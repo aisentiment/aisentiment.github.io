@@ -286,26 +286,87 @@
     .filter-input:focus { border-color: var(--accent2); }
     .filter-input::placeholder { color: var(--text-muted); }
 
-    .media-select {
+    /* Multi-select media dropdown */
+    .media-dropdown-wrap {
+      position: relative;
+      width: 200px;
+    }
+
+    .media-dropdown-btn {
+      width: 100%;
+      height: 36px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
       font-size: 13px;
       padding: 0 32px 0 12px;
-      height: 36px;
-      width: 200px;
-      outline: none;
+      text-align: left;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: border-color 0.2s;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
-      transition: border-color 0.2s;
     }
-    .media-select:focus { border-color: var(--accent2); }
-    .media-select option { background: var(--surface2); color: var(--text); }
+    .media-dropdown-btn:focus,
+    .media-dropdown-btn.open { border-color: var(--accent2); outline: none; }
+
+    .media-dropdown-list {
+      display: none;
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 0;
+      width: 220px;
+      max-height: 240px;
+      overflow-y: auto;
+      background: var(--surface2);
+      border: 1px solid var(--accent2);
+      z-index: 200;
+    }
+    .media-dropdown-list.open { display: block; }
+
+    .media-dropdown-list::-webkit-scrollbar { width: 4px; }
+    .media-dropdown-list::-webkit-scrollbar-track { background: var(--surface2); }
+    .media-dropdown-list::-webkit-scrollbar-thumb { background: var(--border); }
+
+    .media-opt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text-dim);
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .media-opt:hover { background: rgba(74,158,255,0.08); color: var(--text); }
+    .media-opt.selected { color: var(--text); }
+
+    .media-opt-check {
+      width: 14px; height: 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      transition: all 0.15s;
+    }
+    .media-opt.selected .media-opt-check {
+      background: var(--accent2);
+      border-color: var(--accent2);
+      color: #000;
+    }
+
+    .media-opt-all {
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
 
     .date-range { display: flex; align-items: center; gap: 6px; }
 
@@ -815,9 +876,10 @@
       </div>
       <div class="filter-group">
         <div class="filter-group-label">Media</div>
-        <select class="media-select" id="mediaSelect" onchange="applyFilters()">
-          <option value="">All sources</option>
-        </select>
+        <div class="media-dropdown-wrap" id="mediaDropdownWrap">
+          <button class="media-dropdown-btn" id="mediaDropdownBtn" onclick="toggleMediaDropdown(event)">All sources</button>
+          <div class="media-dropdown-list" id="mediaDropdownList"></div>
+        </div>
       </div>
       <div class="filter-group">
         <div class="filter-group-label">From</div>
@@ -1033,17 +1095,67 @@
         });
     }
 
-    // ── Build media dropdown ──
+    // ── Multi-select media dropdown ──
+    let selectedMedia = new Set();
+
     function buildMediaDropdown() {
       const sources = [...new Set(allNews.map(r => r.media).filter(Boolean))].sort();
-      const sel = document.getElementById('mediaSelect');
-      sel.innerHTML = '<option value="">All sources</option>';
+      const list = document.getElementById('mediaDropdownList');
+      list.innerHTML = '';
+
+      // "All" option
+      const allOpt = document.createElement('div');
+      allOpt.className = 'media-opt media-opt-all';
+      allOpt.innerHTML = '<span class="media-opt-check" id="allCheck">✓</span><span>All sources</span>';
+      allOpt.onclick = () => { selectedMedia.clear(); updateMediaBtn(); applyFilters(); };
+      list.appendChild(allOpt);
+
       sources.forEach(src => {
-        const opt = document.createElement('option');
-        opt.value = src; opt.textContent = src;
-        sel.appendChild(opt);
+        const opt = document.createElement('div');
+        opt.className = 'media-opt';
+        opt.dataset.src = src;
+        opt.innerHTML = `<span class="media-opt-check"></span><span>${src}</span>`;
+        opt.onclick = () => {
+          if (selectedMedia.has(src)) selectedMedia.delete(src);
+          else selectedMedia.add(src);
+          updateMediaBtn();
+          applyFilters();
+        };
+        list.appendChild(opt);
       });
     }
+
+    function updateMediaBtn() {
+      const list = document.getElementById('mediaDropdownList');
+      const btn  = document.getElementById('mediaDropdownBtn');
+      // Update checkmarks
+      list.querySelectorAll('.media-opt[data-src]').forEach(opt => {
+        const checked = selectedMedia.has(opt.dataset.src);
+        opt.classList.toggle('selected', checked);
+      });
+      // Update button label
+      if (selectedMedia.size === 0) {
+        btn.textContent = 'All sources';
+      } else if (selectedMedia.size === 1) {
+        btn.textContent = [...selectedMedia][0];
+      } else {
+        btn.textContent = `${selectedMedia.size} sources`;
+      }
+    }
+
+    function toggleMediaDropdown(e) {
+      e.stopPropagation();
+      const btn  = document.getElementById('mediaDropdownBtn');
+      const list = document.getElementById('mediaDropdownList');
+      const open = list.classList.toggle('open');
+      btn.classList.toggle('open', open);
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      document.getElementById('mediaDropdownList').classList.remove('open');
+      document.getElementById('mediaDropdownBtn').classList.remove('open');
+    });
 
     // ── Set date input min/max from data ──
     function setDateRangeBounds() {
@@ -1061,7 +1173,7 @@
     // ── Main filter + sort ──
     function applyFilters() {
       const keyword   = document.getElementById('keywordInput').value.toLowerCase().trim();
-      const mediaSel  = document.getElementById('mediaSelect').value;
+
       const fromVal   = document.getElementById('dateFrom').value;
       const toVal     = document.getElementById('dateTo').value;
       const fromDate  = fromVal ? new Date(fromVal) : null;
@@ -1069,7 +1181,7 @@
 
       filteredNews = allNews.filter(row => {
         if (keyword && !row.headline.toLowerCase().includes(keyword)) return false;
-        if (mediaSel && row.media !== mediaSel) return false;
+        if (selectedMedia.size > 0 && !selectedMedia.has(row.media)) return false;
         if (fromDate && row._date && row._date < fromDate) return false;
         if (toDate   && row._date && row._date > toDate)   return false;
         return true;
@@ -1157,7 +1269,7 @@
 
     function clearFilters() {
       document.getElementById('keywordInput').value = '';
-      document.getElementById('mediaSelect').value = '';
+      selectedMedia.clear(); updateMediaBtn();
       document.getElementById('dateFrom').value = '';
       document.getElementById('dateTo').value = '';
       applyFilters();
