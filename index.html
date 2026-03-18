@@ -8,17 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #080c10;
-      --surface: #0e1420;
-      --surface2: #141c2a;
-      --border: #1e2d42;
-      --accent: #e8c547;
-      --accent2: #4a9eff;
-      --text: #e2e8f0;
-      --text-muted: #64748b;
-      --text-dim: #94a3b8;
-      --red: #f87171;
-      --green: #4ade80;
+      --bg: #ffffff;
+      --surface: #f4f6f8;
+      --surface2: #e9ecf0;
+      --border: #d0d5dd;
+      --accent: #5ba3d9;
+      --accent2: #3b8abf;
+      --text: #1e293b;
+      --text-muted: #7a8694;
+      --text-dim: #4a5568;
+      --red: #e05252;
+      --green: #38b36e;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,8 +38,8 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(74,158,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(74,158,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(91,163,217,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,163,217,0.06) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
@@ -50,7 +50,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(8,12,16,0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 0 48px;
@@ -70,7 +70,7 @@
     }
 
     .nav-logo span {
-      color: var(--text-dim);
+      color: var(--text-muted);
       font-weight: 400;
     }
 
@@ -114,7 +114,7 @@
       position: absolute;
       right: -80px; top: -80px;
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(74,158,255,0.05) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -146,6 +146,7 @@
       line-height: 1.06;
       letter-spacing: -0.02em;
       margin-bottom: 20px;
+      color: #1e293b;
     }
 
     .hero h1 em {
@@ -182,7 +183,7 @@
       cursor: default;
     }
 
-    .insight-pill:hover { border-color: rgba(74,158,255,0.4); }
+    .insight-pill:hover { border-color: rgba(91,163,217,0.5); }
 
     .pill-dot {
       width: 6px; height: 6px;
@@ -272,7 +273,7 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .filter-input:focus { border-color: var(--accent2); }
+    .filter-input:focus { border-color: var(--accent); }
     .filter-input::placeholder { color: var(--text-muted); }
 
     /* Multi-select media dropdown */
@@ -296,12 +297,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
       transition: border-color 0.2s;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8694' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
     }
     .media-dropdown-btn:focus,
-    .media-dropdown-btn.open { border-color: var(--accent2); outline: none; }
+    .media-dropdown-btn.open { border-color: var(--accent); outline: none; }
 
     .media-dropdown-list {
       display: none;
@@ -311,14 +312,15 @@
       width: 220px;
       max-height: 240px;
       overflow-y: auto;
-      background: var(--surface2);
-      border: 1px solid var(--accent2);
+      background: #fff;
+      border: 1px solid var(--accent);
       z-index: 200;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     }
     .media-dropdown-list.open { display: block; }
 
     .media-dropdown-list::-webkit-scrollbar { width: 4px; }
-    .media-dropdown-list::-webkit-scrollbar-track { background: var(--surface2); }
+    .media-dropdown-list::-webkit-scrollbar-track { background: #fff; }
     .media-dropdown-list::-webkit-scrollbar-thumb { background: var(--border); }
 
     .media-opt {
@@ -332,7 +334,7 @@
       transition: background 0.15s;
       user-select: none;
     }
-    .media-opt:hover { background: rgba(74,158,255,0.08); color: var(--text); }
+    .media-opt:hover { background: rgba(91,163,217,0.1); color: var(--text); }
     .media-opt.selected { color: var(--text); }
 
     .media-opt-check {
@@ -345,9 +347,9 @@
       transition: all 0.15s;
     }
     .media-opt.selected .media-opt-check {
-      background: var(--accent2);
-      border-color: var(--accent2);
-      color: #000;
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     .media-opt-all {
@@ -370,9 +372,8 @@
       width: 140px;
       outline: none;
       transition: border-color 0.2s;
-      color-scheme: dark;
     }
-    .date-input:focus { border-color: var(--accent2); }
+    .date-input:focus { border-color: var(--accent); }
 
     .date-sep { color: var(--text-muted); font-size: 12px; }
 
@@ -399,7 +400,7 @@
     }
     .filter-stats span { color: var(--accent2); }
 
-        /* ── NEWS TABLE ── */
+    /* ── NEWS TABLE ── */
     .news-table-wrap {
       padding: 0 48px;
       overflow-x: auto;
@@ -422,7 +423,7 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent2);
       font-weight: 500;
       white-space: nowrap;
       cursor: pointer;
@@ -442,7 +443,7 @@
     }
 
     .news-table tbody tr:hover {
-      background: var(--surface2);
+      background: var(--surface);
     }
 
     .news-table td {
@@ -463,14 +464,14 @@
       text-decoration: none;
       transition: color 0.18s;
     }
-    .td-headline a:hover { color: var(--accent2); }
+    .td-headline a:hover { color: var(--accent); }
 
     .td-headline .headline-link-icon {
       display: inline-block;
       margin-left: 6px;
       opacity: 0;
       font-size: 11px;
-      color: var(--accent2);
+      color: var(--accent);
       transition: opacity 0.18s;
     }
     .news-table tbody tr:hover .headline-link-icon { opacity: 1; }
@@ -487,7 +488,7 @@
       font-size: 11px;
       letter-spacing: 0.06em;
       color: var(--accent2);
-      background: rgba(74,158,255,0.06);
+      background: rgba(91,163,217,0.08);
     }
 
     .td-time {
@@ -514,8 +515,6 @@
     .news-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
     .news-empty p { font-size: 13px; }
 
-
-
     /* Pagination */
     .news-pagination {
       padding: 16px 48px 0;
@@ -537,9 +536,9 @@
       transition: all 0.18s;
     }
     .page-btn:hover, .page-btn.active {
-      border-color: var(--accent2);
+      border-color: var(--accent);
       color: var(--text);
-      background: rgba(74,158,255,0.08);
+      background: rgba(91,163,217,0.08);
     }
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .page-info { font-size: 12px; color: var(--text-muted); }
@@ -578,7 +577,6 @@
       flex-shrink: 0;
     }
 
-    /* #companyBtns wrapper must fill remaining panel height */
     #companyBtns {
       flex: 1;
       min-height: 0;
@@ -596,7 +594,7 @@
 
     .company-search-input {
       width: 100%;
-      background: var(--surface2);
+      background: #fff;
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
@@ -606,7 +604,7 @@
       transition: border-color 0.2s;
       box-sizing: border-box;
     }
-    .company-search-input:focus { border-color: var(--accent2); }
+    .company-search-input:focus { border-color: var(--accent); }
     .company-search-input::placeholder { color: var(--text-muted); }
 
     /* All companies — single scrollable list */
@@ -644,8 +642,8 @@
     }
 
     .company-btn.active {
-      background: rgba(232,197,71,0.07);
-      border-color: rgba(232,197,71,0.4);
+      background: rgba(91,163,217,0.1);
+      border-color: rgba(91,163,217,0.5);
       color: var(--text);
     }
 
@@ -729,8 +727,6 @@
       justify-content: center;
     }
 
-
-
     .radar-legend {
       display: flex;
       flex-direction: column;
@@ -771,8 +767,8 @@
     .radar-empty .ph-icon { font-size: 36px; margin-bottom: 12px; }
     .radar-empty p { font-size: 13px; line-height: 1.6; }
     .radar-empty code {
-      color: var(--accent);
-      background: rgba(232,197,71,0.08);
+      color: var(--accent2);
+      background: rgba(91,163,217,0.1);
       padding: 2px 6px;
       border-radius: 2px;
       font-size: 12px;
@@ -811,8 +807,6 @@
       text-align: right;
     }
 
-
-
     /* Responsive */
     @media (max-width: 1024px) {
       .hero { grid-template-columns: 1fr; }
@@ -845,7 +839,6 @@
     <div class="nav-badge">LIVE DATA</div>
   </nav>
 
-
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
@@ -855,7 +848,6 @@
         Tracking AI-related hiring trends, workforce shifts, and job market signals across major technology companies in real time — powered by recent news and six-dimension company analysis.
       </p>
       <div class="hero-insights" id="heroInsights">
-        <!-- Populated by JS after data loads -->
         <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
         <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
         <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
@@ -870,7 +862,6 @@
       <h2 class="section-title">Recent AI News</h2>
       <div class="section-line"></div>
     </div>
-
 
     <!-- Filters -->
     <div class="filter-bar">
@@ -926,7 +917,6 @@
       <span class="page-info" id="pageInfo">Page 1 of 1</span>
       <button class="page-btn" id="nextPageBtn" onclick="changePage(1)">Next →</button>
     </div>
-
   </section>
 
   <!-- ANALYSIS -->
@@ -954,7 +944,6 @@
             <div class="figure-company-name" id="figCompanyName">—</div>
             <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
           </div>
-
         </div>
         <div class="figure-body" id="figureBody">
           <div class="radar-empty">
@@ -965,7 +954,6 @@
       </div>
     </div>
   </section>
-
 
   <!-- FOOTER -->
   <footer id="about">
@@ -980,8 +968,6 @@
   </footer>
 
   <script>
-    // ── Company radar chart ──
-    // 👇 Change this to match your actual filename in the data/ folder
     const COMPANIES_CSV_PATH = 'data/companies.csv';
 
     let companyData = [];
@@ -996,15 +982,11 @@
       { key: 'executive_ai_sentiment', lines: ['2025 Executive', 'AI Sentiment']},
     ];
 
-    // Robust TSV/CSV parser — auto-detects tab vs comma
     function parseCompaniesCSV(text) {
       const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
       if (lines.length < 2) return [];
-
-      // Detect separator: if header has tabs use tab, else comma
       const sep = lines[0].includes('\t') ? '\t' : ',';
       const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
-
       const rows = [];
       for (let i = 1; i < lines.length; i++) {
         const cols = lines[i].split(sep);
@@ -1017,7 +999,6 @@
       return rows;
     }
 
-    // Compute global min/max per metric for auto-scaling across all companies
     function computeScales(rows) {
       const scales = {};
       RADAR_METRICS.forEach(m => {
@@ -1030,7 +1011,6 @@
       return scales;
     }
 
-    // Map raw value → 0..5 normalized score
     function normalize(val, key) {
       const raw = parseFloat(val);
       if (isNaN(raw) || !isFinite(raw)) return 0;
@@ -1066,10 +1046,8 @@
     function buildCompanyButtons() {
       const container = document.getElementById('companyBtns');
       container.innerHTML = '';
-
       const scrollDiv = document.createElement('div');
       scrollDiv.className = 'company-panel-scroll';
-
       companyData.forEach((row, i) => {
         const btn = document.createElement('button');
         btn.className = 'company-btn' + (i === 0 ? ' active' : '');
@@ -1079,7 +1057,6 @@
         btn.addEventListener('click', () => selectCompany(btn, row));
         scrollDiv.appendChild(btn);
       });
-
       container.appendChild(scrollDiv);
       selectCompany(scrollDiv.querySelector('.company-btn'), companyData[0]);
     }
@@ -1092,22 +1069,17 @@
       drawRadar(row);
     }
 
-    // Build SVG radar chart
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
       const N = RADAR_METRICS.length;
-      const R = 148;          // radar ring radius
-      const LABEL_R = R + 16; // labels just outside the outer ring
+      const R = 148;
+      const LABEL_R = R + 16;
       const LINE_H  = 13;
       const MAX_SCALE = 5;
-
-      // ViewBox: wide horizontal padding so left-side text-anchor="end" never clips
-      // Layout: pad 120 left/right, 90 top/bottom around the radar center
       const PAD_X = 120, PAD_Y = 90;
-      const VW = R * 2 + PAD_X * 2;  // 496
-      const VH = R * 2 + PAD_Y * 2;  // 476
+      const VW = R * 2 + PAD_X * 2;
+      const VH = R * 2 + PAD_Y * 2;
       const rcx = VW / 2, rcy = VH / 2;
-
       const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
 
       function rpt(r, a)    { return { x: rcx + r*Math.cos(a), y: rcy + r*Math.sin(a) }; }
@@ -1121,33 +1093,28 @@
 
       let svg = `<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">`;
 
-      // Grid rings
       for (let ring = 1; ring <= MAX_SCALE; ring++) {
         const pts = angles.map(a => rptStr(R * ring / MAX_SCALE, a)).join(' ');
         const dash = ring < MAX_SCALE ? 'stroke-dasharray="3 3"' : '';
         const sw   = ring === MAX_SCALE ? '1.5' : '0.8';
-        svg += `<polygon points="${pts}" fill="none" stroke="#1e2d42" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
-        // Scale number on right axis
+        svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
         const lp = rpt(R * ring / MAX_SCALE + 4, 0);
-        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#64748b" font-size="9" font-family="DM Mono,monospace">${ring}</text>`;
+        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="9" font-family="DM Mono,monospace">${ring}</text>`;
       }
 
-      // Axes
       angles.forEach(a => {
         const o = rpt(R, a);
-        svg += `<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#1e2d42" stroke-width="1"/>`;
+        svg += `<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#d0d5dd" stroke-width="1"/>`;
       });
 
-      // Axis labels — close to ring, correct anchor per side, lines[] for clean wrapping
       angles.forEach((a, i) => {
         const m   = RADAR_METRICS[i];
         const lp  = rpt(LABEL_R, a);
-        // Determine text-anchor by x position relative to center
         const dx  = lp.x - rcx;
         const anchor = dx < -8 ? 'end' : dx > 8 ? 'start' : 'middle';
         const totalH = (m.lines.length - 1) * LINE_H;
         const yStart = lp.y - totalH / 2;
-        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="10" fill="#cbd5e1" font-weight="500">`;
+        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="10" fill="#4a5568" font-weight="500">`;
         m.lines.forEach((ln, li) => {
           t += `<tspan x="${lp.x.toFixed(1)}" y="${(yStart + li * LINE_H).toFixed(1)}">${ln}</tspan>`;
         });
@@ -1155,27 +1122,24 @@
         svg += t;
       });
 
-      // Data polygon
       const dataPts = normVals.map((v, i) => rptStr(R * v / MAX_SCALE, angles[i])).join(' ');
-      svg += `<polygon points="${dataPts}" fill="rgba(74,158,255,0.18)" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round"/>`;
+      svg += `<polygon points="${dataPts}" fill="rgba(91,163,217,0.18)" stroke="#5ba3d9" stroke-width="2" stroke-linejoin="round"/>`;
 
-      // Vertex dots
       normVals.forEach((v, i) => {
         const p = rpt(R * v / MAX_SCALE, angles[i]);
-        svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#4a9eff" stroke="#080c10" stroke-width="2"/>`;
+        svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#5ba3d9" stroke="#ffffff" stroke-width="2"/>`;
       });
 
       svg += `</svg>`;
 
-      // Legend: bullet · title · value all on one line
       const legend = RADAR_METRICS.map((m, i) => {
         const raw   = rawVals[i];
         const disp  = raw !== null ? raw.toFixed(3) : 'N/A';
         const pct   = Math.round(normVals[i] / MAX_SCALE * 100);
         const title = m.lines.join(' ');
-        const bar   = `<div style="height:2px;width:${pct}%;background:var(--accent2);border-radius:2px;margin-top:3px"></div>`;
+        const bar   = `<div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
         return `<div style="display:flex;align-items:center;gap:8px;white-space:nowrap">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent2);flex-shrink:0"></span>
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
           <span style="flex:1;font-size:11px;color:var(--text-dim)">${title}</span>
           <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span>
         </div>${bar}`;
@@ -1207,7 +1171,6 @@
 
     fetchCompaniesCSV();
 
-    // ── News table state ──
     let allNews = [];
     let filteredNews = [];
     let currentPage = 1;
@@ -1215,7 +1178,6 @@
     let sortCol = 'time';
     let sortDir = 'desc';
 
-    // ── Parse CSV (handles both "time" and "date" column names) ──
     function parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
       const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
@@ -1233,7 +1195,6 @@
         cols.push(cur.trim());
         const row = {};
         headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, ''); });
-        // support both "time" and "date" column names
         const rawDate = row.time || row.date || '';
         row._rawDate = rawDate;
         row._date = rawDate ? parseDate(rawDate) : null;
@@ -1242,13 +1203,10 @@
       return rows;
     }
 
-    // Robust date parser: handles YYYY-MM-DD, MM/DD/YYYY, "Mar 14, 2026", etc.
     function parseDate(str) {
       if (!str) return null;
-      // Already ISO-like
       let d = new Date(str);
       if (!isNaN(d)) return d;
-      // Try MM/DD/YYYY
       const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
       if (mdy) { d = new Date(+mdy[3], +mdy[1]-1, +mdy[2]); if (!isNaN(d)) return d; }
       return null;
@@ -1272,21 +1230,17 @@
         });
     }
 
-    // ── Multi-select media dropdown ──
     let selectedMedia = new Set();
 
     function buildMediaDropdown() {
       const sources = [...new Set(allNews.map(r => r.media).filter(Boolean))].sort();
       const list = document.getElementById('mediaDropdownList');
       list.innerHTML = '';
-
-      // "All" option
       const allOpt = document.createElement('div');
       allOpt.className = 'media-opt media-opt-all';
       allOpt.innerHTML = '<span class="media-opt-check" id="allCheck">✓</span><span>All sources</span>';
       allOpt.onclick = () => { selectedMedia.clear(); updateMediaBtn(); applyFilters(); };
       list.appendChild(allOpt);
-
       sources.forEach(src => {
         const opt = document.createElement('div');
         opt.className = 'media-opt';
@@ -1305,12 +1259,10 @@
     function updateMediaBtn() {
       const list = document.getElementById('mediaDropdownList');
       const btn  = document.getElementById('mediaDropdownBtn');
-      // Update checkmarks
       list.querySelectorAll('.media-opt[data-src]').forEach(opt => {
         const checked = selectedMedia.has(opt.dataset.src);
         opt.classList.toggle('selected', checked);
       });
-      // Update button label
       if (selectedMedia.size === 0) {
         btn.textContent = 'All sources';
       } else if (selectedMedia.size === 1) {
@@ -1328,13 +1280,11 @@
       btn.classList.toggle('open', open);
     }
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', () => {
       document.getElementById('mediaDropdownList').classList.remove('open');
       document.getElementById('mediaDropdownBtn').classList.remove('open');
     });
 
-    // ── Set date input min/max from data ──
     function setDateRangeBounds() {
       const dates = allNews.map(r => r._date).filter(Boolean);
       if (!dates.length) return;
@@ -1347,15 +1297,12 @@
       document.getElementById('dateTo').max   = toISO(maxD);
     }
 
-    // ── Main filter + sort ──
     function applyFilters() {
       const keyword   = document.getElementById('keywordInput').value.toLowerCase().trim();
-
       const fromVal   = document.getElementById('dateFrom').value;
       const toVal     = document.getElementById('dateTo').value;
       const fromDate  = fromVal ? new Date(fromVal) : null;
       const toDate    = toVal   ? new Date(toVal + 'T23:59:59') : null;
-
       filteredNews = allNews.filter(row => {
         if (keyword && !row.headline.toLowerCase().includes(keyword)) return false;
         if (selectedMedia.size > 0 && !selectedMedia.has(row.media)) return false;
@@ -1363,7 +1310,6 @@
         if (toDate   && row._date && row._date > toDate)   return false;
         return true;
       });
-
       filteredNews.sort((a, b) => {
         let av = sortCol === 'time' ? (a._date || 0) : (a[sortCol] || '');
         let bv = sortCol === 'time' ? (b._date || 0) : (b[sortCol] || '');
@@ -1371,7 +1317,6 @@
         if (av > bv) return sortDir === 'asc' ? 1 : -1;
         return 0;
       });
-
       currentPage = 1;
       renderTable();
       updateStats();
@@ -1380,7 +1325,6 @@
     function sortTable(col) {
       if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
       else { sortCol = col; sortDir = col === 'time' ? 'desc' : 'asc'; }
-      // Update sort indicators
       ['headline','media','time'].forEach(c => {
         const el = document.getElementById('sort-' + c);
         el.className = 'th-sort' + (c === sortCol ? ' ' + sortDir : '');
@@ -1388,24 +1332,20 @@
       applyFilters();
     }
 
-    // ── Render table rows ──
     function renderTable() {
       const tbody = document.getElementById('newsTableBody');
       const empty = document.getElementById('newsEmpty');
       const pagination = document.getElementById('newsPagination');
       tbody.innerHTML = '';
-
       if (filteredNews.length === 0) {
         empty.style.display = 'block';
         pagination.style.display = 'none';
         return;
       }
-
       empty.style.display = 'none';
       const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
       const start = (currentPage - 1) * PAGE_SIZE;
       const pageData = filteredNews.slice(start, start + PAGE_SIZE);
-
       pageData.forEach(row => {
         const tr = document.createElement('tr');
         const dateStr = row._date ? row._date.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : (row._rawDate || '—');
@@ -1421,8 +1361,6 @@
         `;
         tbody.appendChild(tr);
       });
-
-      // Pagination
       if (totalPages > 1) {
         pagination.style.display = 'flex';
         document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
@@ -1463,7 +1401,6 @@
       return `${Math.floor(months/12)}yr ago`;
     }
 
-    // Initialize sort indicator & auto-load CSV from repo
     document.getElementById('sort-time').className = 'th-sort desc';
     fetchCSV();
   </script>
