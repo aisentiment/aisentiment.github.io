@@ -30,7 +30,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 14px;
+      font-size: 16px;
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -59,13 +59,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
+      height: 64px;
     }
 
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 17px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
@@ -85,7 +85,7 @@
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       transition: color 0.2s;
@@ -94,8 +94,8 @@
     .nav-links a:hover { color: var(--accent); }
 
     .nav-badge {
-      font-size: 11px;
-      padding: 3px 10px;
+      font-size: 13px;
+      padding: 4px 12px;
       border: 1px solid var(--accent);
       color: var(--accent);
       border-radius: 2px;
@@ -123,7 +123,7 @@
     .hero-inner { max-width: 860px; }
 
     .hero-eyebrow {
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
@@ -141,7 +141,7 @@
 
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(32px, 4vw, 52px);
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 800;
       line-height: 1.06;
       letter-spacing: -0.02em;
@@ -158,7 +158,7 @@
     .hero-desc {
       color: var(--text-dim);
       line-height: 1.75;
-      font-size: 14px;
+      font-size: 16px;
       max-width: 640px;
       margin-bottom: 36px;
     }
@@ -171,8 +171,8 @@
       gap: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 8px 14px;
-      font-size: 12px;
+      padding: 9px 16px;
+      font-size: 14px;
       color: var(--text-dim);
       transition: border-color 0.2s;
       cursor: default;
@@ -180,7 +180,7 @@
 
     .insight-pill:hover { border-color: rgba(91,163,217,0.5); }
 
-    .pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .pill-dot.news  { background: var(--accent); }
     .pill-dot.radar { background: var(--accent2); }
     .pill-dot.dim   { background: var(--text-muted); }
@@ -189,7 +189,7 @@
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       color: var(--text);
-      font-size: 13px;
+      font-size: 15px;
     }
 
     /* ── SECTION HEADERS ── */
@@ -203,13 +203,13 @@
 
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 700;
       letter-spacing: -0.01em;
     }
 
     .section-num {
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.15em;
       color: var(--accent);
     }
@@ -241,7 +241,7 @@
     .filter-group { display: flex; flex-direction: column; gap: 6px; }
 
     .filter-group-label {
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -252,26 +252,26 @@
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 13px;
+      font-size: 15px;
       padding: 0 12px;
-      height: 36px;
-      width: 240px;
+      height: 40px;
+      width: 260px;
       outline: none;
       transition: border-color 0.2s;
     }
     .filter-input:focus { border-color: var(--accent); }
     .filter-input::placeholder { color: var(--text-muted); }
 
-    .media-dropdown-wrap { position: relative; width: 200px; }
+    .media-dropdown-wrap { position: relative; width: 220px; }
 
     .media-dropdown-btn {
       width: 100%;
-      height: 36px;
+      height: 40px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 13px;
+      font-size: 15px;
       padding: 0 32px 0 12px;
       text-align: left;
       cursor: pointer;
@@ -291,8 +291,8 @@
       position: absolute;
       top: calc(100% + 2px);
       left: 0;
-      width: 220px;
-      max-height: 240px;
+      width: 240px;
+      max-height: 260px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid var(--accent);
@@ -309,9 +309,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 12px;
+      padding: 10px 14px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-dim);
       transition: background 0.15s;
       user-select: none;
@@ -320,12 +320,12 @@
     .media-opt.selected { color: var(--text); }
 
     .media-opt-check {
-      width: 14px; height: 14px;
+      width: 16px; height: 16px;
       border: 1px solid var(--border);
       border-radius: 2px;
       flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px;
+      font-size: 11px;
       transition: all 0.15s;
     }
     .media-opt.selected .media-opt-check {
@@ -337,7 +337,7 @@
     .media-opt-all {
       border-bottom: 1px solid var(--border);
       color: var(--text-muted);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.06em;
     }
 
@@ -346,10 +346,10 @@
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
+      font-size: 14px;
       padding: 0 10px;
-      height: 36px;
-      width: 140px;
+      height: 40px;
+      width: 150px;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -360,9 +360,9 @@
       border: 1px solid var(--border);
       color: var(--text-muted);
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      padding: 0 14px;
-      height: 36px;
+      font-size: 13px;
+      padding: 0 16px;
+      height: 40px;
       cursor: pointer;
       transition: all 0.18s;
     }
@@ -370,7 +370,7 @@
 
     .filter-stats {
       padding: 0 48px 14px;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -379,18 +379,16 @@
     .filter-stats span { color: var(--accent2); }
 
     /* ── NEWS TIMELINE ── */
-    .news-timeline-wrap {
-      padding: 0 48px;
-    }
+    .news-timeline-wrap { padding: 0 48px; }
 
     .news-feed {
       position: relative;
-      padding-left: 110px;
+      padding-left: 120px;
     }
 
     .news-spine {
       position: absolute;
-      left: 84px;
+      left: 94px;
       top: 6px;
       bottom: 6px;
       width: 2px;
@@ -400,7 +398,7 @@
 
     .news-item {
       position: relative;
-      padding: 18px 0 18px 32px;
+      padding: 20px 0 20px 36px;
     }
 
     .news-item + .news-item {
@@ -410,9 +408,9 @@
     .news-node {
       position: absolute;
       left: -22px;
-      top: 24px;
-      width: 14px;
-      height: 14px;
+      top: 28px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       border: 2px solid var(--spine-top);
       background: var(--bg);
@@ -420,11 +418,11 @@
     }
 
     .news-node-inner {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: #378ADD;
-      margin: 2px auto;
+      margin: 2.5px auto;
       transition: background 0.2s;
     }
 
@@ -432,22 +430,22 @@
 
     .news-ts {
       position: absolute;
-      left: -110px;
-      top: 18px;
-      width: 74px;
+      left: -120px;
+      top: 20px;
+      width: 84px;
       text-align: right;
     }
 
     .news-ts-day {
       display: block;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 500;
       color: var(--text);
       font-family: 'Syne', sans-serif;
     }
 
     .news-ts-month {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-muted);
       letter-spacing: 0.05em;
     }
@@ -461,11 +459,11 @@
     .news-content { flex: 1; }
 
     .news-headline {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 1.5;
+      line-height: 1.55;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .news-headline a {
@@ -478,12 +476,12 @@
     .news-meta {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .news-badge {
-      font-size: 11px;
-      padding: 3px 10px;
+      font-size: 13px;
+      padding: 4px 12px;
       border-radius: 2px;
       background: rgba(91,163,217,0.1);
       color: var(--accent2);
@@ -492,13 +490,13 @@
     }
 
     .news-ago {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
     .news-link-arrow {
       color: var(--accent);
-      font-size: 14px;
+      font-size: 16px;
       text-decoration: none;
       font-weight: 500;
       flex-shrink: 0;
@@ -516,7 +514,7 @@
       display: none;
     }
     .news-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
-    .news-empty p { font-size: 13px; }
+    .news-empty p { font-size: 15px; }
 
     /* Pagination */
     .news-pagination {
@@ -528,8 +526,8 @@
     }
 
     .page-btn {
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 8px 14px;
+      font-size: 14px;
       font-family: 'DM Mono', monospace;
       background: transparent;
       border: 1px solid var(--border);
@@ -544,7 +542,7 @@
       background: rgba(91,163,217,0.08);
     }
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .page-info { font-size: 12px; color: var(--text-muted); }
+    .page-info { font-size: 14px; color: var(--text-muted); }
 
     /* Sort controls */
     .sort-bar {
@@ -555,7 +553,7 @@
     }
 
     .sort-label {
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -563,9 +561,9 @@
     }
 
     .sort-btn {
-      font-size: 11px;
+      font-size: 13px;
       font-family: 'DM Mono', monospace;
-      padding: 4px 10px;
+      padding: 5px 12px;
       background: transparent;
       border: 1px solid var(--border);
       color: var(--text-muted);
@@ -587,9 +585,9 @@
     .company-layout {
       padding: 0 48px;
       display: grid;
-      grid-template-columns: 220px 1fr;
+      grid-template-columns: 240px 1fr;
       gap: 2px;
-      height: 680px;
+      height: 700px;
     }
 
     .company-panel {
@@ -620,8 +618,8 @@
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      padding: 7px 10px;
+      font-size: 14px;
+      padding: 8px 10px;
       outline: none;
       transition: border-color 0.2s;
       box-sizing: border-box;
@@ -670,7 +668,7 @@
     .company-btn.active .btn-indicator { background: var(--accent); }
 
     .btn-indicator {
-      width: 6px; height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--border);
       flex-shrink: 0;
@@ -679,7 +677,7 @@
 
     .btn-name {
       font-family: 'Syne', sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       display: block;
       margin-bottom: 2px;
@@ -703,12 +701,12 @@
 
     .figure-company-name {
       font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
     }
 
     .figure-subtitle {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -735,7 +733,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      min-width: 260px;
+      min-width: 280px;
     }
 
     .radar-empty {
@@ -744,13 +742,13 @@
       padding: 60px 20px;
     }
     .radar-empty .ph-icon { font-size: 36px; margin-bottom: 12px; }
-    .radar-empty p { font-size: 13px; line-height: 1.6; }
+    .radar-empty p { font-size: 15px; line-height: 1.6; }
     .radar-empty code {
       color: var(--accent2);
       background: rgba(91,163,217,0.1);
       padding: 2px 6px;
       border-radius: 2px;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     /* ── FOOTER ── */
@@ -765,18 +763,18 @@
     }
 
     .footer-left {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-muted);
     }
 
     .footer-left strong {
       font-family: 'Syne', sans-serif;
       color: var(--accent);
-      font-size: 13px;
+      font-size: 15px;
     }
 
     .footer-right {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-muted);
       text-align: right;
     }
@@ -813,9 +811,9 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-eyebrow">AI Labor Market Intelligence</div>
-      <h1>The <em>AI</em><br>Labor Market<br>Intelligence Hub</h1>
+      <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the Future of Work</h1>
       <p class="hero-desc">
-        Tracking AI-related hiring trends, workforce shifts, and job market signals across major technology companies in real time — powered by recent news and six-dimension company analysis.
+        The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
       </p>
       <div class="hero-insights" id="heroInsights">
         <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
@@ -900,7 +898,7 @@
             placeholder="Search…" oninput="filterCompanyBtns(this.value)">
         </div>
         <div id="companyBtns">
-          <div style="padding:16px;font-size:12px;color:var(--text-muted)">Loading companies…</div>
+          <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
         </div>
       </div>
 
@@ -933,9 +931,6 @@
   </footer>
 
   <script>
-    /* ══════════════════════════════════════
-       NEWS — Timeline Feed
-       ══════════════════════════════════════ */
     let allNews = [];
     let filteredNews = [];
     let currentPage = 1;
@@ -1088,21 +1083,17 @@
     function sortBy(col) {
       if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
       else { sortCol = col; sortDir = col === 'time' ? 'desc' : 'asc'; }
-
       document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
       const arrows = { asc: ' ↑', desc: ' ↓' };
       const labels = { time: 'Date', headline: 'Headline', media: 'Media' };
       const btn = document.getElementById('sort' + col.charAt(0).toUpperCase() + col.slice(1) + 'Btn');
       btn.classList.add('active');
       btn.textContent = labels[col] + (arrows[sortDir] || '');
-
       applyFilters();
     }
 
-    // Compute node color based on position in list
     function getNodeColor(index, total) {
       const t = total <= 1 ? 0 : index / (total - 1);
-      // Interpolate: top=#85B7EB mid=#5DCAA5 bot=#AFA9EC
       if (t <= 0.5) {
         const p = t * 2;
         return lerpColor([0x85,0xB7,0xEB], [0x5D,0xCA,0xA5], p);
@@ -1125,7 +1116,6 @@
       const empty = document.getElementById('newsEmpty');
       const pagination = document.getElementById('newsPagination');
 
-      // Clear old items (keep spine)
       feed.querySelectorAll('.news-item').forEach(el => el.remove());
 
       if (filteredNews.length === 0) {
@@ -1145,17 +1135,14 @@
       pageData.forEach((row, i) => {
         const item = document.createElement('div');
         item.className = 'news-item';
-
         const dateObj = row._date;
         const dayStr = dateObj ? dateObj.getDate() : '—';
         const monthStr = dateObj ? dateObj.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (row._rawDate || '');
         const timeAgo = dateObj ? getTimeAgo(dateObj) : '';
         const nodeColor = getNodeColor(i, pageData.length);
-
         const linkHtml = row.link
           ? `<a href="${row.link}" target="_blank" rel="noopener" class="news-link-arrow" title="Open article">↗</a>`
           : '';
-
         item.innerHTML = `
           <div class="news-node" style="border-color:${nodeColor}">
             <div class="news-node-inner" style="background:${nodeColor}"></div>
@@ -1174,7 +1161,6 @@
             </div>
             ${linkHtml}
           </div>`;
-
         feed.appendChild(item);
       });
 
@@ -1280,9 +1266,9 @@
         })
         .catch(err => {
           document.getElementById('companyBtns').innerHTML =
-            `<div style="padding:16px;font-size:12px;color:var(--red)">
+            `<div style="padding:16px;font-size:14px;color:var(--red)">
               Could not load <strong>${COMPANIES_CSV_PATH}</strong><br>
-              <span style="color:var(--text-muted);font-size:11px">${err.message}</span>
+              <span style="color:var(--text-muted);font-size:13px">${err.message}</span>
             </div>`;
         });
     }
@@ -1314,7 +1300,7 @@
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
       const N = RADAR_METRICS.length;
-      const R = 148, LABEL_R = R + 16, LINE_H = 13, MAX_SCALE = 5;
+      const R = 148, LABEL_R = R + 16, LINE_H = 14, MAX_SCALE = 5;
       const PAD_X = 120, PAD_Y = 90;
       const VW = R * 2 + PAD_X * 2, VH = R * 2 + PAD_Y * 2;
       const rcx = VW / 2, rcy = VH / 2;
@@ -1334,7 +1320,7 @@
         const sw = ring === MAX_SCALE ? '1.5' : '0.8';
         svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
         const lp = rpt(R * ring / MAX_SCALE + 4, 0);
-        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="9" font-family="DM Mono,monospace">${ring}</text>`;
+        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="10" font-family="DM Mono,monospace">${ring}</text>`;
       }
 
       angles.forEach(a => {
@@ -1348,7 +1334,7 @@
         const anchor = dx < -8 ? 'end' : dx > 8 ? 'start' : 'middle';
         const totalH = (m.lines.length - 1) * LINE_H;
         const yStart = lp.y - totalH / 2;
-        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="10" fill="#4a5568" font-weight="500">`;
+        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="11" fill="#4a5568" font-weight="500">`;
         m.lines.forEach((ln, li) => { t += `<tspan x="${lp.x.toFixed(1)}" y="${(yStart + li * LINE_H).toFixed(1)}">${ln}</tspan>`; });
         t += `</text>`;
         svg += t;
@@ -1371,9 +1357,9 @@
         const title = m.lines.join(' ');
         const bar = `<div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
         return `<div style="display:flex;align-items:center;gap:8px;white-space:nowrap">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
-          <span style="flex:1;font-size:11px;color:var(--text-dim)">${title}</span>
-          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span>
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
+          <span style="flex:1;font-size:13px;color:var(--text-dim)">${title}</span>
+          <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span>
         </div>${bar}`;
       }).join('');
 
