@@ -578,35 +578,18 @@
       flex-shrink: 0;
     }
 
-    /* Top 5 pinned — always visible */
-    .company-panel-pinned {
-      flex-shrink: 0;
-      padding: 6px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Divider between pinned and scrollable */
-    .company-panel-more-label {
-      padding: 8px 16px 4px;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    /* Remaining companies — scrollable */
+    /* All companies — single scrollable list */
     .company-panel-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 0 6px 6px;
+      padding: 6px;
       min-height: 0;
     }
 
     .company-panel-scroll::-webkit-scrollbar { width: 4px; }
     .company-panel-scroll::-webkit-scrollbar-track { background: transparent; }
     .company-panel-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .company-panel-scroll::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
     .company-btn {
       background: transparent;
@@ -1044,50 +1027,28 @@
         });
     }
 
-    function makeBtn(row, isActive) {
-      const btn = document.createElement('button');
-      btn.className = 'company-btn' + (isActive ? ' active' : '');
-      btn.innerHTML = `
-        <div class="btn-indicator"></div>
-        <div>
-          <span class="btn-name">${row.conm}</span>
-          <span class="btn-ticker">${row.rcid || ''}</span>
-        </div>`;
-      btn.addEventListener('click', () => selectCompany(btn, row));
-      return btn;
-    }
-
     function buildCompanyButtons() {
       const container = document.getElementById('companyBtns');
       container.innerHTML = '';
 
-      const TOP = 5;
-      const pinned  = companyData.slice(0, TOP);
-      const rest    = companyData.slice(TOP);
+      const scrollDiv = document.createElement('div');
+      scrollDiv.className = 'company-panel-scroll';
 
-      // Pinned top-5
-      const pinnedDiv = document.createElement('div');
-      pinnedDiv.className = 'company-panel-pinned';
-      pinned.forEach((row, i) => {
-        pinnedDiv.appendChild(makeBtn(row, i === 0));
+      companyData.forEach((row, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'company-btn' + (i === 0 ? ' active' : '');
+        btn.innerHTML = `
+          <div class="btn-indicator"></div>
+          <div>
+            <span class="btn-name">${row.conm}</span>
+            <span class="btn-ticker">${row.rcid || ''}</span>
+          </div>`;
+        btn.addEventListener('click', () => selectCompany(btn, row));
+        scrollDiv.appendChild(btn);
       });
-      container.appendChild(pinnedDiv);
 
-      // Scrollable rest
-      if (rest.length > 0) {
-        const moreLabel = document.createElement('div');
-        moreLabel.className = 'company-panel-more-label';
-        moreLabel.textContent = `+ ${rest.length} more`;
-        container.appendChild(moreLabel);
-
-        const scrollDiv = document.createElement('div');
-        scrollDiv.className = 'company-panel-scroll';
-        rest.forEach(row => scrollDiv.appendChild(makeBtn(row, false)));
-        container.appendChild(scrollDiv);
-      }
-
-      // Auto-select first
-      selectCompany(container.querySelector('.company-btn'), companyData[0]);
+      container.appendChild(scrollDiv);
+      selectCompany(scrollDiv.querySelector('.company-btn'), companyData[0]);
     }
 
     function selectCompany(btn, row) {
