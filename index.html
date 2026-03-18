@@ -104,24 +104,22 @@
     .hero {
       position: relative;
       z-index: 1;
-      padding: 80px 48px 60px;
+      padding: 64px 48px 56px;
       border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
       overflow: hidden;
     }
 
     .hero::after {
       content: '';
       position: absolute;
-      right: -100px;
-      top: -100px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(74,158,255,0.06) 0%, transparent 70%);
+      right: -80px; top: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(74,158,255,0.05) 0%, transparent 70%);
       pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 860px;
     }
 
     .hero-eyebrow {
@@ -137,18 +135,17 @@
 
     .hero-eyebrow::before {
       content: '';
-      width: 24px;
-      height: 1px;
+      width: 24px; height: 1px;
       background: var(--accent);
     }
 
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(36px, 4vw, 56px);
+      font-size: clamp(32px, 4vw, 52px);
       font-weight: 800;
-      line-height: 1.05;
+      line-height: 1.06;
       letter-spacing: -0.02em;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .hero h1 em {
@@ -159,58 +156,50 @@
 
     .hero-desc {
       color: var(--text-dim);
-      line-height: 1.7;
+      line-height: 1.75;
       font-size: 14px;
-      max-width: 480px;
+      max-width: 640px;
+      margin-bottom: 36px;
     }
 
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
+    /* Insight pills row */
+    .hero-insights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .stat-card {
+    .insight-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: var(--text-dim);
+      transition: border-color 0.2s;
+      cursor: default;
     }
 
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.3s;
+    .insight-pill:hover { border-color: rgba(74,158,255,0.4); }
+
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .stat-card:hover::before { opacity: 1; }
+    .pill-dot.news  { background: var(--accent); }
+    .pill-dot.radar { background: var(--accent2); }
+    .pill-dot.dim   { background: var(--text-muted); }
 
-    .stat-label {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .stat-value {
+    .pill-num {
       font-family: 'Syne', sans-serif;
-      font-size: 28px;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 6px;
+      font-size: 13px;
     }
-
-    .stat-delta {
-      font-size: 12px;
-    }
-    .stat-delta.up { color: var(--green); }
-    .stat-delta.down { color: var(--red); }
 
     /* ── SECTION HEADERS ── */
     .section-header {
@@ -567,28 +556,57 @@
       display: grid;
       grid-template-columns: 220px 1fr;
       gap: 2px;
-      min-height: 500px;
+      height: 560px;
     }
 
     /* Company buttons panel */
     .company-panel {
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 8px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      overflow: hidden;
     }
 
     .company-panel-header {
-      padding: 12px 16px 16px;
+      padding: 12px 16px;
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
       border-bottom: 1px solid var(--border);
-      margin-bottom: 8px;
+      flex-shrink: 0;
     }
+
+    /* Top 5 pinned — always visible */
+    .company-panel-pinned {
+      flex-shrink: 0;
+      padding: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Divider between pinned and scrollable */
+    .company-panel-more-label {
+      padding: 8px 16px 4px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* Remaining companies — scrollable */
+    .company-panel-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 6px 6px;
+      min-height: 0;
+    }
+
+    .company-panel-scroll::-webkit-scrollbar { width: 4px; }
+    .company-panel-scroll::-webkit-scrollbar-track { background: transparent; }
+    .company-panel-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     .company-btn {
       background: transparent;
@@ -681,24 +699,27 @@
 
     .figure-body {
       flex: 1;
-      padding: 20px 28px 28px;
+      padding: 16px 24px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 40px;
-      min-height: 440px;
-      flex-wrap: wrap;
+      gap: 32px;
+      overflow: hidden;
     }
 
     .radar-wrap {
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .radar-legend {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-width: 200px;
+      gap: 8px;
+      min-width: 190px;
+      max-width: 210px;
     }
 
     .legend-item {
@@ -774,40 +795,7 @@
       text-align: right;
     }
 
-    /* ── TICKER TAPE ── */
-    .ticker {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-      z-index: 1;
-    }
 
-    .ticker-inner {
-      display: inline-flex;
-      gap: 48px;
-      animation: ticker 30s linear infinite;
-    }
-
-    .ticker-item {
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ticker-name { color: var(--text-dim); }
-    .ticker-val { color: var(--text); }
-    .ticker-chg.up { color: var(--green); }
-    .ticker-chg.down { color: var(--red); }
-
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
 
     /* Responsive */
     @media (max-width: 1024px) {
@@ -841,58 +829,20 @@
     <div class="nav-badge">LIVE DATA</div>
   </nav>
 
-  <!-- TICKER TAPE -->
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span class="ticker-item"><span class="ticker-name">MSFT</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+12.4%</span></span>
-      <span class="ticker-item"><span class="ticker-name">GOOGL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+8.7%</span></span>
-      <span class="ticker-item"><span class="ticker-name">META</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−3.1%</span></span>
-      <span class="ticker-item"><span class="ticker-name">AMZN</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+19.2%</span></span>
-      <span class="ticker-item"><span class="ticker-name">NVDA</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+41.0%</span></span>
-      <span class="ticker-item"><span class="ticker-name">AAPL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+6.3%</span></span>
-      <span class="ticker-item"><span class="ticker-name">OPENAI</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+28.5%</span></span>
-      <span class="ticker-item"><span class="ticker-name">IBM</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−7.8%</span></span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item"><span class="ticker-name">MSFT</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+12.4%</span></span>
-      <span class="ticker-item"><span class="ticker-name">GOOGL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+8.7%</span></span>
-      <span class="ticker-item"><span class="ticker-name">META</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−3.1%</span></span>
-      <span class="ticker-item"><span class="ticker-name">AMZN</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+19.2%</span></span>
-      <span class="ticker-item"><span class="ticker-name">NVDA</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+41.0%</span></span>
-      <span class="ticker-item"><span class="ticker-name">AAPL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+6.3%</span></span>
-      <span class="ticker-item"><span class="ticker-name">OPENAI</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+28.5%</span></span>
-      <span class="ticker-item"><span class="ticker-name">IBM</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−7.8%</span></span>
-    </div>
-  </div>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-text">
-      <div class="hero-eyebrow">Q1 2026 Report</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">AI Labor Market Intelligence</div>
       <h1>The <em>AI</em><br>Labor Market<br>Intelligence Hub</h1>
       <p class="hero-desc">
-        Tracking AI-related hiring trends, workforce shifts, and job market signals across major technology companies in real time.
+        Tracking AI-related hiring trends, workforce shifts, and job market signals across major technology companies in real time — powered by recent news and six-dimension company analysis.
       </p>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-label">AI Job Postings</div>
-        <div class="stat-value">482K</div>
-        <div class="stat-delta up">↑ 18.3% YoY</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Companies Tracked</div>
-        <div class="stat-value">47</div>
-        <div class="stat-delta up">↑ 6 new</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Avg. AI Salary</div>
-        <div class="stat-value">$198K</div>
-        <div class="stat-delta up">↑ 7.1% QoQ</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Displacement Index</div>
-        <div class="stat-value">3.2</div>
-        <div class="stat-delta down">↓ 0.4 pts</div>
+      <div class="hero-insights" id="heroInsights">
+        <!-- Populated by JS after data loads -->
+        <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
+        <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
+        <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
       </div>
     </div>
   </section>
@@ -1081,6 +1031,7 @@
           if (companyData.length === 0) throw new Error('No rows parsed');
           globalScales = computeScales(companyData);
           buildCompanyButtons();
+          updateHeroPills();
         })
         .catch(err => {
           document.getElementById('companyBtns').innerHTML =
@@ -1093,31 +1044,57 @@
         });
     }
 
+    function makeBtn(row, isActive) {
+      const btn = document.createElement('button');
+      btn.className = 'company-btn' + (isActive ? ' active' : '');
+      btn.innerHTML = `
+        <div class="btn-indicator"></div>
+        <div>
+          <span class="btn-name">${row.conm}</span>
+          <span class="btn-ticker">${row.rcid || ''}</span>
+        </div>`;
+      btn.addEventListener('click', () => selectCompany(btn, row));
+      return btn;
+    }
+
     function buildCompanyButtons() {
       const container = document.getElementById('companyBtns');
       container.innerHTML = '';
-      companyData.forEach((row, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'company-btn' + (i === 0 ? ' active' : '');
-        btn.innerHTML = `
-          <div class="btn-indicator"></div>
-          <div>
-            <span class="btn-name">${row.conm}</span>
-            <span class="btn-ticker">${row.rcid || ''}</span>
-          </div>`;
-        btn.addEventListener('click', () => selectCompany(btn, row));
-        container.appendChild(btn);
+
+      const TOP = 5;
+      const pinned  = companyData.slice(0, TOP);
+      const rest    = companyData.slice(TOP);
+
+      // Pinned top-5
+      const pinnedDiv = document.createElement('div');
+      pinnedDiv.className = 'company-panel-pinned';
+      pinned.forEach((row, i) => {
+        pinnedDiv.appendChild(makeBtn(row, i === 0));
       });
+      container.appendChild(pinnedDiv);
+
+      // Scrollable rest
+      if (rest.length > 0) {
+        const moreLabel = document.createElement('div');
+        moreLabel.className = 'company-panel-more-label';
+        moreLabel.textContent = `+ ${rest.length} more`;
+        container.appendChild(moreLabel);
+
+        const scrollDiv = document.createElement('div');
+        scrollDiv.className = 'company-panel-scroll';
+        rest.forEach(row => scrollDiv.appendChild(makeBtn(row, false)));
+        container.appendChild(scrollDiv);
+      }
+
       // Auto-select first
       selectCompany(container.querySelector('.company-btn'), companyData[0]);
     }
 
     function selectCompany(btn, row) {
-      document.querySelectorAll('.company-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('figCompanyName').textContent = row.conm;
       document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
-
       drawRadar(row);
     }
 
@@ -1125,7 +1102,7 @@
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
       const N = RADAR_METRICS.length;
-      const CX = 230, CY = 230, R = 170;
+      const CX = 210, CY = 210, R = 155;
       const MAX_SCALE = 5;
 
       const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
@@ -1215,6 +1192,17 @@
         <div class="radar-legend">${legend}</div>`;
     }
 
+    function updateHeroPills() {
+      const pills = document.getElementById('heroInsights');
+      const newsCount = allNews.length;
+      const compCount = companyData.length;
+      let items = [];
+      if (newsCount > 0) items.push(`<div class="insight-pill"><span class="pill-dot news"></span><span class="pill-num">${newsCount}</span><span>news articles loaded</span></div>`);
+      if (compCount > 0) items.push(`<div class="insight-pill"><span class="pill-dot radar"></span><span class="pill-num">${compCount}</span><span>companies analysed</span></div>`);
+      items.push(`<div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
+      pills.innerHTML = items.join('');
+    }
+
     fetchCompaniesCSV();
 
     // ── News table state ──
@@ -1273,6 +1261,7 @@
           buildMediaDropdown();
           setDateRangeBounds();
           applyFilters();
+          updateHeroPills();
         })
         .catch(() => {
           const empty = document.getElementById('newsEmpty');
