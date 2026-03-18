@@ -109,6 +109,7 @@
       padding: 64px 48px 56px;
       border-bottom: 1px solid var(--border);
       overflow: hidden;
+      background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
     }
 
     .hero::after {
@@ -142,11 +143,11 @@
     .hero h1 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 800;
-      line-height: 1.06;
+      font-weight: 700;
+      line-height: 1.12;
       letter-spacing: -0.02em;
       margin-bottom: 20px;
-      color: #1e293b;
+      color: #7a8694;
     }
 
     .hero h1 em {
@@ -811,7 +812,7 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-eyebrow">AI Labor Market Intelligence</div>
-      <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the Future of Work</h1>
+      <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the <span style="color:var(--accent)">Future</span> of Work</h1>
       <p class="hero-desc">
         The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
       </p>
@@ -1370,9 +1371,9 @@
       const pills = document.getElementById('heroInsights');
       const newsCount = allNews.length, compCount = companyData.length;
       let items = [];
-      if (newsCount > 0) items.push(`<div class="insight-pill"><span class="pill-dot news"></span><span class="pill-num">${newsCount}</span><span>news articles loaded</span></div>`);
-      if (compCount > 0) items.push(`<div class="insight-pill"><span class="pill-dot radar"></span><span class="pill-num">${compCount}</span><span>companies analysed</span></div>`);
-      items.push(`<div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
+      if (newsCount > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span class="pill-num" style="color:#185FA5">${newsCount}</span><span>news articles loaded</span></div>`);
+      if (compCount > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${compCount}</span><span>companies analysed</span></div>`);
+      items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
       pills.innerHTML = items.join('');
     }
 
