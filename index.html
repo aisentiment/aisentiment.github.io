@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Labor Market Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080c10;
+      --surface: #0e1420;
+      --surface2: #141c2a;
+      --border: #1e2d42;
+      --accent: #e8c547;
+      --accent2: #4a9eff;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --red: #f87171;
+      --green: #4ade80;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(74,158,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,158,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,12,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .nav-logo span {
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 80px 48px 60px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -100px;
+      top: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(74,158,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-size: 14px;
+      max-width: 480px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .stat-card:hover::before { opacity: 1; }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .stat-delta {
+      font-size: 12px;
+    }
+    .stat-delta.up { color: var(--green); }
+    .stat-delta.down { color: var(--red); }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      padding: 48px 48px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .section-num {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 8px;
+    }
+
+    /* ── NEWS SECTION ── */
+    .news-section {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .news-grid {
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2px;
+    }
+
+    .news-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-card:hover {
+      background: var(--surface2);
+      border-color: rgba(74,158,255,0.3);
+    }
+
+    .news-card.featured {
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid;
+      display: inline-block;
+      margin-bottom: 16px;
+      border-radius: 2px;
+    }
+
+    .tag-hiring { color: var(--green); border-color: var(--green); }
+    .tag-layoff { color: var(--red); border-color: var(--red); }
+    .tag-research { color: var(--accent2); border-color: var(--accent2); }
+    .tag-policy { color: var(--accent); border-color: var(--accent); }
+
+    .news-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .news-card.featured h3 {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .news-card p {
+      color: var(--text-dim);
+      line-height: 1.6;
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .news-meta {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .news-source { color: var(--accent2); }
+
+    /* ── ANALYSIS SECTION ── */
+    .analysis-section {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 80px;
+    }
+
+    .company-layout {
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2px;
+      min-height: 560px;
+    }
+
+    /* Company buttons panel */
+    .company-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-panel-header {
+      padding: 12px 16px 16px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+
+    .company-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 14px 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-dim);
+      width: 100%;
+    }
+
+    .company-btn:hover {
+      background: var(--surface2);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .company-btn.active {
+      background: rgba(232,197,71,0.07);
+      border-color: rgba(232,197,71,0.4);
+      color: var(--text);
+    }
+
+    .company-btn.active .btn-indicator {
+      background: var(--accent);
+    }
+
+    .btn-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .btn-content {
+      flex: 1;
+    }
+
+    .btn-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .btn-ticker {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .btn-trend {
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .trend-up { color: var(--green); }
+    .trend-down { color: var(--red); }
+
+    /* Figure panel */
+    .figure-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .figure-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .figure-company-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .figure-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .figure-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .fig-tab {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.06em;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+
+    .fig-tab.active, .fig-tab:hover {
+      background: var(--surface2);
+      border-color: var(--accent2);
+      color: var(--text);
+    }
+
+    .figure-content {
+      padding: 28px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .figure-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SVG Charts ── */
+    .chart-wrap {
+      width: 100%;
+      height: 300px;
+      position: relative;
+    }
+
+    .chart-label {
+      font-size: 10px;
+      fill: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .chart-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 24px;
+    }
+
+    .kpi {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .kpi-change {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-left strong {
+      font-family: 'Syne', sans-serif;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .footer-right {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ── TICKER TAPE ── */
+    .ticker {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      gap: 48px;
+      animation: ticker 30s linear infinite;
+    }
+
+    .ticker-item {
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ticker-name { color: var(--text-dim); }
+    .ticker-val { color: var(--text); }
+    .ticker-chg.up { color: var(--green); }
+    .ticker-chg.down { color: var(--red); }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .news-grid { grid-template-columns: 1fr 1fr; }
+      .news-card.featured { grid-row: auto; }
+      .company-layout { grid-template-columns: 1fr; }
+      .company-panel { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 768px) {
+      nav, .hero, .section-header, .news-grid, .company-layout, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .news-grid { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">AI·LMI <span>/ Labor Market Intelligence</span></div>
+    <ul class="nav-links">
+      <li><a href="#news">News</a></li>
+      <li><a href="#analysis">Analysis</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="nav-badge">LIVE DATA</div>
+  </nav>
+
+  <!-- TICKER TAPE -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item"><span class="ticker-name">MSFT</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+12.4%</span></span>
+      <span class="ticker-item"><span class="ticker-name">GOOGL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+8.7%</span></span>
+      <span class="ticker-item"><span class="ticker-name">META</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−3.1%</span></span>
+      <span class="ticker-item"><span class="ticker-name">AMZN</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+19.2%</span></span>
+      <span class="ticker-item"><span class="ticker-name">NVDA</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+41.0%</span></span>
+      <span class="ticker-item"><span class="ticker-name">AAPL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+6.3%</span></span>
+      <span class="ticker-item"><span class="ticker-name">OPENAI</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+28.5%</span></span>
+      <span class="ticker-item"><span class="ticker-name">IBM</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−7.8%</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item"><span class="ticker-name">MSFT</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+12.4%</span></span>
+      <span class="ticker-item"><span class="ticker-name">GOOGL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+8.7%</span></span>
+      <span class="ticker-item"><span class="ticker-name">META</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−3.1%</span></span>
+      <span class="ticker-item"><span class="ticker-name">AMZN</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+19.2%</span></span>
+      <span class="ticker-item"><span class="ticker-name">NVDA</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+41.0%</span></span>
+      <span class="ticker-item"><span class="ticker-name">AAPL</span><span class="ticker-val">AI Postings</span><span class="ticker-chg up">+6.3%</span></span>
+      <span class="ticker-item"><span class="ticker-name">OPENAI</span><span class="ticker-val">AI Hires</span><span class="ticker-chg up">+28.5%</span></span>
+      <span class="ticker-item"><span class="ticker-name">IBM</span><span class="ticker-val">AI Postings</span><span class="ticker-chg down">−7.8%</span></span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Q1 2026 Report</div>
+      <h1>The <em>AI</em><br>Labor Market<br>Intelligence Hub</h1>
+      <p class="hero-desc">
+        Tracking AI-related hiring trends, workforce shifts, and job market signals across major technology companies in real time.
+      </p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-label">AI Job Postings</div>
+        <div class="stat-value">482K</div>
+        <div class="stat-delta up">↑ 18.3% YoY</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Companies Tracked</div>
+        <div class="stat-value">47</div>
+        <div class="stat-delta up">↑ 6 new</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. AI Salary</div>
+        <div class="stat-value">$198K</div>
+        <div class="stat-delta up">↑ 7.1% QoQ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Displacement Index</div>
+        <div class="stat-value">3.2</div>
+        <div class="stat-delta down">↓ 0.4 pts</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section class="news-section" id="news">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Recent AI News</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="news-grid">
+
+      <!-- Featured -->
+      <article class="news-card featured">
+        <span class="news-tag tag-hiring">Hiring Surge</span>
+        <h3>Microsoft Doubles AI Engineering Headcount as Copilot Revenue Surpasses $10B</h3>
+        <p>Microsoft's aggressive push into AI productivity tools has translated directly into hiring activity, with the company announcing plans to expand its AI division by over 12,000 roles globally in the next 18 months. The move signals confidence in enterprise AI adoption rates far exceeding initial projections.</p>
+        <div class="news-meta">
+          <span class="news-source">Reuters</span>
+          <span>Mar 14, 2026</span>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <span class="news-tag tag-layoff">Restructuring</span>
+        <h3>IBM Cuts 3,900 Non-AI Roles in Accelerated Workforce Transition</h3>
+        <p>IBM continues its pivot, replacing traditional IT roles with AI-specialized positions as automation absorbs legacy functions.</p>
+        <div class="news-meta">
+          <span class="news-source">FT</span>
+          <span>Mar 11, 2026</span>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <span class="news-tag tag-research">Research</span>
+        <h3>OpenAI Expands Policy Team Amid Global AI Regulation Push</h3>
+        <p>Regulatory pressure drives OpenAI to build out a 200-person policy and safety team, with significant hires in Brussels and Washington D.C.</p>
+        <div class="news-meta">
+          <span class="news-source">Politico</span>
+          <span>Mar 9, 2026</span>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <span class="news-tag tag-policy">Policy</span>
+        <h3>EU AI Act Compliance Deadline Triggers New "AI Auditor" Job Category</h3>
+        <p>European firms scramble to hire AI compliance officers as the August 2026 deadline approaches. Postings for "AI Auditor" roles surged 310% in Q1.</p>
+        <div class="news-meta">
+          <span class="news-source">Bloomberg</span>
+          <span>Mar 6, 2026</span>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <span class="news-tag tag-hiring">Hiring</span>
+        <h3>Amazon AWS Targets 50,000 AI Cloud Specialists Over Next 2 Years</h3>
+        <p>AWS launches a global AI talent initiative targeting cloud ML engineers, MLOps practitioners, and AI solutions architects.</p>
+        <div class="news-meta">
+          <span class="news-source">WSJ</span>
+          <span>Mar 3, 2026</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ANALYSIS -->
+  <section class="analysis-section" id="analysis">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Company Analysis</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="company-layout">
+
+      <!-- Sidebar buttons -->
+      <div class="company-panel">
+        <div class="company-panel-header">Select Company</div>
+
+        <button class="company-btn active" onclick="selectCompany(this, 'microsoft')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">Microsoft</span>
+            <span class="btn-ticker">MSFT · Big Tech</span>
+          </div>
+          <span class="btn-trend trend-up">+12.4%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'google')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">Google</span>
+            <span class="btn-ticker">GOOGL · Big Tech</span>
+          </div>
+          <span class="btn-trend trend-up">+8.7%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'meta')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">Meta</span>
+            <span class="btn-ticker">META · Social</span>
+          </div>
+          <span class="btn-trend trend-down">−3.1%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'amazon')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">Amazon</span>
+            <span class="btn-ticker">AMZN · Cloud</span>
+          </div>
+          <span class="btn-trend trend-up">+19.2%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'nvidia')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">NVIDIA</span>
+            <span class="btn-ticker">NVDA · Chips</span>
+          </div>
+          <span class="btn-trend trend-up">+41.0%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'openai')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">OpenAI</span>
+            <span class="btn-ticker">PRIVATE · AI Lab</span>
+          </div>
+          <span class="btn-trend trend-up">+28.5%</span>
+        </button>
+
+        <button class="company-btn" onclick="selectCompany(this, 'ibm')">
+          <div class="btn-indicator"></div>
+          <div class="btn-content">
+            <span class="btn-name">IBM</span>
+            <span class="btn-ticker">IBM · Enterprise</span>
+          </div>
+          <span class="btn-trend trend-down">−7.8%</span>
+        </button>
+      </div>
+
+      <!-- Figure display -->
+      <div class="figure-panel" id="figurePanel">
+
+        <!-- MICROSOFT -->
+        <div id="fig-microsoft" class="company-figure active">
+          <div class="figure-header">
+            <div>
+              <div class="figure-company-name">Microsoft</div>
+              <div class="figure-subtitle">AI Labor Market Analysis · MSFT</div>
+            </div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'microsoft', 'hiring')">Hiring</button>
+              <button class="fig-tab" onclick="switchTab(this, 'microsoft', 'roles')">Roles</button>
+              <button class="fig-tab" onclick="switchTab(this, 'microsoft', 'salary')">Salary</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="microsoft-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">18,420</div><div class="kpi-change trend-up">↑ 12.4%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">4,210</div><div class="kpi-change trend-up">↑ 9.1%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">38 days</div><div class="kpi-change trend-down">↑ 4 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">31%</div><div class="kpi-change trend-up">↑ 5 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" class="chart-wrap" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <defs>
+                <linearGradient id="msftGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#4a9eff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <!-- Y axis labels -->
+              <text x="40" y="24" class="chart-label" text-anchor="end">20K</text>
+              <text x="40" y="69" class="chart-label" text-anchor="end">16K</text>
+              <text x="40" y="114" class="chart-label" text-anchor="end">12K</text>
+              <text x="40" y="159" class="chart-label" text-anchor="end">8K</text>
+              <text x="40" y="204" class="chart-label" text-anchor="end">4K</text>
+              <!-- Area fill -->
+              <polygon points="50,160 103,150 156,138 209,130 262,120 315,105 368,98 421,88 474,80 527,72 580,62 633,52 680,42 680,200 50,200" fill="url(#msftGrad)"/>
+              <!-- Line -->
+              <polyline points="50,160 103,150 156,138 209,130 262,120 315,105 368,98 421,88 474,80 527,72 580,62 633,52 680,42" fill="none" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
+              <!-- Dots -->
+              <circle cx="680" cy="42" r="5" fill="#4a9eff"/>
+              <circle cx="50" cy="160" r="4" fill="#4a9eff" opacity="0.5"/>
+              <!-- X labels -->
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="156" y="215" class="chart-label" text-anchor="middle">Jun</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="368" y="215" class="chart-label" text-anchor="middle">Oct</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="580" y="215" class="chart-label" text-anchor="middle">Feb</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="microsoft-roles">
+            <div class="chart-title">Top AI Roles by Posting Volume</div>
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="height:260px;width:100%">
+              <!-- Bars -->
+              <text x="180" y="30" class="chart-label" fill="#94a3b8">ML Engineer</text>
+              <rect x="180" y="34" width="400" height="22" rx="2" fill="#4a9eff" opacity="0.8"/>
+              <text x="590" y="50" class="chart-label" fill="#e2e8f0">4,820</text>
+
+              <text x="180" y="72" class="chart-label" fill="#94a3b8">AI Researcher</text>
+              <rect x="180" y="76" width="310" height="22" rx="2" fill="#4a9eff" opacity="0.65"/>
+              <text x="500" y="92" class="chart-label" fill="#e2e8f0">3,740</text>
+
+              <text x="180" y="114" class="chart-label" fill="#94a3b8">Data Scientist</text>
+              <rect x="180" y="118" width="260" height="22" rx="2" fill="#4a9eff" opacity="0.5"/>
+              <text x="450" y="134" class="chart-label" fill="#e2e8f0">3,120</text>
+
+              <text x="180" y="156" class="chart-label" fill="#94a3b8">AI Product Mgr</text>
+              <rect x="180" y="160" width="200" height="22" rx="2" fill="#4a9eff" opacity="0.4"/>
+              <text x="390" y="176" class="chart-label" fill="#e2e8f0">2,410</text>
+
+              <text x="180" y="198" class="chart-label" fill="#94a3b8">Prompt Engineer</text>
+              <rect x="180" y="202" width="140" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
+              <text x="330" y="218" class="chart-label" fill="#e2e8f0">1,680</text>
+
+              <text x="180" y="240" class="chart-label" fill="#94a3b8">AI Safety Lead</text>
+              <rect x="180" y="244" width="80" height="22" rx="2" fill="#4ade80" opacity="0.5"/>
+              <text x="270" y="260" class="chart-label" fill="#e2e8f0">960</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="microsoft-salary">
+            <div class="chart-title">AI Role Salary Distribution (USD)</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
+              <defs>
+                <linearGradient id="salGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.3"/>
+                  <stop offset="50%" stop-color="#e8c547" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#4ade80" stop-opacity="0.3"/>
+                </linearGradient>
+              </defs>
+              <line x1="60" y1="180" x2="660" y2="180" stroke="#1e2d42" stroke-width="1"/>
+              <!-- Bell curve approximation -->
+              <path d="M60,178 C100,176 160,160 200,130 C240,100 260,40 360,20 C460,40 480,100 520,130 C560,160 620,176 660,178" fill="url(#salGrad)" stroke="#e8c547" stroke-width="2"/>
+              <!-- Median line -->
+              <line x1="360" y1="20" x2="360" y2="180" stroke="#e8c547" stroke-width="1.5" stroke-dasharray="4,4"/>
+              <text x="362" y="16" class="chart-label" fill="#e8c547">Median $198K</text>
+              <!-- X axis labels -->
+              <text x="60" y="195" class="chart-label" text-anchor="middle">$80K</text>
+              <text x="180" y="195" class="chart-label" text-anchor="middle">$120K</text>
+              <text x="300" y="195" class="chart-label" text-anchor="middle">$160K</text>
+              <text x="420" y="195" class="chart-label" text-anchor="middle">$220K</text>
+              <text x="540" y="195" class="chart-label" text-anchor="middle">$280K</text>
+              <text x="660" y="195" class="chart-label" text-anchor="middle">$350K+</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- GOOGLE -->
+        <div id="fig-google" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div>
+              <div class="figure-company-name">Google</div>
+              <div class="figure-subtitle">AI Labor Market Analysis · GOOGL</div>
+            </div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'google', 'hiring')">Hiring</button>
+              <button class="fig-tab" onclick="switchTab(this, 'google', 'roles')">Roles</button>
+              <button class="fig-tab" onclick="switchTab(this, 'google', 'salary')">Salary</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="google-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">15,200</div><div class="kpi-change trend-up">↑ 8.7%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">3,850</div><div class="kpi-change trend-up">↑ 6.3%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">42 days</div><div class="kpi-change trend-down">↑ 6 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">28%</div><div class="kpi-change trend-up">↑ 3 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <defs>
+                <linearGradient id="googGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4ade80" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <text x="40" y="24" class="chart-label" text-anchor="end">18K</text>
+              <text x="40" y="69" class="chart-label" text-anchor="end">14K</text>
+              <text x="40" y="114" class="chart-label" text-anchor="end">10K</text>
+              <text x="40" y="159" class="chart-label" text-anchor="end">6K</text>
+              <text x="40" y="204" class="chart-label" text-anchor="end">2K</text>
+              <polygon points="50,170 103,158 156,145 209,140 262,132 315,118 368,112 421,100 474,92 527,82 580,70 633,60 680,52 680,200 50,200" fill="url(#googGrad)"/>
+              <polyline points="50,170 103,158 156,145 209,140 262,132 315,118 368,112 421,100 474,92 527,82 580,70 633,60 680,52" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="52" r="5" fill="#4ade80"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="google-roles">
+            <div class="chart-title">Top AI Roles by Posting Volume</div>
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="height:260px;width:100%">
+              <text x="180" y="30" class="chart-label" fill="#94a3b8">AI Researcher</text>
+              <rect x="180" y="34" width="380" height="22" rx="2" fill="#4ade80" opacity="0.7"/>
+              <text x="570" y="50" class="chart-label" fill="#e2e8f0">4,180</text>
+              <text x="180" y="72" class="chart-label" fill="#94a3b8">ML Engineer</text>
+              <rect x="180" y="76" width="330" height="22" rx="2" fill="#4ade80" opacity="0.55"/>
+              <text x="520" y="92" class="chart-label" fill="#e2e8f0">3,620</text>
+              <text x="180" y="114" class="chart-label" fill="#94a3b8">Data Scientist</text>
+              <rect x="180" y="118" width="250" height="22" rx="2" fill="#4ade80" opacity="0.4"/>
+              <text x="440" y="134" class="chart-label" fill="#e2e8f0">2,740</text>
+              <text x="180" y="156" class="chart-label" fill="#94a3b8">LLM Specialist</text>
+              <rect x="180" y="160" width="190" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
+              <text x="380" y="176" class="chart-label" fill="#e2e8f0">2,090</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="google-salary">
+            <div class="chart-title">AI Role Salary Distribution (USD)</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
+              <line x1="60" y1="180" x2="660" y2="180" stroke="#1e2d42" stroke-width="1"/>
+              <path d="M60,178 C100,175 150,162 200,135 C250,108 280,50 370,22 C460,50 490,108 540,135 C590,162 640,175 660,178" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="2"/>
+              <line x1="370" y1="22" x2="370" y2="180" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,4"/>
+              <text x="372" y="18" class="chart-label" fill="#4ade80">Median $210K</text>
+              <text x="60" y="195" class="chart-label" text-anchor="middle">$90K</text>
+              <text x="220" y="195" class="chart-label" text-anchor="middle">$140K</text>
+              <text x="380" y="195" class="chart-label" text-anchor="middle">$210K</text>
+              <text x="540" y="195" class="chart-label" text-anchor="middle">$300K</text>
+              <text x="660" y="195" class="chart-label" text-anchor="middle">$380K+</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- META -->
+        <div id="fig-meta" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div>
+              <div class="figure-company-name">Meta</div>
+              <div class="figure-subtitle">AI Labor Market Analysis · META</div>
+            </div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'meta', 'hiring')">Hiring</button>
+              <button class="fig-tab" onclick="switchTab(this, 'meta', 'roles')">Roles</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="meta-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">9,840</div><div class="kpi-change trend-down">↓ 3.1%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">1,920</div><div class="kpi-change trend-down">↓ 5.4%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">51 days</div><div class="kpi-change trend-down">↑ 9 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">22%</div><div class="kpi-change trend-down">↓ 2 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <polygon points="50,80 103,85 156,82 209,88 262,95 315,105 368,112 421,118 474,128 527,138 580,145 633,155 680,162 680,200 50,200" fill="rgba(248,113,113,0.1)"/>
+              <polyline points="50,80 103,85 156,82 209,88 262,95 315,105 368,112 421,118 474,128 527,138 580,145 633,155 680,162" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="162" r="5" fill="#f87171"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="meta-roles">
+            <div class="chart-title">Top AI Roles by Posting Volume</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
+              <text x="180" y="30" class="chart-label" fill="#94a3b8">ML Engineer</text>
+              <rect x="180" y="34" width="340" height="22" rx="2" fill="#f87171" opacity="0.6"/>
+              <text x="530" y="50" class="chart-label" fill="#e2e8f0">3,740</text>
+              <text x="180" y="72" class="chart-label" fill="#94a3b8">AI Infrastructure</text>
+              <rect x="180" y="76" width="260" height="22" rx="2" fill="#f87171" opacity="0.45"/>
+              <text x="450" y="92" class="chart-label" fill="#e2e8f0">2,860</text>
+              <text x="180" y="114" class="chart-label" fill="#94a3b8">Computer Vision</text>
+              <rect x="180" y="118" width="190" height="22" rx="2" fill="#f87171" opacity="0.35"/>
+              <text x="380" y="134" class="chart-label" fill="#e2e8f0">2,090</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- AMAZON -->
+        <div id="fig-amazon" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div><div class="figure-company-name">Amazon</div><div class="figure-subtitle">AI Labor Market Analysis · AMZN</div></div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'amazon', 'hiring')">Hiring</button>
+              <button class="fig-tab" onclick="switchTab(this, 'amazon', 'roles')">Roles</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="amazon-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">22,100</div><div class="kpi-change trend-up">↑ 19.2%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">5,480</div><div class="kpi-change trend-up">↑ 14.7%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">35 days</div><div class="kpi-change trend-up">↓ 2 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">34%</div><div class="kpi-change trend-up">↑ 7 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <polygon points="50,175 103,165 156,150 209,138 262,120 315,100 368,85 421,70 474,58 527,46 580,35 633,28 680,22 680,200 50,200" fill="rgba(232,197,71,0.1)"/>
+              <polyline points="50,175 103,165 156,150 209,138 262,120 315,100 368,85 421,70 474,58 527,46 580,35 633,28 680,22" fill="none" stroke="#e8c547" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="22" r="5" fill="#e8c547"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+          <div class="figure-content" id="amazon-roles">
+            <div class="chart-title">Top AI Roles by Posting Volume</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
+              <text x="180" y="30" class="chart-label" fill="#94a3b8">Cloud AI Architect</text>
+              <rect x="180" y="34" width="420" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
+              <text x="610" y="50" class="chart-label" fill="#e2e8f0">5,200</text>
+              <text x="180" y="72" class="chart-label" fill="#94a3b8">MLOps Engineer</text>
+              <rect x="180" y="76" width="350" height="22" rx="2" fill="#e8c547" opacity="0.45"/>
+              <text x="540" y="92" class="chart-label" fill="#e2e8f0">4,330</text>
+              <text x="180" y="114" class="chart-label" fill="#94a3b8">AI Solutions Architect</text>
+              <rect x="180" y="118" width="280" height="22" rx="2" fill="#e8c547" opacity="0.35"/>
+              <text x="470" y="134" class="chart-label" fill="#e2e8f0">3,470</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- NVIDIA -->
+        <div id="fig-nvidia" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div><div class="figure-company-name">NVIDIA</div><div class="figure-subtitle">AI Labor Market Analysis · NVDA</div></div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'nvidia', 'hiring')">Hiring</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="nvidia-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">8,740</div><div class="kpi-change trend-up">↑ 41.0%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">2,110</div><div class="kpi-change trend-up">↑ 33.2%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">28 days</div><div class="kpi-change trend-up">↓ 8 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">71%</div><div class="kpi-change trend-up">↑ 12 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <polygon points="50,190 103,185 156,180 209,172 262,160 315,140 368,115 421,88 474,62 527,42 580,30 633,24 680,20 680,200 50,200" fill="rgba(168,85,247,0.12)"/>
+              <polyline points="50,190 103,185 156,180 209,172 262,160 315,140 368,115 421,88 474,62 527,42 580,30 633,24 680,20" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="20" r="5" fill="#a855f7"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- OPENAI -->
+        <div id="fig-openai" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div><div class="figure-company-name">OpenAI</div><div class="figure-subtitle">AI Labor Market Analysis · PRIVATE</div></div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'openai', 'hiring')">Hiring</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="openai-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">3,210</div><div class="kpi-change trend-up">↑ 28.5%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">680</div><div class="kpi-change trend-up">↑ 22.0%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">22 days</div><div class="kpi-change trend-up">↓ 5 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">96%</div><div class="kpi-change trend-up">↑ 1 pt</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <polyline points="50,190 103,185 156,178 209,170 262,158 315,142 368,120 421,98 474,76 527,55 580,38 633,28 680,22" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="22" r="5" fill="#e2e8f0"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- IBM -->
+        <div id="fig-ibm" class="company-figure" style="display:none">
+          <div class="figure-header">
+            <div><div class="figure-company-name">IBM</div><div class="figure-subtitle">AI Labor Market Analysis · IBM</div></div>
+            <div class="figure-tabs">
+              <button class="fig-tab active" onclick="switchTab(this, 'ibm', 'hiring')">Hiring</button>
+            </div>
+          </div>
+          <div class="figure-content active" id="ibm-hiring">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">5,620</div><div class="kpi-change trend-down">↓ 7.8%</div></div>
+              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">1,040</div><div class="kpi-change trend-down">↓ 11.2%</div></div>
+              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">62 days</div><div class="kpi-change trend-down">↑ 14 days</div></div>
+              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">18%</div><div class="kpi-change trend-down">↓ 3 pts</div></div>
+            </div>
+            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
+              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
+              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
+              <polyline points="50,80 103,82 156,85 209,90 262,95 315,102 368,112 421,118 474,128 527,138 580,148 633,155 680,162" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="680" cy="162" r="5" fill="#f87171"/>
+              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
+              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
+              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
+              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
+            </svg>
+          </div>
+        </div>
+
+      </div><!-- /figure-panel -->
+    </div><!-- /company-layout -->
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="about">
+    <div class="footer-left">
+      <strong>AI · LMI</strong><br>
+      Labor Market Intelligence Platform
+    </div>
+    <div class="footer-right">
+      Data updated weekly · Sources: LinkedIn, Glassdoor, BLS, company filings<br>
+      © 2026 AI Labor Market Intelligence. For research purposes.
+    </div>
+  </footer>
+
+  <script>
+    function selectCompany(btn, company) {
+      // Deactivate all buttons
+      document.querySelectorAll('.company-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Hide all figures
+      document.querySelectorAll('.company-figure').forEach(f => f.style.display = 'none');
+
+      // Show selected figure
+      const fig = document.getElementById('fig-' + company);
+      if (fig) fig.style.display = 'block';
+    }
+
+    function switchTab(btn, company, tab) {
+      // Deactivate all tabs in this company's header
+      const fig = document.getElementById('fig-' + company);
+      fig.querySelectorAll('.fig-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Hide all contents in this company's panel
+      fig.querySelectorAll('.figure-content').forEach(c => c.classList.remove('active'));
+
+      // Show selected content
+      const content = document.getElementById(company + '-' + tab);
+      if (content) content.classList.add('active');
+    }
+  </script>
+</body>
+</html>
