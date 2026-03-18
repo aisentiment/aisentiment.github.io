@@ -1011,41 +1011,45 @@
   </footer>
 
   <script>
-    // ── Company radar chart state ──
-    let companyData = [];  // rows from data/companies.csv
+    // ── Company radar chart ──
+    let companyData = [];
+    let globalScales = {};
 
     const RADAR_METRICS = [
-      { key: 'ai_talent_perc',           label: 'AI Talent %'       },
-      { key: 'hire_percent',             label: 'Hire %'            },
-      { key: 'ai_salary_premium',        label: 'Salary Premium'    },
-      { key: 'executive_ai_sentiment',   label: 'Exec Sentiment'    },
-      { key: 'emp_ai_sentiment',         label: 'Emp Sentiment'     },
-      { key: 'retention_perc',           label: 'Retention %'       },
+      { key: 'ai_talent_perc',         label: 'AI Talent %'    },
+      { key: 'hire_percent',           label: 'Hire %'         },
+      { key: 'ai_salary_premium',      label: 'Salary Premium' },
+      { key: 'executive_ai_sentiment', label: 'Exec Sentiment' },
+      { key: 'emp_ai_sentiment',       label: 'Emp Sentiment'  },
+      { key: 'retention_perc',         label: 'Retention %'    },
     ];
 
-    // Parse companies CSV
+    // Robust TSV/CSV parser — auto-detects tab vs comma
     function parseCompaniesCSV(text) {
-      const lines = text.trim().split(/\r?\n/);
-      const headers = lines[0].split('\t').map(h => h.trim().toLowerCase());
-      // also support comma-separated
-      const sep = headers.length > 1 ? '\t' : ',';
-      const hdrs = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+      const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) return [];
+
+      // Detect separator: if header has tabs use tab, else comma
+      const sep = lines[0].includes('\t') ? '\t' : ',';
+      const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+
       const rows = [];
       for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
         const cols = lines[i].split(sep);
         const row = {};
-        hdrs.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
-        if (row.conm) rows.push(row);
+        headers.forEach((h, idx) => {
+          row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim();
+        });
+        if (row.conm && row.conm.length > 0) rows.push(row);
       }
       return rows;
     }
 
-    // Compute global min/max per metric across all companies → for auto-scaling
+    // Compute global min/max per metric for auto-scaling across all companies
     function computeScales(rows) {
       const scales = {};
       RADAR_METRICS.forEach(m => {
-        const vals = rows.map(r => parseFloat(r[m.key])).filter(v => !isNaN(v));
+        const vals = rows.map(r => parseFloat(r[m.key])).filter(v => !isNaN(v) && isFinite(v));
         scales[m.key] = {
           min: vals.length ? Math.min(...vals) : 0,
           max: vals.length ? Math.max(...vals) : 1,
@@ -1054,12 +1058,10 @@
       return scales;
     }
 
-    let globalScales = {};
-
-    // Normalize a raw value to 0–5 scale
+    // Map raw value → 0..5 normalized score
     function normalize(val, key) {
       const raw = parseFloat(val);
-      if (isNaN(raw)) return 0;
+      if (isNaN(raw) || !isFinite(raw)) return 0;
       const { min, max } = globalScales[key];
       if (max === min) return 2.5;
       return Math.max(0, Math.min(5, ((raw - min) / (max - min)) * 5));
@@ -1067,15 +1069,22 @@
 
     function fetchCompaniesCSV() {
       fetch('data/companies.csv')
-        .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
+        .then(res => {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.text();
+        })
         .then(text => {
           companyData = parseCompaniesCSV(text);
+          if (companyData.length === 0) throw new Error('No rows parsed');
           globalScales = computeScales(companyData);
           buildCompanyButtons();
         })
-        .catch(() => {
+        .catch(err => {
           document.getElementById('companyBtns').innerHTML =
-            '<div style="padding:16px;font-size:12px;color:var(--red)">Could not load data/companies.csv</div>';
+            `<div style="padding:16px;font-size:12px;color:var(--red)">
+              Could not load data/companies.csv<br>
+              <span style="color:var(--text-muted);font-size:11px">${err.message}</span>
+            </div>`;
         });
     }
 
@@ -1091,141 +1100,115 @@
             <span class="btn-name">${row.conm}</span>
             <span class="btn-ticker">gvkey: ${row.gvkey || '—'}</span>
           </div>`;
-        btn.onclick = () => selectCompany(btn, row);
+        btn.addEventListener('click', () => selectCompany(btn, row));
         container.appendChild(btn);
       });
-      if (companyData.length > 0) selectCompany(container.querySelector('.company-btn'), companyData[0]);
+      // Auto-select first
+      selectCompany(container.querySelector('.company-btn'), companyData[0]);
     }
 
     function selectCompany(btn, row) {
       document.querySelectorAll('.company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       document.getElementById('figCompanyName').textContent = row.conm;
       document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
       const gvEl = document.getElementById('figGvkey');
       gvEl.style.display = 'inline-block';
       gvEl.textContent = 'gvkey: ' + (row.gvkey || '—');
-
       drawRadar(row);
     }
 
+    // Build SVG as a string (avoids outerHTML namespace issues)
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
       const N = RADAR_METRICS.length;
-      const CX = 200, CY = 200, R = 160;
+      const CX = 190, CY = 190, R = 140;
       const MAX_SCALE = 5;
 
-      // Compute normalized values
+      const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
+
+      function pt(r, angle) {
+        return { x: CX + r * Math.cos(angle), y: CY + r * Math.sin(angle) };
+      }
+      function ptStr(r, angle) {
+        const p = pt(r, angle); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+      }
+
       const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
       const rawVals  = RADAR_METRICS.map(m => {
         const v = parseFloat(row[m.key]);
-        return isNaN(v) ? null : v;
+        return (!isNaN(v) && isFinite(v)) ? v : null;
       });
 
-      // Axis angles (start top, go clockwise)
-      const angles = RADAR_METRICS.map((_, i) => (Math.PI * 2 * i / N) - Math.PI / 2);
+      let svg = `<svg viewBox="0 0 380 380" width="340" height="340" xmlns="http://www.w3.org/2000/svg">`;
 
-      function polarPt(r, angle) {
-        return [CX + r * Math.cos(angle), CY + r * Math.sin(angle)];
-      }
-
-      // SVG namespace helper
-      function el(tag, attrs, text) {
-        const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
-        Object.entries(attrs).forEach(([k,v]) => e.setAttribute(k, v));
-        if (text !== undefined) e.textContent = text;
-        return e;
-      }
-
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('viewBox', '0 0 400 400');
-      svg.setAttribute('width', '380');
-      svg.setAttribute('height', '380');
-
-      // ── Grid rings (5 levels)
+      // Grid rings
       for (let ring = 1; ring <= MAX_SCALE; ring++) {
-        const pts = angles.map(a => polarPt(R * ring / MAX_SCALE, a));
-        const d = pts.map((p,i) => `${i===0?'M':'L'}${p[0]},${p[1]}`).join(' ') + 'Z';
-        svg.appendChild(el('path', {
-          d,
-          fill: 'none',
-          stroke: ring === MAX_SCALE ? '#1e2d42' : '#1e2d42',
-          'stroke-width': ring === MAX_SCALE ? '1.5' : '0.8',
-          'stroke-dasharray': ring < MAX_SCALE ? '3,3' : 'none',
-          opacity: '0.7'
-        }));
-        // Ring label (right side)
-        const labelPt = polarPt(R * ring / MAX_SCALE, 0);
-        svg.appendChild(el('text', {
-          x: labelPt[0] + 4,
-          y: labelPt[1] + 4,
-          fill: '#64748b',
-          'font-size': '9',
-          'font-family': 'DM Mono, monospace'
-        }, ring.toString()));
+        const pts = angles.map(a => ptStr(R * ring / MAX_SCALE, a)).join(' ');
+        const dash = ring < MAX_SCALE ? 'stroke-dasharray="3 3"' : '';
+        const sw   = ring === MAX_SCALE ? '1.5' : '0.8';
+        svg += `<polygon points="${pts}" fill="none" stroke="#1e2d42" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
+        // Ring number on right axis
+        const lp = pt(R * ring / MAX_SCALE + 4, 0);
+        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y + 4).toFixed(1)}" fill="#64748b" font-size="9" font-family="DM Mono,monospace">${ring}</text>`;
       }
 
-      // ── Axis lines + labels
-      angles.forEach((angle, i) => {
-        const outer = polarPt(R, angle);
-        svg.appendChild(el('line', {
-          x1: CX, y1: CY, x2: outer[0], y2: outer[1],
-          stroke: '#1e2d42', 'stroke-width': '1'
-        }));
-
-        // Label position — push further out
-        const labelR = R + 28;
-        const lp = polarPt(labelR, angle);
-        const anchor = lp[0] < CX - 5 ? 'end' : lp[0] > CX + 5 ? 'start' : 'middle';
-        svg.appendChild(el('text', {
-          x: lp[0], y: lp[1] + 4,
-          fill: '#94a3b8',
-          'font-size': '11',
-          'font-family': 'DM Mono, monospace',
-          'text-anchor': anchor
-        }, RADAR_METRICS[i].label));
+      // Axes
+      angles.forEach(a => {
+        const outer = pt(R, a);
+        svg += `<line x1="${CX}" y1="${CY}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" stroke="#1e2d42" stroke-width="1"/>`;
       });
 
-      // ── Filled polygon
-      const dataPts = normVals.map((v, i) => polarPt(R * v / MAX_SCALE, angles[i]));
-      const polyD = dataPts.map((p,i) => `${i===0?'M':'L'}${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(' ') + 'Z';
-
-      svg.appendChild(el('path', {
-        d: polyD,
-        fill: 'rgba(74,158,255,0.15)',
-        stroke: '#4a9eff',
-        'stroke-width': '2',
-        'stroke-linejoin': 'round'
-      }));
-
-      // ── Dots at each vertex
-      dataPts.forEach((p, i) => {
-        svg.appendChild(el('circle', {
-          cx: p[0].toFixed(2), cy: p[1].toFixed(2),
-          r: '5', fill: '#4a9eff', stroke: '#080c10', 'stroke-width': '2'
-        }));
+      // Axis labels
+      angles.forEach((a, i) => {
+        const lp = pt(R + 26, a);
+        const anchor = lp.x < CX - 8 ? 'end' : lp.x > CX + 8 ? 'start' : 'middle';
+        // Split long labels to two lines
+        const words = RADAR_METRICS[i].label.split(' ');
+        if (words.length > 1) {
+          const mid = Math.ceil(words.length / 2);
+          const line1 = words.slice(0, mid).join(' ');
+          const line2 = words.slice(mid).join(' ');
+          svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y - 4).toFixed(1)}" fill="#94a3b8" font-size="11" font-family="DM Mono,monospace" text-anchor="${anchor}">
+            <tspan x="${lp.x.toFixed(1)}" dy="0">${line1}</tspan>
+            <tspan x="${lp.x.toFixed(1)}" dy="13">${line2}</tspan>
+          </text>`;
+        } else {
+          svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y + 4).toFixed(1)}" fill="#94a3b8" font-size="11" font-family="DM Mono,monospace" text-anchor="${anchor}">${RADAR_METRICS[i].label}</text>`;
+        }
       });
 
-      // ── Legend sidebar
-      const legendHtml = RADAR_METRICS.map((m, i) => {
-        const raw = rawVals[i];
-        const displayVal = raw !== null ? raw.toFixed(2) : 'N/A';
-        const norm = normVals[i].toFixed(1);
+      // Data polygon
+      const dataPts = normVals.map((v, i) => ptStr(R * v / MAX_SCALE, angles[i])).join(' ');
+      svg += `<polygon points="${dataPts}" fill="rgba(74,158,255,0.18)" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round"/>`;
+
+      // Vertex dots
+      normVals.forEach((v, i) => {
+        const p = pt(R * v / MAX_SCALE, angles[i]);
+        svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="5" fill="#4a9eff" stroke="#080c10" stroke-width="2"/>`;
+      });
+
+      svg += `</svg>`;
+
+      // Legend
+      const legend = RADAR_METRICS.map((m, i) => {
+        const raw  = rawVals[i];
+        const disp = raw !== null ? raw.toFixed(3) : 'N/A';
+        const norm = normVals[i].toFixed(2);
+        const pct  = Math.round(normVals[i] / MAX_SCALE * 100);
+        const bar  = `<div style="height:3px;width:${pct}%;background:var(--accent2);border-radius:2px;margin-top:4px"></div>`;
         return `<div class="legend-item">
           <span class="legend-dot"></span>
           <span class="legend-label">${m.label}</span>
-          <span class="legend-value" title="raw: ${displayVal}">${displayVal}</span>
-        </div>`;
+          <span class="legend-value">${disp}</span>
+        </div>${bar}`;
       }).join('');
 
       body.innerHTML = `
-        <div class="radar-wrap">${svg.outerHTML}</div>
-        <div class="radar-legend">${legendHtml}</div>
-      `;
+        <div class="radar-wrap">${svg}</div>
+        <div class="radar-legend">${legend}</div>`;
     }
 
-    // Kick off company data fetch
     fetchCompaniesCSV();
 
     // ── News table state ──
