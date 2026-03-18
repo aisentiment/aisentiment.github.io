@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Labor Market Intelligence</title>
+  <title>Community Voices — AI Labor Market Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -19,9 +19,6 @@
       --text-dim: #4a5568;
       --red: #e05252;
       --green: #38b36e;
-      --spine-top: #85B7EB;
-      --spine-mid: #5DCAA5;
-      --spine-bot: #AFA9EC;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,7 +44,6 @@
       z-index: 0;
     }
 
-    /* ── NAV ── */
     nav {
       position: sticky;
       top: 0;
@@ -69,18 +65,12 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
+      text-decoration: none;
     }
 
-    .nav-logo span {
-      color: var(--text-muted);
-      font-weight: 400;
-    }
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
 
     .nav-links a {
       color: var(--text-muted);
@@ -92,484 +82,204 @@
     }
 
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
 
-    .nav-badge {
-      font-size: 13px;
-      padding: 4px 12px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      border-radius: 2px;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── HERO ── */
-    .hero {
+    .page-hero {
       position: relative;
       z-index: 1;
-      padding: 64px 48px 56px;
+      padding: 56px 48px 48px;
       border-bottom: 1px solid var(--border);
-      overflow: hidden;
       background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
     }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      right: -80px; top: -80px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 3fr 2fr; gap: 16px; align-items: center; }
-    .hero-text { }
-    .hero-chart { position: relative; min-height: 240px; }
-    .hero-chart canvas { width: 100% !important; }
-    .hero-chart-legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
-    .hero-chart-legend span { display: flex; align-items: center; gap: 5px; }
-    .hero-chart-dot { width: 10px; height: 10px; border-radius: 2px; background: #378ADD; }
-    .hero-chart-note { margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
-
-    .hero-eyebrow {
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--accent);
-    }
-
-    .hero h1 {
+    .page-hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(36px, 4.5vw, 56px);
+      font-size: clamp(28px, 3.5vw, 40px);
       font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
       color: #7a8694;
+      margin-bottom: 12px;
     }
 
-    .hero h1 em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
+    .page-hero h1 em {
+      font-style: normal;
       color: var(--accent);
     }
 
-    .hero-desc {
-      color: var(--text-dim);
-      line-height: 1.75;
-      font-size: 16px;
-      max-width: 640px;
-      margin-bottom: 36px;
-    }
-
-    .hero-insights { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .insight-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 9px 16px;
-      font-size: 14px;
-      color: var(--text-dim);
-      transition: border-color 0.2s;
-      cursor: default;
-    }
-
-    .insight-pill:hover { border-color: rgba(91,163,217,0.5); }
-
-    .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .pill-dot.news  { background: var(--accent); }
-    .pill-dot.radar { background: var(--accent2); }
-    .pill-dot.dim   { background: var(--text-muted); }
-
-    .pill-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      color: var(--text);
+    .page-hero p {
       font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 680px;
     }
 
-    /* ── SECTION HEADERS ── */
-    .section-header {
-      padding: 48px 48px 0;
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .section-num {
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      margin-left: 8px;
-    }
-
-    /* ── NEWS SECTION ── */
-    .news-section {
+    .main-content {
       position: relative;
       z-index: 1;
-      padding-bottom: 64px;
-      border-bottom: 1px solid var(--border);
+      padding: 48px;
     }
 
-    /* ── FILTER BAR ── */
-    .filter-bar {
-      padding: 0 48px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-end;
+    .comments-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 2px;
+      min-height: 600px;
     }
 
-    .filter-group { display: flex; flex-direction: column; gap: 6px; }
-
-    .filter-group-label {
-      font-size: 12px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .filter-input {
+    /* ── FORM PANEL ── */
+    .form-panel {
       background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .form-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .field { margin-bottom: 24px; }
+
+    .field-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .star-row { display: flex; gap: 6px; margin-bottom: 6px; }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 30px;
+      color: var(--border);
+      cursor: pointer;
+      transition: color 0.15s, transform 0.15s;
+      padding: 0 2px;
+      line-height: 1;
+    }
+
+    .star-btn:hover { transform: scale(1.15); }
+    .star-btn.active { color: #EF9F27; }
+    .star-btn.hover-preview { color: #FAC775; }
+
+    .rating-hint { font-size: 12px; color: var(--text-muted); }
+
+    .location-select {
+      width: 100%;
+      background: #fff;
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
-      font-size: 15px;
-      padding: 0 12px;
-      height: 40px;
-      width: 260px;
+      font-size: 14px;
+      padding: 10px 12px;
       outline: none;
       transition: border-color 0.2s;
-    }
-    .filter-input:focus { border-color: var(--accent); }
-    .filter-input::placeholder { color: var(--text-muted); }
-
-    .media-dropdown-wrap { position: relative; width: 220px; }
-
-    .media-dropdown-btn {
-      width: 100%;
-      height: 40px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 15px;
-      padding: 0 32px 0 12px;
-      text-align: left;
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: border-color 0.2s;
+      appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8694' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
-    }
-    .media-dropdown-btn:focus,
-    .media-dropdown-btn.open { border-color: var(--accent); outline: none; }
-
-    .media-dropdown-list {
-      display: none;
-      position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      width: 240px;
-      max-height: 260px;
-      overflow-y: auto;
-      background: #fff;
-      border: 1px solid var(--accent);
-      z-index: 200;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    }
-    .media-dropdown-list.open { display: block; }
-
-    .media-dropdown-list::-webkit-scrollbar { width: 4px; }
-    .media-dropdown-list::-webkit-scrollbar-track { background: #fff; }
-    .media-dropdown-list::-webkit-scrollbar-thumb { background: var(--border); }
-
-    .media-opt {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
       cursor: pointer;
-      font-size: 14px;
-      color: var(--text-dim);
-      transition: background 0.15s;
-      user-select: none;
-    }
-    .media-opt:hover { background: rgba(91,163,217,0.1); color: var(--text); }
-    .media-opt.selected { color: var(--text); }
-
-    .media-opt-check {
-      width: 16px; height: 16px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px;
-      transition: all 0.15s;
-    }
-    .media-opt.selected .media-opt-check {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
     }
 
-    .media-opt-all {
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-    }
+    .location-select:focus { border-color: var(--accent); }
 
-    .date-input {
-      background: var(--surface);
+    .comment-input {
+      width: 100%;
+      background: #fff;
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'DM Mono', monospace;
       font-size: 14px;
-      padding: 0 10px;
-      height: 40px;
-      width: 150px;
+      padding: 12px 14px;
       outline: none;
+      resize: vertical;
+      min-height: 120px;
       transition: border-color 0.2s;
     }
-    .date-input:focus { border-color: var(--accent); }
 
-    .clear-btn {
-      background: transparent;
-      border: 1px solid var(--border);
+    .comment-input:focus { border-color: var(--accent); }
+    .comment-input::placeholder { color: var(--text-muted); }
+
+    .char-count {
+      font-size: 11px;
       color: var(--text-muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      padding: 0 16px;
-      height: 40px;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-    .clear-btn:hover { border-color: var(--red); color: var(--red); }
-
-    .filter-stats {
-      padding: 0 48px 14px;
-      font-size: 14px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .filter-stats span { color: var(--accent2); }
-
-    /* ── NEWS TIMELINE ── */
-    .news-timeline-wrap { padding: 0 48px; }
-
-    .news-feed {
-      position: relative;
-      padding-left: 120px;
-    }
-
-    .news-spine {
-      position: absolute;
-      left: 94px;
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: linear-gradient(180deg, var(--spine-top), var(--spine-mid), var(--spine-bot));
-      border-radius: 1px;
-    }
-
-    .news-item {
-      position: relative;
-      padding: 20px 0 20px 36px;
-    }
-
-    .news-item + .news-item {
-      border-top: 1px solid var(--surface2);
-    }
-
-    .news-node {
-      position: absolute;
-      left: -22px;
-      top: 28px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid var(--spine-top);
-      background: var(--bg);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .news-node-inner {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #378ADD;
-      margin: 2.5px auto;
-      transition: background 0.2s;
-    }
-
-    .news-item:hover .news-node { transform: scale(1.2); }
-
-    .news-ts {
-      position: absolute;
-      left: -120px;
-      top: 20px;
-      width: 84px;
       text-align: right;
+      margin-top: 4px;
     }
 
-    .news-ts-day {
-      display: block;
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--text);
+    .submit-btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
       font-family: 'Syne', sans-serif;
-    }
-
-    .news-ts-month {
-      font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-    }
-
-    .news-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .news-content { flex: 1; }
-
-    .news-headline {
       font-size: 15px;
-      font-weight: 500;
-      line-height: 1.55;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .news-headline a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.18s;
-    }
-    .news-headline a:hover { color: var(--accent); }
-
-    .news-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .news-badge {
-      font-size: 13px;
-      padding: 4px 12px;
-      border-radius: 2px;
-      background: rgba(91,163,217,0.1);
-      color: var(--accent2);
-      font-weight: 500;
-      letter-spacing: 0.03em;
-    }
-
-    .news-ago {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .news-link-arrow {
-      color: var(--accent);
-      font-size: 16px;
-      text-decoration: none;
-      font-weight: 500;
-      flex-shrink: 0;
-      margin-top: 2px;
-      opacity: 0;
-      transition: opacity 0.18s;
-    }
-
-    .news-item:hover .news-link-arrow { opacity: 1; }
-
-    .news-empty {
-      padding: 60px 48px;
-      text-align: center;
-      color: var(--text-muted);
-      display: none;
-    }
-    .news-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
-    .news-empty p { font-size: 15px; }
-
-    /* Pagination */
-    .news-pagination {
-      padding: 16px 48px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .page-btn {
-      padding: 8px 14px;
-      font-size: 14px;
-      font-family: 'DM Mono', monospace;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
+      font-weight: 600;
+      padding: 14px 32px;
       cursor: pointer;
       border-radius: 2px;
-      transition: all 0.18s;
-    }
-    .page-btn:hover, .page-btn.active {
-      border-color: var(--accent);
-      color: var(--text);
-      background: rgba(91,163,217,0.08);
-    }
-    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .page-info { font-size: 14px; color: var(--text-muted); }
-
-    /* Sort controls */
-    .sort-bar {
-      padding: 0 48px 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.03em;
+      width: 100%;
     }
 
-    .sort-label {
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-right: 4px;
-    }
+    .submit-btn:hover { background: var(--accent2); }
+    .submit-btn:active { transform: scale(0.98); }
 
-    .sort-btn {
+    .submit-msg {
       font-size: 13px;
+      margin-top: 12px;
+      min-height: 20px;
+      text-align: center;
+    }
+
+    /* ── FEED PANEL ── */
+    .feed-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feed-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .feed-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .feed-count {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .feed-filters {
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .filter-pill {
+      font-size: 12px;
       font-family: 'DM Mono', monospace;
       padding: 5px 12px;
       background: transparent;
@@ -580,183 +290,75 @@
       transition: all 0.18s;
     }
 
-    .sort-btn:hover { border-color: var(--accent); color: var(--text); }
-    .sort-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
+    .filter-pill:hover { border-color: var(--accent); color: var(--text); }
+    .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
 
-    /* ── ANALYSIS SECTION ── */
-    .analysis-section {
-      position: relative;
-      z-index: 1;
-      padding-bottom: 80px;
-    }
-
-    .company-layout {
-      padding: 0 48px;
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 2px;
-      height: 700px;
-    }
-
-    .company-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    #companyBtns {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .company-search {
-      padding: 8px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .company-search-input {
-      width: 100%;
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      padding: 8px 10px;
-      outline: none;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
-    .company-search-input:focus { border-color: var(--accent); }
-    .company-search-input::placeholder { color: var(--text-muted); }
-
-    .company-panel-scroll {
+    .feed-scroll {
       flex: 1;
       overflow-y: auto;
+      padding: 12px;
       min-height: 0;
-      padding: 6px;
     }
 
-    .company-panel-scroll::-webkit-scrollbar { width: 4px; }
-    .company-panel-scroll::-webkit-scrollbar-track { background: transparent; }
-    .company-panel-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .feed-scroll::-webkit-scrollbar { width: 4px; }
+    .feed-scroll::-webkit-scrollbar-track { background: transparent; }
+    .feed-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-    .company-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 3px;
-      padding: 14px 16px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-dim);
-      width: 100%;
-    }
-
-    .company-btn:hover {
-      background: var(--surface2);
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .company-btn.active {
-      background: rgba(91,163,217,0.1);
-      border-color: rgba(91,163,217,0.5);
-      color: var(--text);
-    }
-
-    .company-btn.active .btn-indicator { background: var(--accent); }
-
-    .btn-indicator {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-
-    .btn-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .figure-panel {
-      background: var(--surface);
+    .opinion-card {
+      padding: 18px 20px;
       border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
+      background: #fff;
+      margin-bottom: 8px;
+      border-radius: 2px;
+      transition: border-color 0.2s;
     }
 
-    .figure-header {
-      padding: 18px 28px;
-      border-bottom: 1px solid var(--border);
+    .opinion-card:hover { border-color: rgba(91,163,217,0.4); }
+
+    .opinion-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .opinion-top-left {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
     }
 
-    .figure-company-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
+    .opinion-stars {
+      color: #EF9F27;
+      font-size: 15px;
+      letter-spacing: 1px;
     }
 
-    .figure-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .figure-body {
-      flex: 1;
-      padding: 12px 20px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .radar-wrap {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .radar-legend {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 280px;
-    }
-
-    .radar-empty {
-      text-align: center;
-      color: var(--text-muted);
-      padding: 60px 20px;
-    }
-    .radar-empty .ph-icon { font-size: 36px; margin-bottom: 12px; }
-    .radar-empty p { font-size: 15px; line-height: 1.6; }
-    .radar-empty code {
+    .opinion-location {
+      font-size: 12px;
       color: var(--accent2);
       background: rgba(91,163,217,0.1);
-      padding: 2px 6px;
+      padding: 3px 10px;
       border-radius: 2px;
+    }
+
+    .opinion-time {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .opinion-text {
       font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .feed-empty {
+      padding: 80px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
     }
 
     /* ── FOOTER ── */
@@ -770,10 +372,7 @@
       align-items: center;
     }
 
-    .footer-left {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
+    .footer-left { font-size: 14px; color: var(--text-muted); }
 
     .footer-left strong {
       font-family: 'Syne', sans-serif;
@@ -788,154 +387,110 @@
     }
 
     @media (max-width: 1024px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .company-layout { grid-template-columns: 1fr; }
-      .company-panel { flex-direction: row; flex-wrap: wrap; }
+      .comments-layout { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
-      nav, .hero, .section-header, .company-layout, footer,
-      .filter-bar, .news-timeline-wrap, .sort-bar, .news-pagination {
+      nav, .page-hero, .main-content, footer {
         padding-left: 20px;
         padding-right: 20px;
       }
-      .news-feed { padding-left: 90px; }
-      .news-ts { left: -90px; width: 58px; }
-      .news-spine { left: 64px; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="nav-logo">AI·LMI <span>/ Labor Market Intelligence</span></div>
+    <a class="nav-logo" href="index.html">AI·LMI <span>/ Labor Market Intelligence</span></a>
     <ul class="nav-links">
-      <li><a href="#news">News</a></li>
-      <li><a href="#analysis">Analysis</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="index.html#news">News</a></li>
+      <li><a href="index.html#analysis">Analysis</a></li>
+      <li><a href="comments.html" class="active">Comments</a></li>
+      <li><a href="index.html#about">About</a></li>
     </ul>
-    <div></div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">AI Labor Market Intelligence</div>
-        <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the <span style="color:var(--accent)">Future</span> of Work</h1>
-        <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
-        </p>
-        <div class="hero-insights" id="heroInsights">
-          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
-        </div>
-      </div>
-      <div class="hero-chart">
-        <div class="hero-chart-legend"><span><span class="hero-chart-dot"></span>AI post %</span></div>
-        <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
-        <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
-      </div>
-    </div>
+  <section class="page-hero">
+    <h1><em>Community</em> Voices</h1>
+    <p>How is AI affecting your workplace? Share your experience anonymously — rate your satisfaction with AI at your firm and tell us about your concerns, hopes, or observations.</p>
   </section>
 
-  <section class="news-section" id="news">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">Recent AI News</h2>
-      <div class="section-line"></div>
-    </div>
+  <div class="main-content">
+    <div class="comments-layout">
 
-    <div class="filter-bar">
-      <div class="filter-group">
-        <div class="filter-group-label">Keyword</div>
-        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyFilters()">
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">Media</div>
-        <div class="media-dropdown-wrap" id="mediaDropdownWrap">
-          <button class="media-dropdown-btn" id="mediaDropdownBtn" onclick="toggleMediaDropdown(event)">All sources</button>
-          <div class="media-dropdown-list" id="mediaDropdownList"></div>
-        </div>
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">From</div>
-        <input class="date-input" id="dateFrom" type="date" onchange="applyFilters()">
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">To</div>
-        <input class="date-input" id="dateTo" type="date" onchange="applyFilters()">
-      </div>
-      <div class="filter-group" style="justify-content:flex-end">
-        <button class="clear-btn" onclick="clearFilters()">✕ Clear</button>
-      </div>
-    </div>
+      <div class="form-panel">
+        <div class="form-title">Share your experience</div>
+        <div class="form-desc">All submissions are completely anonymous.</div>
 
-    <div class="filter-stats" id="filterStats" style="display:none">
-      Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> articles
-      <button class="clear-btn" onclick="clearFilters()">✕ Clear filters</button>
-    </div>
-
-    <div class="sort-bar">
-      <span class="sort-label">Sort by</span>
-      <button class="sort-btn active" id="sortTimeBtn" onclick="sortBy('time')">Date ↓</button>
-      <button class="sort-btn" id="sortHeadlineBtn" onclick="sortBy('headline')">Headline</button>
-      <button class="sort-btn" id="sortMediaBtn" onclick="sortBy('media')">Media</button>
-    </div>
-
-    <div class="news-timeline-wrap">
-      <div class="news-feed" id="newsFeed">
-        <div class="news-spine" id="newsSpine"></div>
-      </div>
-      <div class="news-empty" id="newsEmpty">
-        <div class="empty-icon">🔎</div>
-        <p>No articles match your filters. Try adjusting the keyword or time range.</p>
-      </div>
-    </div>
-
-    <div class="news-pagination" id="newsPagination" style="display:none">
-      <button class="page-btn" id="prevPageBtn" onclick="changePage(-1)" disabled>← Prev</button>
-      <span class="page-info" id="pageInfo">Page 1 of 1</span>
-      <button class="page-btn" id="nextPageBtn" onclick="changePage(1)">Next →</button>
-    </div>
-  </section>
-
-  <section class="analysis-section" id="analysis">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2 class="section-title">Company Analysis</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="company-layout">
-      <div class="company-panel">
-        <div class="company-search">
-          <input class="company-search-input" id="companySearch" type="text"
-            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
-        </div>
-        <div id="companyBtns">
-          <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
-        </div>
-      </div>
-
-      <div class="figure-panel" id="figurePanel">
-        <div class="figure-header">
-          <div>
-            <div class="figure-company-name" id="figCompanyName">—</div>
-            <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
+        <div class="field">
+          <div class="field-label">AI satisfaction at your firm</div>
+          <div class="star-row" id="starRow">
+            <button class="star-btn" data-val="1">★</button>
+            <button class="star-btn" data-val="2">★</button>
+            <button class="star-btn" data-val="3">★</button>
+            <button class="star-btn" data-val="4">★</button>
+            <button class="star-btn" data-val="5">★</button>
           </div>
+          <div class="rating-hint" id="ratingHint">Select 1 (very dissatisfied) to 5 (very satisfied)</div>
         </div>
-        <div class="figure-body" id="figureBody">
-          <div class="radar-empty">
-            <div class="ph-icon">📊</div>
-            <p>Reads from <code>data/companies.csv</code> in your repo.<br>Click a company to view its radar chart.</p>
-          </div>
+
+        <div class="field">
+          <div class="field-label">Your location</div>
+          <select class="location-select" id="locationSelect">
+            <option value="">Select a region...</option>
+            <option value="US - Northeast">US — Northeast</option>
+            <option value="US - Southeast">US — Southeast</option>
+            <option value="US - Midwest">US — Midwest</option>
+            <option value="US - Southwest">US — Southwest</option>
+            <option value="US - West">US — West</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="Europe">Europe</option>
+            <option value="Asia - East">Asia — East</option>
+            <option value="Asia - South">Asia — South</option>
+            <option value="Asia - Southeast">Asia — Southeast</option>
+            <option value="Middle East">Middle East</option>
+            <option value="Africa">Africa</option>
+            <option value="Latin America">Latin America</option>
+            <option value="Oceania">Oceania</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your thoughts on AI use and job concerns</div>
+          <textarea class="comment-input" id="commentInput" rows="5"
+            placeholder="e.g. AI tools have improved my productivity, but I worry about..."
+            oninput="updateCharCount()"></textarea>
+          <div class="char-count"><span id="charCount">0</span> / 1000</div>
+        </div>
+
+        <button class="submit-btn" onclick="submitOpinion()">Submit anonymously</button>
+        <div class="submit-msg" id="submitMsg"></div>
+      </div>
+
+      <div class="feed-panel">
+        <div class="feed-header">
+          <span class="feed-title">Recent responses</span>
+          <span class="feed-count" id="feedCount">0 responses</span>
+        </div>
+        <div class="feed-filters">
+          <button class="filter-pill active" onclick="filterFeed('all', this)">All</button>
+          <button class="filter-pill" onclick="filterFeed(5, this)">★★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(4, this)">★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(3, this)">★★★</button>
+          <button class="filter-pill" onclick="filterFeed(2, this)">★★</button>
+          <button class="filter-pill" onclick="filterFeed(1, this)">★</button>
+        </div>
+        <div class="feed-scroll" id="feedScroll">
+          <div class="feed-empty" id="feedEmpty">No responses yet — be the first to share your experience with AI in the workplace.</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <footer id="about">
+    </div>
+  </div>
+
+  <footer>
     <div class="footer-left">
       <strong>AI · LMI</strong><br>
       Labor Market Intelligence Platform
@@ -947,550 +502,154 @@
   </footer>
 
   <script>
-    let allNews = [];
-    let filteredNews = [];
-    let currentPage = 1;
-    const PAGE_SIZE = 10;
-    let sortCol = 'time';
-    let sortDir = 'desc';
+    let selectedRating = 0;
+    let opinions = [];
+    let currentFilter = 'all';
 
-    function parseCSV(text) {
-      const lines = text.trim().split(/\r?\n/);
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
-      const rows = [];
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i];
-        if (!line.trim()) continue;
-        const cols = [];
-        let cur = '', inQ = false;
-        for (let c = 0; c < line.length; c++) {
-          if (line[c] === '"') { inQ = !inQ; }
-          else if (line[c] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-          else { cur += line[c]; }
-        }
-        cols.push(cur.trim());
-        const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, ''); });
-        const rawDate = row.time || row.date || '';
-        row._rawDate = rawDate;
-        row._date = rawDate ? parseDate(rawDate) : null;
-        if (row.headline) rows.push(row);
-      }
-      return rows;
-    }
+    const starBtns = document.querySelectorAll('.star-btn');
+    const ratingHint = document.getElementById('ratingHint');
+    const hints = ['','Very dissatisfied','Dissatisfied','Neutral','Satisfied','Very satisfied'];
 
-    function parseDate(str) {
-      if (!str) return null;
-      let d = new Date(str);
-      if (!isNaN(d)) return d;
-      const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-      if (mdy) { d = new Date(+mdy[3], +mdy[1]-1, +mdy[2]); if (!isNaN(d)) return d; }
-      return null;
-    }
-
-    function fetchCSV() {
-      fetch('data/news.csv')
-        .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
-        .then(text => {
-          allNews = parseCSV(text);
-          document.getElementById('filterStats').style.display = 'flex';
-          buildMediaDropdown();
-          setDateRangeBounds();
-          applyFilters();
-          updateHeroPills();
-        })
-        .catch(() => {
-          const empty = document.getElementById('newsEmpty');
-          empty.style.display = 'block';
-          empty.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>. Make sure it exists in your repo at <code style="color:var(--accent)">data/news.csv</code>.</p>';
+    starBtns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        const val = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('hover-preview', +b.dataset.val <= val && +b.dataset.val > selectedRating);
         });
-    }
-
-    let selectedMedia = new Set();
-
-    function buildMediaDropdown() {
-      const sources = [...new Set(allNews.map(r => r.media).filter(Boolean))].sort();
-      const list = document.getElementById('mediaDropdownList');
-      list.innerHTML = '';
-      const allOpt = document.createElement('div');
-      allOpt.className = 'media-opt media-opt-all';
-      allOpt.innerHTML = '<span class="media-opt-check" id="allCheck">✓</span><span>All sources</span>';
-      allOpt.onclick = () => { selectedMedia.clear(); updateMediaBtn(); applyFilters(); };
-      list.appendChild(allOpt);
-      sources.forEach(src => {
-        const opt = document.createElement('div');
-        opt.className = 'media-opt';
-        opt.dataset.src = src;
-        opt.innerHTML = `<span class="media-opt-check"></span><span>${src}</span>`;
-        opt.onclick = () => {
-          if (selectedMedia.has(src)) selectedMedia.delete(src);
-          else selectedMedia.add(src);
-          updateMediaBtn();
-          applyFilters();
-        };
-        list.appendChild(opt);
       });
-    }
-
-    function updateMediaBtn() {
-      const list = document.getElementById('mediaDropdownList');
-      const btn  = document.getElementById('mediaDropdownBtn');
-      list.querySelectorAll('.media-opt[data-src]').forEach(opt => {
-        opt.classList.toggle('selected', selectedMedia.has(opt.dataset.src));
+      btn.addEventListener('mouseleave', () => {
+        starBtns.forEach(b => b.classList.remove('hover-preview'));
       });
-      if (selectedMedia.size === 0) btn.textContent = 'All sources';
-      else if (selectedMedia.size === 1) btn.textContent = [...selectedMedia][0];
-      else btn.textContent = `${selectedMedia.size} sources`;
-    }
-
-    function toggleMediaDropdown(e) {
-      e.stopPropagation();
-      const btn  = document.getElementById('mediaDropdownBtn');
-      const list = document.getElementById('mediaDropdownList');
-      const open = list.classList.toggle('open');
-      btn.classList.toggle('open', open);
-    }
-
-    document.addEventListener('click', () => {
-      document.getElementById('mediaDropdownList').classList.remove('open');
-      document.getElementById('mediaDropdownBtn').classList.remove('open');
+      btn.addEventListener('click', () => {
+        selectedRating = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('active', +b.dataset.val <= selectedRating);
+          b.classList.remove('hover-preview');
+        });
+        ratingHint.textContent = hints[selectedRating];
+      });
     });
 
-    function setDateRangeBounds() {
-      const dates = allNews.map(r => r._date).filter(Boolean);
-      if (!dates.length) return;
-      const minD = new Date(Math.min(...dates));
-      const maxD = new Date(Math.max(...dates));
-      const toISO = d => d.toISOString().slice(0,10);
-      document.getElementById('dateFrom').min = toISO(minD);
-      document.getElementById('dateFrom').max = toISO(maxD);
-      document.getElementById('dateTo').min   = toISO(minD);
-      document.getElementById('dateTo').max   = toISO(maxD);
+    function updateCharCount() {
+      const len = document.getElementById('commentInput').value.length;
+      const el = document.getElementById('charCount');
+      el.textContent = len;
+      el.style.color = len > 1000 ? 'var(--red)' : 'var(--text-muted)';
     }
 
-    function applyFilters() {
-      const keyword  = document.getElementById('keywordInput').value.toLowerCase().trim();
-      const fromVal  = document.getElementById('dateFrom').value;
-      const toVal    = document.getElementById('dateTo').value;
-      const fromDate = fromVal ? new Date(fromVal) : null;
-      const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
+    function submitOpinion() {
+      const comment = document.getElementById('commentInput').value.trim();
+      const location = document.getElementById('locationSelect').value;
+      const msg = document.getElementById('submitMsg');
 
-      filteredNews = allNews.filter(row => {
-        if (keyword && !row.headline.toLowerCase().includes(keyword)) return false;
-        if (selectedMedia.size > 0 && !selectedMedia.has(row.media)) return false;
-        if (fromDate && row._date && row._date < fromDate) return false;
-        if (toDate   && row._date && row._date > toDate)   return false;
-        return true;
-      });
-
-      filteredNews.sort((a, b) => {
-        let av = sortCol === 'time' ? (a._date || 0) : (a[sortCol] || '');
-        let bv = sortCol === 'time' ? (b._date || 0) : (b[sortCol] || '');
-        if (av < bv) return sortDir === 'asc' ? -1 : 1;
-        if (av > bv) return sortDir === 'asc' ? 1 : -1;
-        return 0;
-      });
-
-      currentPage = 1;
-      renderTimeline();
-      updateStats();
-    }
-
-    function sortBy(col) {
-      if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      else { sortCol = col; sortDir = col === 'time' ? 'desc' : 'asc'; }
-      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-      const arrows = { asc: ' ↑', desc: ' ↓' };
-      const labels = { time: 'Date', headline: 'Headline', media: 'Media' };
-      const btn = document.getElementById('sort' + col.charAt(0).toUpperCase() + col.slice(1) + 'Btn');
-      btn.classList.add('active');
-      btn.textContent = labels[col] + (arrows[sortDir] || '');
-      applyFilters();
-    }
-
-    function getNodeColor(index, total) {
-      const t = total <= 1 ? 0 : index / (total - 1);
-      if (t <= 0.5) {
-        const p = t * 2;
-        return lerpColor([0x85,0xB7,0xEB], [0x5D,0xCA,0xA5], p);
-      } else {
-        const p = (t - 0.5) * 2;
-        return lerpColor([0x5D,0xCA,0xA5], [0xAF,0xA9,0xEC], p);
+      if (selectedRating === 0) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please select a rating (1–5 stars).';
+        return;
       }
-    }
-
-    function lerpColor(a, b, t) {
-      const r = Math.round(a[0] + (b[0]-a[0]) * t);
-      const g = Math.round(a[1] + (b[1]-a[1]) * t);
-      const bl = Math.round(a[2] + (b[2]-a[2]) * t);
-      return `rgb(${r},${g},${bl})`;
-    }
-
-    function renderTimeline() {
-      const feed  = document.getElementById('newsFeed');
-      const spine = document.getElementById('newsSpine');
-      const empty = document.getElementById('newsEmpty');
-      const pagination = document.getElementById('newsPagination');
-
-      feed.querySelectorAll('.news-item').forEach(el => el.remove());
-
-      if (filteredNews.length === 0) {
-        empty.style.display = 'block';
-        spine.style.display = 'none';
-        pagination.style.display = 'none';
+      if (!location) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please select your location.';
+        return;
+      }
+      if (comment.length === 0) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please share your thoughts before submitting.';
+        return;
+      }
+      if (comment.length > 1000) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please keep your comment under 1000 characters.';
         return;
       }
 
-      empty.style.display = 'none';
-      spine.style.display = 'block';
-
-      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const pageData = filteredNews.slice(start, start + PAGE_SIZE);
-
-      pageData.forEach((row, i) => {
-        const item = document.createElement('div');
-        item.className = 'news-item';
-        const dateObj = row._date;
-        const dayStr = dateObj ? dateObj.getDate() : '—';
-        const monthStr = dateObj ? dateObj.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (row._rawDate || '');
-        const timeAgo = dateObj ? getTimeAgo(dateObj) : '';
-        const nodeColor = getNodeColor(i, pageData.length);
-        const linkHtml = row.link
-          ? `<a href="${row.link}" target="_blank" rel="noopener" class="news-link-arrow" title="Open article">↗</a>`
-          : '';
-        item.innerHTML = `
-          <div class="news-node" style="border-color:${nodeColor}">
-            <div class="news-node-inner" style="background:${nodeColor}"></div>
-          </div>
-          <div class="news-ts">
-            <span class="news-ts-day">${dayStr}</span>
-            <span class="news-ts-month">${monthStr}</span>
-          </div>
-          <div class="news-row">
-            <div class="news-content">
-              <div class="news-headline">${row.headline}</div>
-              <div class="news-meta">
-                <span class="news-badge">${row.media || '—'}</span>
-                <span class="news-ago">${timeAgo}</span>
-              </div>
-            </div>
-            ${linkHtml}
-          </div>`;
-        feed.appendChild(item);
+      opinions.unshift({
+        rating: selectedRating,
+        location: location,
+        comment: comment,
+        time: new Date().toISOString()
       });
 
-      if (totalPages > 1) {
-        pagination.style.display = 'flex';
-        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
-        document.getElementById('prevPageBtn').disabled = currentPage === 1;
-        document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
-      } else {
-        pagination.style.display = 'none';
-      }
+      saveOpinions();
+      renderFeed();
+
+      selectedRating = 0;
+      starBtns.forEach(b => { b.classList.remove('active','hover-preview'); });
+      ratingHint.textContent = 'Select 1 (very dissatisfied) to 5 (very satisfied)';
+      document.getElementById('commentInput').value = '';
+      document.getElementById('locationSelect').value = '';
+      document.getElementById('charCount').textContent = '0';
+
+      msg.style.color = 'var(--green)';
+      msg.textContent = 'Thank you — your response has been recorded anonymously.';
+      setTimeout(() => { msg.textContent = ''; }, 4000);
     }
 
-    function changePage(dir) {
-      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
-      currentPage = Math.max(1, Math.min(totalPages, currentPage + dir));
-      renderTimeline();
-    }
-
-    function updateStats() {
-      document.getElementById('visibleCount').textContent = filteredNews.length;
-      document.getElementById('totalCount').textContent = allNews.length;
-    }
-
-    function clearFilters() {
-      document.getElementById('keywordInput').value = '';
-      selectedMedia.clear(); updateMediaBtn();
-      document.getElementById('dateFrom').value = '';
-      document.getElementById('dateTo').value = '';
-      applyFilters();
-    }
-
-    function getTimeAgo(date) {
-      const diff = (new Date() - date) / 1000;
-      if (diff < 86400) return 'Today';
-      if (diff < 172800) return 'Yesterday';
-      const days = Math.floor(diff / 86400);
-      if (days < 30) return `${days}d ago`;
-      const months = Math.floor(days / 30);
-      if (months < 12) return `${months}mo ago`;
-      return `${Math.floor(months/12)}yr ago`;
-    }
-
-    fetchCSV();
-
-    /* ══════════════════════════════════════
-       COMPANIES — Radar Chart
-       ══════════════════════════════════════ */
-    const COMPANIES_CSV_PATH = 'data/companies.csv';
-    let companyData = [];
-    let globalScales = {};
-
-    const RADAR_METRICS = [
-      { key: 'ai_talent_perc',         lines: ['2025 AI', 'Talent %']           },
-      { key: 'retention_perc',         lines: ['2025 Avg', 'Retention %']       },
-      { key: 'hire_percent',           lines: ['2025 Avg', 'Hiring %']          },
-      { key: 'ai_salary_premium',      lines: ['2025 AI Salary', 'Premium %']   },
-      { key: 'emp_ai_sentiment',       lines: ['2025 Employee', 'AI Sentiment'] },
-      { key: 'executive_ai_sentiment', lines: ['2025 Executive', 'AI Sentiment']},
-    ];
-
-    function parseCompaniesCSV(text) {
-      const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
-      if (lines.length < 2) return [];
-      const sep = lines[0].includes('\t') ? '\t' : ',';
-      const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
-      const rows = [];
-      for (let i = 1; i < lines.length; i++) {
-        const cols = lines[i].split(sep);
-        const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
-        if (row.conm && row.conm.length > 0) rows.push(row);
-      }
-      return rows;
-    }
-
-    function computeScales(rows) {
-      const scales = {};
-      RADAR_METRICS.forEach(m => {
-        const vals = rows.map(r => parseFloat(r[m.key])).filter(v => !isNaN(v) && isFinite(v));
-        scales[m.key] = { min: vals.length ? Math.min(...vals) : 0, max: vals.length ? Math.max(...vals) : 1 };
-      });
-      return scales;
-    }
-
-    function normalize(val, key) {
-      const raw = parseFloat(val);
-      if (isNaN(raw) || !isFinite(raw)) return 0;
-      const { min, max } = globalScales[key];
-      if (max === min) return 2.5;
-      return Math.max(0, Math.min(5, ((raw - min) / (max - min)) * 5));
-    }
-
-    function fetchCompaniesCSV() {
-      fetch(COMPANIES_CSV_PATH)
-        .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
-        .then(text => {
-          companyData = parseCompaniesCSV(text);
-          if (companyData.length === 0) throw new Error('No rows parsed');
-          globalScales = computeScales(companyData);
-          buildCompanyButtons();
-          updateHeroPills();
-        })
-        .catch(err => {
-          document.getElementById('companyBtns').innerHTML =
-            `<div style="padding:16px;font-size:14px;color:var(--red)">
-              Could not load <strong>${COMPANIES_CSV_PATH}</strong><br>
-              <span style="color:var(--text-muted);font-size:13px">${err.message}</span>
-            </div>`;
-        });
-    }
-
-    function buildCompanyButtons() {
-      const container = document.getElementById('companyBtns');
-      container.innerHTML = '';
-      const scrollDiv = document.createElement('div');
-      scrollDiv.className = 'company-panel-scroll';
-      companyData.forEach((row, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'company-btn' + (i === 0 ? ' active' : '');
-        btn.innerHTML = `<div class="btn-indicator"></div><span class="btn-name">${row.conm}</span>`;
-        btn.addEventListener('click', () => selectCompany(btn, row));
-        scrollDiv.appendChild(btn);
-      });
-      container.appendChild(scrollDiv);
-      selectCompany(scrollDiv.querySelector('.company-btn'), companyData[0]);
-    }
-
-    function selectCompany(btn, row) {
-      document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
+    function filterFeed(val, btn) {
+      currentFilter = val;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('figCompanyName').textContent = row.conm;
-      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
-      drawRadar(row);
+      renderFeed();
     }
 
-    function drawRadar(row) {
-      const body = document.getElementById('figureBody');
-      const N = RADAR_METRICS.length;
-      const R = 148, LABEL_R = R + 16, LINE_H = 14, MAX_SCALE = 5;
-      const PAD_X = 120, PAD_Y = 90;
-      const VW = R * 2 + PAD_X * 2, VH = R * 2 + PAD_Y * 2;
-      const rcx = VW / 2, rcy = VH / 2;
-      const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
+    function renderFeed() {
+      const scroll = document.getElementById('feedScroll');
+      const countEl = document.getElementById('feedCount');
 
-      function rpt(r, a) { return { x: rcx + r*Math.cos(a), y: rcy + r*Math.sin(a) }; }
-      function rptStr(r, a) { const p = rpt(r,a); return p.x.toFixed(1)+','+p.y.toFixed(1); }
+      const filtered = currentFilter === 'all'
+        ? opinions
+        : opinions.filter(o => o.rating === currentFilter);
 
-      const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
-      const rawVals  = RADAR_METRICS.map(m => { const v = parseFloat(row[m.key]); return (!isNaN(v) && isFinite(v)) ? v : null; });
+      countEl.textContent = opinions.length + ' response' + (opinions.length !== 1 ? 's' : '');
 
-      let svg = `<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">`;
-
-      for (let ring = 1; ring <= MAX_SCALE; ring++) {
-        const pts = angles.map(a => rptStr(R * ring / MAX_SCALE, a)).join(' ');
-        const dash = ring < MAX_SCALE ? 'stroke-dasharray="3 3"' : '';
-        const sw = ring === MAX_SCALE ? '1.5' : '0.8';
-        svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
-        const lp = rpt(R * ring / MAX_SCALE + 4, 0);
-        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="10" font-family="DM Mono,monospace">${ring}</text>`;
+      if (filtered.length === 0) {
+        scroll.innerHTML = `<div class="feed-empty">${opinions.length === 0
+          ? 'No responses yet — be the first to share your experience with AI in the workplace.'
+          : 'No responses match this filter.'}</div>`;
+        return;
       }
 
-      angles.forEach(a => {
-        const o = rpt(R, a);
-        svg += `<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#d0d5dd" stroke-width="1"/>`;
-      });
-
-      angles.forEach((a, i) => {
-        const m = RADAR_METRICS[i], lp = rpt(LABEL_R, a);
-        const dx = lp.x - rcx;
-        const anchor = dx < -8 ? 'end' : dx > 8 ? 'start' : 'middle';
-        const totalH = (m.lines.length - 1) * LINE_H;
-        const yStart = lp.y - totalH / 2;
-        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="11" fill="#4a5568" font-weight="500">`;
-        m.lines.forEach((ln, li) => { t += `<tspan x="${lp.x.toFixed(1)}" y="${(yStart + li * LINE_H).toFixed(1)}">${ln}</tspan>`; });
-        t += `</text>`;
-        svg += t;
-      });
-
-      const dataPts = normVals.map((v, i) => rptStr(R * v / MAX_SCALE, angles[i])).join(' ');
-      svg += `<polygon points="${dataPts}" fill="rgba(91,163,217,0.18)" stroke="#5ba3d9" stroke-width="2" stroke-linejoin="round"/>`;
-
-      normVals.forEach((v, i) => {
-        const p = rpt(R * v / MAX_SCALE, angles[i]);
-        svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#5ba3d9" stroke="#ffffff" stroke-width="2"/>`;
-      });
-
-      svg += `</svg>`;
-
-      const legend = RADAR_METRICS.map((m, i) => {
-        const raw = rawVals[i];
-        const disp = raw !== null ? raw.toFixed(3) : 'N/A';
-        const pct = Math.round(normVals[i] / MAX_SCALE * 100);
-        const title = m.lines.join(' ');
-        const bar = `<div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
-        return `<div style="display:flex;align-items:center;gap:8px;white-space:nowrap">
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
-          <span style="flex:1;font-size:13px;color:var(--text-dim)">${title}</span>
-          <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span>
-        </div>${bar}`;
+      scroll.innerHTML = filtered.map(op => {
+        const stars = '★'.repeat(op.rating) + '☆'.repeat(5 - op.rating);
+        const d = new Date(op.time);
+        const timeStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+          + ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+        const safe = op.comment.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const locBadge = op.location ? `<span class="opinion-location">${op.location}</span>` : '';
+        return `<div class="opinion-card">
+          <div class="opinion-top">
+            <div class="opinion-top-left">
+              <span class="opinion-stars">${stars}</span>
+              ${locBadge}
+            </div>
+            <span class="opinion-time">${timeStr}</span>
+          </div>
+          <div class="opinion-text">${safe}</div>
+        </div>`;
       }).join('');
-
-      body.innerHTML = `<div class="radar-wrap">${svg}</div><div class="radar-legend" style="margin-left:24px">${legend}</div>`;
     }
 
-    function updateHeroPills() {
-      const pills = document.getElementById('heroInsights');
-      const newsCount = allNews.length, compCount = companyData.length;
-      let items = [];
-      if (newsCount > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span class="pill-num" style="color:#185FA5">${newsCount}</span><span>news articles loaded</span></div>`);
-      if (compCount > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${compCount}</span><span>companies analysed</span></div>`);
-      items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
-      pills.innerHTML = items.join('');
+    async function saveOpinions() {
+      try {
+        if (window.storage) {
+          await window.storage.set('ai-lmi-opinions', JSON.stringify(opinions), true);
+        }
+      } catch(e) {}
     }
 
-    function filterCompanyBtns(q) {
-      const term = q.toLowerCase().trim();
-      document.querySelectorAll('#companyBtns .company-btn').forEach(btn => {
-        const name = btn.querySelector('.btn-name').textContent.toLowerCase();
-        btn.style.display = name.includes(term) ? '' : 'none';
-      });
-    }
-
-    fetchCompaniesCSV();
-
-    /* ══════════════════════════════════════
-       HERO — AI Post % Trend Chart
-       ══════════════════════════════════════ */
-    function buildHeroChart() {
-      const monthly = [
-        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],
-        [2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
-        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],
-        [2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
-        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],
-        [2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
-        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],
-        [2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
-        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],
-        [2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
-        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],
-        [2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
-      ];
-      const qMap = {};
-      monthly.forEach(([y,m,ai]) => {
-        const q = Math.ceil(m/3);
-        const key = y + 'Q' + q;
-        if (!qMap[key]) qMap[key] = [];
-        qMap[key].push(ai);
-      });
-      const qKeys = Object.keys(qMap).sort();
-      const labels = qKeys.map(k => k.slice(0,4) + ' Q' + k.slice(5));
-      const avg = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const aiData = qKeys.map(k => avg(qMap[k]));
-
-      new Chart(document.getElementById('heroTrendChart'), {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'AI post %',
-            data: aiData,
-            borderColor: '#378ADD',
-            backgroundColor: 'rgba(55,138,221,0.08)',
-            fill: true,
-            tension: 0.35,
-            pointRadius: 5,
-            pointBackgroundColor: '#378ADD',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            pointHoverRadius: 8,
-            pointHoverBackgroundColor: '#378ADD',
-            borderWidth: 2.5
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: 'rgba(30,41,59,0.92)',
-              titleFont: { size: 13 },
-              bodyFont: { size: 13 },
-              padding: 12,
-              cornerRadius: 4,
-              callbacks: {
-                label: function(ctx) {
-                  return 'AI post %: ' + ctx.parsed.y.toFixed(1) + '%';
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: { autoSkip: false, font: { size: 11 }, color: '#7a8694' },
-              border: { color: '#d0d5dd' }
-            },
-            y: {
-              title: { display: true, text: 'AI post %', font: { size: 12 }, color: '#378ADD' },
-              min: 1.5,
-              max: 5.5,
-              grid: { color: 'rgba(208,213,221,0.5)', lineWidth: 0.5 },
-              ticks: { font: { size: 11 }, color: '#378ADD', callback: v => v.toFixed(1) + '%' },
-              border: { display: false }
-            }
+    async function loadOpinions() {
+      try {
+        if (window.storage) {
+          const result = await window.storage.get('ai-lmi-opinions', true);
+          if (result && result.value) {
+            opinions = JSON.parse(result.value);
           }
         }
-      });
+      } catch(e) {}
+      renderFeed();
     }
+
+    loadOpinions();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>buildHeroChart();</script>
 </body>
 </html>
