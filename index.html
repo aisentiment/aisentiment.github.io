@@ -121,7 +121,14 @@
       pointer-events: none;
     }
 
-    .hero-inner { max-width: 860px; }
+    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .hero-text { max-width: 540px; }
+    .hero-chart { position: relative; min-height: 320px; }
+    .hero-chart canvas { width: 100% !important; }
+    .hero-chart-legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
+    .hero-chart-legend span { display: flex; align-items: center; gap: 5px; }
+    .hero-chart-dot { width: 10px; height: 10px; border-radius: 2px; background: #378ADD; }
+    .hero-chart-note { margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 
     .hero-eyebrow {
       font-size: 13px;
@@ -781,6 +788,7 @@
     }
 
     @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
       .company-layout { grid-template-columns: 1fr; }
       .company-panel { flex-direction: row; flex-wrap: wrap; }
     }
@@ -806,20 +814,27 @@
       <li><a href="#analysis">Analysis</a></li>
       <li><a href="#about">About</a></li>
     </ul>
-    <div class="nav-badge">LIVE DATA</div>
+    <div></div>
   </nav>
 
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-eyebrow">AI Labor Market Intelligence</div>
-      <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the <span style="color:var(--accent)">Future</span> of Work</h1>
-      <p class="hero-desc">
-        The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
-      </p>
-      <div class="hero-insights" id="heroInsights">
-        <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-        <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-        <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
+      <div class="hero-text">
+        <div class="hero-eyebrow">AI Labor Market Intelligence</div>
+        <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the <span style="color:var(--accent)">Future</span> of Work</h1>
+        <p class="hero-desc">
+          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
+        </p>
+        <div class="hero-insights" id="heroInsights">
+          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
+          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
+          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
+        </div>
+      </div>
+      <div class="hero-chart">
+        <div class="hero-chart-legend"><span><span class="hero-chart-dot"></span>AI post %</span></div>
+        <div style="position:relative;width:100%;height:280px"><canvas id="heroTrendChart"></canvas></div>
+        <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
       </div>
     </div>
   </section>
@@ -1386,6 +1401,96 @@
     }
 
     fetchCompaniesCSV();
+
+    /* ══════════════════════════════════════
+       HERO — AI Post % Trend Chart
+       ══════════════════════════════════════ */
+    function buildHeroChart() {
+      const monthly = [
+        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],
+        [2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
+        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],
+        [2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
+        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],
+        [2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
+        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],
+        [2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
+        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],
+        [2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
+        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],
+        [2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
+      ];
+      const qMap = {};
+      monthly.forEach(([y,m,ai]) => {
+        const q = Math.ceil(m/3);
+        const key = y + 'Q' + q;
+        if (!qMap[key]) qMap[key] = [];
+        qMap[key].push(ai);
+      });
+      const qKeys = Object.keys(qMap).sort();
+      const labels = qKeys.map(k => k.slice(0,4) + ' Q' + k.slice(5));
+      const avg = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
+      const aiData = qKeys.map(k => avg(qMap[k]));
+
+      new Chart(document.getElementById('heroTrendChart'), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'AI post %',
+            data: aiData,
+            borderColor: '#378ADD',
+            backgroundColor: 'rgba(55,138,221,0.08)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#378ADD',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: '#378ADD',
+            borderWidth: 2.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(30,41,59,0.92)',
+              titleFont: { size: 13 },
+              bodyFont: { size: 13 },
+              padding: 12,
+              cornerRadius: 4,
+              callbacks: {
+                label: function(ctx) {
+                  return 'AI post %: ' + ctx.parsed.y.toFixed(1) + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { autoSkip: false, font: { size: 11 }, color: '#7a8694' },
+              border: { color: '#d0d5dd' }
+            },
+            y: {
+              title: { display: true, text: 'AI post %', font: { size: 12 }, color: '#378ADD' },
+              min: 1.5,
+              max: 5.5,
+              grid: { color: 'rgba(208,213,221,0.5)', lineWidth: 0.5 },
+              ticks: { font: { size: 11 }, color: '#378ADD', callback: v => v.toFixed(1) + '%' },
+              border: { display: false }
+            }
+          }
+        }
+      });
+    }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script>buildHeroChart();</script>
 </body>
 </html>
