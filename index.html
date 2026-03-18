@@ -578,12 +578,21 @@
       flex-shrink: 0;
     }
 
+    /* #companyBtns wrapper must fill remaining panel height */
+    #companyBtns {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
     /* All companies — single scrollable list */
     .company-panel-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 6px;
       min-height: 0;
+      padding: 6px;
     }
 
     .company-panel-scroll::-webkit-scrollbar { width: 4px; }
