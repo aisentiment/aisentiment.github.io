@@ -249,83 +249,314 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .news-grid {
-      padding: 0 48px;
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 2px;
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      padding: 0 48px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-start;
     }
 
-    .news-card {
+    .filter-group {
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 28px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .news-card:hover {
-      background: var(--surface2);
-      border-color: rgba(74,158,255,0.3);
-    }
-
-    .news-card.featured {
-      grid-row: span 2;
+      padding: 14px 18px;
       display: flex;
       flex-direction: column;
+      gap: 8px;
+      min-width: 200px;
     }
 
-    .news-tag {
+    .filter-group-label {
       font-size: 10px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 3px 8px;
-      border: 1px solid;
-      display: inline-block;
-      margin-bottom: 16px;
-      border-radius: 2px;
+      color: var(--accent);
+      margin-bottom: 2px;
     }
 
-    .tag-hiring { color: var(--green); border-color: var(--green); }
-    .tag-layoff { color: var(--red); border-color: var(--red); }
-    .tag-research { color: var(--accent2); border-color: var(--accent2); }
-    .tag-policy { color: var(--accent); border-color: var(--accent); }
+    /* Keyword search */
+    .filter-input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      padding: 8px 12px;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+    .filter-input:focus { border-color: var(--accent2); }
+    .filter-input::placeholder { color: var(--text-muted); }
 
-    .news-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 12px;
+    /* Media checkboxes */
+    .media-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .media-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text-dim);
+      transition: all 0.18s;
+      user-select: none;
+      background: transparent;
+    }
+
+    .media-chip input[type="checkbox"] { display: none; }
+
+    .media-chip.checked {
+      background: rgba(74,158,255,0.1);
+      border-color: var(--accent2);
       color: var(--text);
     }
 
-    .news-card.featured h3 {
-      font-size: 22px;
-      margin-bottom: 16px;
+    .media-chip .chip-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.18s;
     }
+    .media-chip.checked .chip-dot { background: var(--accent2); }
 
-    .news-card p {
-      color: var(--text-dim);
-      line-height: 1.6;
-      font-size: 13px;
-      flex: 1;
-    }
-
-    .news-meta {
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
+    /* Time filter */
+    .time-filters {
       display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
+      gap: 4px;
     }
 
-    .news-source { color: var(--accent2); }
+    .time-btn {
+      padding: 6px 12px;
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.06em;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+
+    .time-btn.active, .time-btn:hover {
+      background: rgba(232,197,71,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Filter stats */
+    .filter-stats {
+      padding: 0 48px 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .filter-stats span { color: var(--accent2); }
+
+    .clear-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+    .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── NEWS TABLE ── */
+    .news-table-wrap {
+      padding: 0 48px;
+      overflow-x: auto;
+    }
+
+    .news-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+
+    .news-table thead tr {
+      background: var(--surface2);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .news-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.18s;
+    }
+
+    .news-table th:hover { color: var(--text); }
+
+    .th-sort { margin-left: 4px; color: var(--text-muted); font-size: 10px; }
+    .th-sort.asc::after { content: ' ↑'; }
+    .th-sort.desc::after { content: ' ↓'; }
+
+    .news-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .news-table tbody tr:hover {
+      background: var(--surface2);
+    }
+
+    .news-table td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    .td-headline {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.4;
+      max-width: 520px;
+    }
+
+    .td-headline a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .td-headline a:hover { color: var(--accent2); }
+
+    .td-headline .headline-link-icon {
+      display: inline-block;
+      margin-left: 6px;
+      opacity: 0;
+      font-size: 11px;
+      color: var(--accent2);
+      transition: opacity 0.18s;
+    }
+    .news-table tbody tr:hover .headline-link-icon { opacity: 1; }
+
+    .td-media {
+      white-space: nowrap;
+    }
+
+    .media-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--accent2);
+      background: rgba(74,158,255,0.06);
+    }
+
+    .td-time {
+      color: var(--text-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .td-time .time-ago {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+
+    /* Empty state */
+    .news-empty {
+      padding: 60px 48px;
+      text-align: center;
+      color: var(--text-muted);
+      display: none;
+    }
+    .news-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
+    .news-empty p { font-size: 13px; }
+
+    /* CSV upload prompt */
+    .csv-prompt {
+      padding: 0 48px 24px;
+    }
+    .csv-upload-area {
+      border: 1px dashed var(--border);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .csv-upload-area:hover { border-color: var(--accent2); }
+    .csv-icon { font-size: 24px; }
+    .csv-label { font-size: 13px; color: var(--text-dim); }
+    .csv-label strong { color: var(--text); display: block; margin-bottom: 4px; }
+    .csv-label code {
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(232,197,71,0.08);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+    #csvFileInput { display: none; }
+    .csv-loaded-badge {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 4px 12px;
+      border: 1px solid var(--green);
+      color: var(--green);
+      border-radius: 2px;
+      display: none;
+    }
+
+    /* Pagination */
+    .news-pagination {
+      padding: 16px 48px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .page-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+    .page-btn:hover, .page-btn.active {
+      border-color: var(--accent2);
+      color: var(--text);
+      background: rgba(74,158,255,0.08);
+    }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-info { font-size: 12px; color: var(--text-muted); }
 
     /* ── ANALYSIS SECTION ── */
     .analysis-section {
@@ -337,9 +568,9 @@
     .company-layout {
       padding: 0 48px;
       display: grid;
-      grid-template-columns: 260px 1fr;
+      grid-template-columns: 220px 1fr;
       gap: 2px;
-      min-height: 560px;
+      min-height: 500px;
     }
 
     /* Company buttons panel */
@@ -389,21 +620,14 @@
       color: var(--text);
     }
 
-    .company-btn.active .btn-indicator {
-      background: var(--accent);
-    }
+    .company-btn.active .btn-indicator { background: var(--accent); }
 
     .btn-indicator {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--border);
       flex-shrink: 0;
       transition: background 0.2s;
-    }
-
-    .btn-content {
-      flex: 1;
     }
 
     .btn-name {
@@ -417,134 +641,74 @@
     .btn-ticker {
       font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
 
-    .btn-trend {
-      font-size: 11px;
-      font-weight: 500;
-    }
-    .trend-up { color: var(--green); }
-    .trend-down { color: var(--red); }
-
-    /* Figure panel */
+    /* Figure panel — image display */
     .figure-panel {
       background: var(--surface);
       border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .figure-header {
-      padding: 20px 28px;
+      padding: 18px 28px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
     }
 
     .figure-company-name {
       font-family: 'Syne', sans-serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
     }
 
     .figure-subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
-    .figure-tabs {
-      display: flex;
-      gap: 4px;
-    }
-
-    .fig-tab {
-      padding: 6px 14px;
-      font-size: 11px;
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.06em;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
-    }
-
-    .fig-tab.active, .fig-tab:hover {
-      background: var(--surface2);
-      border-color: var(--accent2);
-      color: var(--text);
-    }
-
-    .figure-content {
+    .figure-img-wrap {
+      flex: 1;
       padding: 28px;
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .figure-content.active { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── SVG Charts ── */
-    .chart-wrap {
-      width: 100%;
-      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 420px;
       position: relative;
     }
 
-    .chart-label {
-      font-size: 10px;
-      fill: var(--text-muted);
-      font-family: 'DM Mono', monospace;
+    .figure-img-wrap img {
+      max-width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      display: block;
+      border-radius: 2px;
+      animation: fadeIn 0.3s ease;
     }
 
-    .chart-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-dim);
-      margin-bottom: 16px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      margin-bottom: 24px;
-    }
-
-    .kpi {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      padding: 16px;
-    }
-
-    .kpi-label {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .figure-placeholder {
+      text-align: center;
       color: var(--text-muted);
-      margin-bottom: 8px;
     }
 
-    .kpi-value {
-      font-family: 'Syne', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
+    .figure-placeholder .ph-icon { font-size: 36px; margin-bottom: 12px; }
+    .figure-placeholder p { font-size: 13px; line-height: 1.6; }
+    .figure-placeholder code {
+      color: var(--accent);
+      background: rgba(232,197,71,0.08);
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 12px;
     }
 
-    .kpi-change {
-      font-size: 11px;
-      margin-top: 4px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── FOOTER ── */
@@ -705,7 +869,75 @@
       <h2 class="section-title">Recent AI News</h2>
       <div class="section-line"></div>
     </div>
-    <div class="news-grid">
+
+    <!-- CSV status bar -->
+    <div class="csv-prompt">
+      <div class="csv-upload-area" style="cursor:default">
+        <span class="csv-icon">📄</span>
+        <div class="csv-label">
+          <strong>news.csv</strong>
+          Place your CSV at <code>data/news.csv</code> in your GitHub repo — the table loads automatically.
+        </div>
+        <div class="csv-loaded-badge" id="csvLoadedBadge" style="display:none">✓ Loaded</div>
+        <div class="csv-loaded-badge" id="csvErrorBadge" style="display:none; border-color:var(--red); color:var(--red)">✕ Not found</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <div class="filter-group-label">🔍 Keyword</div>
+        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyFilters()">
+      </div>
+      <div class="filter-group" style="flex:1; min-width:260px">
+        <div class="filter-group-label">📰 Media Source</div>
+        <div class="media-filters" id="mediaFilters">
+          <span style="font-size:12px; color:var(--text-muted)">Load a CSV to see sources</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">🕐 Time Range</div>
+        <div class="time-filters">
+          <button class="time-btn active" data-days="0" onclick="setTimeFilter(this)">All</button>
+          <button class="time-btn" data-days="7" onclick="setTimeFilter(this)">7 days</button>
+          <button class="time-btn" data-days="30" onclick="setTimeFilter(this)">1 month</button>
+          <button class="time-btn" data-days="90" onclick="setTimeFilter(this)">3 months</button>
+          <button class="time-btn" data-days="365" onclick="setTimeFilter(this)">1 year</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-stats" id="filterStats" style="display:none">
+      Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> articles
+      <button class="clear-btn" onclick="clearFilters()">✕ Clear filters</button>
+    </div>
+
+    <div class="news-table-wrap">
+      <table class="news-table" id="newsTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('headline')">Headline <span class="th-sort" id="sort-headline"></span></th>
+            <th onclick="sortTable('media')" style="width:130px">Media <span class="th-sort" id="sort-media"></span></th>
+            <th onclick="sortTable('time')" style="width:140px">Date <span class="th-sort" id="sort-time"></span></th>
+            <th style="width:70px; text-align:center">Link</th>
+          </tr>
+        </thead>
+        <tbody id="newsTableBody"></tbody>
+      </table>
+      <div class="news-empty" id="newsEmpty">
+        <div class="empty-icon">🔎</div>
+        <p>No articles match your filters. Try adjusting the keyword or time range.</p>
+      </div>
+    </div>
+
+    <div class="news-pagination" id="newsPagination" style="display:none">
+      <button class="page-btn" id="prevPageBtn" onclick="changePage(-1)" disabled>← Prev</button>
+      <span class="page-info" id="pageInfo">Page 1 of 1</span>
+      <button class="page-btn" id="nextPageBtn" onclick="changePage(1)">Next →</button>
+    </div>
+
+    <!-- OLD GRID (hidden placeholder) -->
+    <div class="news-grid" style="display:none">
 
       <!-- Featured -->
       <article class="news-card featured">
@@ -771,465 +1003,32 @@
 
     <div class="company-layout">
 
-      <!-- Sidebar buttons -->
+      <!-- Sidebar buttons — driven by JS from companies array -->
       <div class="company-panel">
         <div class="company-panel-header">Select Company</div>
-
-        <button class="company-btn active" onclick="selectCompany(this, 'microsoft')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">Microsoft</span>
-            <span class="btn-ticker">MSFT · Big Tech</span>
-          </div>
-          <span class="btn-trend trend-up">+12.4%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'google')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">Google</span>
-            <span class="btn-ticker">GOOGL · Big Tech</span>
-          </div>
-          <span class="btn-trend trend-up">+8.7%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'meta')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">Meta</span>
-            <span class="btn-ticker">META · Social</span>
-          </div>
-          <span class="btn-trend trend-down">−3.1%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'amazon')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">Amazon</span>
-            <span class="btn-ticker">AMZN · Cloud</span>
-          </div>
-          <span class="btn-trend trend-up">+19.2%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'nvidia')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">NVIDIA</span>
-            <span class="btn-ticker">NVDA · Chips</span>
-          </div>
-          <span class="btn-trend trend-up">+41.0%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'openai')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">OpenAI</span>
-            <span class="btn-ticker">PRIVATE · AI Lab</span>
-          </div>
-          <span class="btn-trend trend-up">+28.5%</span>
-        </button>
-
-        <button class="company-btn" onclick="selectCompany(this, 'ibm')">
-          <div class="btn-indicator"></div>
-          <div class="btn-content">
-            <span class="btn-name">IBM</span>
-            <span class="btn-ticker">IBM · Enterprise</span>
-          </div>
-          <span class="btn-trend trend-down">−7.8%</span>
-        </button>
+        <div id="companyBtns"></div>
       </div>
 
-      <!-- Figure display -->
+      <!-- Figure display — one image per company -->
       <div class="figure-panel" id="figurePanel">
-
-        <!-- MICROSOFT -->
-        <div id="fig-microsoft" class="company-figure active">
-          <div class="figure-header">
-            <div>
-              <div class="figure-company-name">Microsoft</div>
-              <div class="figure-subtitle">AI Labor Market Analysis · MSFT</div>
-            </div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'microsoft', 'hiring')">Hiring</button>
-              <button class="fig-tab" onclick="switchTab(this, 'microsoft', 'roles')">Roles</button>
-              <button class="fig-tab" onclick="switchTab(this, 'microsoft', 'salary')">Salary</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="microsoft-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">18,420</div><div class="kpi-change trend-up">↑ 12.4%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">4,210</div><div class="kpi-change trend-up">↑ 9.1%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">38 days</div><div class="kpi-change trend-down">↑ 4 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">31%</div><div class="kpi-change trend-up">↑ 5 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" class="chart-wrap" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <defs>
-                <linearGradient id="msftGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.25"/>
-                  <stop offset="100%" stop-color="#4a9eff" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <!-- Grid lines -->
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <!-- Y axis labels -->
-              <text x="40" y="24" class="chart-label" text-anchor="end">20K</text>
-              <text x="40" y="69" class="chart-label" text-anchor="end">16K</text>
-              <text x="40" y="114" class="chart-label" text-anchor="end">12K</text>
-              <text x="40" y="159" class="chart-label" text-anchor="end">8K</text>
-              <text x="40" y="204" class="chart-label" text-anchor="end">4K</text>
-              <!-- Area fill -->
-              <polygon points="50,160 103,150 156,138 209,130 262,120 315,105 368,98 421,88 474,80 527,72 580,62 633,52 680,42 680,200 50,200" fill="url(#msftGrad)"/>
-              <!-- Line -->
-              <polyline points="50,160 103,150 156,138 209,130 262,120 315,105 368,98 421,88 474,80 527,72 580,62 633,52 680,42" fill="none" stroke="#4a9eff" stroke-width="2.5" stroke-linejoin="round"/>
-              <!-- Dots -->
-              <circle cx="680" cy="42" r="5" fill="#4a9eff"/>
-              <circle cx="50" cy="160" r="4" fill="#4a9eff" opacity="0.5"/>
-              <!-- X labels -->
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="156" y="215" class="chart-label" text-anchor="middle">Jun</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="368" y="215" class="chart-label" text-anchor="middle">Oct</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="580" y="215" class="chart-label" text-anchor="middle">Feb</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="microsoft-roles">
-            <div class="chart-title">Top AI Roles by Posting Volume</div>
-            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="height:260px;width:100%">
-              <!-- Bars -->
-              <text x="180" y="30" class="chart-label" fill="#94a3b8">ML Engineer</text>
-              <rect x="180" y="34" width="400" height="22" rx="2" fill="#4a9eff" opacity="0.8"/>
-              <text x="590" y="50" class="chart-label" fill="#e2e8f0">4,820</text>
-
-              <text x="180" y="72" class="chart-label" fill="#94a3b8">AI Researcher</text>
-              <rect x="180" y="76" width="310" height="22" rx="2" fill="#4a9eff" opacity="0.65"/>
-              <text x="500" y="92" class="chart-label" fill="#e2e8f0">3,740</text>
-
-              <text x="180" y="114" class="chart-label" fill="#94a3b8">Data Scientist</text>
-              <rect x="180" y="118" width="260" height="22" rx="2" fill="#4a9eff" opacity="0.5"/>
-              <text x="450" y="134" class="chart-label" fill="#e2e8f0">3,120</text>
-
-              <text x="180" y="156" class="chart-label" fill="#94a3b8">AI Product Mgr</text>
-              <rect x="180" y="160" width="200" height="22" rx="2" fill="#4a9eff" opacity="0.4"/>
-              <text x="390" y="176" class="chart-label" fill="#e2e8f0">2,410</text>
-
-              <text x="180" y="198" class="chart-label" fill="#94a3b8">Prompt Engineer</text>
-              <rect x="180" y="202" width="140" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
-              <text x="330" y="218" class="chart-label" fill="#e2e8f0">1,680</text>
-
-              <text x="180" y="240" class="chart-label" fill="#94a3b8">AI Safety Lead</text>
-              <rect x="180" y="244" width="80" height="22" rx="2" fill="#4ade80" opacity="0.5"/>
-              <text x="270" y="260" class="chart-label" fill="#e2e8f0">960</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="microsoft-salary">
-            <div class="chart-title">AI Role Salary Distribution (USD)</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
-              <defs>
-                <linearGradient id="salGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.3"/>
-                  <stop offset="50%" stop-color="#e8c547" stop-opacity="0.8"/>
-                  <stop offset="100%" stop-color="#4ade80" stop-opacity="0.3"/>
-                </linearGradient>
-              </defs>
-              <line x1="60" y1="180" x2="660" y2="180" stroke="#1e2d42" stroke-width="1"/>
-              <!-- Bell curve approximation -->
-              <path d="M60,178 C100,176 160,160 200,130 C240,100 260,40 360,20 C460,40 480,100 520,130 C560,160 620,176 660,178" fill="url(#salGrad)" stroke="#e8c547" stroke-width="2"/>
-              <!-- Median line -->
-              <line x1="360" y1="20" x2="360" y2="180" stroke="#e8c547" stroke-width="1.5" stroke-dasharray="4,4"/>
-              <text x="362" y="16" class="chart-label" fill="#e8c547">Median $198K</text>
-              <!-- X axis labels -->
-              <text x="60" y="195" class="chart-label" text-anchor="middle">$80K</text>
-              <text x="180" y="195" class="chart-label" text-anchor="middle">$120K</text>
-              <text x="300" y="195" class="chart-label" text-anchor="middle">$160K</text>
-              <text x="420" y="195" class="chart-label" text-anchor="middle">$220K</text>
-              <text x="540" y="195" class="chart-label" text-anchor="middle">$280K</text>
-              <text x="660" y="195" class="chart-label" text-anchor="middle">$350K+</text>
-            </svg>
+        <div class="figure-header">
+          <div>
+            <div class="figure-company-name" id="figCompanyName">—</div>
+            <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
           </div>
         </div>
-
-        <!-- GOOGLE -->
-        <div id="fig-google" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div>
-              <div class="figure-company-name">Google</div>
-              <div class="figure-subtitle">AI Labor Market Analysis · GOOGL</div>
-            </div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'google', 'hiring')">Hiring</button>
-              <button class="fig-tab" onclick="switchTab(this, 'google', 'roles')">Roles</button>
-              <button class="fig-tab" onclick="switchTab(this, 'google', 'salary')">Salary</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="google-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">15,200</div><div class="kpi-change trend-up">↑ 8.7%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">3,850</div><div class="kpi-change trend-up">↑ 6.3%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">42 days</div><div class="kpi-change trend-down">↑ 6 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">28%</div><div class="kpi-change trend-up">↑ 3 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <defs>
-                <linearGradient id="googGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#4ade80" stop-opacity="0.25"/>
-                  <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <text x="40" y="24" class="chart-label" text-anchor="end">18K</text>
-              <text x="40" y="69" class="chart-label" text-anchor="end">14K</text>
-              <text x="40" y="114" class="chart-label" text-anchor="end">10K</text>
-              <text x="40" y="159" class="chart-label" text-anchor="end">6K</text>
-              <text x="40" y="204" class="chart-label" text-anchor="end">2K</text>
-              <polygon points="50,170 103,158 156,145 209,140 262,132 315,118 368,112 421,100 474,92 527,82 580,70 633,60 680,52 680,200 50,200" fill="url(#googGrad)"/>
-              <polyline points="50,170 103,158 156,145 209,140 262,132 315,118 368,112 421,100 474,92 527,82 580,70 633,60 680,52" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="52" r="5" fill="#4ade80"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="google-roles">
-            <div class="chart-title">Top AI Roles by Posting Volume</div>
-            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="height:260px;width:100%">
-              <text x="180" y="30" class="chart-label" fill="#94a3b8">AI Researcher</text>
-              <rect x="180" y="34" width="380" height="22" rx="2" fill="#4ade80" opacity="0.7"/>
-              <text x="570" y="50" class="chart-label" fill="#e2e8f0">4,180</text>
-              <text x="180" y="72" class="chart-label" fill="#94a3b8">ML Engineer</text>
-              <rect x="180" y="76" width="330" height="22" rx="2" fill="#4ade80" opacity="0.55"/>
-              <text x="520" y="92" class="chart-label" fill="#e2e8f0">3,620</text>
-              <text x="180" y="114" class="chart-label" fill="#94a3b8">Data Scientist</text>
-              <rect x="180" y="118" width="250" height="22" rx="2" fill="#4ade80" opacity="0.4"/>
-              <text x="440" y="134" class="chart-label" fill="#e2e8f0">2,740</text>
-              <text x="180" y="156" class="chart-label" fill="#94a3b8">LLM Specialist</text>
-              <rect x="180" y="160" width="190" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
-              <text x="380" y="176" class="chart-label" fill="#e2e8f0">2,090</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="google-salary">
-            <div class="chart-title">AI Role Salary Distribution (USD)</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
-              <line x1="60" y1="180" x2="660" y2="180" stroke="#1e2d42" stroke-width="1"/>
-              <path d="M60,178 C100,175 150,162 200,135 C250,108 280,50 370,22 C460,50 490,108 540,135 C590,162 640,175 660,178" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="2"/>
-              <line x1="370" y1="22" x2="370" y2="180" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,4"/>
-              <text x="372" y="18" class="chart-label" fill="#4ade80">Median $210K</text>
-              <text x="60" y="195" class="chart-label" text-anchor="middle">$90K</text>
-              <text x="220" y="195" class="chart-label" text-anchor="middle">$140K</text>
-              <text x="380" y="195" class="chart-label" text-anchor="middle">$210K</text>
-              <text x="540" y="195" class="chart-label" text-anchor="middle">$300K</text>
-              <text x="660" y="195" class="chart-label" text-anchor="middle">$380K+</text>
-            </svg>
+        <div class="figure-img-wrap" id="figImgWrap">
+          <div class="figure-placeholder">
+            <div class="ph-icon">📊</div>
+            <p>Click a company on the left to load its analysis figure.<br>
+            Images are read from <code>data/figures/{company}.png</code> in your repo.</p>
           </div>
         </div>
+      </div>
 
-        <!-- META -->
-        <div id="fig-meta" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div>
-              <div class="figure-company-name">Meta</div>
-              <div class="figure-subtitle">AI Labor Market Analysis · META</div>
-            </div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'meta', 'hiring')">Hiring</button>
-              <button class="fig-tab" onclick="switchTab(this, 'meta', 'roles')">Roles</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="meta-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">9,840</div><div class="kpi-change trend-down">↓ 3.1%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">1,920</div><div class="kpi-change trend-down">↓ 5.4%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">51 days</div><div class="kpi-change trend-down">↑ 9 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">22%</div><div class="kpi-change trend-down">↓ 2 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <polygon points="50,80 103,85 156,82 209,88 262,95 315,105 368,112 421,118 474,128 527,138 580,145 633,155 680,162 680,200 50,200" fill="rgba(248,113,113,0.1)"/>
-              <polyline points="50,80 103,85 156,82 209,88 262,95 315,105 368,112 421,118 474,128 527,138 580,145 633,155 680,162" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="162" r="5" fill="#f87171"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="meta-roles">
-            <div class="chart-title">Top AI Roles by Posting Volume</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
-              <text x="180" y="30" class="chart-label" fill="#94a3b8">ML Engineer</text>
-              <rect x="180" y="34" width="340" height="22" rx="2" fill="#f87171" opacity="0.6"/>
-              <text x="530" y="50" class="chart-label" fill="#e2e8f0">3,740</text>
-              <text x="180" y="72" class="chart-label" fill="#94a3b8">AI Infrastructure</text>
-              <rect x="180" y="76" width="260" height="22" rx="2" fill="#f87171" opacity="0.45"/>
-              <text x="450" y="92" class="chart-label" fill="#e2e8f0">2,860</text>
-              <text x="180" y="114" class="chart-label" fill="#94a3b8">Computer Vision</text>
-              <rect x="180" y="118" width="190" height="22" rx="2" fill="#f87171" opacity="0.35"/>
-              <text x="380" y="134" class="chart-label" fill="#e2e8f0">2,090</text>
-            </svg>
-          </div>
-        </div>
-
-        <!-- AMAZON -->
-        <div id="fig-amazon" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div><div class="figure-company-name">Amazon</div><div class="figure-subtitle">AI Labor Market Analysis · AMZN</div></div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'amazon', 'hiring')">Hiring</button>
-              <button class="fig-tab" onclick="switchTab(this, 'amazon', 'roles')">Roles</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="amazon-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">22,100</div><div class="kpi-change trend-up">↑ 19.2%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">5,480</div><div class="kpi-change trend-up">↑ 14.7%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">35 days</div><div class="kpi-change trend-up">↓ 2 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">34%</div><div class="kpi-change trend-up">↑ 7 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <polygon points="50,175 103,165 156,150 209,138 262,120 315,100 368,85 421,70 474,58 527,46 580,35 633,28 680,22 680,200 50,200" fill="rgba(232,197,71,0.1)"/>
-              <polyline points="50,175 103,165 156,150 209,138 262,120 315,100 368,85 421,70 474,58 527,46 580,35 633,28 680,22" fill="none" stroke="#e8c547" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="22" r="5" fill="#e8c547"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-          <div class="figure-content" id="amazon-roles">
-            <div class="chart-title">Top AI Roles by Posting Volume</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px;width:100%">
-              <text x="180" y="30" class="chart-label" fill="#94a3b8">Cloud AI Architect</text>
-              <rect x="180" y="34" width="420" height="22" rx="2" fill="#e8c547" opacity="0.6"/>
-              <text x="610" y="50" class="chart-label" fill="#e2e8f0">5,200</text>
-              <text x="180" y="72" class="chart-label" fill="#94a3b8">MLOps Engineer</text>
-              <rect x="180" y="76" width="350" height="22" rx="2" fill="#e8c547" opacity="0.45"/>
-              <text x="540" y="92" class="chart-label" fill="#e2e8f0">4,330</text>
-              <text x="180" y="114" class="chart-label" fill="#94a3b8">AI Solutions Architect</text>
-              <rect x="180" y="118" width="280" height="22" rx="2" fill="#e8c547" opacity="0.35"/>
-              <text x="470" y="134" class="chart-label" fill="#e2e8f0">3,470</text>
-            </svg>
-          </div>
-        </div>
-
-        <!-- NVIDIA -->
-        <div id="fig-nvidia" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div><div class="figure-company-name">NVIDIA</div><div class="figure-subtitle">AI Labor Market Analysis · NVDA</div></div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'nvidia', 'hiring')">Hiring</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="nvidia-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">8,740</div><div class="kpi-change trend-up">↑ 41.0%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">2,110</div><div class="kpi-change trend-up">↑ 33.2%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">28 days</div><div class="kpi-change trend-up">↓ 8 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">71%</div><div class="kpi-change trend-up">↑ 12 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="65" x2="680" y2="65" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="155" x2="680" y2="155" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <polygon points="50,190 103,185 156,180 209,172 262,160 315,140 368,115 421,88 474,62 527,42 580,30 633,24 680,20 680,200 50,200" fill="rgba(168,85,247,0.12)"/>
-              <polyline points="50,190 103,185 156,180 209,172 262,160 315,140 368,115 421,88 474,62 527,42 580,30 633,24 680,20" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="20" r="5" fill="#a855f7"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-        </div>
-
-        <!-- OPENAI -->
-        <div id="fig-openai" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div><div class="figure-company-name">OpenAI</div><div class="figure-subtitle">AI Labor Market Analysis · PRIVATE</div></div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'openai', 'hiring')">Hiring</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="openai-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">3,210</div><div class="kpi-change trend-up">↑ 28.5%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">680</div><div class="kpi-change trend-up">↑ 22.0%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">22 days</div><div class="kpi-change trend-up">↓ 5 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">96%</div><div class="kpi-change trend-up">↑ 1 pt</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <polyline points="50,190 103,185 156,178 209,170 262,158 315,142 368,120 421,98 474,76 527,55 580,38 633,28 680,22" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="22" r="5" fill="#e2e8f0"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-        </div>
-
-        <!-- IBM -->
-        <div id="fig-ibm" class="company-figure" style="display:none">
-          <div class="figure-header">
-            <div><div class="figure-company-name">IBM</div><div class="figure-subtitle">AI Labor Market Analysis · IBM</div></div>
-            <div class="figure-tabs">
-              <button class="fig-tab active" onclick="switchTab(this, 'ibm', 'hiring')">Hiring</button>
-            </div>
-          </div>
-          <div class="figure-content active" id="ibm-hiring">
-            <div class="kpi-row">
-              <div class="kpi"><div class="kpi-label">AI Postings</div><div class="kpi-value">5,620</div><div class="kpi-change trend-down">↓ 7.8%</div></div>
-              <div class="kpi"><div class="kpi-label">New Hires (Q1)</div><div class="kpi-value">1,040</div><div class="kpi-change trend-down">↓ 11.2%</div></div>
-              <div class="kpi"><div class="kpi-label">Avg. Time to Fill</div><div class="kpi-value">62 days</div><div class="kpi-change trend-down">↑ 14 days</div></div>
-              <div class="kpi"><div class="kpi-label">AI % of Total</div><div class="kpi-value">18%</div><div class="kpi-change trend-down">↓ 3 pts</div></div>
-            </div>
-            <div class="chart-title">Monthly AI Job Postings — 12 Month Trend</div>
-            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="height:220px">
-              <line x1="50" y1="20" x2="680" y2="20" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="110" x2="680" y2="110" stroke="#1e2d42" stroke-width="1"/>
-              <line x1="50" y1="200" x2="680" y2="200" stroke="#1e2d42" stroke-width="1"/>
-              <polyline points="50,80 103,82 156,85 209,90 262,95 315,102 368,112 421,118 474,128 527,138 580,148 633,155 680,162" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linejoin="round"/>
-              <circle cx="680" cy="162" r="5" fill="#f87171"/>
-              <text x="50" y="215" class="chart-label" text-anchor="middle">Apr</text>
-              <text x="262" y="215" class="chart-label" text-anchor="middle">Aug</text>
-              <text x="474" y="215" class="chart-label" text-anchor="middle">Dec</text>
-              <text x="680" y="215" class="chart-label" text-anchor="middle">Mar</text>
-            </svg>
-          </div>
-        </div>
-
-      </div><!-- /figure-panel -->
-    </div><!-- /company-layout -->
+    </div>
   </section>
+
 
   <!-- FOOTER -->
   <footer id="about">
@@ -1244,32 +1043,280 @@
   </footer>
 
   <script>
+    // ── Companies config — edit this list to add/remove companies ──
+    const COMPANIES = [
+      { id: 'microsoft', name: 'Microsoft',  sub: 'MSFT · Big Tech'  },
+      { id: 'google',    name: 'Google',     sub: 'GOOGL · Big Tech' },
+      { id: 'meta',      name: 'Meta',       sub: 'META · Social'    },
+      { id: 'amazon',    name: 'Amazon',     sub: 'AMZN · Cloud'     },
+      { id: 'nvidia',    name: 'NVIDIA',     sub: 'NVDA · Chips'     },
+      { id: 'openai',    name: 'OpenAI',     sub: 'Private · AI Lab' },
+      { id: 'ibm',       name: 'IBM',        sub: 'IBM · Enterprise' },
+    ];
+
+    // Build sidebar buttons
+    const btnContainer = document.getElementById('companyBtns');
+    COMPANIES.forEach((c, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'company-btn' + (i === 0 ? ' active' : '');
+      btn.innerHTML = `
+        <div class="btn-indicator"></div>
+        <div>
+          <span class="btn-name">${c.name}</span>
+          <span class="btn-ticker">${c.sub}</span>
+        </div>`;
+      btn.onclick = () => selectCompany(btn, c);
+      btnContainer.appendChild(btn);
+    });
+
+    // ── Select company → load image ──
     function selectCompany(btn, company) {
-      // Deactivate all buttons
       document.querySelectorAll('.company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Hide all figures
-      document.querySelectorAll('.company-figure').forEach(f => f.style.display = 'none');
+      document.getElementById('figCompanyName').textContent = company.name;
+      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market Analysis · ' + company.sub;
 
-      // Show selected figure
-      const fig = document.getElementById('fig-' + company);
-      if (fig) fig.style.display = 'block';
+      const wrap = document.getElementById('figImgWrap');
+      wrap.innerHTML = '<div style="color:var(--text-muted);font-size:13px">Loading…</div>';
+
+      const img = new Image();
+      const src = `data/figures/${company.id}.png`;
+      img.onload = () => { wrap.innerHTML = ''; wrap.appendChild(img); };
+      img.onerror = () => {
+        wrap.innerHTML = `
+          <div class="figure-placeholder">
+            <div class="ph-icon">📂</div>
+            <p>No figure found for <strong>${company.name}</strong>.<br>
+            Upload your image to <code>data/figures/${company.id}.png</code> in your repo.</p>
+          </div>`;
+      };
+      img.src = src;
+      img.alt = company.name + ' analysis figure';
     }
 
-    function switchTab(btn, company, tab) {
-      // Deactivate all tabs in this company's header
-      const fig = document.getElementById('fig-' + company);
-      fig.querySelectorAll('.fig-tab').forEach(t => t.classList.remove('active'));
+    // Auto-load first company on page load
+    const firstBtn = btnContainer.querySelector('.company-btn');
+    if (firstBtn) selectCompany(firstBtn, COMPANIES[0]);
+
+    // ── News table state ──
+    let allNews = [];           // full parsed dataset
+    let filteredNews = [];      // after filters
+    let currentPage = 1;
+    const PAGE_SIZE = 20;
+    let activeMediaSources = new Set();  // empty = all
+    let activeDays = 0;                  // 0 = all time
+    let sortCol = 'time';
+    let sortDir = 'desc';
+
+    // ── Parse CSV ──
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i];
+        if (!line.trim()) continue;
+        // Handle quoted fields with commas inside
+        const cols = [];
+        let cur = '', inQ = false;
+        for (let c = 0; c < line.length; c++) {
+          if (line[c] === '"') { inQ = !inQ; }
+          else if (line[c] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+          else { cur += line[c]; }
+        }
+        cols.push(cur.trim());
+        const row = {};
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, ''); });
+        if (row.headline) rows.push(row);
+      }
+      return rows;
+    }
+
+    function fetchCSV() {
+      fetch('data/news.csv')
+        .then(res => {
+          if (!res.ok) throw new Error('not found');
+          return res.text();
+        })
+        .then(text => {
+          allNews = parseCSV(text);
+          allNews.forEach(row => {
+            row._date = new Date(row.time);
+            if (isNaN(row._date)) row._date = null;
+          });
+          document.getElementById('csvLoadedBadge').style.display = 'inline-block';
+          document.getElementById('filterStats').style.display = 'flex';
+          buildMediaFilters();
+          applyFilters();
+        })
+        .catch(() => {
+          document.getElementById('csvErrorBadge').style.display = 'inline-block';
+          document.getElementById('newsEmpty').style.display = 'block';
+          document.getElementById('newsEmpty').innerHTML = `
+            <div class="empty-icon">📂</div>
+            <p>Could not load <strong>data/news.csv</strong>.<br>
+            Make sure the file exists in your GitHub repo at <code style="color:var(--accent)">data/news.csv</code>.</p>`;
+        });
+    }
+
+    // ── Build media checkboxes dynamically ──
+    function buildMediaFilters() {
+      const sources = [...new Set(allNews.map(r => r.media).filter(Boolean))].sort();
+      const container = document.getElementById('mediaFilters');
+      container.innerHTML = '';
+      sources.forEach(src => {
+        const chip = document.createElement('label');
+        chip.className = 'media-chip checked';
+        chip.innerHTML = `<input type="checkbox" checked><span class="chip-dot"></span>${src}`;
+        chip.querySelector('input').addEventListener('change', (e) => {
+          if (e.target.checked) {
+            activeMediaSources.delete(src);
+            chip.classList.add('checked');
+          } else {
+            activeMediaSources.add(src);
+            chip.classList.remove('checked');
+          }
+          applyFilters();
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    // ── Time filter ──
+    function setTimeFilter(btn) {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
-      // Hide all contents in this company's panel
-      fig.querySelectorAll('.figure-content').forEach(c => c.classList.remove('active'));
-
-      // Show selected content
-      const content = document.getElementById(company + '-' + tab);
-      if (content) content.classList.add('active');
+      activeDays = parseInt(btn.dataset.days);
+      applyFilters();
     }
+
+    // ── Main filter + sort ──
+    function applyFilters() {
+      const keyword = document.getElementById('keywordInput').value.toLowerCase().trim();
+      const now = new Date();
+
+      filteredNews = allNews.filter(row => {
+        // Keyword
+        if (keyword && !row.headline.toLowerCase().includes(keyword)) return false;
+        // Media
+        if (activeMediaSources.size > 0 && activeMediaSources.has(row.media)) return false;
+        // Time
+        if (activeDays > 0 && row._date) {
+          const diffDays = (now - row._date) / (1000 * 60 * 60 * 24);
+          if (diffDays > activeDays) return false;
+        }
+        return true;
+      });
+
+      // Sort
+      filteredNews.sort((a, b) => {
+        let av = a[sortCol] || '', bv = b[sortCol] || '';
+        if (sortCol === 'time') { av = a._date || 0; bv = b._date || 0; }
+        if (av < bv) return sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      currentPage = 1;
+      renderTable();
+      updateStats();
+    }
+
+    function sortTable(col) {
+      if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      else { sortCol = col; sortDir = col === 'time' ? 'desc' : 'asc'; }
+      // Update sort indicators
+      ['headline','media','time'].forEach(c => {
+        const el = document.getElementById('sort-' + c);
+        el.className = 'th-sort' + (c === sortCol ? ' ' + sortDir : '');
+      });
+      applyFilters();
+    }
+
+    // ── Render table rows ──
+    function renderTable() {
+      const tbody = document.getElementById('newsTableBody');
+      const empty = document.getElementById('newsEmpty');
+      const pagination = document.getElementById('newsPagination');
+      tbody.innerHTML = '';
+
+      if (filteredNews.length === 0) {
+        empty.style.display = 'block';
+        pagination.style.display = 'none';
+        return;
+      }
+
+      empty.style.display = 'none';
+      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageData = filteredNews.slice(start, start + PAGE_SIZE);
+
+      pageData.forEach(row => {
+        const tr = document.createElement('tr');
+        const dateStr = row._date ? row._date.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : row.time;
+        const timeAgo = row._date ? getTimeAgo(row._date) : '';
+        const linkCell = row.link
+          ? `<a href="${row.link}" target="_blank" rel="noopener" style="color:var(--accent2); text-decoration:none; font-size:18px; display:block; text-align:center" title="Open article">↗</a>`
+          : `<span style="color:var(--text-muted); text-align:center; display:block">—</span>`;
+        tr.innerHTML = `
+          <td class="td-headline">${row.headline}</td>
+          <td class="td-media"><span class="media-badge">${row.media || '—'}</span></td>
+          <td class="td-time">${dateStr}<span class="time-ago">${timeAgo}</span></td>
+          <td>${linkCell}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Pagination
+      if (totalPages > 1) {
+        pagination.style.display = 'flex';
+        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = currentPage === 1;
+        document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+      } else {
+        pagination.style.display = 'none';
+      }
+    }
+
+    function changePage(dir) {
+      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
+      currentPage = Math.max(1, Math.min(totalPages, currentPage + dir));
+      renderTable();
+    }
+
+    function updateStats() {
+      document.getElementById('visibleCount').textContent = filteredNews.length;
+      document.getElementById('totalCount').textContent = allNews.length;
+    }
+
+    function clearFilters() {
+      document.getElementById('keywordInput').value = '';
+      activeMediaSources.clear();
+      document.querySelectorAll('.media-chip').forEach(c => {
+        c.classList.add('checked');
+        c.querySelector('input').checked = true;
+      });
+      activeDays = 0;
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-days="0"]').classList.add('active');
+      applyFilters();
+    }
+
+    function getTimeAgo(date) {
+      const diff = (new Date() - date) / 1000;
+      if (diff < 86400) return 'Today';
+      if (diff < 172800) return 'Yesterday';
+      const days = Math.floor(diff / 86400);
+      if (days < 30) return `${days}d ago`;
+      const months = Math.floor(days / 30);
+      if (months < 12) return `${months}mo ago`;
+      return `${Math.floor(months/12)}yr ago`;
+    }
+
+    // Initialize sort indicator & auto-load CSV from repo
+    document.getElementById('sort-time').className = 'th-sort desc';
+    fetchCSV();
   </script>
 </body>
 </html>
