@@ -121,9 +121,9 @@
       pointer-events: none;
     }
 
-    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-    .hero-text { max-width: 540px; }
-    .hero-chart { position: relative; min-height: 320px; }
+    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: center; }
+    .hero-text { max-width: 600px; }
+    .hero-chart { position: relative; min-height: 240px; }
     .hero-chart canvas { width: 100% !important; }
     .hero-chart-legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
     .hero-chart-legend span { display: flex; align-items: center; gap: 5px; }
@@ -833,7 +833,7 @@
       </div>
       <div class="hero-chart">
         <div class="hero-chart-legend"><span><span class="hero-chart-dot"></span>AI post %</span></div>
-        <div style="position:relative;width:100%;height:280px"><canvas id="heroTrendChart"></canvas></div>
+        <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
         <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
       </div>
     </div>
