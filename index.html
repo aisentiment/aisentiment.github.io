@@ -403,12 +403,7 @@
     .news-table-wrap {
       padding: 0 48px;
       overflow-x: auto;
-      max-height: 320px;
-      overflow-y: auto;
     }
-    .news-table-wrap::-webkit-scrollbar { width: 4px; height: 4px; }
-    .news-table-wrap::-webkit-scrollbar-track { background: transparent; }
-    .news-table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     .news-table {
       width: 100%;
@@ -416,7 +411,6 @@
       border: 1px solid var(--border);
     }
 
-    .news-table thead th { position: sticky; top: 0; z-index: 2; }
     .news-table thead tr {
       background: var(--surface2);
       border-bottom: 2px solid var(--border);
@@ -1217,7 +1211,7 @@
     let allNews = [];
     let filteredNews = [];
     let currentPage = 1;
-    const PAGE_SIZE = 20;
+    const PAGE_SIZE = 10;
     let sortCol = 'time';
     let sortDir = 'desc';
 
