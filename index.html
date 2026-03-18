@@ -985,7 +985,7 @@
             <div class="figure-company-name" id="figCompanyName">—</div>
             <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
           </div>
-          <div class="figure-gvkey" id="figGvkey" style="display:none"></div>
+
         </div>
         <div class="figure-body" id="figureBody">
           <div class="radar-empty">
@@ -1012,16 +1012,19 @@
 
   <script>
     // ── Company radar chart ──
+    // 👇 Change this to match your actual filename in the data/ folder
+    const COMPANIES_CSV_PATH = 'data/companies.csv';
+
     let companyData = [];
     let globalScales = {};
 
     const RADAR_METRICS = [
-      { key: 'ai_talent_perc',         label: 'AI Talent %'    },
-      { key: 'hire_percent',           label: 'Hire %'         },
-      { key: 'ai_salary_premium',      label: 'Salary Premium' },
-      { key: 'executive_ai_sentiment', label: 'Exec Sentiment' },
-      { key: 'emp_ai_sentiment',       label: 'Emp Sentiment'  },
-      { key: 'retention_perc',         label: 'Retention %'    },
+      { key: 'ai_talent_perc',         label: '2025 AI Talent %',            sublabel: 'relative to total employees' },
+      { key: 'retention_perc',         label: '2025 Avg Retention %',        sublabel: 'quarterly average'           },
+      { key: 'hire_percent',           label: '2025 Avg Hiring %',           sublabel: 'quarterly average'           },
+      { key: 'ai_salary_premium',      label: '2025 AI Salary Premium',      sublabel: 'AI position premium'         },
+      { key: 'emp_ai_sentiment',       label: '2025 Employee AI Sentiment',  sublabel: ''                            },
+      { key: 'executive_ai_sentiment', label: '2025 Executive AI Sentiment', sublabel: ''                            },
     ];
 
     // Robust TSV/CSV parser — auto-detects tab vs comma
@@ -1068,7 +1071,7 @@
     }
 
     function fetchCompaniesCSV() {
-      fetch('data/companies.csv')
+      fetch(COMPANIES_CSV_PATH)
         .then(res => {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           return res.text();
@@ -1082,8 +1085,10 @@
         .catch(err => {
           document.getElementById('companyBtns').innerHTML =
             `<div style="padding:16px;font-size:12px;color:var(--red)">
-              Could not load data/companies.csv<br>
-              <span style="color:var(--text-muted);font-size:11px">${err.message}</span>
+              Could not load <strong>${COMPANIES_CSV_PATH}</strong><br>
+              <span style="color:var(--text-muted);font-size:11px">
+                ${err.message} — check the filename matches exactly (case-sensitive)
+              </span>
             </div>`;
         });
     }
@@ -1098,7 +1103,7 @@
           <div class="btn-indicator"></div>
           <div>
             <span class="btn-name">${row.conm}</span>
-            <span class="btn-ticker">gvkey: ${row.gvkey || '—'}</span>
+            <span class="btn-ticker">${row.rcid || ''}</span>
           </div>`;
         btn.addEventListener('click', () => selectCompany(btn, row));
         container.appendChild(btn);
@@ -1112,9 +1117,7 @@
       btn.classList.add('active');
       document.getElementById('figCompanyName').textContent = row.conm;
       document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
-      const gvEl = document.getElementById('figGvkey');
-      gvEl.style.display = 'inline-block';
-      gvEl.textContent = 'gvkey: ' + (row.gvkey || '—');
+
       drawRadar(row);
     }
 
@@ -1122,7 +1125,7 @@
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
       const N = RADAR_METRICS.length;
-      const CX = 190, CY = 190, R = 140;
+      const CX = 230, CY = 230, R = 170;
       const MAX_SCALE = 5;
 
       const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
@@ -1159,23 +1162,26 @@
         svg += `<line x1="${CX}" y1="${CY}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" stroke="#1e2d42" stroke-width="1"/>`;
       });
 
-      // Axis labels
+      // Axis labels — two lines: main label + sublabel
       angles.forEach((a, i) => {
-        const lp = pt(R + 26, a);
+        const lp = pt(R + 30, a);
         const anchor = lp.x < CX - 8 ? 'end' : lp.x > CX + 8 ? 'start' : 'middle';
-        // Split long labels to two lines
-        const words = RADAR_METRICS[i].label.split(' ');
-        if (words.length > 1) {
-          const mid = Math.ceil(words.length / 2);
-          const line1 = words.slice(0, mid).join(' ');
-          const line2 = words.slice(mid).join(' ');
-          svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y - 4).toFixed(1)}" fill="#94a3b8" font-size="11" font-family="DM Mono,monospace" text-anchor="${anchor}">
-            <tspan x="${lp.x.toFixed(1)}" dy="0">${line1}</tspan>
-            <tspan x="${lp.x.toFixed(1)}" dy="13">${line2}</tspan>
-          </text>`;
-        } else {
-          svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y + 4).toFixed(1)}" fill="#94a3b8" font-size="11" font-family="DM Mono,monospace" text-anchor="${anchor}">${RADAR_METRICS[i].label}</text>`;
-        }
+        const m = RADAR_METRICS[i];
+        // Break label at last space before midpoint for two lines
+        const words = m.label.split(' ');
+        const mid = Math.ceil(words.length / 2);
+        const line1 = words.slice(0, mid).join(' ');
+        const line2 = words.slice(mid).join(' ');
+        const hasLine2 = line2.length > 0;
+        const hasSub   = m.sublabel && m.sublabel.length > 0;
+        // y start: shift up if multi-line
+        const yStart = lp.y - (hasLine2 ? 7 : 0) - (hasSub ? 5 : 0);
+        let t = `<text x="${lp.x.toFixed(1)}" y="${yStart.toFixed(1)}" font-family="DM Mono,monospace" text-anchor="${anchor}">`;
+        t += `<tspan x="${lp.x.toFixed(1)}" dy="0" fill="#e2e8f0" font-size="11" font-weight="500">${line1}</tspan>`;
+        if (hasLine2) t += `<tspan x="${lp.x.toFixed(1)}" dy="14" fill="#e2e8f0" font-size="11" font-weight="500">${line2}</tspan>`;
+        if (hasSub)   t += `<tspan x="${lp.x.toFixed(1)}" dy="13" fill="#64748b" font-size="9">${m.sublabel}</tspan>`;
+        t += `</text>`;
+        svg += t;
       });
 
       // Data polygon
@@ -1199,7 +1205,7 @@
         const bar  = `<div style="height:3px;width:${pct}%;background:var(--accent2);border-radius:2px;margin-top:4px"></div>`;
         return `<div class="legend-item">
           <span class="legend-dot"></span>
-          <span class="legend-label">${m.label}</span>
+          <span class="legend-label" style="font-size:11px;line-height:1.3">${m.label}</span>
           <span class="legend-value">${disp}</span>
         </div>${bar}`;
       }).join('');
