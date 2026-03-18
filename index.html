@@ -587,6 +587,28 @@
       overflow: hidden;
     }
 
+    /* Company search */
+    .company-search {
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .company-search-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 7px 10px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .company-search-input:focus { border-color: var(--accent2); }
+    .company-search-input::placeholder { color: var(--text-muted); }
+
     /* All companies — single scrollable list */
     .company-panel-scroll {
       flex: 1;
@@ -918,6 +940,10 @@
     <div class="company-layout">
       <div class="company-panel">
         <div class="company-panel-header">Select Company</div>
+        <div class="company-search">
+          <input class="company-search-input" id="companySearch" type="text"
+            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
+        </div>
         <div id="companyBtns">
           <div style="padding:16px;font-size:12px;color:var(--text-muted)">Loading companies…</div>
         </div>
@@ -1170,6 +1196,14 @@
       if (compCount > 0) items.push(`<div class="insight-pill"><span class="pill-dot radar"></span><span class="pill-num">${compCount}</span><span>companies analysed</span></div>`);
       items.push(`<div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
       pills.innerHTML = items.join('');
+    }
+
+    function filterCompanyBtns(q) {
+      const term = q.toLowerCase().trim();
+      document.querySelectorAll('#companyBtns .company-btn').forEach(btn => {
+        const name = btn.querySelector('.btn-name').textContent.toLowerCase();
+        btn.style.display = name.includes(term) ? '' : 'none';
+      });
     }
 
     fetchCompaniesCSV();
