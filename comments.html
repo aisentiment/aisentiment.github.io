@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Voices — AI Labor Market Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f4f6f8;
+      --surface2: #e9ecf0;
+      --border: #d0d5dd;
+      --accent: #5ba3d9;
+      --accent2: #3b8abf;
+      --text: #1e293b;
+      --text-muted: #7a8694;
+      --text-dim: #4a5568;
+      --red: #e05252;
+      --green: #38b36e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91,163,217,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,163,217,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    .page-hero {
+      position: relative;
+      z-index: 1;
+      padding: 56px 48px 48px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      color: #7a8694;
+      margin-bottom: 12px;
+    }
+
+    .page-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .page-hero p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 680px;
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 48px;
+    }
+
+    .comments-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 2px;
+      min-height: 600px;
+    }
+
+    /* ── FORM PANEL ── */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .form-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .field { margin-bottom: 24px; }
+
+    .field-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .star-row { display: flex; gap: 6px; margin-bottom: 6px; }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 30px;
+      color: var(--border);
+      cursor: pointer;
+      transition: color 0.15s, transform 0.15s;
+      padding: 0 2px;
+      line-height: 1;
+    }
+
+    .star-btn:hover { transform: scale(1.15); }
+    .star-btn.active { color: #EF9F27; }
+    .star-btn.hover-preview { color: #FAC775; }
+
+    .rating-hint { font-size: 12px; color: var(--text-muted); }
+
+    .location-select {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8694' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    .location-select:focus { border-color: var(--accent); }
+
+    .comment-input {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.2s;
+    }
+
+    .comment-input:focus { border-color: var(--accent); }
+    .comment-input::placeholder { color: var(--text-muted); }
+
+    .char-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.03em;
+      width: 100%;
+    }
+
+    .submit-btn:hover { background: var(--accent2); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .submit-msg {
+      font-size: 13px;
+      margin-top: 12px;
+      min-height: 20px;
+      text-align: center;
+    }
+
+    /* ── FEED PANEL ── */
+    .feed-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feed-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .feed-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .feed-count {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .feed-filters {
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .filter-pill {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+
+    .filter-pill:hover { border-color: var(--accent); color: var(--text); }
+    .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
+
+    .feed-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      min-height: 0;
+    }
+
+    .feed-scroll::-webkit-scrollbar { width: 4px; }
+    .feed-scroll::-webkit-scrollbar-track { background: transparent; }
+    .feed-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .opinion-card {
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-bottom: 8px;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .opinion-card:hover { border-color: rgba(91,163,217,0.4); }
+
+    .opinion-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .opinion-top-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .opinion-stars {
+      color: #EF9F27;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .opinion-location {
+      font-size: 12px;
+      color: var(--accent2);
+      background: rgba(91,163,217,0.1);
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .opinion-time {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .opinion-text {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .feed-empty {
+      padding: 80px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left { font-size: 14px; color: var(--text-muted); }
+
+    .footer-left strong {
+      font-family: 'Syne', sans-serif;
+      color: var(--accent);
+      font-size: 15px;
+    }
+
+    .footer-right {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    @media (max-width: 1024px) {
+      .comments-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav, .page-hero, .main-content, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">AI·LMI <span>/ Labor Market Intelligence</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#news">News</a></li>
+      <li><a href="index.html#analysis">Analysis</a></li>
+      <li><a href="comments.html" class="active">Comments</a></li>
+      <li><a href="index.html#about">About</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-hero">
+    <h1><em>Community</em> Voices</h1>
+    <p>How is AI affecting your workplace? Share your experience anonymously — rate your satisfaction with AI at your firm and tell us about your concerns, hopes, or observations.</p>
+  </section>
+
+  <div class="main-content">
+    <div class="comments-layout">
+
+      <div class="form-panel">
+        <div class="form-title">Share your experience</div>
+        <div class="form-desc">All submissions are completely anonymous.</div>
+
+        <div class="field">
+          <div class="field-label">AI satisfaction at your firm</div>
+          <div class="star-row" id="starRow">
+            <button class="star-btn" data-val="1">★</button>
+            <button class="star-btn" data-val="2">★</button>
+            <button class="star-btn" data-val="3">★</button>
+            <button class="star-btn" data-val="4">★</button>
+            <button class="star-btn" data-val="5">★</button>
+          </div>
+          <div class="rating-hint" id="ratingHint">Select 1 (very dissatisfied) to 5 (very satisfied)</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your location</div>
+          <select class="location-select" id="locationSelect">
+            <option value="">Select a region...</option>
+            <option value="US - Northeast">US — Northeast</option>
+            <option value="US - Southeast">US — Southeast</option>
+            <option value="US - Midwest">US — Midwest</option>
+            <option value="US - Southwest">US — Southwest</option>
+            <option value="US - West">US — West</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="Europe">Europe</option>
+            <option value="Asia - East">Asia — East</option>
+            <option value="Asia - South">Asia — South</option>
+            <option value="Asia - Southeast">Asia — Southeast</option>
+            <option value="Middle East">Middle East</option>
+            <option value="Africa">Africa</option>
+            <option value="Latin America">Latin America</option>
+            <option value="Oceania">Oceania</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your thoughts on AI use and job concerns</div>
+          <textarea class="comment-input" id="commentInput" rows="5"
+            placeholder="e.g. AI tools have improved my productivity, but I worry about..."
+            oninput="updateCharCount()"></textarea>
+          <div class="char-count"><span id="charCount">0</span> / 1000</div>
+        </div>
+
+        <button class="submit-btn" onclick="submitOpinion()">Submit anonymously</button>
+        <div class="submit-msg" id="submitMsg"></div>
+      </div>
+
+      <div class="feed-panel">
+        <div class="feed-header">
+          <span class="feed-title">Recent responses</span>
+          <span class="feed-count" id="feedCount">0 responses</span>
+        </div>
+        <div class="feed-filters">
+          <button class="filter-pill active" onclick="filterFeed('all', this)">All</button>
+          <button class="filter-pill" onclick="filterFeed(5, this)">★★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(4, this)">★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(3, this)">★★★</button>
+          <button class="filter-pill" onclick="filterFeed(2, this)">★★</button>
+          <button class="filter-pill" onclick="filterFeed(1, this)">★</button>
+        </div>
+        <div class="feed-scroll" id="feedScroll">
+          <div class="feed-empty" id="feedEmpty">No responses yet — be the first to share your experience with AI in the workplace.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <strong>AI · LMI</strong><br>
+      Labor Market Intelligence Platform
+    </div>
+    <div class="footer-right">
+      Data updated weekly · Sources: LinkedIn, Glassdoor, company filings<br>
+      © 2026 AI Labor Market Intelligence. For research purposes.
+    </div>
+  </footer>
+
+  <script>
+    let selectedRating = 0;
+    let opinions = [];
+    let currentFilter = 'all';
+
+    const starBtns = document.querySelectorAll('.star-btn');
+    const ratingHint = document.getElementById('ratingHint');
+    const hints = ['','Very dissatisfied','Dissatisfied','Neutral','Satisfied','Very satisfied'];
+
+    starBtns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        const val = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('hover-preview', +b.dataset.val <= val && +b.dataset.val > selectedRating);
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        starBtns.forEach(b => b.classList.remove('hover-preview'));
+      });
+      btn.addEventListener('click', () => {
+        selectedRating = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('active', +b.dataset.val <= selectedRating);
+          b.classList.remove('hover-preview');
+        });
+        ratingHint.textContent = hints[selectedRating];
+      });
+    });
+
+    function updateCharCount() {
+      const len = document.getElementById('commentInput').value.length;
+      const el = document.getElementById('charCount');
+      el.textContent = len;
+      el.style.color = len > 1000 ? 'var(--red)' : 'var(--text-muted)';
+    }
+
+    function submitOpinion() {
+      const comment = document.getElementById('commentInput').value.trim();
+      const location = document.getElementById('locationSelect').value;
+      const msg = document.getElementById('submitMsg');
+
+      if (selectedRating === 0) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please select a rating (1–5 stars).';
+        return;
+      }
+      if (!location) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please select your location.';
+        return;
+      }
+      if (comment.length === 0) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please share your thoughts before submitting.';
+        return;
+      }
+      if (comment.length > 1000) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please keep your comment under 1000 characters.';
+        return;
+      }
+
+      opinions.unshift({
+        rating: selectedRating,
+        location: location,
+        comment: comment,
+        time: new Date().toISOString()
+      });
+
+      saveOpinions();
+      renderFeed();
+
+      selectedRating = 0;
+      starBtns.forEach(b => { b.classList.remove('active','hover-preview'); });
+      ratingHint.textContent = 'Select 1 (very dissatisfied) to 5 (very satisfied)';
+      document.getElementById('commentInput').value = '';
+      document.getElementById('locationSelect').value = '';
+      document.getElementById('charCount').textContent = '0';
+
+      msg.style.color = 'var(--green)';
+      msg.textContent = 'Thank you — your response has been recorded anonymously.';
+      setTimeout(() => { msg.textContent = ''; }, 4000);
+    }
+
+    function filterFeed(val, btn) {
+      currentFilter = val;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFeed();
+    }
+
+    function renderFeed() {
+      const scroll = document.getElementById('feedScroll');
+      const countEl = document.getElementById('feedCount');
+
+      const filtered = currentFilter === 'all'
+        ? opinions
+        : opinions.filter(o => o.rating === currentFilter);
+
+      countEl.textContent = opinions.length + ' response' + (opinions.length !== 1 ? 's' : '');
+
+      if (filtered.length === 0) {
+        scroll.innerHTML = `<div class="feed-empty">${opinions.length === 0
+          ? 'No responses yet — be the first to share your experience with AI in the workplace.'
+          : 'No responses match this filter.'}</div>`;
+        return;
+      }
+
+      scroll.innerHTML = filtered.map(op => {
+        const stars = '★'.repeat(op.rating) + '☆'.repeat(5 - op.rating);
+        const d = new Date(op.time);
+        const timeStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+          + ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+        const safe = op.comment.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const locBadge = op.location ? `<span class="opinion-location">${op.location}</span>` : '';
+        return `<div class="opinion-card">
+          <div class="opinion-top">
+            <div class="opinion-top-left">
+              <span class="opinion-stars">${stars}</span>
+              ${locBadge}
+            </div>
+            <span class="opinion-time">${timeStr}</span>
+          </div>
+          <div class="opinion-text">${safe}</div>
+        </div>`;
+      }).join('');
+    }
+
+    async function saveOpinions() {
+      try {
+        if (window.storage) {
+          await window.storage.set('ai-lmi-opinions', JSON.stringify(opinions), true);
+        }
+      } catch(e) {}
+    }
+
+    async function loadOpinions() {
+      try {
+        if (window.storage) {
+          const result = await window.storage.get('ai-lmi-opinions', true);
+          if (result && result.value) {
+            opinions = JSON.parse(result.value);
+          }
+        }
+      } catch(e) {}
+      renderFeed();
+    }
+
+    loadOpinions();
+  </script>
+</body>
+</html>
