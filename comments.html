@@ -435,6 +435,11 @@
         </div>
 
         <div class="field">
+          <div class="field-label">Your employer</div>
+          <input class="location-select" id="employerInput" type="text" placeholder="e.g. Google, JPMorgan, a startup..." style="background-image:none;cursor:text">
+        </div>
+
+        <div class="field">
           <div class="field-label">Your location</div>
           <select class="location-select" id="locationSelect">
             <option value="">Select a region...</option>
@@ -540,11 +545,17 @@
     function submitOpinion() {
       const comment = document.getElementById('commentInput').value.trim();
       const location = document.getElementById('locationSelect').value;
+      const employer = document.getElementById('employerInput').value.trim();
       const msg = document.getElementById('submitMsg');
 
       if (selectedRating === 0) {
         msg.style.color = 'var(--red)';
         msg.textContent = 'Please select a rating (1–5 stars).';
+        return;
+      }
+      if (!employer) {
+        msg.style.color = 'var(--red)';
+        msg.textContent = 'Please enter your employer name.';
         return;
       }
       if (!location) {
@@ -565,6 +576,7 @@
 
       opinions.unshift({
         rating: selectedRating,
+        employer: employer,
         location: location,
         comment: comment,
         time: new Date().toISOString()
@@ -578,6 +590,7 @@
       ratingHint.textContent = 'Select 1 (very dissatisfied) to 5 (very satisfied)';
       document.getElementById('commentInput').value = '';
       document.getElementById('locationSelect').value = '';
+      document.getElementById('employerInput').value = '';
       document.getElementById('charCount').textContent = '0';
 
       msg.style.color = 'var(--green)';
@@ -616,10 +629,12 @@
           + ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
         const safe = op.comment.replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const locBadge = op.location ? `<span class="opinion-location">${op.location}</span>` : '';
+        const empBadge = op.employer ? `<span class="opinion-location" style="background:rgba(93,202,165,0.12);color:#085041">${op.employer.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>` : '';
         return `<div class="opinion-card">
           <div class="opinion-top">
             <div class="opinion-top-left">
               <span class="opinion-stars">${stars}</span>
+              ${empBadge}
               ${locBadge}
             </div>
             <span class="opinion-time">${timeStr}</span>
