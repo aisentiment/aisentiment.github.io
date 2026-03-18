@@ -641,7 +641,7 @@
       letter-spacing: 0.06em;
     }
 
-    /* Figure panel — image display */
+    /* Figure panel — radar chart */
     .figure-panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -654,6 +654,7 @@
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
     }
 
@@ -669,33 +670,70 @@
       margin-top: 2px;
     }
 
-    .figure-img-wrap {
+    .figure-gvkey {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+    }
+
+    .figure-body {
       flex: 1;
-      padding: 28px;
+      padding: 20px 28px 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 420px;
-      position: relative;
+      gap: 40px;
+      min-height: 440px;
+      flex-wrap: wrap;
     }
 
-    .figure-img-wrap img {
-      max-width: 100%;
-      max-height: 480px;
-      object-fit: contain;
-      display: block;
-      border-radius: 2px;
-      animation: fadeIn 0.3s ease;
+    .radar-wrap {
+      flex-shrink: 0;
     }
 
-    .figure-placeholder {
+    .radar-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 200px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--accent2);
+    }
+
+    .legend-label { color: var(--text-dim); }
+    .legend-value {
+      margin-left: auto;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      min-width: 48px;
+      text-align: right;
+    }
+
+    .radar-empty {
       text-align: center;
       color: var(--text-muted);
+      padding: 60px 20px;
     }
-
-    .figure-placeholder .ph-icon { font-size: 36px; margin-bottom: 12px; }
-    .figure-placeholder p { font-size: 13px; line-height: 1.6; }
-    .figure-placeholder code {
+    .radar-empty .ph-icon { font-size: 36px; margin-bottom: 12px; }
+    .radar-empty p { font-size: 13px; line-height: 1.6; }
+    .radar-empty code {
       color: var(--accent);
       background: rgba(232,197,71,0.08);
       padding: 2px 6px;
@@ -934,30 +972,28 @@
     </div>
 
     <div class="company-layout">
-
-      <!-- Sidebar buttons — driven by JS from companies array -->
       <div class="company-panel">
         <div class="company-panel-header">Select Company</div>
-        <div id="companyBtns"></div>
+        <div id="companyBtns">
+          <div style="padding:16px;font-size:12px;color:var(--text-muted)">Loading companies…</div>
+        </div>
       </div>
 
-      <!-- Figure display — one image per company -->
       <div class="figure-panel" id="figurePanel">
         <div class="figure-header">
           <div>
             <div class="figure-company-name" id="figCompanyName">—</div>
             <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
           </div>
+          <div class="figure-gvkey" id="figGvkey" style="display:none"></div>
         </div>
-        <div class="figure-img-wrap" id="figImgWrap">
-          <div class="figure-placeholder">
+        <div class="figure-body" id="figureBody">
+          <div class="radar-empty">
             <div class="ph-icon">📊</div>
-            <p>Click a company on the left to load its analysis figure.<br>
-            Images are read from <code>data/figures/{company}.png</code> in your repo.</p>
+            <p>Reads from <code>data/companies.csv</code> in your repo.<br>Click a company to view its radar chart.</p>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -975,61 +1011,222 @@
   </footer>
 
   <script>
-    // ── Companies config — edit this list to add/remove companies ──
-    const COMPANIES = [
-      { id: 'microsoft', name: 'Microsoft',  sub: 'MSFT · Big Tech'  },
-      { id: 'google',    name: 'Google',     sub: 'GOOGL · Big Tech' },
-      { id: 'meta',      name: 'Meta',       sub: 'META · Social'    },
-      { id: 'amazon',    name: 'Amazon',     sub: 'AMZN · Cloud'     },
-      { id: 'nvidia',    name: 'NVIDIA',     sub: 'NVDA · Chips'     },
-      { id: 'openai',    name: 'OpenAI',     sub: 'Private · AI Lab' },
-      { id: 'ibm',       name: 'IBM',        sub: 'IBM · Enterprise' },
+    // ── Company radar chart state ──
+    let companyData = [];  // rows from data/companies.csv
+
+    const RADAR_METRICS = [
+      { key: 'ai_talent_perc',           label: 'AI Talent %'       },
+      { key: 'hire_percent',             label: 'Hire %'            },
+      { key: 'ai_salary_premium',        label: 'Salary Premium'    },
+      { key: 'executive_ai_sentiment',   label: 'Exec Sentiment'    },
+      { key: 'emp_ai_sentiment',         label: 'Emp Sentiment'     },
+      { key: 'retention_perc',           label: 'Retention %'       },
     ];
 
-    // Build sidebar buttons
-    const btnContainer = document.getElementById('companyBtns');
-    COMPANIES.forEach((c, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'company-btn' + (i === 0 ? ' active' : '');
-      btn.innerHTML = `
-        <div class="btn-indicator"></div>
-        <div>
-          <span class="btn-name">${c.name}</span>
-          <span class="btn-ticker">${c.sub}</span>
-        </div>`;
-      btn.onclick = () => selectCompany(btn, c);
-      btnContainer.appendChild(btn);
-    });
+    // Parse companies CSV
+    function parseCompaniesCSV(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines[0].split('\t').map(h => h.trim().toLowerCase());
+      // also support comma-separated
+      const sep = headers.length > 1 ? '\t' : ',';
+      const hdrs = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const cols = lines[i].split(sep);
+        const row = {};
+        hdrs.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
+        if (row.conm) rows.push(row);
+      }
+      return rows;
+    }
 
-    // ── Select company → load image ──
-    function selectCompany(btn, company) {
+    // Compute global min/max per metric across all companies → for auto-scaling
+    function computeScales(rows) {
+      const scales = {};
+      RADAR_METRICS.forEach(m => {
+        const vals = rows.map(r => parseFloat(r[m.key])).filter(v => !isNaN(v));
+        scales[m.key] = {
+          min: vals.length ? Math.min(...vals) : 0,
+          max: vals.length ? Math.max(...vals) : 1,
+        };
+      });
+      return scales;
+    }
+
+    let globalScales = {};
+
+    // Normalize a raw value to 0–5 scale
+    function normalize(val, key) {
+      const raw = parseFloat(val);
+      if (isNaN(raw)) return 0;
+      const { min, max } = globalScales[key];
+      if (max === min) return 2.5;
+      return Math.max(0, Math.min(5, ((raw - min) / (max - min)) * 5));
+    }
+
+    function fetchCompaniesCSV() {
+      fetch('data/companies.csv')
+        .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
+        .then(text => {
+          companyData = parseCompaniesCSV(text);
+          globalScales = computeScales(companyData);
+          buildCompanyButtons();
+        })
+        .catch(() => {
+          document.getElementById('companyBtns').innerHTML =
+            '<div style="padding:16px;font-size:12px;color:var(--red)">Could not load data/companies.csv</div>';
+        });
+    }
+
+    function buildCompanyButtons() {
+      const container = document.getElementById('companyBtns');
+      container.innerHTML = '';
+      companyData.forEach((row, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'company-btn' + (i === 0 ? ' active' : '');
+        btn.innerHTML = `
+          <div class="btn-indicator"></div>
+          <div>
+            <span class="btn-name">${row.conm}</span>
+            <span class="btn-ticker">gvkey: ${row.gvkey || '—'}</span>
+          </div>`;
+        btn.onclick = () => selectCompany(btn, row);
+        container.appendChild(btn);
+      });
+      if (companyData.length > 0) selectCompany(container.querySelector('.company-btn'), companyData[0]);
+    }
+
+    function selectCompany(btn, row) {
       document.querySelectorAll('.company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      document.getElementById('figCompanyName').textContent = company.name;
-      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market Analysis · ' + company.sub;
+      document.getElementById('figCompanyName').textContent = row.conm;
+      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
+      const gvEl = document.getElementById('figGvkey');
+      gvEl.style.display = 'inline-block';
+      gvEl.textContent = 'gvkey: ' + (row.gvkey || '—');
 
-      const wrap = document.getElementById('figImgWrap');
-      wrap.innerHTML = '<div style="color:var(--text-muted);font-size:13px">Loading…</div>';
-
-      const img = new Image();
-      const src = `data/figures/${company.id}.png`;
-      img.onload = () => { wrap.innerHTML = ''; wrap.appendChild(img); };
-      img.onerror = () => {
-        wrap.innerHTML = `
-          <div class="figure-placeholder">
-            <div class="ph-icon">📂</div>
-            <p>No figure found for <strong>${company.name}</strong>.<br>
-            Upload your image to <code>data/figures/${company.id}.png</code> in your repo.</p>
-          </div>`;
-      };
-      img.src = src;
-      img.alt = company.name + ' analysis figure';
+      drawRadar(row);
     }
 
-    // Auto-load first company on page load
-    const firstBtn = btnContainer.querySelector('.company-btn');
-    if (firstBtn) selectCompany(firstBtn, COMPANIES[0]);
+    function drawRadar(row) {
+      const body = document.getElementById('figureBody');
+      const N = RADAR_METRICS.length;
+      const CX = 200, CY = 200, R = 160;
+      const MAX_SCALE = 5;
+
+      // Compute normalized values
+      const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
+      const rawVals  = RADAR_METRICS.map(m => {
+        const v = parseFloat(row[m.key]);
+        return isNaN(v) ? null : v;
+      });
+
+      // Axis angles (start top, go clockwise)
+      const angles = RADAR_METRICS.map((_, i) => (Math.PI * 2 * i / N) - Math.PI / 2);
+
+      function polarPt(r, angle) {
+        return [CX + r * Math.cos(angle), CY + r * Math.sin(angle)];
+      }
+
+      // SVG namespace helper
+      function el(tag, attrs, text) {
+        const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attrs).forEach(([k,v]) => e.setAttribute(k, v));
+        if (text !== undefined) e.textContent = text;
+        return e;
+      }
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 400 400');
+      svg.setAttribute('width', '380');
+      svg.setAttribute('height', '380');
+
+      // ── Grid rings (5 levels)
+      for (let ring = 1; ring <= MAX_SCALE; ring++) {
+        const pts = angles.map(a => polarPt(R * ring / MAX_SCALE, a));
+        const d = pts.map((p,i) => `${i===0?'M':'L'}${p[0]},${p[1]}`).join(' ') + 'Z';
+        svg.appendChild(el('path', {
+          d,
+          fill: 'none',
+          stroke: ring === MAX_SCALE ? '#1e2d42' : '#1e2d42',
+          'stroke-width': ring === MAX_SCALE ? '1.5' : '0.8',
+          'stroke-dasharray': ring < MAX_SCALE ? '3,3' : 'none',
+          opacity: '0.7'
+        }));
+        // Ring label (right side)
+        const labelPt = polarPt(R * ring / MAX_SCALE, 0);
+        svg.appendChild(el('text', {
+          x: labelPt[0] + 4,
+          y: labelPt[1] + 4,
+          fill: '#64748b',
+          'font-size': '9',
+          'font-family': 'DM Mono, monospace'
+        }, ring.toString()));
+      }
+
+      // ── Axis lines + labels
+      angles.forEach((angle, i) => {
+        const outer = polarPt(R, angle);
+        svg.appendChild(el('line', {
+          x1: CX, y1: CY, x2: outer[0], y2: outer[1],
+          stroke: '#1e2d42', 'stroke-width': '1'
+        }));
+
+        // Label position — push further out
+        const labelR = R + 28;
+        const lp = polarPt(labelR, angle);
+        const anchor = lp[0] < CX - 5 ? 'end' : lp[0] > CX + 5 ? 'start' : 'middle';
+        svg.appendChild(el('text', {
+          x: lp[0], y: lp[1] + 4,
+          fill: '#94a3b8',
+          'font-size': '11',
+          'font-family': 'DM Mono, monospace',
+          'text-anchor': anchor
+        }, RADAR_METRICS[i].label));
+      });
+
+      // ── Filled polygon
+      const dataPts = normVals.map((v, i) => polarPt(R * v / MAX_SCALE, angles[i]));
+      const polyD = dataPts.map((p,i) => `${i===0?'M':'L'}${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(' ') + 'Z';
+
+      svg.appendChild(el('path', {
+        d: polyD,
+        fill: 'rgba(74,158,255,0.15)',
+        stroke: '#4a9eff',
+        'stroke-width': '2',
+        'stroke-linejoin': 'round'
+      }));
+
+      // ── Dots at each vertex
+      dataPts.forEach((p, i) => {
+        svg.appendChild(el('circle', {
+          cx: p[0].toFixed(2), cy: p[1].toFixed(2),
+          r: '5', fill: '#4a9eff', stroke: '#080c10', 'stroke-width': '2'
+        }));
+      });
+
+      // ── Legend sidebar
+      const legendHtml = RADAR_METRICS.map((m, i) => {
+        const raw = rawVals[i];
+        const displayVal = raw !== null ? raw.toFixed(2) : 'N/A';
+        const norm = normVals[i].toFixed(1);
+        return `<div class="legend-item">
+          <span class="legend-dot"></span>
+          <span class="legend-label">${m.label}</span>
+          <span class="legend-value" title="raw: ${displayVal}">${displayVal}</span>
+        </div>`;
+      }).join('');
+
+      body.innerHTML = `
+        <div class="radar-wrap">${svg.outerHTML}</div>
+        <div class="radar-legend">${legendHtml}</div>
+      `;
+    }
+
+    // Kick off company data fetch
+    fetchCompaniesCSV();
 
     // ── News table state ──
     let allNews = [];
