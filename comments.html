@@ -591,7 +591,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -629,56 +629,6 @@
       el.style.color = len > 1000 ? 'var(--red)' : 'var(--text-muted)';
     }
 
-    // ── Submit → POST to Apps Script → appends row in Google Sheet ──
-    async function submitOpinion() {
-      const comment  = document.getElementById('commentInput').value.trim();
-      const location = document.getElementById('locationSelect').value;
-      const employer = document.getElementById('employerInput').value.trim();
-      const msg      = document.getElementById('submitMsg');
-      const btn      = document.querySelector('.submit-btn');
-
-      if (selectedRating === 0)    { showMsg(msg, 'Please select a rating (1–5 stars).', false); return; }
-      if (!employer)               { showMsg(msg, 'Please enter your employer name.', false); return; }
-      if (!location)               { showMsg(msg, 'Please select your location.', false); return; }
-      if (comment.length === 0)    { showMsg(msg, 'Please share your thoughts before submitting.', false); return; }
-      if (comment.length > 1000)   { showMsg(msg, 'Please keep your comment under 1000 characters.', false); return; }
-      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-        showMsg(msg, '⚠ Apps Script URL not configured — see comments in the code.', false); return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Submitting…';
-
-      const payload = {
-        timestamp: new Date().toISOString(),
-        rating:    selectedRating,
-        employer:  employer,
-        location:  location,
-        comment:   comment
-      };
-
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode:   'no-cors',   // Apps Script requires no-cors
-          headers: { 'Content-Type': 'application/json' },
-          body:   JSON.stringify(payload)
-        });
-
-        // Optimistically prepend to feed immediately (no-cors means we can't
-        // confirm the response, but appendRow is reliable on Apps Script side)
-        opinions.unshift(payload);
-        renderFeed();
-        resetForm();
-        showMsg(msg, '✓ Thank you — your response has been recorded anonymously.', true);
-
-      } catch (err) {
-        showMsg(msg, 'Submission failed — please try again.', false);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Submit anonymously';
-      }
-    }
 
     function showMsg(el, text, success) {
       el.style.color = success ? 'var(--green)' : 'var(--red)';
@@ -871,8 +821,7 @@
       renderFeed();
     }
 
-    // ── Patch submitOpinion to also save to localStorage ──
-    const _origSubmit = submitOpinion;
+    // ── Submit → POST to Apps Script + save to localStorage ──
     async function submitOpinion() {
       // Intercept after successful submit to persist locally
       const comment  = document.getElementById('commentInput').value.trim();
