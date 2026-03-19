@@ -121,14 +121,77 @@
       pointer-events: none;
     }
 
-    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 3fr 2fr; gap: 16px; align-items: center; }
+    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
     .hero-text { }
-    .hero-chart { position: relative; min-height: 240px; }
+
+    .hero-chart {
+      background: #fff;
+      border: 1px solid #dde3ec;
+      border-radius: 6px;
+      padding: 22px 22px 16px;
+      box-shadow: 0 2px 20px rgba(55,138,221,0.08), 0 1px 3px rgba(0,0,0,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-chart::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%);
+    }
     .hero-chart canvas { width: 100% !important; }
-    .hero-chart-legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
-    .hero-chart-legend span { display: flex; align-items: center; gap: 5px; }
-    .hero-chart-dot { width: 10px; height: 10px; border-radius: 2px; background: #378ADD; }
-    .hero-chart-note { margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    .hero-chart-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .hero-chart-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      letter-spacing: -0.01em;
+    }
+    .hero-chart-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .hero-chart-kpi { text-align: right; }
+    .hero-chart-kpi-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #3b8abf;
+      line-height: 1;
+    }
+    .hero-chart-kpi-delta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #38b36e;
+      margin-top: 4px;
+    }
+    .hero-chart-note {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #eef1f5;
+      font-size: 11px;
+      color: #9ca3af;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .hero-chart-note::before { content: 'ℹ'; color: #5ba3d9; font-size: 11px; }
 
     .hero-eyebrow {
       font-size: 13px;
@@ -202,31 +265,78 @@
 
     /* ── SECTION HEADERS ── */
     .section-header {
-      padding: 48px 48px 0;
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
+      padding: 52px 48px 0;
       margin-bottom: 32px;
+    }
+
+    .section-header-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .section-icon.news-icon {
+      background: linear-gradient(135deg, rgba(91,163,217,0.18) 0%, rgba(56,179,110,0.12) 100%);
+      border: 1px solid rgba(91,163,217,0.3);
+    }
+
+    .section-icon.analysis-icon {
+      background: linear-gradient(135deg, rgba(175,169,236,0.18) 0%, rgba(91,163,217,0.12) 100%);
+      border: 1px solid rgba(175,169,236,0.3);
     }
 
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       letter-spacing: -0.01em;
+      color: var(--text);
     }
 
-    .section-num {
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      color: var(--accent);
+    .section-tag {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .section-tag.news-tag {
+      background: rgba(91,163,217,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(91,163,217,0.25);
+    }
+
+    .section-tag.analysis-tag {
+      background: rgba(175,169,236,0.1);
+      color: #afa9ec;
+      border: 1px solid rgba(175,169,236,0.25);
     }
 
     .section-line {
       flex: 1;
       height: 1px;
-      background: var(--border);
-      margin-left: 8px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+      margin-left: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      padding-left: 48px;
     }
 
     /* ── NEWS SECTION ── */
@@ -832,7 +942,16 @@
         </div>
       </div>
       <div class="hero-chart">
-        <div class="hero-chart-legend"><span><span class="hero-chart-dot"></span>AI post %</span></div>
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">AI Post %</div>
+            <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
+          </div>
+          <div class="hero-chart-kpi">
+            <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
+            <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
+          </div>
+        </div>
         <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
         <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
       </div>
@@ -841,9 +960,12 @@
 
   <section class="news-section" id="news">
     <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">Recent AI News</h2>
-      <div class="section-line"></div>
+      <div class="section-header-inner">
+        <div class="section-icon news-icon">📰</div>
+        <h2 class="section-title">Recent AI News</h2>
+        <span class="section-tag news-tag">Live Feed</span>
+        <div class="section-line"></div>
+      </div>
     </div>
 
     <div class="filter-bar">
@@ -902,9 +1024,12 @@
 
   <section class="analysis-section" id="analysis">
     <div class="section-header">
-      <span class="section-num">02</span>
-      <h2 class="section-title">Company Analysis</h2>
-      <div class="section-line"></div>
+      <div class="section-header-inner">
+        <div class="section-icon analysis-icon">📊</div>
+        <h2 class="section-title">Company Analysis</h2>
+        <span class="section-tag analysis-tag">Radar · 6 Dimensions</span>
+        <div class="section-line"></div>
+      </div>
     </div>
 
     <div class="company-layout">
@@ -1419,74 +1544,162 @@
         [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],
         [2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
       ];
-      const qMap = {};
-      monthly.forEach(([y,m,ai]) => {
-        const q = Math.ceil(m/3);
-        const key = y + 'Q' + q;
-        if (!qMap[key]) qMap[key] = [];
-        qMap[key].push(ai);
-      });
-      const qKeys = Object.keys(qMap).sort();
-      const labels = qKeys.map(k => k.slice(0,4) + ' Q' + k.slice(5));
-      const avg = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const aiData = qKeys.map(k => avg(qMap[k]));
 
-      new Chart(document.getElementById('heroTrendChart'), {
+      const qMap = {};
+      monthly.forEach(([y,m,v]) => {
+        const key = y + 'Q' + Math.ceil(m/3);
+        if (!qMap[key]) qMap[key] = [];
+        qMap[key].push(v);
+      });
+      const qKeys  = Object.keys(qMap).sort();
+      const avg    = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
+      const labels = qKeys.map(k => k.replace('Q',' Q'));
+      const data   = qKeys.map(k => avg(qMap[k]));
+
+      // KPI: second-to-last quarter
+      const kpiVal   = data[data.length - 2];
+      const kpiLabel = labels[labels.length - 2];
+      const delta    = (((kpiVal - data[0]) / data[0]) * 100).toFixed(0);
+      document.getElementById('heroKpiVal').textContent = kpiVal.toFixed(2) + '%';
+      document.getElementById('heroKpiDelta').innerHTML =
+        '<span style="font-size:13px">▲</span>' + delta + '% vs 2023 Q1';
+
+      // Gradient fill matching site accent
+      const canvas = document.getElementById('heroTrendChart');
+      const gctx   = canvas.getContext('2d');
+      const grad   = gctx.createLinearGradient(0, 0, 0, 210);
+      grad.addColorStop(0,    'rgba(59,138,191,0.32)');
+      grad.addColorStop(0.4,  'rgba(91,163,217,0.14)');
+      grad.addColorStop(1,    'rgba(91,163,217,0)');
+
+      // Year bands + vertical separators + year labels plugin
+      const bandPlugin = {
+        id: 'yearBands',
+        beforeDraw(chart) {
+          const { ctx, chartArea: ca, scales: { x } } = chart;
+          if (!x || !ca) return;
+          const step = x.getPixelForValue(1) - x.getPixelForValue(0);
+          const yrs = {};
+          labels.forEach((l, i) => {
+            const yr = l.split(' ')[0];
+            if (!yrs[yr]) yrs[yr] = { s: i, e: i };
+            yrs[yr].e = i;
+          });
+          ctx.save();
+          const yrList = Object.entries(yrs);
+          yrList.forEach(([yr, { s, e }], yi) => {
+            const x0 = x.getPixelForValue(s) - step / 2;
+            const x1 = x.getPixelForValue(e) + step / 2;
+
+
+          });
+          ctx.restore();
+        },
+        beforeDatasetsDraw(chart) {
+          // Soft glow under the line
+          chart.ctx.shadowColor = 'rgba(59,138,191,0.22)';
+          chart.ctx.shadowBlur  = 10;
+          chart.ctx.shadowOffsetY = 3;
+        },
+        afterDatasetsDraw(chart) {
+          chart.ctx.shadowColor = 'transparent';
+          chart.ctx.shadowBlur  = 0;
+          chart.ctx.shadowOffsetY = 0;
+        }
+      };
+
+      const chart = new Chart(canvas, {
         type: 'line',
+        plugins: [bandPlugin],
         data: {
-          labels: labels,
+          labels,
           datasets: [{
             label: 'AI post %',
-            data: aiData,
-            borderColor: '#378ADD',
-            backgroundColor: 'rgba(55,138,221,0.08)',
+            data,
+            borderColor: 'rgba(59,138,191,1)',
+            backgroundColor: grad,
             fill: true,
-            tension: 0.35,
+            tension: 0.5,
             pointRadius: 5,
-            pointBackgroundColor: '#378ADD',
+            pointBackgroundColor: '#3b8abf',
             pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            pointHoverRadius: 8,
-            pointHoverBackgroundColor: '#378ADD',
-            borderWidth: 2.5
+            pointBorderWidth: 2.5,
+            pointHoverRadius: 9,
+            pointHoverBorderWidth: 3,
+            borderWidth: 3
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: { duration: 900, easing: 'easeInOutQuart' },
           interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: { display: false },
+
             tooltip: {
-              backgroundColor: 'rgba(30,41,59,0.92)',
-              titleFont: { size: 13 },
-              bodyFont: { size: 13 },
-              padding: 12,
+              backgroundColor: '#1e293b',
+              titleColor: '#ffffff',
+              bodyColor: '#f8fafc',
+              titleFont: { family: 'DM Mono, monospace', size: 12, weight: '700' },
+              bodyFont:  { family: 'DM Mono, monospace', size: 12, weight: '500' },
+              padding: 14,
               cornerRadius: 4,
+              displayColors: false,
               callbacks: {
-                label: function(ctx) {
-                  return 'AI post %: ' + ctx.parsed.y.toFixed(1) + '%';
-                }
+                title: ctx => { const p = ctx[0].label.split(' '); return p[0] + ' ' + p[1]; },
+                label: ctx => '  AI post: ' + ctx.parsed.y.toFixed(2) + '%'
               }
             }
           },
           scales: {
             x: {
               grid: { display: false },
-              ticks: { autoSkip: false, font: { size: 11 }, color: '#7a8694' },
-              border: { color: '#d0d5dd' }
+              ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                font: function(ctx) {
+                  // Bold + larger for Q1 (year labels)
+                  const lbl = ctx.tick && ctx.tick.label;
+                  const isQ1 = lbl && lbl.includes('Q1');
+                  return { size: isQ1 ? 11 : 10, family: 'DM Mono, monospace', weight: isQ1 ? '700' : '400' };
+                },
+                color: function(ctx) {
+                  const lbl = ctx.tick && ctx.tick.label;
+                  return (lbl && lbl.includes('\n')) ? '#3b8abf' : '#9ca3af';
+                },
+                callback: function(val, idx) {
+                  // val is the index; use labels array
+                  const lbl = this.getLabelForValue(val);
+                  if (!lbl) return '';
+                  const parts = lbl.split(' '); // ['2023', 'Q1']
+                  const q = parts[1];
+                  // On Q1 show year below quarter; others just show Q number
+                  if (q === 'Q1') return [parts[0], q];
+                  return q;
+                }
+              },
+              border: { color: '#dde3ec' }
             },
             y: {
-              title: { display: true, text: 'AI post %', font: { size: 12 }, color: '#378ADD' },
+              position: 'right',
+              title: { display: true, text: 'AI post %', font: { size: 11, family: 'DM Mono, monospace' }, color: '#3b8abf' },
               min: 1.5,
-              max: 5.5,
-              grid: { color: 'rgba(208,213,221,0.5)', lineWidth: 0.5 },
-              ticks: { font: { size: 11 }, color: '#378ADD', callback: v => v.toFixed(1) + '%' },
+              max: 5.8,
+              grid: { color: 'rgba(209,213,219,0.5)', lineWidth: 0.8 },
+              ticks: {
+                count: 5,
+                font: { size: 10, family: 'DM Mono, monospace' },
+                color: '#3b8abf',
+                callback: v => v.toFixed(1) + '%'
+              },
               border: { display: false }
             }
           }
         }
       });
+
     }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
