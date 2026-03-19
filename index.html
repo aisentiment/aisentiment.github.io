@@ -121,100 +121,14 @@
       pointer-events: none;
     }
 
-    .hero-inner {
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    /* ── Chart card ── */
-    .hero-chart {
-      background: #fff;
-      border: 1px solid #dde3ec;
-      border-radius: 6px;
-      padding: 22px 22px 16px;
-      box-shadow: 0 2px 16px rgba(55,138,221,0.08), 0 1px 3px rgba(0,0,0,0.04);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* accent strip top */
-    .hero-chart::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #5ba3d9, #38b36e);
-    }
-
-    .hero-chart-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-
-    .hero-chart-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-      letter-spacing: -0.01em;
-    }
-
-    .hero-chart-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 3px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    /* Big stat */
-    .hero-chart-kpi {
-      text-align: right;
-    }
-
-    .hero-chart-kpi-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      color: #3b8abf;
-      line-height: 1;
-    }
-
-    .hero-chart-kpi-delta {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      color: #38b36e;
-      margin-top: 4px;
-      font-weight: 600;
-    }
-
+    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 3fr 2fr; gap: 16px; align-items: center; }
+    .hero-text { }
+    .hero-chart { position: relative; min-height: 240px; }
     .hero-chart canvas { width: 100% !important; }
-
-    .hero-chart-footer {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #eef1f5;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #7a8694;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-chart-footer::before {
-      content: '●';
-      color: #5ba3d9;
-      font-size: 8px;
-      flex-shrink: 0;
-    }
+    .hero-chart-legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
+    .hero-chart-legend span { display: flex; align-items: center; gap: 5px; }
+    .hero-chart-dot { width: 10px; height: 10px; border-radius: 2px; background: #378ADD; }
+    .hero-chart-note { margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 
     .hero-eyebrow {
       font-size: 13px;
@@ -901,7 +815,6 @@
       <li><a href="./comments.html">Comments</a></li>
       <li><a href="#about">About</a></li>
     </ul>
-    <div></div>
   </nav>
 
   <section class="hero">
@@ -919,20 +832,9 @@
         </div>
       </div>
       <div class="hero-chart">
-        <div class="hero-chart-top">
-          <div>
-            <div class="hero-chart-title">AI Posting Share</div>
-            <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
-          </div>
-          <div class="hero-chart-kpi">
-            <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
-            <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
-          </div>
-        </div>
-        <div style="position:relative;width:100%;height:200px"><canvas id="heroTrendChart"></canvas></div>
-        <div class="hero-chart-footer">
-          AI post % = share of new job postings requiring AI-related skills
-        </div>
+        <div class="hero-chart-legend"><span><span class="hero-chart-dot"></span>AI post %</span></div>
+        <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
+        <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
       </div>
     </div>
   </section>
@@ -1039,7 +941,6 @@
       Labor Market Intelligence Platform
     </div>
     <div class="footer-right">
-      Data updated weekly · Sources: LinkedIn, Glassdoor, company filings<br>
       © 2026 AI Labor Market Intelligence. For research purposes.
     </div>
   </footer>
@@ -1068,7 +969,7 @@
         }
         cols.push(cur.trim());
         const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, ''); });
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, '').trim().replace(/%$/, ''); });
         const rawDate = row.time || row.date || '';
         row._rawDate = rawDate;
         row._date = rawDate ? parseDate(rawDate) : null;
@@ -1354,14 +1255,14 @@
     function computeScales(rows) {
       const scales = {};
       RADAR_METRICS.forEach(m => {
-        const vals = rows.map(r => parseFloat(r[m.key])).filter(v => !isNaN(v) && isFinite(v));
+        const vals = rows.map(r => parseFloat(String(r[m.key] || '').replace(/%$/, ''))).filter(v => !isNaN(v) && isFinite(v));
         scales[m.key] = { min: vals.length ? Math.min(...vals) : 0, max: vals.length ? Math.max(...vals) : 1 };
       });
       return scales;
     }
 
     function normalize(val, key) {
-      const raw = parseFloat(val);
+      const raw = parseFloat(String(val || '').replace(/%$/, ''));
       if (isNaN(raw) || !isFinite(raw)) return 0;
       const { min, max } = globalScales[key];
       if (max === min) return 2.5;
@@ -1424,7 +1325,7 @@
       function rptStr(r, a) { const p = rpt(r,a); return p.x.toFixed(1)+','+p.y.toFixed(1); }
 
       const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
-      const rawVals  = RADAR_METRICS.map(m => { const v = parseFloat(row[m.key]); return (!isNaN(v) && isFinite(v)) ? v : null; });
+      const rawVals  = RADAR_METRICS.map(m => { const v = parseFloat(String(row[m.key] || '').replace(/%$/, '')); return (!isNaN(v) && isFinite(v)) ? v : null; });
 
       let svg = `<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">`;
 
@@ -1518,126 +1419,69 @@
         [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],
         [2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
       ];
-
-      // Aggregate to quarterly averages
       const qMap = {};
-      monthly.forEach(([y,m,v]) => {
-        const key = y + 'Q' + Math.ceil(m/3);
+      monthly.forEach(([y,m,ai]) => {
+        const q = Math.ceil(m/3);
+        const key = y + 'Q' + q;
         if (!qMap[key]) qMap[key] = [];
-        qMap[key].push(v);
+        qMap[key].push(ai);
       });
-      const qKeys  = Object.keys(qMap).sort();
-      const avg    = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const labels = qKeys.map(k => k.replace('Q',' Q'));
-      const data   = qKeys.map(k => avg(qMap[k]));
+      const qKeys = Object.keys(qMap).sort();
+      const labels = qKeys.map(k => k.slice(0,4) + ' Q' + k.slice(5));
+      const avg = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
+      const aiData = qKeys.map(k => avg(qMap[k]));
 
-      // KPI stat card
-      const latest = data[data.length - 1];
-      const first  = data[0];
-      const delta  = (((latest - first) / first) * 100).toFixed(0);
-      document.getElementById('heroKpiVal').textContent   = latest.toFixed(2) + '%';
-      document.getElementById('heroKpiDelta').innerHTML   =
-        `<span style="font-size:14px">▲</span>${delta}% since 2023`;
-
-      // Gradient fill
-      const canvas = document.getElementById('heroTrendChart');
-      const gctx   = canvas.getContext('2d');
-      const grad   = gctx.createLinearGradient(0, 0, 0, 200);
-      grad.addColorStop(0,   'rgba(91,163,217,0.22)');
-      grad.addColorStop(0.55,'rgba(91,163,217,0.06)');
-      grad.addColorStop(1,   'rgba(91,163,217,0)');
-
-      // Year-band background plugin
-      const bandPlugin = {
-        id: 'yearBands',
-        beforeDraw(chart) {
-          const { ctx, chartArea: ca, scales: { x } } = chart;
-          if (!x || !ca) return;
-          const step = x.getPixelForValue(1) - x.getPixelForValue(0);
-          const yrs = {};
-          labels.forEach((l, i) => {
-            const yr = l.split(' ')[0];
-            if (!yrs[yr]) yrs[yr] = { s: i, e: i };
-            yrs[yr].e = i;
-          });
-          ctx.save();
-          Object.values(yrs).forEach(({ s, e }, yi) => {
-            if (yi % 2 === 0) return;
-            const x0 = x.getPixelForValue(s) - step / 2;
-            const x1 = x.getPixelForValue(e) + step / 2;
-            ctx.fillStyle = 'rgba(91,163,217,0.04)';
-            ctx.fillRect(x0, ca.top, x1 - x0, ca.bottom - ca.top);
-          });
-          ctx.restore();
-        }
-      };
-
-      new Chart(canvas, {
+      new Chart(document.getElementById('heroTrendChart'), {
         type: 'line',
-        plugins: [bandPlugin],
         data: {
-          labels,
+          labels: labels,
           datasets: [{
             label: 'AI post %',
-            data,
-            borderColor: '#3b8abf',
-            backgroundColor: grad,
+            data: aiData,
+            borderColor: '#378ADD',
+            backgroundColor: 'rgba(55,138,221,0.08)',
             fill: true,
-            tension: 0.42,
-            pointRadius: data.map((_, i) => i === data.length - 1 ? 6 : 2.5),
-            pointBackgroundColor: data.map((_, i) =>
-              i === data.length - 1 ? '#3b8abf' : 'rgba(91,163,217,0.7)'),
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#378ADD',
             pointBorderColor: '#fff',
-            pointBorderWidth: data.map((_, i) => i === data.length - 1 ? 2.5 : 1.5),
-            pointHoverRadius: 7,
+            pointBorderWidth: 2,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: '#378ADD',
             borderWidth: 2.5
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 1000, easing: 'easeInOutQuart' },
           interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: '#1e293b',
-              titleColor: '#94a3b8',
-              bodyColor: '#f8fafc',
-              titleFont: { family: 'DM Mono, monospace', size: 11, weight: '400' },
-              bodyFont:  { family: 'Syne, sans-serif',  size: 15, weight: '700' },
-              padding: 14,
+              backgroundColor: 'rgba(30,41,59,0.92)',
+              titleFont: { size: 13 },
+              bodyFont: { size: 13 },
+              padding: 12,
               cornerRadius: 4,
-              displayColors: false,
               callbacks: {
-                title: ctx => ctx[0].label,
-                label: ctx => '  ' + ctx.parsed.y.toFixed(2) + '%'
+                label: function(ctx) {
+                  return 'AI post %: ' + ctx.parsed.y.toFixed(1) + '%';
+                }
               }
             }
           },
           scales: {
             x: {
               grid: { display: false },
-              ticks: {
-                maxTicksLimit: 9,
-                autoSkip: true,
-                maxRotation: 0,
-                font: { size: 10, family: 'DM Mono, monospace' },
-                color: '#9ca3af'
-              },
-              border: { color: '#dde3ec' }
+              ticks: { autoSkip: false, font: { size: 11 }, color: '#7a8694' },
+              border: { color: '#d0d5dd' }
             },
             y: {
-              position: 'right',
+              title: { display: true, text: 'AI post %', font: { size: 12 }, color: '#378ADD' },
               min: 1.5,
-              max: 5.8,
-              grid: { color: 'rgba(209,213,219,0.5)', lineWidth: 0.8 },
-              ticks: {
-                count: 5,
-                font: { size: 10, family: 'DM Mono, monospace' },
-                color: '#3b8abf',
-                callback: v => v.toFixed(1) + '%'
-              },
+              max: 5.5,
+              grid: { color: 'rgba(208,213,221,0.5)', lineWidth: 0.5 },
+              ticks: { font: { size: 11 }, color: '#378ADD', callback: v => v.toFixed(1) + '%' },
               border: { display: false }
             }
           }
