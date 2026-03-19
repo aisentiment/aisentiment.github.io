@@ -514,7 +514,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -684,12 +684,21 @@
       scroll.innerHTML = '<div class="feed-empty" style="opacity:.5">Loading responses…</div>';
 
       try {
-        const res  = await fetch(APPS_SCRIPT_URL + '?action=get');
+        // Apps Script redirects once — use 'follow' to handle it.
+        // Do NOT use mode:'no-cors' here (that returns opaque response we can't read).
+        const res = await fetch(APPS_SCRIPT_URL + '?action=get', {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        // Sheet returns rows newest-first if sorted, else reverse
-        opinions = Array.isArray(data) ? data.reverse() : [];
+        // Reverse so newest submissions appear first
+        opinions = Array.isArray(data) ? data.slice().reverse() : [];
       } catch (err) {
-        scroll.innerHTML = '<div class="feed-empty" style="color:var(--red)">Could not load responses. Check your Apps Script URL.</div>';
+        scroll.innerHTML = `<div class="feed-empty" style="color:var(--red)">
+          Could not load responses.<br>
+          <span style="font-size:12px;opacity:.7">${err.message} — make sure your Apps Script is deployed and the URL is correct.</span>
+        </div>`;
         return;
       }
 
