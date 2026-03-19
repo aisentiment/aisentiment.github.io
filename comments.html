@@ -380,9 +380,12 @@
 
     .ai-toggle-btn:hover { border-color: var(--accent2); color: var(--text); }
 
-    .ai-toggle-btn.selected-yes       { border-color: #38b36e; color: #1a6e42; background: rgba(56,179,110,0.07); font-weight: 600; }
-    .ai-toggle-btn.selected-no        { border-color: var(--red); color: #9b2020; background: rgba(224,82,82,0.07); font-weight: 600; }
-    .ai-toggle-btn.selected-sometimes { border-color: var(--accent2); color: #1a4a7a; background: rgba(91,163,217,0.08); font-weight: 600; }
+    /* Almost Everyday — green */
+    .ai-toggle-btn.selected-yes       { border-color: #38b36e; color: #fff; background: #38b36e; font-weight: 600; }
+    /* Never — red */
+    .ai-toggle-btn.selected-no        { border-color: #e05252; color: #fff; background: #e05252; font-weight: 600; }
+    /* Sometimes — blue */
+    .ai-toggle-btn.selected-sometimes { border-color: #5ba3d9; color: #fff; background: #5ba3d9; font-weight: 600; }
 
     .opinion-card {
       padding: 16px 18px;
@@ -673,7 +676,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -969,9 +972,9 @@
       document.querySelectorAll('.ai-toggle-btn').forEach(b => {
         b.className = 'ai-toggle-btn';
       });
-      const cls = btn.dataset.val === 'Yes'       ? 'selected-yes'       :
-                  btn.dataset.val === 'No'        ? 'selected-no'        :
-                                                    'selected-sometimes';
+      const cls = btn.dataset.val === 'Almost Everyday' ? 'selected-yes'       :
+                  btn.dataset.val === 'Never'          ? 'selected-no'        :
+                                                         'selected-sometimes';
       btn.classList.add(cls);
     }
 
