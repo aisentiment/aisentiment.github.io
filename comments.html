@@ -317,6 +317,51 @@
     }
 
     /* Individual card */
+    /* Admin mode */
+    .admin-bar {
+      display: none;
+      padding: 8px 12px;
+      background: rgba(224,82,82,0.06);
+      border: 1px solid rgba(224,82,82,0.2);
+      border-radius: 3px;
+      margin: 0 0 10px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--red);
+    }
+    .admin-bar.visible { display: flex; }
+    .admin-bar-label { font-weight: 600; letter-spacing: 0.05em; }
+    .admin-exit-btn {
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 3px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .admin-exit-btn:hover { background: var(--red); color: #fff; }
+
+    .delete-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(224,82,82,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 3px 9px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .delete-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
+    body.admin-mode .delete-btn { display: inline-block; }
+
     .opinion-card {
       padding: 16px 18px;
       border: 1px solid var(--border);
@@ -547,7 +592,12 @@
           <span class="feed-title">Recent Responses</span>
           <div class="feed-header-right">
             <span class="feed-count" id="feedCount">0 responses</span>
+            <button class="filter-pill" onclick="toggleAdminMode()" title="Admin mode" style="margin-left:8px;opacity:0.4;font-size:13px;padding:4px 8px">⚙</button>
           </div>
+        </div>
+        <div class="admin-bar" id="adminBar">
+          <span class="admin-bar-label">🔑 Admin mode — click ✕ to delete a response</span>
+          <button class="admin-exit-btn" onclick="toggleAdminMode()">Exit admin</button>
         </div>
         <div class="feed-filters">
           <button class="filter-pill active" onclick="filterFeed('all', this)">All</button>
@@ -591,7 +641,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -708,6 +758,7 @@
         const num     = start + idx + 1;
         const locBadge = op.location ? `<span class="opinion-badge badge-location">${op.location}</span>` : '';
         const empBadge = emp         ? `<span class="opinion-badge badge-employer">${emp}</span>` : '';
+        const globalIdx = opinions.indexOf(op);
         return `<div class="opinion-card">
           <div class="opinion-top">
             <div class="opinion-top-left">
@@ -715,7 +766,10 @@
               <span class="opinion-stars">${stars}</span>
               ${empBadge}${locBadge}
             </div>
-            <span class="opinion-time">${timeStr}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="opinion-time">${timeStr}</span>
+              <button class="delete-btn" onclick="deleteOpinion(${globalIdx})">✕</button>
+            </div>
           </div>
           <div class="opinion-text">${safe}</div>
         </div>`;
@@ -872,6 +926,23 @@
         btn.disabled = false;
         btn.textContent = 'Submit anonymously';
       }
+    }
+
+    let adminMode = false;
+
+    function toggleAdminMode() {
+      adminMode = !adminMode;
+      document.body.classList.toggle('admin-mode', adminMode);
+      document.getElementById('adminBar').classList.toggle('visible', adminMode);
+    }
+
+    function deleteOpinion(idx) {
+      if (!adminMode) return;
+      if (!confirm('Delete this response?')) return;
+      opinions.splice(idx, 1);
+      saveLocal(opinions);
+      renderFeed();
+      // Note: also delete from Google Sheet manually if needed
     }
 
     loadOpinions();
