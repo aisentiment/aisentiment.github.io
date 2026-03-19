@@ -243,6 +243,7 @@
     }
 
     /* ── FEED PANEL ── */
+    /* ── FEED PANEL ── */
     .feed-panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -251,12 +252,13 @@
     }
 
     .feed-header {
-      padding: 18px 24px;
+      padding: 16px 24px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
+      background: #fff;
     }
 
     .feed-title {
@@ -265,96 +267,162 @@
       font-weight: 700;
     }
 
-    .feed-count {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .feed-filters {
-      padding: 12px 24px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .filter-pill {
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      padding: 5px 12px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
-    }
-
-    .filter-pill:hover { border-color: var(--accent); color: var(--text); }
-    .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
-
-    .feed-scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px;
-      min-height: 0;
-    }
-
-    .feed-scroll::-webkit-scrollbar { width: 4px; }
-    .feed-scroll::-webkit-scrollbar-track { background: transparent; }
-    .feed-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .opinion-card {
-      padding: 18px 20px;
-      border: 1px solid var(--border);
-      background: #fff;
-      margin-bottom: 8px;
-      border-radius: 2px;
-      transition: border-color 0.2s;
-    }
-
-    .opinion-card:hover { border-color: rgba(91,163,217,0.4); }
-
-    .opinion-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .opinion-top-left {
+    .feed-header-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
+    .feed-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Star filter tabs */
+    .feed-filters {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 4px 11px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .filter-pill:hover  { border-color: var(--accent); color: var(--text); }
+    .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.07); font-weight: 500; }
+
+    /* Cards list */
+    .feed-list {
+      flex: 1;
+      padding: 14px 14px 0;
+      min-height: 0;
+    }
+
+    /* Individual card */
+    .opinion-card {
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-bottom: 8px;
+      border-radius: 3px;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .opinion-card:hover {
+      border-color: rgba(91,163,217,0.5);
+      box-shadow: 0 2px 12px rgba(91,163,217,0.08);
+    }
+
+    /* Rating bar accent on left edge */
+    .opinion-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      border-radius: 3px 0 0 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+    .opinion-card:hover::before { opacity: 1; }
+
+    .opinion-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .opinion-top-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
     .opinion-stars {
       color: #EF9F27;
-      font-size: 15px;
-      letter-spacing: 1px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      flex-shrink: 0;
     }
 
-    .opinion-location {
-      font-size: 12px;
-      color: var(--accent2);
-      background: rgba(91,163,217,0.1);
-      padding: 3px 10px;
+    .opinion-badge {
+      font-size: 11px;
+      padding: 2px 8px;
       border-radius: 2px;
+      white-space: nowrap;
     }
+    .badge-employer { background: rgba(93,202,165,.12); color: #085041; border: 1px solid rgba(93,202,165,.3); }
+    .badge-location { background: rgba(91,163,217,.1);  color: var(--accent2); border: 1px solid rgba(91,163,217,.25); }
 
     .opinion-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .opinion-text {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .feed-pagination {
+      padding: 12px 14px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 6px;
+      background: var(--surface);
+    }
+
+    .feed-page-info {
       font-size: 12px;
       color: var(--text-muted);
     }
 
-    .opinion-text {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.65;
+    .feed-page-btns { display: flex; gap: 4px; }
+
+    .feed-page-btn {
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
     }
+    .feed-page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .feed-page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
     .feed-empty {
-      padding: 80px 20px;
+      padding: 60px 20px;
       text-align: center;
       color: var(--text-muted);
       font-size: 14px;
@@ -476,8 +544,10 @@
 
       <div class="feed-panel">
         <div class="feed-header">
-          <span class="feed-title">Recent responses</span>
-          <span class="feed-count" id="feedCount">0 responses</span>
+          <span class="feed-title">Recent Responses</span>
+          <div class="feed-header-right">
+            <span class="feed-count" id="feedCount">0 responses</span>
+          </div>
         </div>
         <div class="feed-filters">
           <button class="filter-pill active" onclick="filterFeed('all', this)">All</button>
@@ -487,8 +557,15 @@
           <button class="filter-pill" onclick="filterFeed(2, this)">★★</button>
           <button class="filter-pill" onclick="filterFeed(1, this)">★</button>
         </div>
-        <div class="feed-scroll" id="feedScroll">
+        <div class="feed-list" id="feedList">
           <div class="feed-empty" id="feedEmpty">No responses yet — be the first to share your experience with AI in the workplace.</div>
+        </div>
+        <div class="feed-pagination" id="feedPagination" style="display:none">
+          <span class="feed-page-info" id="feedPageInfo">Page 1 of 1</span>
+          <div class="feed-page-btns">
+            <button class="feed-page-btn" id="feedPrevBtn" onclick="changeFeedPage(-1)" disabled>← Prev</button>
+            <button class="feed-page-btn" id="feedNextBtn" onclick="changeFeedPage(1)">Next →</button>
+          </div>
         </div>
       </div>
 
@@ -514,7 +591,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -619,18 +696,35 @@
       document.getElementById('charCount').textContent = '0';
     }
 
+    // ── Feed pagination state ──
+    const FEED_PAGE_SIZE = 10;
+    let feedPage = 1;
+
     // ── Filter feed by star rating ──
     function filterFeed(val, btn) {
       currentFilter = val;
+      feedPage = 1;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderFeed();
     }
 
-    // ── Render opinions from in-memory array ──
+    function changeFeedPage(dir) {
+      const filtered = currentFilter === 'all' ? opinions : opinions.filter(o => +o.rating === currentFilter);
+      const total = Math.ceil(filtered.length / FEED_PAGE_SIZE);
+      feedPage = Math.max(1, Math.min(total, feedPage + dir));
+      renderFeed();
+      document.querySelector('.feed-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Render opinions with pagination ──
     function renderFeed() {
-      const scroll  = document.getElementById('feedScroll');
+      const list    = document.getElementById('feedList');
       const countEl = document.getElementById('feedCount');
+      const pagDiv  = document.getElementById('feedPagination');
+      const pageInfo= document.getElementById('feedPageInfo');
+      const prevBtn = document.getElementById('feedPrevBtn');
+      const nextBtn = document.getElementById('feedNextBtn');
 
       const filtered = currentFilter === 'all'
         ? opinions
@@ -639,29 +733,35 @@
       countEl.textContent = opinions.length + ' response' + (opinions.length !== 1 ? 's' : '');
 
       if (filtered.length === 0) {
-        scroll.innerHTML = `<div class="feed-empty">${
+        list.innerHTML = `<div class="feed-empty">${
           opinions.length === 0
-            ? 'No responses yet — be the first to share your experience with AI in the workplace.'
+            ? 'No responses yet — be the first to share your experience.'
             : 'No responses match this filter.'
         }</div>`;
+        pagDiv.style.display = 'none';
         return;
       }
 
-      scroll.innerHTML = filtered.map(op => {
+      const totalPages = Math.ceil(filtered.length / FEED_PAGE_SIZE);
+      feedPage = Math.max(1, Math.min(totalPages, feedPage));
+      const start = (feedPage - 1) * FEED_PAGE_SIZE;
+      const page  = filtered.slice(start, start + FEED_PAGE_SIZE);
+
+      list.innerHTML = page.map((op, idx) => {
         const r       = +op.rating || 0;
         const stars   = '★'.repeat(r) + '☆'.repeat(5 - r);
         const d       = new Date(op.timestamp || op.time);
-        const timeStr = isNaN(d)
-          ? ''
-          : d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
-            + ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+        const timeStr = isNaN(d) ? '' :
+          d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
         const safe    = (op.comment||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const emp     = (op.employer||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        const locBadge = op.location ? `<span class="opinion-location">${op.location}</span>` : '';
-        const empBadge = emp ? `<span class="opinion-location" style="background:rgba(93,202,165,.12);color:#085041">${emp}</span>` : '';
+        const num     = start + idx + 1;
+        const locBadge = op.location ? `<span class="opinion-badge badge-location">${op.location}</span>` : '';
+        const empBadge = emp         ? `<span class="opinion-badge badge-employer">${emp}</span>` : '';
         return `<div class="opinion-card">
           <div class="opinion-top">
             <div class="opinion-top-left">
+              <span style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;min-width:24px">#${num}</span>
               <span class="opinion-stars">${stars}</span>
               ${empBadge}${locBadge}
             </div>
@@ -670,6 +770,16 @@
           <div class="opinion-text">${safe}</div>
         </div>`;
       }).join('');
+
+      // Pagination controls
+      if (totalPages > 1) {
+        pagDiv.style.display  = 'flex';
+        pageInfo.textContent  = `Page ${feedPage} of ${totalPages}  ·  ${filtered.length} responses`;
+        prevBtn.disabled      = feedPage === 1;
+        nextBtn.disabled      = feedPage === totalPages;
+      } else {
+        pagDiv.style.display = 'none';
+      }
     }
 
     // ── Load all existing responses from Google Sheet on page load ──
