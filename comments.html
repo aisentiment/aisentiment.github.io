@@ -362,6 +362,28 @@
     .delete-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
     body.admin-mode .delete-btn { display: inline-block; }
 
+    /* AI tools toggle */
+    .ai-toggle-group { display: flex; gap: 8px; }
+
+    .ai-toggle-btn {
+      flex: 1;
+      padding: 9px 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.18s;
+    }
+
+    .ai-toggle-btn:hover { border-color: var(--accent2); color: var(--text); }
+
+    .ai-toggle-btn.selected-yes       { border-color: #38b36e; color: #1a6e42; background: rgba(56,179,110,0.07); font-weight: 600; }
+    .ai-toggle-btn.selected-no        { border-color: var(--red); color: #9b2020; background: rgba(224,82,82,0.07); font-weight: 600; }
+    .ai-toggle-btn.selected-sometimes { border-color: var(--accent2); color: #1a4a7a; background: rgba(91,163,217,0.08); font-weight: 600; }
+
     .opinion-card {
       padding: 16px 18px;
       border: 1px solid var(--border);
@@ -416,6 +438,7 @@
       border-radius: 2px;
       white-space: nowrap;
     }
+    .badge-ai-tools { background: rgba(56,179,110,0.08); color: #1a6e42; border: 1px solid rgba(56,179,110,0.25); }
     .badge-employer { background: rgba(93,202,165,.12); color: #085041; border: 1px solid rgba(93,202,165,.3); }
     .badge-location { background: rgba(91,163,217,.1);  color: var(--accent2); border: 1px solid rgba(91,163,217,.25); }
 
@@ -576,6 +599,15 @@
         </div>
 
         <div class="field">
+          <div class="field-label">Do you use AI tools in your work?</div>
+          <div class="ai-toggle-group" id="aiToolsGroup">
+            <button type="button" class="ai-toggle-btn" data-val="Yes"       onclick="selectAiTools(this)">Yes</button>
+            <button type="button" class="ai-toggle-btn" data-val="Sometimes" onclick="selectAiTools(this)">Sometimes</button>
+            <button type="button" class="ai-toggle-btn" data-val="No"        onclick="selectAiTools(this)">No</button>
+          </div>
+        </div>
+
+        <div class="field">
           <div class="field-label">Your thoughts on AI use and job concerns</div>
           <textarea class="comment-input" id="commentInput" rows="5"
             placeholder="e.g. AI tools have improved my productivity, but I worry about..."
@@ -628,6 +660,7 @@
       Labor Market Intelligence Platform
     </div>
     <div class="footer-right">
+      Data updated weekly · Sources: LinkedIn, Glassdoor, company filings<br>
       © 2026 AI Labor Market Intelligence. For research purposes.
     </div>
   </footer>
@@ -640,7 +673,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
@@ -693,6 +726,7 @@
       document.getElementById('locationSelect').value = '';
       document.getElementById('employerInput').value = '';
       document.getElementById('charCount').textContent = '0';
+      document.querySelectorAll('.ai-toggle-btn').forEach(b => { b.className = 'ai-toggle-btn'; });
     }
 
     // ── Feed pagination state ──
@@ -755,7 +789,8 @@
         const safe    = (op.comment||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const emp     = (op.employer||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const num     = start + idx + 1;
-        const locBadge = op.location ? `<span class="opinion-badge badge-location">${op.location}</span>` : '';
+        const locBadge    = op.location  ? `<span class="opinion-badge badge-location">${op.location}</span>` : '';
+        const aiToolsBadge = op.ai_tools ? `<span class="opinion-badge badge-ai-tools">AI: ${op.ai_tools}</span>` : '';
         const empBadge = emp         ? `<span class="opinion-badge badge-employer">${emp}</span>` : '';
         const globalIdx = opinions.indexOf(op);
         return `<div class="opinion-card">
@@ -763,7 +798,7 @@
             <div class="opinion-top-left">
               <span style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;min-width:24px">#${num}</span>
               <span class="opinion-stars">${stars}</span>
-              ${empBadge}${locBadge}
+              ${empBadge}${locBadge}${aiToolsBadge}
             </div>
             <div style="display:flex;align-items:center;gap:8px">
               <span class="opinion-time">${timeStr}</span>
@@ -895,11 +930,13 @@
       btn.disabled = true;
       btn.textContent = 'Submitting…';
 
+      const aiTools = document.querySelector('#aiToolsGroup .ai-toggle-btn.selected-yes, #aiToolsGroup .ai-toggle-btn.selected-no, #aiToolsGroup .ai-toggle-btn[class*="selected"]');
       const payload = {
         timestamp: new Date().toISOString(),
         rating:    selectedRating,
         employer:  employer,
         location:  location,
+        ai_tools:  aiTools ? aiTools.dataset.val : '',
         comment:   comment
       };
 
@@ -925,6 +962,17 @@
         btn.disabled = false;
         btn.textContent = 'Submit anonymously';
       }
+    }
+
+    // AI tools toggle
+    function selectAiTools(btn) {
+      document.querySelectorAll('.ai-toggle-btn').forEach(b => {
+        b.className = 'ai-toggle-btn';
+      });
+      const cls = btn.dataset.val === 'Yes'       ? 'selected-yes'       :
+                  btn.dataset.val === 'No'        ? 'selected-no'        :
+                                                    'selected-sometimes';
+      btn.classList.add(cls);
     }
 
     let adminMode = false;
