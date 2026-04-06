@@ -382,11 +382,11 @@
 <body>
 
   <nav>
-    <div class="nav-logo">AI Sentiment <span>/ Intelligence Platform</span></div>
+    <div class="nav-logo">AI Sentiment</div>
     <ul class="nav-links">
       <li><a href="#news">News</a></li>
       <li><a href="#occupation">Occupation</a></li>
-      <li><a href="#analysis">Analysis</a></li>
+      <li><a href="#analysis">Company</a></li>
       <li><a href="./comments.html">Comments</a></li>
       <li><a href="#about">About</a></li>
     </ul>
@@ -403,7 +403,7 @@
         </p>
         <div class="hero-insights" id="heroInsights">
           <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Analysis</span></div>
+          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
           <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
         </div>
       </div>
@@ -468,8 +468,8 @@
     <div class="sort-bar">
       <span class="sort-label">Sort by</span>
       <button class="sort-btn active" id="sortDateBtn"   onclick="newsSortBy('date')">Date ↓</button>
-      <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
       <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
+      <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
       <button class="sort-btn"        id="sortNewsBtn"   onclick="newsSortBy('news')">Headline</button>
       <button class="sort-btn"        id="sortTypeBtn"   onclick="newsSortBy('news_type')">Type</button>
     </div>
@@ -482,7 +482,7 @@
             <th id="th-firm"   onclick="newsSortBy('firm')">Firm</th>
             <th id="th-amount" onclick="newsSortBy('investment_amount')">Investment/Layoff Amount</th>
             <th id="th-news"   onclick="newsSortBy('news')">News Headline</th>
-            <th id="th-type"   onclick="newsSortBy('news_type')">News Type</th>
+            <th id="th-type"   onclick="newsSortBy('news_type')">News Headline Type</th>
           </tr>
         </thead>
         <tbody id="newsTbody"></tbody>
@@ -512,9 +512,8 @@
 
     <div class="filter-bar">
       <div class="filter-group">
-        <div class="filter-group-label"></div>
         <input class="filter-input" id="occSearchInput" type="text"
-          placeholder="Search occupation..." oninput="applyOccFilters()" style="width:320px">
+          placeholder="Search by occupation..." oninput="applyOccFilters()" style="width:320px">
       </div>
       <div class="filter-group" style="justify-content:flex-end">
         <button class="clear-btn" onclick="clearOccFilters()">✕ Clear</button>
@@ -557,7 +556,7 @@
       <div class="company-panel">
         <div class="company-search">
           <input class="company-search-input" id="companySearch" type="text"
-            placeholder="Search company..." oninput="filterCompanyBtns(this.value)">
+            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
         </div>
         <div id="companyBtns">
           <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
@@ -582,8 +581,7 @@
 
   <footer id="about">
     <div class="footer-left">
-      <strong>AI Sentiment</strong><br>
-      AI Labor Market Intelligence Platform
+      <strong>AI Sentiment</strong>
     </div>
     <div class="footer-right">
       © 2026 AI Sentiment. For research purposes.
@@ -813,8 +811,8 @@
         tr.className = tc.row;
         tr.innerHTML = `
           <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
-          <td class="td-amount">${row.investment_amount || '—'}</td>
           <td class="td-firm">${row.firm || '—'}</td>
+          <td class="td-amount">${row.investment_amount || '—'}</td>
           <td class="td-news">${row.news}</td>
           <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
         tbody.appendChild(tr);
@@ -1065,7 +1063,7 @@
       document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('figCompanyName').textContent = row.conm;
-      document.getElementById('figCompanySubtitle').textContent = 'Six-Dimension Analysis';
+      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
       drawRadar(row);
     }
 
