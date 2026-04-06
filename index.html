@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Labor Market Intelligence</title>
+  <title>AI Sentiment</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -19,9 +19,6 @@
       --text-dim: #4a5568;
       --red: #e05252;
       --green: #38b36e;
-      --spine-top: #85B7EB;
-      --spine-mid: #5DCAA5;
-      --spine-bot: #AFA9EC;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,7 +44,7 @@
       z-index: 0;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: sticky;
       top: 0;
@@ -61,7 +58,6 @@
       justify-content: space-between;
       height: 64px;
     }
-
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
@@ -70,18 +66,8 @@
       text-transform: uppercase;
       color: var(--accent);
     }
-
-    .nav-logo span {
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
@@ -90,19 +76,9 @@
       text-transform: uppercase;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--accent); }
 
-    .nav-badge {
-      font-size: 13px;
-      padding: 4px 12px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      border-radius: 2px;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── HERO ── */
+    /* HERO */
     .hero {
       position: relative;
       z-index: 1;
@@ -111,7 +87,6 @@
       overflow: hidden;
       background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
     }
-
     .hero::after {
       content: '';
       position: absolute;
@@ -120,10 +95,7 @@
       background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
-
     .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-    .hero-text { }
-
     .hero-chart {
       background: #fff;
       border: 1px solid #dde3ec;
@@ -141,230 +113,41 @@
       background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%);
     }
     .hero-chart canvas { width: 100% !important; }
-
-    .hero-chart-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-    .hero-chart-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-      letter-spacing: -0.01em;
-    }
-    .hero-chart-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
+    .hero-chart-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .hero-chart-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #1e293b; }
+    .hero-chart-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
     .hero-chart-kpi { text-align: right; }
-    .hero-chart-kpi-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: #3b8abf;
-      line-height: 1;
-    }
-    .hero-chart-kpi-delta {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 3px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #38b36e;
-      margin-top: 4px;
-    }
-    .hero-chart-note {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #eef1f5;
-      font-size: 11px;
-      color: #9ca3af;
-      letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .hero-chart-note::before { content: 'ℹ'; color: #5ba3d9; font-size: 11px; }
-
-    .hero-eyebrow {
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--accent);
-    }
-
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-      color: #7a8694;
-    }
-
-    .hero h1 em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-desc {
-      color: var(--text-dim);
-      line-height: 1.75;
-      font-size: 16px;
-      max-width: 640px;
-      margin-bottom: 36px;
-    }
-
+    .hero-chart-kpi-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #3b8abf; line-height: 1; }
+    .hero-chart-kpi-delta { display: flex; align-items: center; justify-content: flex-end; gap: 3px; font-size: 12px; font-weight: 600; color: #38b36e; margin-top: 4px; }
+    .hero-chart-note { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef1f5; font-size: 11px; color: #9ca3af; display: flex; align-items: center; gap: 5px; }
+    .hero-chart-note::before { content: 'ℹ'; color: #5ba3d9; }
+    .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 4.5vw, 56px); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; color: #7a8694; }
+    .hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); }
+    .hero-desc { color: var(--text-dim); line-height: 1.75; font-size: 16px; max-width: 640px; margin-bottom: 36px; }
     .hero-insights { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .insight-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 9px 16px;
-      font-size: 14px;
-      color: var(--text-dim);
-      transition: border-color 0.2s;
-      cursor: default;
-    }
-
-    .insight-pill:hover { border-color: rgba(91,163,217,0.5); }
-
+    .insight-pill { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); padding: 9px 16px; font-size: 14px; color: var(--text-dim); cursor: default; }
     .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .pill-dot.news  { background: var(--accent); }
     .pill-dot.radar { background: var(--accent2); }
     .pill-dot.dim   { background: var(--text-muted); }
+    .pill-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text); font-size: 15px; }
 
-    .pill-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      color: var(--text);
-      font-size: 15px;
-    }
+    /* SECTION HEADERS */
+    .section-header { padding: 52px 48px 0; margin-bottom: 32px; }
+    .section-header-inner { display: flex; align-items: center; gap: 14px; }
+    .section-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .section-icon.news-icon { background: linear-gradient(135deg, rgba(91,163,217,0.18) 0%, rgba(56,179,110,0.12) 100%); border: 1px solid rgba(91,163,217,0.3); }
+    .section-icon.analysis-icon { background: linear-gradient(135deg, rgba(175,169,236,0.18) 0%, rgba(91,163,217,0.12) 100%); border: 1px solid rgba(175,169,236,0.3); }
+    .section-icon.occupation-icon { background: linear-gradient(135deg, rgba(56,179,110,0.18) 0%, rgba(93,202,165,0.12) 100%); border: 1px solid rgba(56,179,110,0.3); }
+    .section-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); margin-left: 4px; }
 
-    /* ── SECTION HEADERS ── */
-    .section-header {
-      padding: 52px 48px 0;
-      margin-bottom: 32px;
-    }
-
-    .section-header-inner {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .section-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .section-icon.news-icon {
-      background: linear-gradient(135deg, rgba(91,163,217,0.18) 0%, rgba(56,179,110,0.12) 100%);
-      border: 1px solid rgba(91,163,217,0.3);
-    }
-
-    .section-icon.analysis-icon {
-      background: linear-gradient(135deg, rgba(175,169,236,0.18) 0%, rgba(91,163,217,0.12) 100%);
-      border: 1px solid rgba(175,169,236,0.3);
-    }
-
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-
-    .section-tag {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    .section-tag.news-tag {
-      background: rgba(91,163,217,0.1);
-      color: var(--accent2);
-      border: 1px solid rgba(91,163,217,0.25);
-    }
-
-    .section-tag.analysis-tag {
-      background: rgba(175,169,236,0.1);
-      color: #afa9ec;
-      border: 1px solid rgba(175,169,236,0.25);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-      margin-left: 4px;
-    }
-
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      padding-left: 48px;
-    }
-
-    /* ── NEWS SECTION ── */
-    .news-section {
-      position: relative;
-      z-index: 1;
-      padding-bottom: 64px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* ── FILTER BAR ── */
-    .filter-bar {
-      padding: 0 48px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-end;
-    }
-
+    /* SHARED FILTER BAR */
+    .filter-bar { padding: 0 48px 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
     .filter-group { display: flex; flex-direction: column; gap: 6px; }
-
-    .filter-group-label {
-      font-size: 12px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
+    .filter-group-label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
     .filter-input {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -379,12 +162,36 @@
     }
     .filter-input:focus { border-color: var(--accent); }
     .filter-input::placeholder { color: var(--text-muted); }
-
-    .media-dropdown-wrap { position: relative; width: 220px; }
-
-    .media-dropdown-btn {
-      width: 100%;
+    .date-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 0 10px;
       height: 40px;
+      width: 150px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .date-input:focus { border-color: var(--accent); }
+    .clear-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      padding: 0 16px;
+      height: 40px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* NEWS TYPE DROPDOWN */
+    .type-dropdown-wrap { position: relative; width: 220px; }
+    .type-dropdown-btn {
+      width: 100%; height: 40px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
@@ -401,539 +208,196 @@
       background-repeat: no-repeat;
       background-position: right 12px center;
     }
-    .media-dropdown-btn:focus,
-    .media-dropdown-btn.open { border-color: var(--accent); outline: none; }
-
-    .media-dropdown-list {
+    .type-dropdown-btn:focus, .type-dropdown-btn.open { border-color: var(--accent); outline: none; }
+    .type-dropdown-list {
       display: none;
       position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      width: 240px;
-      max-height: 260px;
+      top: calc(100% + 2px); left: 0;
+      width: 240px; max-height: 260px;
       overflow-y: auto;
       background: #fff;
       border: 1px solid var(--accent);
       z-index: 200;
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     }
-    .media-dropdown-list.open { display: block; }
+    .type-dropdown-list.open { display: block; }
+    .type-dropdown-list::-webkit-scrollbar { width: 4px; }
+    .type-dropdown-list::-webkit-scrollbar-thumb { background: var(--border); }
+    .type-opt { display: flex; align-items: center; gap: 8px; padding: 10px 14px; cursor: pointer; font-size: 14px; color: var(--text-dim); transition: background 0.15s; user-select: none; }
+    .type-opt:hover { background: rgba(91,163,217,0.1); color: var(--text); }
+    .type-opt-check { width: 16px; height: 16px; border: 1px solid var(--border); border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: all 0.15s; }
+    .type-opt.selected .type-opt-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .type-opt-all { border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+    .type-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .media-dropdown-list::-webkit-scrollbar { width: 4px; }
-    .media-dropdown-list::-webkit-scrollbar-track { background: #fff; }
-    .media-dropdown-list::-webkit-scrollbar-thumb { background: var(--border); }
-
-    .media-opt {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--text-dim);
-      transition: background 0.15s;
-      user-select: none;
-    }
-    .media-opt:hover { background: rgba(91,163,217,0.1); color: var(--text); }
-    .media-opt.selected { color: var(--text); }
-
-    .media-opt-check {
-      width: 16px; height: 16px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px;
-      transition: all 0.15s;
-    }
-    .media-opt.selected .media-opt-check {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    .media-opt-all {
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-    }
-
-    .date-input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      padding: 0 10px;
-      height: 40px;
-      width: 150px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .date-input:focus { border-color: var(--accent); }
-
-    .clear-btn {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      padding: 0 16px;
-      height: 40px;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-    .clear-btn:hover { border-color: var(--red); color: var(--red); }
-
-    .filter-stats {
-      padding: 0 48px 14px;
-      font-size: 14px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    /* FILTER STATS + SORT BAR */
+    .filter-stats { padding: 0 48px 14px; font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 12px; }
     .filter-stats span { color: var(--accent2); }
+    .sort-bar { padding: 0 48px 16px; display: flex; align-items: center; gap: 6px; }
+    .sort-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; }
+    .sort-btn { font-size: 13px; font-family: 'DM Mono', monospace; padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 2px; transition: all 0.18s; }
+    .sort-btn:hover { border-color: var(--accent); color: var(--text); }
+    .sort-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
 
-    /* ── NEWS TIMELINE ── */
-    .news-timeline-wrap { padding: 0 48px; }
+    /* NEWS LEGEND */
+    .news-legend { padding: 0 48px 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .legend-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; }
+    .legend-pill { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 3px 10px; border-radius: 20px; border: 1px solid transparent; font-weight: 500; }
+    .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-    .news-feed {
-      position: relative;
-      padding-left: 120px;
-    }
+    /* NEWS SECTION */
+    .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
+    .news-table-wrap { padding: 0 48px; overflow-x: auto; }
+    .news-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .news-table thead tr { background: var(--surface); border-bottom: 2px solid var(--border); }
+    .news-table th { padding: 12px 16px; text-align: left; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; transition: color 0.18s; }
+    .news-table th:hover { color: var(--accent); }
+    .news-table th.sorted { color: var(--accent2); }
+    .news-table tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: filter 0.15s; }
+    .news-table tbody tr:hover { filter: brightness(0.96); }
+    .news-table td { padding: 12px 16px; vertical-align: top; line-height: 1.55; }
+    .td-date { white-space: nowrap; font-size: 13px; color: var(--text-dim); width: 110px; }
+    .td-news { color: var(--text); }
+    .td-type { white-space: nowrap; width: 150px; }
 
-    .news-spine {
-      position: absolute;
-      left: 94px;
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: linear-gradient(180deg, var(--spine-top), var(--spine-mid), var(--spine-bot));
-      border-radius: 1px;
-    }
+    /* Row color schemes */
+    .row-investment   { background: #eff6ff; }
+    .row-layoff       { background: #fef2f2; }
+    .row-divestment   { background: #fefce8; }
+    .row-partnership  { background: #f0fdf4; }
+    .row-regulation   { background: #faf5ff; }
+    .row-hiring       { background: #ecfdf5; }
+    .row-acquisition  { background: #fff7ed; }
+    .row-earnings     { background: #f0f9ff; }
+    .row-default      { background: #ffffff; }
 
-    .news-item {
-      position: relative;
-      padding: 20px 0 20px 36px;
-    }
+    /* Badge colors */
+    .type-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500; border: 1px solid transparent; }
+    .type-badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .badge-investment  { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+    .badge-layoff      { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+    .badge-divestment  { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
+    .badge-partnership { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+    .badge-regulation  { background: #f3e8ff; color: #7e22ce; border-color: #e9d5ff; }
+    .badge-hiring      { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+    .badge-acquisition { background: #ffedd5; color: #9a3412; border-color: #fed7aa; }
+    .badge-earnings    { background: #e0f2fe; color: #075985; border-color: #bae6fd; }
+    .badge-default     { background: rgba(91,163,217,0.1); color: var(--accent2); border-color: rgba(91,163,217,0.25); }
 
-    .news-item + .news-item {
-      border-top: 1px solid var(--surface2);
-    }
+    /* Dot colors */
+    .dot-investment  { background: #3b82f6; }
+    .dot-layoff      { background: #ef4444; }
+    .dot-divestment  { background: #eab308; }
+    .dot-partnership { background: #22c55e; }
+    .dot-regulation  { background: #a855f7; }
+    .dot-hiring      { background: #10b981; }
+    .dot-acquisition { background: #f97316; }
+    .dot-earnings    { background: #0ea5e9; }
+    .dot-default     { background: #5ba3d9; }
 
-    .news-node {
-      position: absolute;
-      left: -22px;
-      top: 28px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid var(--spine-top);
-      background: var(--bg);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .news-node-inner {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #378ADD;
-      margin: 2.5px auto;
-      transition: background 0.2s;
-    }
-
-    .news-item:hover .news-node { transform: scale(1.2); }
-
-    .news-ts {
-      position: absolute;
-      left: -120px;
-      top: 20px;
-      width: 84px;
-      text-align: right;
-    }
-
-    .news-ts-day {
-      display: block;
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-    }
-
-    .news-ts-month {
-      font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-    }
-
-    .news-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .news-content { flex: 1; }
-
-    .news-headline {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.55;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .news-headline a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.18s;
-    }
-    .news-headline a:hover { color: var(--accent); }
-
-    .news-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .news-badge {
-      font-size: 13px;
-      padding: 4px 12px;
-      border-radius: 2px;
-      background: rgba(91,163,217,0.1);
-      color: var(--accent2);
-      font-weight: 500;
-      letter-spacing: 0.03em;
-    }
-
-    .news-ago {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .news-link-arrow {
-      color: var(--accent);
-      font-size: 16px;
-      text-decoration: none;
-      font-weight: 500;
-      flex-shrink: 0;
-      margin-top: 2px;
-      opacity: 0;
-      transition: opacity 0.18s;
-    }
-
-    .news-item:hover .news-link-arrow { opacity: 1; }
-
-    .news-empty {
-      padding: 60px 48px;
-      text-align: center;
-      color: var(--text-muted);
-      display: none;
-    }
+    .news-empty { padding: 60px 48px; text-align: center; color: var(--text-muted); display: none; }
     .news-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
-    .news-empty p { font-size: 15px; }
 
-    /* Pagination */
-    .news-pagination {
+    /* PAGINATION */
+    .news-pagination, .occ-pagination {
       padding: 16px 48px 0;
       display: flex;
       align-items: center;
       gap: 8px;
       justify-content: flex-end;
     }
-
-    .page-btn {
-      padding: 8px 14px;
-      font-size: 14px;
-      font-family: 'DM Mono', monospace;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
-    }
-    .page-btn:hover, .page-btn.active {
-      border-color: var(--accent);
-      color: var(--text);
-      background: rgba(91,163,217,0.08);
-    }
+    .page-btn { padding: 8px 14px; font-size: 14px; font-family: 'DM Mono', monospace; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 2px; transition: all 0.18s; }
+    .page-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(91,163,217,0.08); }
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .page-info { font-size: 14px; color: var(--text-muted); }
 
-    /* Sort controls */
-    .sort-bar {
-      padding: 0 48px 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    /* OCCUPATION SECTION */
+    .occupation-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
+    .occ-stats { padding: 0 48px 14px; font-size: 14px; color: var(--text-muted); display: none; }
+    .occ-stats span { color: var(--accent2); }
+    .occ-table-wrap { padding: 0 48px; overflow-x: auto; }
+    .occ-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .occ-table thead tr { background: var(--surface); border-bottom: 2px solid var(--border); }
+    .occ-table th { padding: 12px 16px; text-align: left; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; transition: color 0.18s; }
+    .occ-table th:hover { color: var(--accent); }
+    .occ-table th.sorted { color: var(--accent2); }
+    .occ-table tbody tr { border-bottom: 1px solid var(--surface2); transition: background 0.15s; }
+    .occ-table tbody tr:hover { background: rgba(91,163,217,0.04); }
+    .occ-table td { padding: 12px 16px; vertical-align: top; color: var(--text-dim); line-height: 1.5; }
+    .occ-table td:first-child { color: var(--text); font-weight: 500; }
+    .occ-empty { padding: 60px 48px; text-align: center; color: var(--text-muted); }
+    .occ-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
 
-    .sort-label {
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-right: 4px;
-    }
-
-    .sort-btn {
-      font-size: 13px;
-      font-family: 'DM Mono', monospace;
-      padding: 5px 12px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
-    }
-
-    .sort-btn:hover { border-color: var(--accent); color: var(--text); }
-    .sort-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
-
-    /* ── ANALYSIS SECTION ── */
-    .analysis-section {
-      position: relative;
-      z-index: 1;
-      padding-bottom: 80px;
-    }
-
-    .company-layout {
-      padding: 0 48px;
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 2px;
-      height: 700px;
-    }
-
-    .company-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    #companyBtns {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .company-search {
-      padding: 8px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .company-search-input {
-      width: 100%;
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      padding: 8px 10px;
-      outline: none;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
+    /* ANALYSIS SECTION */
+    .analysis-section { position: relative; z-index: 1; padding-bottom: 80px; }
+    .company-layout { padding: 0 48px; display: grid; grid-template-columns: 240px 1fr; gap: 2px; height: 700px; }
+    .company-panel { background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+    #companyBtns { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .company-search { padding: 8px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .company-search-input { width: 100%; background: #fff; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 14px; padding: 8px 10px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
     .company-search-input:focus { border-color: var(--accent); }
     .company-search-input::placeholder { color: var(--text-muted); }
-
-    .company-panel-scroll {
-      flex: 1;
-      overflow-y: auto;
-      min-height: 0;
-      padding: 6px;
-    }
-
+    .company-panel-scroll { flex: 1; overflow-y: auto; min-height: 0; padding: 6px; }
     .company-panel-scroll::-webkit-scrollbar { width: 4px; }
-    .company-panel-scroll::-webkit-scrollbar-track { background: transparent; }
     .company-panel-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .company-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 3px;
-      padding: 14px 16px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-dim);
-      width: 100%;
-    }
-
-    .company-btn:hover {
-      background: var(--surface2);
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .company-btn.active {
-      background: rgba(91,163,217,0.1);
-      border-color: rgba(91,163,217,0.5);
-      color: var(--text);
-    }
-
+    .company-btn { background: transparent; border: 1px solid transparent; border-radius: 3px; padding: 14px 16px; cursor: pointer; text-align: left; transition: all 0.18s; display: flex; align-items: center; gap: 12px; color: var(--text-dim); width: 100%; }
+    .company-btn:hover { background: var(--surface2); border-color: var(--border); color: var(--text); }
+    .company-btn.active { background: rgba(91,163,217,0.1); border-color: rgba(91,163,217,0.5); color: var(--text); }
     .company-btn.active .btn-indicator { background: var(--accent); }
-
-    .btn-indicator {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-
-    .btn-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .figure-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .figure-header {
-      padding: 18px 28px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .figure-company-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .figure-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .figure-body {
-      flex: 1;
-      padding: 12px 20px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .radar-wrap {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .radar-legend {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 280px;
-    }
-
-    .radar-empty {
-      text-align: center;
-      color: var(--text-muted);
-      padding: 60px 20px;
-    }
+    .btn-indicator { width: 7px; height: 7px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+    .btn-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; display: block; }
+    .figure-panel { background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; }
+    .figure-header { padding: 18px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .figure-company-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+    .figure-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
+    .figure-body { flex: 1; padding: 12px 20px 16px; display: flex; align-items: center; justify-content: center; gap: 8px; overflow: hidden; min-height: 0; }
+    .radar-wrap { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+    .radar-legend { display: flex; flex-direction: column; gap: 10px; min-width: 280px; }
+    .radar-empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
     .radar-empty .ph-icon { font-size: 36px; margin-bottom: 12px; }
-    .radar-empty p { font-size: 15px; line-height: 1.6; }
-    .radar-empty code {
-      color: var(--accent2);
-      background: rgba(91,163,217,0.1);
-      padding: 2px 6px;
-      border-radius: 2px;
-      font-size: 14px;
-    }
+    .radar-empty code { color: var(--accent2); background: rgba(91,163,217,0.1); padding: 2px 6px; border-radius: 2px; font-size: 14px; }
 
-    /* ── FOOTER ── */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-left {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .footer-left strong {
-      font-family: 'Syne', sans-serif;
-      color: var(--accent);
-      font-size: 15px;
-    }
-
-    .footer-right {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-align: right;
-    }
+    /* FOOTER */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-left { font-size: 14px; color: var(--text-muted); }
+    .footer-left strong { font-family: 'Syne', sans-serif; color: var(--accent); font-size: 15px; }
+    .footer-right { font-size: 13px; color: var(--text-muted); text-align: right; }
 
     @media (max-width: 1024px) {
       .hero-inner { grid-template-columns: 1fr; }
       .company-layout { grid-template-columns: 1fr; }
-      .company-panel { flex-direction: row; flex-wrap: wrap; }
     }
-
     @media (max-width: 768px) {
       nav, .hero, .section-header, .company-layout, footer,
-      .filter-bar, .news-timeline-wrap, .sort-bar, .news-pagination {
+      .filter-bar, .news-table-wrap, .sort-bar, .news-pagination,
+      .occ-table-wrap, .occ-pagination, .occ-stats, .filter-stats, .news-legend {
         padding-left: 20px;
         padding-right: 20px;
       }
-      .news-feed { padding-left: 90px; }
-      .news-ts { left: -90px; width: 58px; }
-      .news-spine { left: 64px; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="nav-logo">AI·LMI <span>/ Labor Market Intelligence</span></div>
+    <div class="nav-logo">AI Sentiment <span>/ Intelligence Platform</span></div>
     <ul class="nav-links">
       <li><a href="#news">News</a></li>
+      <li><a href="#occupation">Occupation</a></li>
       <li><a href="#analysis">Analysis</a></li>
       <li><a href="./comments.html">Comments</a></li>
       <li><a href="#about">About</a></li>
     </ul>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-eyebrow">AI Labor Market Intelligence</div>
-        <h1>How <span style="color:var(--accent)">AI</span> Is Reshaping<br>the <span style="color:var(--accent)">Future</span> of Work</h1>
+        <div class="hero-eyebrow">AI Sentiment Platform</div>
+        <h1>How <em>AI</em> Is Reshaping<br>the <em>Future</em> of Work</h1>
         <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, and dive into firm-level analysis across six key dimensions—including AI talent share, hiring and retention trends, salary premiums for AI roles, and employee and executive sentiment on how AI is transforming the workplace.
+          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, dive into occupation-level trends, and analyse firm-level data across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
         </p>
         <div class="hero-insights" id="heroInsights">
           <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
@@ -958,12 +422,12 @@
     </div>
   </section>
 
+  <!-- NEWS SECTION -->
   <section class="news-section" id="news">
     <div class="section-header">
       <div class="section-header-inner">
         <div class="section-icon news-icon">📰</div>
         <h2 class="section-title">Recent AI News</h2>
-
         <div class="section-line"></div>
       </div>
     </div>
@@ -971,63 +435,114 @@
     <div class="filter-bar">
       <div class="filter-group">
         <div class="filter-group-label">Keyword</div>
-        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyFilters()">
+        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyNewsFilters()">
       </div>
       <div class="filter-group">
-        <div class="filter-group-label">Media</div>
-        <div class="media-dropdown-wrap" id="mediaDropdownWrap">
-          <button class="media-dropdown-btn" id="mediaDropdownBtn" onclick="toggleMediaDropdown(event)">All sources</button>
-          <div class="media-dropdown-list" id="mediaDropdownList"></div>
+        <div class="filter-group-label">News Type</div>
+        <div class="type-dropdown-wrap">
+          <button class="type-dropdown-btn" id="typeDropdownBtn" onclick="toggleTypeDropdown(event)">All types</button>
+          <div class="type-dropdown-list" id="typeDropdownList"></div>
         </div>
       </div>
       <div class="filter-group">
         <div class="filter-group-label">From</div>
-        <input class="date-input" id="dateFrom" type="date" onchange="applyFilters()">
+        <input class="date-input" id="dateFrom" type="date" onchange="applyNewsFilters()">
       </div>
       <div class="filter-group">
         <div class="filter-group-label">To</div>
-        <input class="date-input" id="dateTo" type="date" onchange="applyFilters()">
+        <input class="date-input" id="dateTo" type="date" onchange="applyNewsFilters()">
       </div>
       <div class="filter-group" style="justify-content:flex-end">
-        <button class="clear-btn" onclick="clearFilters()">✕ Clear</button>
+        <button class="clear-btn" onclick="clearNewsFilters()">✕ Clear</button>
       </div>
     </div>
 
+    <div class="news-legend" id="newsLegend"></div>
+
     <div class="filter-stats" id="filterStats" style="display:none">
       Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> articles
-      <button class="clear-btn" onclick="clearFilters()">✕ Clear filters</button>
     </div>
 
     <div class="sort-bar">
       <span class="sort-label">Sort by</span>
-      <button class="sort-btn active" id="sortTimeBtn" onclick="sortBy('time')">Date ↓</button>
-      <button class="sort-btn" id="sortHeadlineBtn" onclick="sortBy('headline')">Headline</button>
-      <button class="sort-btn" id="sortMediaBtn" onclick="sortBy('media')">Media</button>
+      <button class="sort-btn active" id="sortDateBtn" onclick="newsSortBy('date')">Date ↓</button>
+      <button class="sort-btn"        id="sortNewsBtn" onclick="newsSortBy('news')">Headline</button>
+      <button class="sort-btn"        id="sortTypeBtn" onclick="newsSortBy('news_type')">Type</button>
     </div>
 
-    <div class="news-timeline-wrap">
-      <div class="news-feed" id="newsFeed">
-        <div class="news-spine" id="newsSpine"></div>
-      </div>
-      <div class="news-empty" id="newsEmpty">
+    <div class="news-table-wrap">
+      <table class="news-table" id="newsTable" style="display:none">
+        <thead>
+          <tr>
+            <th id="th-date"  onclick="newsSortBy('date')">Date</th>
+            <th id="th-news"  onclick="newsSortBy('news')">Headline</th>
+            <th id="th-type"  onclick="newsSortBy('news_type')">Type</th>
+          </tr>
+        </thead>
+        <tbody id="newsTbody"></tbody>
+      </table>
+      <div class="news-empty" id="newsEmpty" style="display:none">
         <div class="empty-icon">🔎</div>
-        <p>No articles match your filters. Try adjusting the keyword or time range.</p>
+        <p id="newsEmptyMsg">No articles match your filters.</p>
       </div>
     </div>
 
     <div class="news-pagination" id="newsPagination" style="display:none">
-      <button class="page-btn" id="prevPageBtn" onclick="changePage(-1)" disabled>← Prev</button>
+      <button class="page-btn" id="prevPageBtn" onclick="changeNewsPage(-1)" disabled>← Prev</button>
       <span class="page-info" id="pageInfo">Page 1 of 1</span>
-      <button class="page-btn" id="nextPageBtn" onclick="changePage(1)">Next →</button>
+      <button class="page-btn" id="nextPageBtn" onclick="changeNewsPage(1)">Next →</button>
     </div>
   </section>
 
+  <!-- OCCUPATION SECTION -->
+  <section class="occupation-section" id="occupation">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon occupation-icon">💼</div>
+        <h2 class="section-title">Occupation</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <div class="filter-group-label">Search Occupation</div>
+        <input class="filter-input" id="occSearchInput" type="text"
+          placeholder="Search by occupation..." oninput="applyOccFilters()" style="width:320px">
+      </div>
+      <div class="filter-group" style="justify-content:flex-end">
+        <button class="clear-btn" onclick="clearOccFilters()">✕ Clear</button>
+      </div>
+    </div>
+
+    <div class="occ-stats" id="occStats">
+      Showing <span id="occVisible">0</span> of <span id="occTotal">0</span> occupations
+    </div>
+
+    <div class="occ-table-wrap">
+      <table class="occ-table" id="occTable" style="display:none">
+        <thead><tr id="occThead"></tr></thead>
+        <tbody id="occTbody"></tbody>
+      </table>
+      <div class="occ-empty" id="occEmpty">
+        <div class="empty-icon">💼</div>
+        <p id="occEmptyMsg" style="font-size:15px">Loading <strong>data/role_level_data.csv</strong>…</p>
+      </div>
+    </div>
+
+    <div class="occ-pagination" id="occPagination" style="display:none">
+      <button class="page-btn" id="occPrevBtn" onclick="changeOccPage(-1)" disabled>← Prev</button>
+      <span class="page-info" id="occPageInfo">Page 1 of 1</span>
+      <button class="page-btn" id="occNextBtn" onclick="changeOccPage(1)">Next →</button>
+    </div>
+  </section>
+
+  <!-- ANALYSIS SECTION -->
   <section class="analysis-section" id="analysis">
     <div class="section-header">
       <div class="section-header-inner">
         <div class="section-icon analysis-icon">📊</div>
         <h2 class="section-title">Company Analysis</h2>
-
         <div class="section-line"></div>
       </div>
     </div>
@@ -1042,8 +557,7 @@
           <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
         </div>
       </div>
-
-      <div class="figure-panel" id="figurePanel">
+      <div class="figure-panel">
         <div class="figure-header">
           <div>
             <div class="figure-company-name" id="figCompanyName">—</div>
@@ -1053,7 +567,7 @@
         <div class="figure-body" id="figureBody">
           <div class="radar-empty">
             <div class="ph-icon">📊</div>
-            <p>Reads from <code>data/companies.csv</code> in your repo.<br>Click a company to view its radar chart.</p>
+            <p>Reads from <code>data/companies.csv</code><br>Click a company to view its radar chart.</p>
           </div>
         </div>
       </div>
@@ -1062,45 +576,41 @@
 
   <footer id="about">
     <div class="footer-left">
-      <strong>AI · LMI</strong><br>
-      Labor Market Intelligence Platform
+      <strong>AI Sentiment</strong><br>
+      AI Labor Market Intelligence Platform
     </div>
     <div class="footer-right">
-      © 2026 AI Labor Market Intelligence. For research purposes.
+      © 2026 AI Sentiment. For research purposes.
     </div>
   </footer>
 
   <script>
-    let allNews = [];
-    let filteredNews = [];
-    let currentPage = 1;
-    const PAGE_SIZE = 10;
-    let sortCol = 'time';
-    let sortDir = 'desc';
+    /* ═══════════════════════════════════
+       CSV PARSER
+    ═══════════════════════════════════ */
+    function parseCSVLine(line) {
+      const cols = []; let cur = '', inQ = false;
+      for (let c = 0; c < line.length; c++) {
+        if (line[c] === '"') { inQ = !inQ; }
+        else if (line[c] === ',' && !inQ) { cols.push(cur); cur = ''; }
+        else { cur += line[c]; }
+      }
+      cols.push(cur);
+      return cols.map(s => s.replace(/^"|"$/g,'').trim());
+    }
 
-    function parseCSV(text) {
+    function parseCSVGeneric(text) {
       const lines = text.trim().split(/\r?\n/);
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
       const rows = [];
       for (let i = 1; i < lines.length; i++) {
-        const line = lines[i];
-        if (!line.trim()) continue;
-        const cols = [];
-        let cur = '', inQ = false;
-        for (let c = 0; c < line.length; c++) {
-          if (line[c] === '"') { inQ = !inQ; }
-          else if (line[c] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-          else { cur += line[c]; }
-        }
-        cols.push(cur.trim());
+        if (!lines[i].trim()) continue;
+        const cols = parseCSVLine(lines[i]);
         const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g, '').trim().replace(/%$/, ''); });
-        const rawDate = row.time || row.date || '';
-        row._rawDate = rawDate;
-        row._date = rawDate ? parseDate(rawDate) : null;
-        if (row.headline) rows.push(row);
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').trim(); });
+        rows.push(row);
       }
-      return rows;
+      return { headers, rows };
     }
 
     function parseDate(str) {
@@ -1108,258 +618,375 @@
       let d = new Date(str);
       if (!isNaN(d)) return d;
       const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-      if (mdy) { d = new Date(+mdy[3], +mdy[1]-1, +mdy[2]); if (!isNaN(d)) return d; }
+      if (mdy) return new Date(+mdy[3], +mdy[1]-1, +mdy[2]);
       return null;
     }
 
-    function fetchCSV() {
+    function fmtDate(d) {
+      if (!d) return '';
+      return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    }
+
+    /* ═══════════════════════════════════
+       NEWS TYPE COLOR MAP
+    ═══════════════════════════════════ */
+    const TYPE_MAP = {
+      'investment':   { row:'row-investment',   badge:'badge-investment',   dot:'dot-investment',   label:'Investment'   },
+      'layoff':       { row:'row-layoff',        badge:'badge-layoff',       dot:'dot-layoff',       label:'Layoff'       },
+      'divestment':   { row:'row-divestment',    badge:'badge-divestment',   dot:'dot-divestment',   label:'Divestment'   },
+      'partnership':  { row:'row-partnership',   badge:'badge-partnership',  dot:'dot-partnership',  label:'Partnership'  },
+      'regulation':   { row:'row-regulation',    badge:'badge-regulation',   dot:'dot-regulation',   label:'Regulation'   },
+      'hiring':       { row:'row-hiring',        badge:'badge-hiring',       dot:'dot-hiring',       label:'Hiring'       },
+      'acquisition':  { row:'row-acquisition',   badge:'badge-acquisition',  dot:'dot-acquisition',  label:'Acquisition'  },
+      'earnings':     { row:'row-earnings',      badge:'badge-earnings',     dot:'dot-earnings',     label:'Earnings'     },
+    };
+
+    function getTypeClasses(rawType) {
+      const key = (rawType || '').toLowerCase().trim();
+      return TYPE_MAP[key] || { row:'row-default', badge:'badge-default', dot:'dot-default', label: rawType || '—' };
+    }
+
+    /* ═══════════════════════════════════
+       NEWS SECTION
+    ═══════════════════════════════════ */
+    let allNews = [], filteredNews = [];
+    let newsPage = 1;
+    const NEWS_PAGE_SIZE = 15;
+    let newsSortCol = 'date', newsSortDir = 'desc';
+    let selectedTypes = new Set();
+
+    function fetchNewsCSV() {
       fetch('data/news.csv')
-        .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
+        .then(r => { if (!r.ok) throw new Error('not found'); return r.text(); })
         .then(text => {
-          allNews = parseCSV(text);
-          document.getElementById('filterStats').style.display = 'flex';
-          buildMediaDropdown();
-          setDateRangeBounds();
-          applyFilters();
+          const { rows } = parseCSVGeneric(text);
+          allNews = rows.map(r => ({
+            news:      r.news || r.headline || '',
+            date:      r.date || r.time || '',
+            news_type: r.news_type || r.type || r.media || '',
+            _date:     parseDate(r.date || r.time || '')
+          })).filter(r => r.news);
+
+          buildTypeDropdown();
+          buildNewsLegend();
+          setNewsDateBounds();
+          applyNewsFilters();
           updateHeroPills();
+          document.getElementById('filterStats').style.display = 'flex';
         })
         .catch(() => {
-          const empty = document.getElementById('newsEmpty');
-          empty.style.display = 'block';
-          empty.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>. Make sure it exists in your repo at <code style="color:var(--accent)">data/news.csv</code>.</p>';
+          const el = document.getElementById('newsEmpty');
+          el.style.display = 'block';
+          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, News, News_Type</code></p>';
         });
     }
 
-    let selectedMedia = new Set();
-
-    function buildMediaDropdown() {
-      const sources = [...new Set(allNews.map(r => r.media).filter(Boolean))].sort();
-      const list = document.getElementById('mediaDropdownList');
+    function buildTypeDropdown() {
+      const types = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      const list  = document.getElementById('typeDropdownList');
       list.innerHTML = '';
       const allOpt = document.createElement('div');
-      allOpt.className = 'media-opt media-opt-all';
-      allOpt.innerHTML = '<span class="media-opt-check" id="allCheck">✓</span><span>All sources</span>';
-      allOpt.onclick = () => { selectedMedia.clear(); updateMediaBtn(); applyFilters(); };
+      allOpt.className = 'type-opt type-opt-all';
+      allOpt.innerHTML = '<span class="type-opt-check">✓</span><span>All types</span>';
+      allOpt.onclick = () => { selectedTypes.clear(); updateTypeBtn(); applyNewsFilters(); };
       list.appendChild(allOpt);
-      sources.forEach(src => {
+      types.forEach(t => {
+        const tc = getTypeClasses(t);
         const opt = document.createElement('div');
-        opt.className = 'media-opt';
-        opt.dataset.src = src;
-        opt.innerHTML = `<span class="media-opt-check"></span><span>${src}</span>`;
+        opt.className = 'type-opt'; opt.dataset.val = t;
+        opt.innerHTML = `<span class="type-opt-check"></span><span class="type-color-dot ${tc.dot}"></span><span>${tc.label}</span>`;
         opt.onclick = () => {
-          if (selectedMedia.has(src)) selectedMedia.delete(src);
-          else selectedMedia.add(src);
-          updateMediaBtn();
-          applyFilters();
+          if (selectedTypes.has(t)) selectedTypes.delete(t); else selectedTypes.add(t);
+          updateTypeBtn(); applyNewsFilters();
         };
         list.appendChild(opt);
       });
     }
 
-    function updateMediaBtn() {
-      const list = document.getElementById('mediaDropdownList');
-      const btn  = document.getElementById('mediaDropdownBtn');
-      list.querySelectorAll('.media-opt[data-src]').forEach(opt => {
-        opt.classList.toggle('selected', selectedMedia.has(opt.dataset.src));
+    function updateTypeBtn() {
+      document.getElementById('typeDropdownList').querySelectorAll('.type-opt[data-val]').forEach(opt => {
+        opt.classList.toggle('selected', selectedTypes.has(opt.dataset.val));
       });
-      if (selectedMedia.size === 0) btn.textContent = 'All sources';
-      else if (selectedMedia.size === 1) btn.textContent = [...selectedMedia][0];
-      else btn.textContent = `${selectedMedia.size} sources`;
+      const btn = document.getElementById('typeDropdownBtn');
+      if (selectedTypes.size === 0) btn.textContent = 'All types';
+      else if (selectedTypes.size === 1) btn.textContent = [...selectedTypes][0];
+      else btn.textContent = `${selectedTypes.size} types`;
     }
 
-    function toggleMediaDropdown(e) {
+    function toggleTypeDropdown(e) {
       e.stopPropagation();
-      const btn  = document.getElementById('mediaDropdownBtn');
-      const list = document.getElementById('mediaDropdownList');
+      const btn  = document.getElementById('typeDropdownBtn');
+      const list = document.getElementById('typeDropdownList');
       const open = list.classList.toggle('open');
       btn.classList.toggle('open', open);
     }
 
     document.addEventListener('click', () => {
-      document.getElementById('mediaDropdownList').classList.remove('open');
-      document.getElementById('mediaDropdownBtn').classList.remove('open');
+      document.getElementById('typeDropdownList').classList.remove('open');
+      document.getElementById('typeDropdownBtn').classList.remove('open');
     });
 
-    function setDateRangeBounds() {
-      const dates = allNews.map(r => r._date).filter(Boolean);
-      if (!dates.length) return;
-      const minD = new Date(Math.min(...dates));
-      const maxD = new Date(Math.max(...dates));
-      const toISO = d => d.toISOString().slice(0,10);
-      document.getElementById('dateFrom').min = toISO(minD);
-      document.getElementById('dateFrom').max = toISO(maxD);
-      document.getElementById('dateTo').min   = toISO(minD);
-      document.getElementById('dateTo').max   = toISO(maxD);
+    function buildNewsLegend() {
+      const types  = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      const legend = document.getElementById('newsLegend');
+      if (!types.length) return;
+      legend.innerHTML = '<span class="legend-label">Type key</span>' +
+        types.map(t => { const tc = getTypeClasses(t); return `<span class="legend-pill ${tc.badge}"><span class="legend-dot ${tc.dot}"></span>${tc.label}</span>`; }).join('');
     }
 
-    function applyFilters() {
+    function setNewsDateBounds() {
+      const dates = allNews.map(r => r._date).filter(Boolean);
+      if (!dates.length) return;
+      const minD = new Date(Math.min(...dates)), maxD = new Date(Math.max(...dates));
+      const toISO = d => d.toISOString().slice(0,10);
+      ['dateFrom','dateTo'].forEach(id => { const el = document.getElementById(id); el.min = toISO(minD); el.max = toISO(maxD); });
+    }
+
+    function applyNewsFilters() {
       const keyword  = document.getElementById('keywordInput').value.toLowerCase().trim();
-      const fromVal  = document.getElementById('dateFrom').value;
-      const toVal    = document.getElementById('dateTo').value;
-      const fromDate = fromVal ? new Date(fromVal) : null;
-      const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
+      const fromDate = document.getElementById('dateFrom').value ? new Date(document.getElementById('dateFrom').value) : null;
+      const toDate   = document.getElementById('dateTo').value   ? new Date(document.getElementById('dateTo').value + 'T23:59:59') : null;
 
       filteredNews = allNews.filter(row => {
-        if (keyword && !row.headline.toLowerCase().includes(keyword)) return false;
-        if (selectedMedia.size > 0 && !selectedMedia.has(row.media)) return false;
+        if (keyword && !row.news.toLowerCase().includes(keyword)) return false;
+        if (selectedTypes.size > 0 && !selectedTypes.has(row.news_type)) return false;
         if (fromDate && row._date && row._date < fromDate) return false;
         if (toDate   && row._date && row._date > toDate)   return false;
         return true;
       });
 
       filteredNews.sort((a, b) => {
-        let av = sortCol === 'time' ? (a._date || 0) : (a[sortCol] || '');
-        let bv = sortCol === 'time' ? (b._date || 0) : (b[sortCol] || '');
-        if (av < bv) return sortDir === 'asc' ? -1 : 1;
-        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        let av = newsSortCol === 'date' ? (a._date || 0) : (a[newsSortCol] || '');
+        let bv = newsSortCol === 'date' ? (b._date || 0) : (b[newsSortCol] || '');
+        if (av < bv) return newsSortDir === 'asc' ? -1 : 1;
+        if (av > bv) return newsSortDir === 'asc' ? 1  : -1;
         return 0;
       });
 
-      currentPage = 1;
-      renderTimeline();
-      updateStats();
+      newsPage = 1;
+      renderNewsTable();
+      document.getElementById('visibleCount').textContent = filteredNews.length;
+      document.getElementById('totalCount').textContent   = allNews.length;
     }
 
-    function sortBy(col) {
-      if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      else { sortCol = col; sortDir = col === 'time' ? 'desc' : 'asc'; }
+    function newsSortBy(col) {
+      if (newsSortCol === col) newsSortDir = newsSortDir === 'asc' ? 'desc' : 'asc';
+      else { newsSortCol = col; newsSortDir = col === 'date' ? 'desc' : 'asc'; }
+      const idMap  = { date:'sortDateBtn', news:'sortNewsBtn', news_type:'sortTypeBtn' };
+      const labels = { date:'Date', news:'Headline', news_type:'Type' };
       document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-      const arrows = { asc: ' ↑', desc: ' ↓' };
-      const labels = { time: 'Date', headline: 'Headline', media: 'Media' };
-      const btn = document.getElementById('sort' + col.charAt(0).toUpperCase() + col.slice(1) + 'Btn');
-      btn.classList.add('active');
-      btn.textContent = labels[col] + (arrows[sortDir] || '');
-      applyFilters();
+      const btn = document.getElementById(idMap[col]);
+      if (btn) { btn.classList.add('active'); btn.textContent = labels[col] + (newsSortDir === 'asc' ? ' ↑' : ' ↓'); }
+      applyNewsFilters();
     }
 
-    function getNodeColor(index, total) {
-      const t = total <= 1 ? 0 : index / (total - 1);
-      if (t <= 0.5) {
-        const p = t * 2;
-        return lerpColor([0x85,0xB7,0xEB], [0x5D,0xCA,0xA5], p);
-      } else {
-        const p = (t - 0.5) * 2;
-        return lerpColor([0x5D,0xCA,0xA5], [0xAF,0xA9,0xEC], p);
-      }
-    }
-
-    function lerpColor(a, b, t) {
-      const r = Math.round(a[0] + (b[0]-a[0]) * t);
-      const g = Math.round(a[1] + (b[1]-a[1]) * t);
-      const bl = Math.round(a[2] + (b[2]-a[2]) * t);
-      return `rgb(${r},${g},${bl})`;
-    }
-
-    function renderTimeline() {
-      const feed  = document.getElementById('newsFeed');
-      const spine = document.getElementById('newsSpine');
+    function renderNewsTable() {
+      const tbody = document.getElementById('newsTbody');
       const empty = document.getElementById('newsEmpty');
-      const pagination = document.getElementById('newsPagination');
-
-      feed.querySelectorAll('.news-item').forEach(el => el.remove());
+      const table = document.getElementById('newsTable');
+      const pag   = document.getElementById('newsPagination');
+      tbody.innerHTML = '';
 
       if (filteredNews.length === 0) {
-        empty.style.display = 'block';
-        spine.style.display = 'none';
-        pagination.style.display = 'none';
+        empty.style.display = 'block'; table.style.display = 'none'; pag.style.display = 'none';
+        document.getElementById('newsEmptyMsg').textContent = allNews.length === 0
+          ? 'No articles loaded. Check data/news.csv.'
+          : 'No articles match your filters.';
         return;
       }
 
-      empty.style.display = 'none';
-      spine.style.display = 'block';
+      empty.style.display = 'none'; table.style.display = 'table';
 
-      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const pageData = filteredNews.slice(start, start + PAGE_SIZE);
-
-      pageData.forEach((row, i) => {
-        const item = document.createElement('div');
-        item.className = 'news-item';
-        const dateObj = row._date;
-        const dayStr = dateObj ? dateObj.getDate() : '—';
-        const monthStr = dateObj ? dateObj.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : (row._rawDate || '');
-        const timeAgo = dateObj ? getTimeAgo(dateObj) : '';
-        const nodeColor = getNodeColor(i, pageData.length);
-        const linkHtml = row.link
-          ? `<a href="${row.link}" target="_blank" rel="noopener" class="news-link-arrow" title="Open article">↗</a>`
-          : '';
-        item.innerHTML = `
-          <div class="news-node" style="border-color:${nodeColor}">
-            <div class="news-node-inner" style="background:${nodeColor}"></div>
-          </div>
-          <div class="news-ts">
-            <span class="news-ts-day">${dayStr}</span>
-            <span class="news-ts-month">${monthStr}</span>
-          </div>
-          <div class="news-row">
-            <div class="news-content">
-              <div class="news-headline">${row.headline}</div>
-              <div class="news-meta">
-                <span class="news-badge">${row.media || '—'}</span>
-                <span class="news-ago">${timeAgo}</span>
-              </div>
-            </div>
-            ${linkHtml}
-          </div>`;
-        feed.appendChild(item);
+      const totalPages = Math.ceil(filteredNews.length / NEWS_PAGE_SIZE);
+      const start = (newsPage - 1) * NEWS_PAGE_SIZE;
+      filteredNews.slice(start, start + NEWS_PAGE_SIZE).forEach(row => {
+        const tc = getTypeClasses(row.news_type);
+        const tr = document.createElement('tr');
+        tr.className = tc.row;
+        tr.innerHTML = `
+          <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
+          <td class="td-news">${row.news}</td>
+          <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
+        tbody.appendChild(tr);
       });
 
       if (totalPages > 1) {
-        pagination.style.display = 'flex';
-        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
-        document.getElementById('prevPageBtn').disabled = currentPage === 1;
-        document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+        pag.style.display = 'flex';
+        document.getElementById('pageInfo').textContent = `Page ${newsPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = newsPage === 1;
+        document.getElementById('nextPageBtn').disabled = newsPage === totalPages;
       } else {
-        pagination.style.display = 'none';
+        pag.style.display = 'none';
       }
     }
 
-    function changePage(dir) {
-      const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
-      currentPage = Math.max(1, Math.min(totalPages, currentPage + dir));
-      renderTimeline();
+    function changeNewsPage(dir) {
+      newsPage = Math.max(1, Math.min(Math.ceil(filteredNews.length / NEWS_PAGE_SIZE), newsPage + dir));
+      renderNewsTable();
     }
 
-    function updateStats() {
-      document.getElementById('visibleCount').textContent = filteredNews.length;
-      document.getElementById('totalCount').textContent = allNews.length;
-    }
-
-    function clearFilters() {
+    function clearNewsFilters() {
       document.getElementById('keywordInput').value = '';
-      selectedMedia.clear(); updateMediaBtn();
+      selectedTypes.clear(); updateTypeBtn();
       document.getElementById('dateFrom').value = '';
-      document.getElementById('dateTo').value = '';
-      applyFilters();
+      document.getElementById('dateTo').value   = '';
+      applyNewsFilters();
     }
 
-    function getTimeAgo(date) {
-      const diff = (new Date() - date) / 1000;
-      if (diff < 86400) return 'Today';
-      if (diff < 172800) return 'Yesterday';
-      const days = Math.floor(diff / 86400);
-      if (days < 30) return `${days}d ago`;
-      const months = Math.floor(days / 30);
-      if (months < 12) return `${months}mo ago`;
-      return `${Math.floor(months/12)}yr ago`;
+    fetchNewsCSV();
+
+    /* ═══════════════════════════════════
+       OCCUPATION SECTION
+    ═══════════════════════════════════ */
+    let allOcc = [], filteredOcc = [];
+    let occPage = 1;
+    const OCC_PAGE_SIZE = 20;
+    let occSortCol = null, occSortDir = 'asc';
+    let occHeaders = [];
+
+    function fetchOccCSV() {
+      fetch('data/role_level_data.csv')
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(text => {
+          const parsed = parseCSVGeneric(text);
+          occHeaders = parsed.headers;
+          allOcc     = parsed.rows;
+          if (!allOcc.length) throw new Error('No data rows found');
+
+          buildOccHeaders();
+          applyOccFilters();
+          document.getElementById('occStats').style.display = 'block';
+          updateHeroPills();
+        })
+        .catch(err => {
+          document.getElementById('occEmpty').style.display = 'block';
+          document.getElementById('occEmptyMsg').innerHTML =
+            `Could not load <strong>data/role_level_data.csv</strong> — ${err.message}`;
+        });
     }
 
-    fetchCSV();
+    function buildOccHeaders() {
+      const tr = document.getElementById('occThead');
+      tr.innerHTML = '';
+      occHeaders.forEach(h => {
+        const th = document.createElement('th');
+        const label = h.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+        th.textContent = label;
+        th.dataset.col = h;
+        th.onclick = () => {
+          if (occSortCol === h) { occSortDir = occSortDir === 'asc' ? 'desc' : 'asc'; }
+          else { occSortCol = h; occSortDir = 'asc'; }
+          document.querySelectorAll('#occThead th').forEach(t => {
+            t.classList.remove('sorted');
+            t.textContent = t.textContent.replace(/ [↑↓]$/,'');
+          });
+          th.classList.add('sorted');
+          th.textContent = label + (occSortDir === 'asc' ? ' ↑' : ' ↓');
+          applyOccFilters();
+        };
+        tr.appendChild(th);
+      });
+    }
 
-    /* ══════════════════════════════════════
+    function applyOccFilters() {
+      const keyword = document.getElementById('occSearchInput').value.toLowerCase().trim();
+      filteredOcc = allOcc.filter(row =>
+        !keyword || Object.values(row).some(v => v.toLowerCase().includes(keyword))
+      );
+
+      if (occSortCol) {
+        filteredOcc.sort((a, b) => {
+          const av = a[occSortCol] || '', bv = b[occSortCol] || '';
+          const an = parseFloat(av), bn = parseFloat(bv);
+          if (!isNaN(an) && !isNaN(bn)) return occSortDir === 'asc' ? an - bn : bn - an;
+          return occSortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+        });
+      }
+
+      occPage = 1;
+      renderOccTable();
+      document.getElementById('occVisible').textContent = filteredOcc.length;
+      document.getElementById('occTotal').textContent   = allOcc.length;
+    }
+
+    function renderOccTable() {
+      const tbody = document.getElementById('occTbody');
+      const empty = document.getElementById('occEmpty');
+      const table = document.getElementById('occTable');
+      const pag   = document.getElementById('occPagination');
+      tbody.innerHTML = '';
+
+      if (filteredOcc.length === 0) {
+        empty.style.display = 'block'; table.style.display = 'none'; pag.style.display = 'none';
+        document.getElementById('occEmptyMsg').textContent = 'No occupations match your search.';
+        return;
+      }
+
+      empty.style.display = 'none'; table.style.display = 'table';
+
+      const totalPages = Math.ceil(filteredOcc.length / OCC_PAGE_SIZE);
+      const start = (occPage - 1) * OCC_PAGE_SIZE;
+      filteredOcc.slice(start, start + OCC_PAGE_SIZE).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = occHeaders.map(h => `<td>${row[h] !== undefined ? row[h] : '—'}</td>`).join('');
+        tbody.appendChild(tr);
+      });
+
+      if (totalPages > 1) {
+        pag.style.display = 'flex';
+        document.getElementById('occPageInfo').textContent = `Page ${occPage} of ${totalPages}`;
+        document.getElementById('occPrevBtn').disabled = occPage === 1;
+        document.getElementById('occNextBtn').disabled = occPage === totalPages;
+      } else {
+        pag.style.display = 'none';
+      }
+    }
+
+    function changeOccPage(dir) {
+      occPage = Math.max(1, Math.min(Math.ceil(filteredOcc.length / OCC_PAGE_SIZE), occPage + dir));
+      renderOccTable();
+    }
+
+    function clearOccFilters() {
+      document.getElementById('occSearchInput').value = '';
+      applyOccFilters();
+    }
+
+    fetchOccCSV();
+
+    /* ═══════════════════════════════════
+       HERO PILLS
+    ═══════════════════════════════════ */
+    function updateHeroPills() {
+      const pills = document.getElementById('heroInsights');
+      const nc = allNews.length, oc = allOcc.length, cc = companyData.length;
+      let items = [];
+      if (nc > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span class="pill-num" style="color:#185FA5">${nc}</span><span>news articles</span></div>`);
+      if (oc > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${oc}</span><span>occupations tracked</span></div>`);
+      if (cc > 0) items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${cc}</span><span>companies analysed</span></div>`);
+      if (!items.length) {
+        items = [
+          `<div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>`,
+          `<div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>`,
+          `<div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`
+        ];
+      }
+      pills.innerHTML = items.join('');
+    }
+
+    /* ═══════════════════════════════════
        COMPANIES — Radar Chart
-       ══════════════════════════════════════ */
-    const COMPANIES_CSV_PATH = 'data/companies.csv';
+    ═══════════════════════════════════ */
     let companyData = [];
     let globalScales = {};
 
     const RADAR_METRICS = [
-      { key: 'ai_talent_perc',         lines: ['2025 AI', 'Talent %']           },
-      { key: 'retention_perc',         lines: ['2025 Avg', 'Retention %']       },
-      { key: 'hire_percent',           lines: ['2025 Avg', 'Hiring %']          },
-      { key: 'ai_salary_premium',      lines: ['2025 AI Salary', 'Premium %']   },
-      { key: 'emp_ai_sentiment',       lines: ['2025 Employee', 'AI Sentiment'] },
-      { key: 'executive_ai_sentiment', lines: ['2025 Executive', 'AI Sentiment']},
+      { key:'ai_talent_perc',         lines:['2025 AI','Talent %']           },
+      { key:'retention_perc',         lines:['2025 Avg','Retention %']       },
+      { key:'hire_percent',           lines:['2025 Avg','Hiring %']          },
+      { key:'ai_salary_premium',      lines:['2025 AI Salary','Premium %']   },
+      { key:'emp_ai_sentiment',       lines:['2025 Employee','AI Sentiment'] },
+      { key:'executive_ai_sentiment', lines:['2025 Executive','AI Sentiment']},
     ];
 
     function parseCompaniesCSV(text) {
@@ -1367,27 +994,25 @@
       if (lines.length < 2) return [];
       const sep = lines[0].includes('\t') ? '\t' : ',';
       const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
-      const rows = [];
-      for (let i = 1; i < lines.length; i++) {
-        const cols = lines[i].split(sep);
+      return lines.slice(1).map(line => {
+        const cols = line.split(sep);
         const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
-        if (row.conm && row.conm.length > 0) rows.push(row);
-      }
-      return rows;
+        headers.forEach((h, i) => { row[h] = (cols[i] || '').replace(/^"|"$/g,'').trim(); });
+        return row;
+      }).filter(r => r.conm);
     }
 
     function computeScales(rows) {
       const scales = {};
       RADAR_METRICS.forEach(m => {
-        const vals = rows.map(r => parseFloat(String(r[m.key] || '').replace(/%$/, ''))).filter(v => !isNaN(v) && isFinite(v));
+        const vals = rows.map(r => parseFloat(String(r[m.key]||'').replace(/%$/,''))).filter(v => !isNaN(v) && isFinite(v));
         scales[m.key] = { min: vals.length ? Math.min(...vals) : 0, max: vals.length ? Math.max(...vals) : 1 };
       });
       return scales;
     }
 
     function normalize(val, key) {
-      const raw = parseFloat(String(val || '').replace(/%$/, ''));
+      const raw = parseFloat(String(val||'').replace(/%$/,''));
       if (isNaN(raw) || !isFinite(raw)) return 0;
       const { min, max } = globalScales[key];
       if (max === min) return 2.5;
@@ -1395,311 +1020,144 @@
     }
 
     function fetchCompaniesCSV() {
-      fetch(COMPANIES_CSV_PATH)
-        .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+      fetch('data/companies.csv')
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
         .then(text => {
           companyData = parseCompaniesCSV(text);
-          if (companyData.length === 0) throw new Error('No rows parsed');
+          if (!companyData.length) throw new Error('No rows');
           globalScales = computeScales(companyData);
           buildCompanyButtons();
           updateHeroPills();
         })
         .catch(err => {
           document.getElementById('companyBtns').innerHTML =
-            `<div style="padding:16px;font-size:14px;color:var(--red)">
-              Could not load <strong>${COMPANIES_CSV_PATH}</strong><br>
-              <span style="color:var(--text-muted);font-size:13px">${err.message}</span>
-            </div>`;
+            `<div style="padding:16px;font-size:14px;color:var(--red)">Could not load companies.csv<br><span style="color:var(--text-muted);font-size:13px">${err.message}</span></div>`;
         });
     }
 
     function buildCompanyButtons() {
       const container = document.getElementById('companyBtns');
       container.innerHTML = '';
-      const scrollDiv = document.createElement('div');
-      scrollDiv.className = 'company-panel-scroll';
+      const scroll = document.createElement('div');
+      scroll.className = 'company-panel-scroll';
       companyData.forEach((row, i) => {
         const btn = document.createElement('button');
         btn.className = 'company-btn' + (i === 0 ? ' active' : '');
         btn.innerHTML = `<div class="btn-indicator"></div><span class="btn-name">${row.conm}</span>`;
         btn.addEventListener('click', () => selectCompany(btn, row));
-        scrollDiv.appendChild(btn);
+        scroll.appendChild(btn);
       });
-      container.appendChild(scrollDiv);
-      selectCompany(scrollDiv.querySelector('.company-btn'), companyData[0]);
+      container.appendChild(scroll);
+      selectCompany(scroll.querySelector('.company-btn'), companyData[0]);
     }
 
     function selectCompany(btn, row) {
       document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('figCompanyName').textContent = row.conm;
-      document.getElementById('figCompanySubtitle').textContent = 'Six-Dimension Analysis';
+      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
       drawRadar(row);
     }
 
     function drawRadar(row) {
       const body = document.getElementById('figureBody');
-      const N = RADAR_METRICS.length;
-      const R = 148, LABEL_R = R + 16, LINE_H = 14, MAX_SCALE = 5;
-      const PAD_X = 120, PAD_Y = 90;
-      const VW = R * 2 + PAD_X * 2, VH = R * 2 + PAD_Y * 2;
-      const rcx = VW / 2, rcy = VH / 2;
-      const angles = RADAR_METRICS.map((_, i) => (2 * Math.PI * i / N) - Math.PI / 2);
-
-      function rpt(r, a) { return { x: rcx + r*Math.cos(a), y: rcy + r*Math.sin(a) }; }
-      function rptStr(r, a) { const p = rpt(r,a); return p.x.toFixed(1)+','+p.y.toFixed(1); }
+      const N = RADAR_METRICS.length, R = 148, LABEL_R = R + 16, LINE_H = 14, MAX_SCALE = 5;
+      const PAD_X = 120, PAD_Y = 90, VW = R*2+PAD_X*2, VH = R*2+PAD_Y*2;
+      const rcx = VW/2, rcy = VH/2;
+      const angles = RADAR_METRICS.map((_,i) => (2*Math.PI*i/N) - Math.PI/2);
+      const rpt = (r,a) => ({ x: rcx+r*Math.cos(a), y: rcy+r*Math.sin(a) });
+      const rptStr = (r,a) => { const p=rpt(r,a); return p.x.toFixed(1)+','+p.y.toFixed(1); };
 
       const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
-      const rawVals  = RADAR_METRICS.map(m => { const v = parseFloat(String(row[m.key] || '').replace(/%$/, '')); return (!isNaN(v) && isFinite(v)) ? v : null; });
+      const rawVals  = RADAR_METRICS.map(m => { const v=parseFloat(String(row[m.key]||'').replace(/%$/,'')); return (!isNaN(v)&&isFinite(v))?v:null; });
 
       let svg = `<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">`;
-
-      for (let ring = 1; ring <= MAX_SCALE; ring++) {
-        const pts = angles.map(a => rptStr(R * ring / MAX_SCALE, a)).join(' ');
-        const dash = ring < MAX_SCALE ? 'stroke-dasharray="3 3"' : '';
-        const sw = ring === MAX_SCALE ? '1.5' : '0.8';
-        svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash} opacity="0.9"/>`;
-        const lp = rpt(R * ring / MAX_SCALE + 4, 0);
+      for (let ring=1; ring<=MAX_SCALE; ring++) {
+        const pts = angles.map(a=>rptStr(R*ring/MAX_SCALE,a)).join(' ');
+        const dash = ring<MAX_SCALE?'stroke-dasharray="3 3"':'', sw = ring===MAX_SCALE?'1.5':'0.8';
+        svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash}/>`;
+        const lp = rpt(R*ring/MAX_SCALE+4, 0);
         svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="10" font-family="DM Mono,monospace">${ring}</text>`;
       }
-
-      angles.forEach(a => {
-        const o = rpt(R, a);
-        svg += `<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#d0d5dd" stroke-width="1"/>`;
+      angles.forEach(a => { const o=rpt(R,a); svg+=`<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#d0d5dd" stroke-width="1"/>`; });
+      angles.forEach((a,i) => {
+        const m=RADAR_METRICS[i], lp=rpt(LABEL_R,a), dx=lp.x-rcx;
+        const anchor = dx<-8?'end':dx>8?'start':'middle';
+        const totalH=(m.lines.length-1)*LINE_H, yStart=lp.y-totalH/2;
+        svg += `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="11" fill="#4a5568" font-weight="500">${m.lines.map((ln,li)=>`<tspan x="${lp.x.toFixed(1)}" y="${(yStart+li*LINE_H).toFixed(1)}">${ln}</tspan>`).join('')}</text>`;
       });
-
-      angles.forEach((a, i) => {
-        const m = RADAR_METRICS[i], lp = rpt(LABEL_R, a);
-        const dx = lp.x - rcx;
-        const anchor = dx < -8 ? 'end' : dx > 8 ? 'start' : 'middle';
-        const totalH = (m.lines.length - 1) * LINE_H;
-        const yStart = lp.y - totalH / 2;
-        let t = `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="11" fill="#4a5568" font-weight="500">`;
-        m.lines.forEach((ln, li) => { t += `<tspan x="${lp.x.toFixed(1)}" y="${(yStart + li * LINE_H).toFixed(1)}">${ln}</tspan>`; });
-        t += `</text>`;
-        svg += t;
-      });
-
-      const dataPts = normVals.map((v, i) => rptStr(R * v / MAX_SCALE, angles[i])).join(' ');
+      const dataPts = normVals.map((v,i)=>rptStr(R*v/MAX_SCALE,angles[i])).join(' ');
       svg += `<polygon points="${dataPts}" fill="rgba(91,163,217,0.18)" stroke="#5ba3d9" stroke-width="2" stroke-linejoin="round"/>`;
+      normVals.forEach((v,i) => { const p=rpt(R*v/MAX_SCALE,angles[i]); svg+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#5ba3d9" stroke="#fff" stroke-width="2"/>`; });
+      svg += '</svg>';
 
-      normVals.forEach((v, i) => {
-        const p = rpt(R * v / MAX_SCALE, angles[i]);
-        svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#5ba3d9" stroke="#ffffff" stroke-width="2"/>`;
-      });
-
-      svg += `</svg>`;
-
-      const legend = RADAR_METRICS.map((m, i) => {
-        const raw = rawVals[i];
-        const disp = raw !== null ? raw.toFixed(3) : 'N/A';
-        const pct = Math.round(normVals[i] / MAX_SCALE * 100);
-        const title = m.lines.join(' ');
-        const bar = `<div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
-        return `<div style="display:flex;align-items:center;gap:8px;white-space:nowrap">
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>
-          <span style="flex:1;font-size:13px;color:var(--text-dim)">${title}</span>
-          <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span>
-        </div>${bar}`;
+      const legend = RADAR_METRICS.map((m,i) => {
+        const raw=rawVals[i], disp=raw!==null?raw.toFixed(3):'N/A', pct=Math.round(normVals[i]/MAX_SCALE*100);
+        return `<div style="display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="flex:1;font-size:13px;color:var(--text-dim)">${m.lines.join(' ')}</span><span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span></div><div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
       }).join('');
 
       body.innerHTML = `<div class="radar-wrap">${svg}</div><div class="radar-legend" style="margin-left:24px">${legend}</div>`;
     }
 
-    function updateHeroPills() {
-      const pills = document.getElementById('heroInsights');
-      const newsCount = allNews.length, compCount = companyData.length;
-      let items = [];
-      if (newsCount > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span class="pill-num" style="color:#185FA5">${newsCount}</span><span>news articles loaded</span></div>`);
-      if (compCount > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${compCount}</span><span>companies analysed</span></div>`);
-      items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>`);
-      pills.innerHTML = items.join('');
-    }
-
     function filterCompanyBtns(q) {
-      const term = q.toLowerCase().trim();
+      const term = q.toLowerCase();
       document.querySelectorAll('#companyBtns .company-btn').forEach(btn => {
-        const name = btn.querySelector('.btn-name').textContent.toLowerCase();
-        btn.style.display = name.includes(term) ? '' : 'none';
+        btn.style.display = btn.querySelector('.btn-name').textContent.toLowerCase().includes(term) ? '' : 'none';
       });
     }
 
     fetchCompaniesCSV();
 
-    /* ══════════════════════════════════════
-       HERO — AI Post % Trend Chart
-       ══════════════════════════════════════ */
+    /* ═══════════════════════════════════
+       HERO CHART
+    ═══════════════════════════════════ */
     function buildHeroChart() {
       const monthly = [
-        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],
-        [2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
-        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],
-        [2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
-        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],
-        [2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
-        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],
-        [2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
-        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],
-        [2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
-        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],
-        [2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
+        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],[2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
+        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],[2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
+        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],[2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
+        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],[2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
+        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],[2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
+        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],[2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
       ];
-
       const qMap = {};
-      monthly.forEach(([y,m,v]) => {
-        const key = y + 'Q' + Math.ceil(m/3);
-        if (!qMap[key]) qMap[key] = [];
-        qMap[key].push(v);
-      });
-      const qKeys  = Object.keys(qMap).sort();
-      const avg    = arr => +(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const labels = qKeys.map(k => k.replace('Q',' Q'));
-      const data   = qKeys.map(k => avg(qMap[k]));
+      monthly.forEach(([y,m,v]) => { const k=y+'Q'+Math.ceil(m/3); if(!qMap[k])qMap[k]=[]; qMap[k].push(v); });
+      const qKeys=Object.keys(qMap).sort(), avg=arr=>+(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
+      const labels=qKeys.map(k=>k.replace('Q',' Q')), data=qKeys.map(k=>avg(qMap[k]));
+      const kpiVal=data[data.length-2], delta=(((kpiVal-data[0])/data[0])*100).toFixed(0);
+      document.getElementById('heroKpiVal').textContent = kpiVal.toFixed(2)+'%';
+      document.getElementById('heroKpiDelta').innerHTML = '<span style="font-size:13px">▲</span>'+delta+'% vs 2023 Q1';
 
-      // KPI: second-to-last quarter
-      const kpiVal   = data[data.length - 2];
-      const kpiLabel = labels[labels.length - 2];
-      const delta    = (((kpiVal - data[0]) / data[0]) * 100).toFixed(0);
-      document.getElementById('heroKpiVal').textContent = kpiVal.toFixed(2) + '%';
-      document.getElementById('heroKpiDelta').innerHTML =
-        '<span style="font-size:13px">▲</span>' + delta + '% vs 2023 Q1';
+      const canvas=document.getElementById('heroTrendChart'), gctx=canvas.getContext('2d');
+      const grad=gctx.createLinearGradient(0,0,0,210);
+      grad.addColorStop(0,'rgba(59,138,191,0.32)'); grad.addColorStop(0.4,'rgba(91,163,217,0.14)'); grad.addColorStop(1,'rgba(91,163,217,0)');
 
-      // Gradient fill matching site accent
-      const canvas = document.getElementById('heroTrendChart');
-      const gctx   = canvas.getContext('2d');
-      const grad   = gctx.createLinearGradient(0, 0, 0, 210);
-      grad.addColorStop(0,    'rgba(59,138,191,0.32)');
-      grad.addColorStop(0.4,  'rgba(91,163,217,0.14)');
-      grad.addColorStop(1,    'rgba(91,163,217,0)');
-
-      // Year bands + vertical separators + year labels plugin
-      const bandPlugin = {
-        id: 'yearBands',
-        beforeDraw(chart) {
-          const { ctx, chartArea: ca, scales: { x } } = chart;
-          if (!x || !ca) return;
-          const step = x.getPixelForValue(1) - x.getPixelForValue(0);
-          const yrs = {};
-          labels.forEach((l, i) => {
-            const yr = l.split(' ')[0];
-            if (!yrs[yr]) yrs[yr] = { s: i, e: i };
-            yrs[yr].e = i;
-          });
-          ctx.save();
-          const yrList = Object.entries(yrs);
-          yrList.forEach(([yr, { s, e }], yi) => {
-            const x0 = x.getPixelForValue(s) - step / 2;
-            const x1 = x.getPixelForValue(e) + step / 2;
-
-
-          });
-          ctx.restore();
-        },
-        beforeDatasetsDraw(chart) {
-          // Soft glow under the line
-          chart.ctx.shadowColor = 'rgba(59,138,191,0.22)';
-          chart.ctx.shadowBlur  = 10;
-          chart.ctx.shadowOffsetY = 3;
-        },
-        afterDatasetsDraw(chart) {
-          chart.ctx.shadowColor = 'transparent';
-          chart.ctx.shadowBlur  = 0;
-          chart.ctx.shadowOffsetY = 0;
-        }
-      };
-
-      const chart = new Chart(canvas, {
-        type: 'line',
-        plugins: [bandPlugin],
-        data: {
-          labels,
-          datasets: [{
-            label: 'AI post %',
-            data,
-            borderColor: 'rgba(59,138,191,1)',
-            backgroundColor: grad,
-            fill: true,
-            tension: 0.5,
-            pointRadius: 5,
-            pointBackgroundColor: '#3b8abf',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2.5,
-            pointHoverRadius: 9,
-            pointHoverBorderWidth: 3,
-            borderWidth: 3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: { duration: 900, easing: 'easeInOutQuart' },
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { display: false },
-
-            tooltip: {
-              backgroundColor: '#1e293b',
-              titleColor: '#ffffff',
-              bodyColor: '#f8fafc',
-              titleFont: { family: 'DM Mono, monospace', size: 12, weight: '700' },
-              bodyFont:  { family: 'DM Mono, monospace', size: 12, weight: '500' },
-              padding: 14,
-              cornerRadius: 4,
-              displayColors: false,
-              callbacks: {
-                title: ctx => { const p = ctx[0].label.split(' '); return p[0] + ' ' + p[1]; },
-                label: ctx => '  AI post: ' + ctx.parsed.y.toFixed(2) + '%'
+      new Chart(canvas, {
+        type:'line',
+        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:5, pointBackgroundColor:'#3b8abf', pointBorderColor:'#fff', pointBorderWidth:2.5, pointHoverRadius:9, borderWidth:3 }]},
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          animation:{duration:900, easing:'easeInOutQuart'},
+          interaction:{mode:'index', intersect:false},
+          plugins:{
+            legend:{display:false},
+            tooltip:{
+              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
+              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
+              bodyFont:{family:'DM Mono, monospace',size:12},
+              padding:14, cornerRadius:4, displayColors:false,
+              callbacks:{
+                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
+                label: ctx => '  AI post: '+ctx.parsed.y.toFixed(2)+'%'
               }
             }
           },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0,
-                font: function(ctx) {
-                  // Bold + larger for Q1 (year labels)
-                  const lbl = ctx.tick && ctx.tick.label;
-                  const isQ1 = lbl && lbl.includes('Q1');
-                  return { size: isQ1 ? 11 : 10, family: 'DM Mono, monospace', weight: isQ1 ? '700' : '400' };
-                },
-                color: function(ctx) {
-                  const lbl = ctx.tick && ctx.tick.label;
-                  return (lbl && lbl.includes('\n')) ? '#3b8abf' : '#9ca3af';
-                },
-                callback: function(val, idx) {
-                  // val is the index; use labels array
-                  const lbl = this.getLabelForValue(val);
-                  if (!lbl) return '';
-                  const parts = lbl.split(' '); // ['2023', 'Q1']
-                  const q = parts[1];
-                  // On Q1 show year below quarter; others just show Q number
-                  if (q === 'Q1') return [parts[0], q];
-                  return q;
-                }
-              },
-              border: { color: '#dde3ec' }
-            },
-            y: {
-              position: 'right',
-              title: { display: true, text: 'AI post %', font: { size: 11, family: 'DM Mono, monospace' }, color: '#3b8abf' },
-              min: 1.5,
-              max: 5.8,
-              grid: { color: 'rgba(209,213,219,0.5)', lineWidth: 0.8 },
-              ticks: {
-                count: 5,
-                font: { size: 10, family: 'DM Mono, monospace' },
-                color: '#3b8abf',
-                callback: v => v.toFixed(1) + '%'
-              },
-              border: { display: false }
-            }
+          scales:{
+            x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
+            y:{ position:'right', min:1.5, max:5.8, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
           }
         }
       });
-
     }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
