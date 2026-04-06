@@ -506,9 +506,8 @@
 
     <div class="filter-bar">
       <div class="filter-group">
-        <div class="filter-group-label">Search Occupation</div>
         <input class="filter-input" id="occSearchInput" type="text"
-          placeholder="" oninput="applyOccFilters()" style="width:320px">
+          placeholder="Search occupation..." oninput="applyOccFilters()" style="width:320px">
       </div>
       <div class="filter-group" style="justify-content:flex-end">
         <button class="clear-btn" onclick="clearOccFilters()">✕ Clear</button>
@@ -551,7 +550,7 @@
       <div class="company-panel">
         <div class="company-search">
           <input class="company-search-input" id="companySearch" type="text"
-            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
+            placeholder="Search compancy..." oninput="filterCompanyBtns(this.value)">
         </div>
         <div id="companyBtns">
           <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
