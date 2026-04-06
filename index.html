@@ -95,7 +95,7 @@
       background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
-    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .hero-inner { max-width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: center; }
     .hero-chart {
       background: #fff;
       border: 1px solid #dde3ec;
@@ -494,6 +494,9 @@
     .footer-left strong { font-family: 'Syne', sans-serif; color: var(--accent); font-size: 15px; }
     .footer-right { font-size: 13px; color: var(--text-muted); text-align: right; }
 
+    @media (max-width: 1200px) {
+      .hero-inner { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 1024px) {
       .hero-inner { grid-template-columns: 1fr; }
       .company-layout { grid-template-columns: 1fr; }
@@ -549,6 +552,20 @@
         </div>
         <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
         <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
+      </div>
+      <div class="hero-chart">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
+            <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:center">
+            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#3b8abf;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#3b8abf;border-radius:2px;display:inline-block"></span>AI Investment</span>
+            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#e05252;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#e05252;border-radius:2px;display:inline-block"></span>AI Layoff</span>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:210px"><canvas id="heroEventsChart"></canvas></div>
+        <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
       </div>
     </div>
   </section>
@@ -1284,7 +1301,7 @@
 
       new Chart(canvas, {
         type:'line',
-        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:5, pointBackgroundColor:'#3b8abf', pointBorderColor:'#fff', pointBorderWidth:2.5, pointHoverRadius:9, borderWidth:3 }]},
+        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:4, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:3 }]},
         options:{
           responsive:true, maintainAspectRatio:false,
           animation:{duration:900, easing:'easeInOutQuart'},
@@ -1304,13 +1321,89 @@
           },
           scales:{
             x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            y:{ position:'right', min:1.5, max:5.8, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
+            y:{ position:'right', min:1.5, max:5.8, title:{display:true, text:'AI Post %', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
+          }
+        }
+      });
+    }
+
+    function buildEventsChart() {
+      fetch('data/events_by_quarter.csv')
+        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(text => {
+          const { rows } = parseCSVGeneric(text);
+          const sorted = rows
+            .filter(r => r.year && r.quarter)
+            .sort((a,b) => (+a.year - +b.year) || (+a.quarter - +b.quarter));
+          const labels = sorted.map(r => r.year + ' Q' + r.quarter);
+          const invest = sorted.map(r => parseFloat(r.total_investment_events || 0) || 0);
+          const layoff = sorted.map(r => parseFloat(r.total_layoff_events    || 0) || 0);
+          renderEventsChart(labels, invest, layoff);
+        })
+        .catch(() => {
+          const labels = ['2021 Q1','2021 Q2','2021 Q3','2021 Q4','2022 Q1','2022 Q2','2022 Q3','2022 Q4','2023 Q1','2023 Q2','2023 Q3','2023 Q4','2024 Q1','2024 Q2','2024 Q3','2024 Q4','2025 Q1','2025 Q2','2025 Q3','2025 Q4'];
+          const invest = [25,18,22,14,15,14,17,15,20,45,63,73,86,96,87,103,162,144,212,264];
+          const layoff = [0,0,0,0,0,1,2,4,12,2,2,6,11,4,8,6,10,13,22,21];
+          renderEventsChart(labels, invest, layoff);
+        });
+    }
+
+    function renderEventsChart(labels, invest, layoff) {
+      const base2023Q1 = labels.indexOf('2023 Q1');
+      const baseI = base2023Q1 >= 0 ? invest[base2023Q1] : invest[0];
+      const baseL = base2023Q1 >= 0 ? layoff[base2023Q1] : layoff[0];
+      const latestI = invest[invest.length - 1];
+      const latestL = layoff[layoff.length - 1];
+      const deltaI = baseI > 0 ? Math.round(((latestI - baseI) / baseI) * 100) : 0;
+      const deltaL = baseL > 0 ? Math.round(((latestL - baseL) / baseL) * 100) : 0;
+
+      document.getElementById('eventsInvestVal').textContent = latestI;
+      document.getElementById('eventsInvestDelta').innerHTML = '<span style="font-size:11px">▲</span>' + deltaI + '% vs 2023 Q1';
+      document.getElementById('eventsLayoffVal').textContent = latestL;
+      document.getElementById('eventsLayoffDelta').innerHTML = '<span style="font-size:11px">▲</span>' + deltaL + '% vs 2023 Q1';
+      const canvas = document.getElementById('heroEventsChart');
+      const gctx   = canvas.getContext('2d');
+      const gradI  = gctx.createLinearGradient(0,0,0,210);
+      gradI.addColorStop(0,'rgba(59,138,191,0.22)'); gradI.addColorStop(1,'rgba(59,138,191,0)');
+      const gradL  = gctx.createLinearGradient(0,0,0,210);
+      gradL.addColorStop(0,'rgba(224,82,82,0.18)');  gradL.addColorStop(1,'rgba(224,82,82,0)');
+
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { label:'AI Investment', data:invest, yAxisID:'yInvest', borderColor:'rgba(59,138,191,1)', backgroundColor:gradI, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 },
+            { label:'AI Layoff',     data:layoff, yAxisID:'yLayoff',  borderColor:'rgba(224,82,82,1)',  backgroundColor:gradL, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#e05252', pointBorderColor:'#e05252', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 }
+          ]
+        },
+        options: {
+          responsive:true, maintainAspectRatio:false,
+          animation:{duration:900, easing:'easeInOutQuart'},
+          interaction:{mode:'index', intersect:false},
+          plugins:{
+            legend:{display:false},
+            tooltip:{
+              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
+              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
+              bodyFont:{family:'DM Mono, monospace',size:12},
+              padding:14, cornerRadius:4,
+              callbacks:{
+                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
+                label: ctx => '  '+ctx.dataset.label+': '+ctx.parsed.y
+              }
+            }
+          },
+          scales:{
+            x:{ grid:{display:false}, ticks:{ autoSkip:true, maxTicksLimit:12, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
+            yInvest:{ type:'linear', position:'left',  beginAtZero:true, title:{display:true, text:'AI Investment', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf'}, border:{display:false} },
+            yLayoff: { type:'linear', position:'right', beginAtZero:true, title:{display:true, text:'AI Layoff',     font:{size:10,family:'DM Mono, monospace'}, color:'#e05252'}, grid:{display:false},                                   ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#e05252'}, border:{display:false} }
           }
         }
       });
     }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>buildHeroChart();</script>
+  <script>buildHeroChart(); buildEventsChart();</script>
 </body>
 </html>
