@@ -668,6 +668,9 @@
       <span class="page-info" id="occPageInfo">Page 1 of 1</span>
       <button class="page-btn" id="occNextBtn" onclick="changeOccPage(1)">Next →</button>
     </div>
+    <div style="padding: 12px 48px 0; text-align: right; font-size: 12px; color: var(--text-muted);">
+      Data as of 2025
+    </div>
   </section>
 
   <!-- ANALYSIS SECTION -->
@@ -702,6 +705,9 @@
             <div class="ph-icon">📊</div>
             <p>Reads from <code>data/companies.csv</code><br>Click a company to view its radar chart.</p>
           </div>
+        </div>
+        <div style="padding: 10px 20px; text-align: right; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);">
+          Data as of 2025
         </div>
       </div>
     </div>
@@ -1096,7 +1102,7 @@
       const pills = document.getElementById('heroInsights');
       const nc = allNews.length, oc = allOcc.length, cc = companyData.length;
       let items = [];
-      if (nc > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span class="pill-num" style="color:#185FA5">${nc}</span><span>news articles</span></div>`);
+      if (nc > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span>AI News Tracked from 2021 till now</span></div>`);
       if (oc > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${oc}</span><span>occupations tracked</span></div>`);
       if (cc > 0) items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${cc}</span><span>companies analysed</span></div>`);
       if (!items.length) {
