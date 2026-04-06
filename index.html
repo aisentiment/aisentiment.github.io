@@ -432,7 +432,7 @@
       border-bottom: none;
       position: relative;
     }
-    .occ-table th + th { border-left: 1px solid rgba(255,255,255,0.07); }
+    .occ-table th + th { border-left: 1px solid rgba(255,255,255,0.07); text-align: center; }
     .occ-table th:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
     .occ-table th.sorted { color: #7ec8f0; }
     .occ-table th.sorted::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #38b36e, transparent); }
@@ -447,13 +447,14 @@
       background: #edf6ff !important;
       box-shadow: inset 4px 0 0 var(--accent);
     }
-    .occ-table td { padding: 13px 20px; vertical-align: middle; color: var(--text-dim); line-height: 1.5; }
+    .occ-table td { padding: 13px 20px; vertical-align: middle; color: var(--text-dim); line-height: 1.5; text-align: center; }
     .occ-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
     .occ-table td:first-child {
       color: var(--text);
       font-weight: 700;
       font-family: 'Syne', sans-serif;
       letter-spacing: -0.01em;
+      text-align: left;
     }
     .occ-empty { padding: 60px 48px; text-align: center; color: var(--text-muted); }
     .occ-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
