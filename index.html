@@ -337,41 +337,41 @@
     }
     .td-type { white-space: nowrap; width: 148px; }
 
-    /* Row color schemes — stronger left bar per type */
-    .row-investment  { background: #f4f8ff; box-shadow: inset 4px 0 0 #3b82f6; }
-    .row-layoff      { background: #fff4f4; box-shadow: inset 4px 0 0 #ef4444; }
-    .row-divestment  { background: #fffdf0; box-shadow: inset 4px 0 0 #eab308; }
-    .row-partnership { background: #f2fdf6; box-shadow: inset 4px 0 0 #22c55e; }
-    .row-regulation  { background: #f9f5ff; box-shadow: inset 4px 0 0 #a855f7; }
-    .row-hiring      { background: #f0fdf8; box-shadow: inset 4px 0 0 #10b981; }
-    .row-acquisition { background: #fff8f2; box-shadow: inset 4px 0 0 #f97316; }
-    .row-earnings    { background: #f0f8ff; box-shadow: inset 4px 0 0 #0ea5e9; }
+    /* Row color schemes — richer tints + thicker left bar */
+    .row-investment  { background: #eef4ff; box-shadow: inset 5px 0 0 #3b82f6; }
+    .row-layoff      { background: #fff0f0; box-shadow: inset 5px 0 0 #ef4444; }
+    .row-divestment  { background: #fffbe6; box-shadow: inset 5px 0 0 #d97706; }
+    .row-partnership { background: #edfdf5; box-shadow: inset 5px 0 0 #16a34a; }
+    .row-regulation  { background: #f6f0ff; box-shadow: inset 5px 0 0 #9333ea; }
+    .row-hiring      { background: #e8fdf4; box-shadow: inset 5px 0 0 #059669; }
+    .row-acquisition { background: #fff5ea; box-shadow: inset 5px 0 0 #ea580c; }
+    .row-earnings    { background: #e8f4ff; box-shadow: inset 5px 0 0 #0284c7; }
     .row-default     { background: #ffffff; }
 
-    /* Badges */
+    /* Solid filled badges — easy to distinguish at a glance */
     .type-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       font-size: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 5px 11px;
+      border-radius: 4px;
       font-weight: 700;
-      border: 1px solid transparent;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       font-family: 'DM Mono', monospace;
+      border: none;
     }
-    .type-badge-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-    .badge-investment  { background: #dbeafe; color: #1d4ed8; border-color: #bfdbfe; }
-    .badge-layoff      { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
-    .badge-divestment  { background: #fef9c3; color: #92400e; border-color: #fde68a; }
-    .badge-partnership { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
-    .badge-regulation  { background: #f3e8ff; color: #7c3aed; border-color: #ddd6fe; }
-    .badge-hiring      { background: #d1fae5; color: #047857; border-color: #6ee7b7; }
-    .badge-acquisition { background: #ffedd5; color: #c2410c; border-color: #fdba74; }
-    .badge-earnings    { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
-    .badge-default     { background: rgba(91,163,217,0.1); color: var(--accent2); border-color: rgba(91,163,217,0.3); }
+    .type-badge-dot { display: none; }
+    .badge-investment  { background: #3b82f6; color: #fff; }
+    .badge-layoff      { background: #ef4444; color: #fff; }
+    .badge-divestment  { background: #d97706; color: #fff; }
+    .badge-partnership { background: #16a34a; color: #fff; }
+    .badge-regulation  { background: #9333ea; color: #fff; }
+    .badge-hiring      { background: #059669; color: #fff; }
+    .badge-acquisition { background: #ea580c; color: #fff; }
+    .badge-earnings    { background: #0284c7; color: #fff; }
+    .badge-default     { background: #5ba3d9; color: #fff; }
 
     /* Dot colors */
     .dot-investment  { background: #3b82f6; }
