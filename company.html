@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Sentiment</title>
+  <title>AI Sentiment — Company Analysis</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -514,185 +514,236 @@
 <body>
 
   <nav>
-    <div class="nav-logo">AI Sentiment</div>
+    <a class="nav-logo" href="./index.html" style="text-decoration:none">AI Sentiment</a>
     <ul class="nav-links">
       <li><a href="./news.html">News</a></li>
       <li><a href="./occupation.html">Occupation</a></li>
-      <li><a href="./company.html">Company</a></li>
+      <li><a href="./company.html" class="active" style="color:var(--accent)">Company</a></li>
       <li><a href="./comments.html">Comments</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">AI Sentiment Platform</div>
-        <h1>How <em>AI</em> Is Reshaping<br>the <em>Future</em> of Work</h1>
-        <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, dive into occupation-level trends, and analyse firm-level data across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
-        </p>
-        <div class="hero-insights" id="heroInsights">
-          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
+  <section class="analysis-section" id="analysis" style="padding-top:0;padding-bottom:80px">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon analysis-icon">📊</div>
+        <h2 class="section-title">Company Analysis</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+
+    <div class="company-layout">
+      <div class="company-panel">
+        <div class="company-search">
+          <input class="company-search-input" id="companySearch" type="text"
+            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
+        </div>
+        <div id="companyBtns">
+          <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
         </div>
       </div>
-      <div class="hero-chart">
-        <div class="hero-chart-top">
+      <div class="figure-panel">
+        <div class="figure-header">
           <div>
-            <div class="hero-chart-title">AI Post %</div>
-            <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
-          </div>
-          <div class="hero-chart-kpi">
-            <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
-            <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
+            <div class="figure-company-name" id="figCompanyName">—</div>
+            <div class="figure-subtitle" id="figCompanySubtitle">Select a company to view analysis</div>
           </div>
         </div>
-        <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
-        <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
-      </div>
-      <div class="hero-chart">
-        <div class="hero-chart-top">
-          <div>
-            <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
-            <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:center">
-            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#3b8abf;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#3b8abf;border-radius:2px;display:inline-block"></span>AI Investment</span>
-            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#e05252;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#e05252;border-radius:2px;display:inline-block"></span>AI Layoff</span>
+        <div class="figure-body" id="figureBody">
+          <div class="radar-empty">
+            <div class="ph-icon">📊</div>
+            <p>Reads from <code>data/companies.csv</code><br>Click a company to view its radar chart.</p>
           </div>
         </div>
-        <div style="position:relative;width:100%;height:210px"><canvas id="heroEventsChart"></canvas></div>
-        <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
+        <div style="padding: 10px 20px; text-align: right; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);">
+          *Data as of 2025
+        </div>
       </div>
     </div>
   </section>
 
-  <footer id="about">
-    <div class="footer-left">
-      <strong>AI Sentiment</strong>
-    </div>
-    <div class="footer-right">
-      © 2026 AI Sentiment. For research purposes.
-    </div>
+  <footer>
+    <div class="footer-left"><strong>AI Sentiment</strong></div>
+    <div class="footer-right">© 2026 AI Sentiment. For research purposes.</div>
   </footer>
 
   <script>
-function buildHeroChart() {
-      const monthly = [
-        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],[2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
-        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],[2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
-        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],[2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
-        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],[2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
-        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],[2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
-        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],[2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
-      ];
-      const qMap = {};
-      monthly.forEach(([y,m,v]) => { const k=y+'Q'+Math.ceil(m/3); if(!qMap[k])qMap[k]=[]; qMap[k].push(v); });
-      const qKeys=Object.keys(qMap).sort(), avg=arr=>+(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const labels=qKeys.map(k=>k.replace('Q',' Q')), data=qKeys.map(k=>avg(qMap[k]));
-      const kpiVal=data[data.length-2], delta=(((kpiVal-data[0])/data[0])*100).toFixed(0);
-      document.getElementById('heroKpiVal').textContent = kpiVal.toFixed(2)+'%';
-      document.getElementById('heroKpiDelta').innerHTML = '<span style="font-size:13px">▲</span>'+delta+'% vs 2023 Q1';
-
-      const canvas=document.getElementById('heroTrendChart'), gctx=canvas.getContext('2d');
-      const grad=gctx.createLinearGradient(0,0,0,210);
-      grad.addColorStop(0,'rgba(59,138,191,0.32)'); grad.addColorStop(0.4,'rgba(91,163,217,0.14)'); grad.addColorStop(1,'rgba(91,163,217,0)');
-
-      new Chart(canvas, {
-        type:'line',
-        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:4, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:3 }]},
-        options:{
-          responsive:true, maintainAspectRatio:false,
-          animation:{duration:900, easing:'easeInOutQuart'},
-          interaction:{mode:'index', intersect:false},
-          plugins:{
-            legend:{display:false},
-            tooltip:{
-              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
-              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
-              bodyFont:{family:'DM Mono, monospace',size:12},
-              padding:14, cornerRadius:4, displayColors:false,
-              callbacks:{
-                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
-                label: ctx => '  AI post: '+ctx.parsed.y.toFixed(2)+'%'
-              }
-            }
-          },
-          scales:{
-            x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            y:{ position:'right', min:1.5, max:5.8, title:{display:true, text:'AI Post %', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
-          }
-        }
-      });
+    /* ═══════════════════════════════════
+       CSV PARSER
+    ═══════════════════════════════════ */
+    function parseCSVLine(line) {
+      const cols = []; let cur = '', inQ = false;
+      for (let c = 0; c < line.length; c++) {
+        if (line[c] === '"') { inQ = !inQ; }
+        else if (line[c] === ',' && !inQ) { cols.push(cur); cur = ''; }
+        else { cur += line[c]; }
+      }
+      cols.push(cur);
+      return cols.map(s => s.replace(/^"|"$/g,'').trim());
     }
 
-    function buildEventsChart() {
-      fetch('data/events_by_quarter.csv')
-        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+    function parseCSVGeneric(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const cols = parseCSVLine(lines[i]);
+        const row = {};
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').trim(); });
+        rows.push(row);
+      }
+      return { headers, rows };
+    }
+
+    function parseDate(str) {
+      if (!str) return null;
+      let d = new Date(str);
+      if (!isNaN(d)) return d;
+      const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (mdy) return new Date(+mdy[3], +mdy[1]-1, +mdy[2]);
+      return null;
+    }
+
+    function fmtDate(d) {
+      if (!d) return '';
+      return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    }
+
+    /* ═══════════════════════════════════
+       COMPANIES — Radar Chart
+    ═══════════════════════════════════ */
+    let companyData = [];
+    let globalScales = {};
+
+    const RADAR_METRICS = [
+      { key:'ai_talent_perc',         lines:['2025 AI','Talent %']           },
+      { key:'retention_perc',         lines:['2025 Avg','Retention %']       },
+      { key:'hire_percent',           lines:['2025 Avg','Hiring %']          },
+      { key:'ai_salary_premium',      lines:['2025 AI Salary','Premium %']   },
+      { key:'emp_ai_sentiment',       lines:['2025 Employee','AI Sentiment'] },
+      { key:'executive_ai_sentiment', lines:['2025 Executive','AI Sentiment']},
+    ];
+
+    function parseCompaniesCSV(text) {
+      const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) return [];
+      const sep = lines[0].includes('\t') ? '\t' : ',';
+      const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+      return lines.slice(1).map(line => {
+        const cols = line.split(sep);
+        const row = {};
+        headers.forEach((h, i) => { row[h] = (cols[i] || '').replace(/^"|"$/g,'').trim(); });
+        return row;
+      }).filter(r => r.conm);
+    }
+
+    function computeScales(rows) {
+      const scales = {};
+      RADAR_METRICS.forEach(m => {
+        const vals = rows.map(r => parseFloat(String(r[m.key]||'').replace(/%$/,''))).filter(v => !isNaN(v) && isFinite(v));
+        scales[m.key] = { min: vals.length ? Math.min(...vals) : 0, max: vals.length ? Math.max(...vals) : 1 };
+      });
+      return scales;
+    }
+
+    function normalize(val, key) {
+      const raw = parseFloat(String(val||'').replace(/%$/,''));
+      if (isNaN(raw) || !isFinite(raw)) return 0;
+      const { min, max } = globalScales[key];
+      if (max === min) return 2.5;
+      return Math.max(0, Math.min(5, ((raw - min) / (max - min)) * 5));
+    }
+
+    function fetchCompaniesCSV() {
+      fetch('data/companies.csv')
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
         .then(text => {
-          const { rows } = parseCSVGeneric(text);
-          const sorted = rows
-            .filter(r => r.year && r.quarter)
-            .sort((a,b) => (+a.year - +b.year) || (+a.quarter - +b.quarter));
-          const labels = sorted.map(r => r.year + ' Q' + r.quarter);
-          const invest = sorted.map(r => parseFloat(r.total_investment_events || 0) || 0);
-          const layoff = sorted.map(r => parseFloat(r.total_layoff_events    || 0) || 0);
-          renderEventsChart(labels, invest, layoff);
+          companyData = parseCompaniesCSV(text);
+          if (!companyData.length) throw new Error('No rows');
+          globalScales = computeScales(companyData);
+          buildCompanyButtons();
+          
         })
-        .catch(() => {
-          const labels = ['2021 Q1','2021 Q2','2021 Q3','2021 Q4','2022 Q1','2022 Q2','2022 Q3','2022 Q4','2023 Q1','2023 Q2','2023 Q3','2023 Q4','2024 Q1','2024 Q2','2024 Q3','2024 Q4','2025 Q1','2025 Q2','2025 Q3','2025 Q4'];
-          const invest = [25,18,22,14,15,14,17,15,20,45,63,73,86,96,87,103,162,144,212,264];
-          const layoff = [0,0,0,0,0,1,2,4,12,2,2,6,11,4,8,6,10,13,22,21];
-          renderEventsChart(labels, invest, layoff);
+        .catch(err => {
+          document.getElementById('companyBtns').innerHTML =
+            `<div style="padding:16px;font-size:14px;color:var(--red)">Could not load companies.csv<br><span style="color:var(--text-muted);font-size:13px">${err.message}</span></div>`;
         });
     }
 
-    function renderEventsChart(labels, invest, layoff) {
-      const canvas = document.getElementById('heroEventsChart');
-      const gctx   = canvas.getContext('2d');
-      const gradI  = gctx.createLinearGradient(0,0,0,210);
-      gradI.addColorStop(0,'rgba(59,138,191,0.22)'); gradI.addColorStop(1,'rgba(59,138,191,0)');
-      const gradL  = gctx.createLinearGradient(0,0,0,210);
-      gradL.addColorStop(0,'rgba(224,82,82,0.18)');  gradL.addColorStop(1,'rgba(224,82,82,0)');
+    function buildCompanyButtons() {
+      const container = document.getElementById('companyBtns');
+      container.innerHTML = '';
+      const scroll = document.createElement('div');
+      scroll.className = 'company-panel-scroll';
+      companyData.forEach((row, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'company-btn' + (i === 0 ? ' active' : '');
+        btn.innerHTML = `<div class="btn-indicator"></div><span class="btn-name">${row.conm}</span>`;
+        btn.addEventListener('click', () => selectCompany(btn, row));
+        scroll.appendChild(btn);
+      });
+      container.appendChild(scroll);
+      selectCompany(scroll.querySelector('.company-btn'), companyData[0]);
+    }
 
-      new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            { label:'AI Investment', data:invest, yAxisID:'yInvest', borderColor:'rgba(59,138,191,1)', backgroundColor:gradI, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 },
-            { label:'AI Layoff',     data:layoff, yAxisID:'yLayoff',  borderColor:'rgba(224,82,82,1)',  backgroundColor:gradL, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#e05252', pointBorderColor:'#e05252', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 }
-          ]
-        },
-        options: {
-          responsive:true, maintainAspectRatio:false,
-          animation:{duration:900, easing:'easeInOutQuart'},
-          interaction:{mode:'index', intersect:false},
-          plugins:{
-            legend:{display:false},
-            tooltip:{
-              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
-              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
-              bodyFont:{family:'DM Mono, monospace',size:12},
-              padding:14, cornerRadius:4,
-              callbacks:{
-                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
-                label: ctx => '  '+ctx.dataset.label+': '+ctx.parsed.y
-              }
-            }
-          },
-          scales:{
-            x:{ grid:{display:false}, ticks:{ autoSkip:true, maxTicksLimit:12, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            yInvest:{ type:'linear', position:'left',  beginAtZero:true, title:{display:true, text:'AI Investment', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf'}, border:{display:false} },
-            yLayoff: { type:'linear', position:'right', beginAtZero:true, title:{display:true, text:'AI Layoff',     font:{size:10,family:'DM Mono, monospace'}, color:'#e05252'}, grid:{display:false},                                   ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#e05252'}, border:{display:false} }
-          }
-        }
+    function selectCompany(btn, row) {
+      document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('figCompanyName').textContent = row.conm;
+      document.getElementById('figCompanySubtitle').textContent = 'Six-Dimension Analysis';
+      drawRadar(row);
+    }
+
+    function drawRadar(row) {
+      const body = document.getElementById('figureBody');
+      const N = RADAR_METRICS.length, R = 148, LABEL_R = R + 16, LINE_H = 14, MAX_SCALE = 5;
+      const PAD_X = 120, PAD_Y = 90, VW = R*2+PAD_X*2, VH = R*2+PAD_Y*2;
+      const rcx = VW/2, rcy = VH/2;
+      const angles = RADAR_METRICS.map((_,i) => (2*Math.PI*i/N) - Math.PI/2);
+      const rpt = (r,a) => ({ x: rcx+r*Math.cos(a), y: rcy+r*Math.sin(a) });
+      const rptStr = (r,a) => { const p=rpt(r,a); return p.x.toFixed(1)+','+p.y.toFixed(1); };
+
+      const normVals = RADAR_METRICS.map(m => normalize(row[m.key], m.key));
+      const rawVals  = RADAR_METRICS.map(m => { const v=parseFloat(String(row[m.key]||'').replace(/%$/,'')); return (!isNaN(v)&&isFinite(v))?v:null; });
+
+      let svg = `<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">`;
+      for (let ring=1; ring<=MAX_SCALE; ring++) {
+        const pts = angles.map(a=>rptStr(R*ring/MAX_SCALE,a)).join(' ');
+        const dash = ring<MAX_SCALE?'stroke-dasharray="3 3"':'', sw = ring===MAX_SCALE?'1.5':'0.8';
+        svg += `<polygon points="${pts}" fill="none" stroke="#d0d5dd" stroke-width="${sw}" ${dash}/>`;
+        const lp = rpt(R*ring/MAX_SCALE+4, 0);
+        svg += `<text x="${lp.x.toFixed(1)}" y="${(lp.y+4).toFixed(1)}" fill="#7a8694" font-size="10" font-family="DM Mono,monospace">${ring}</text>`;
+      }
+      angles.forEach(a => { const o=rpt(R,a); svg+=`<line x1="${rcx}" y1="${rcy}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="#d0d5dd" stroke-width="1"/>`; });
+      angles.forEach((a,i) => {
+        const m=RADAR_METRICS[i], lp=rpt(LABEL_R,a), dx=lp.x-rcx;
+        const anchor = dx<-8?'end':dx>8?'start':'middle';
+        const totalH=(m.lines.length-1)*LINE_H, yStart=lp.y-totalH/2;
+        svg += `<text font-family="DM Mono,monospace" text-anchor="${anchor}" font-size="11" fill="#4a5568" font-weight="500">${m.lines.map((ln,li)=>`<tspan x="${lp.x.toFixed(1)}" y="${(yStart+li*LINE_H).toFixed(1)}">${ln}</tspan>`).join('')}</text>`;
+      });
+      const dataPts = normVals.map((v,i)=>rptStr(R*v/MAX_SCALE,angles[i])).join(' ');
+      svg += `<polygon points="${dataPts}" fill="rgba(91,163,217,0.18)" stroke="#5ba3d9" stroke-width="2" stroke-linejoin="round"/>`;
+      normVals.forEach((v,i) => { const p=rpt(R*v/MAX_SCALE,angles[i]); svg+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#5ba3d9" stroke="#fff" stroke-width="2"/>`; });
+      svg += '</svg>';
+
+      const legend = RADAR_METRICS.map((m,i) => {
+        const raw=rawVals[i], disp=raw!==null?raw.toFixed(3):'N/A', pct=Math.round(normVals[i]/MAX_SCALE*100);
+        return `<div style="display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="flex:1;font-size:13px;color:var(--text-dim)">${m.lines.join(' ')}</span><span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);padding-left:12px">${disp}</span></div><div style="height:2px;width:${pct}%;background:var(--accent);border-radius:2px;margin-top:3px"></div>`;
+      }).join('');
+
+      body.innerHTML = `<div class="radar-wrap">${svg}</div><div class="radar-legend" style="margin-left:24px">${legend}</div>`;
+    }
+
+    function filterCompanyBtns(q) {
+      const term = q.toLowerCase();
+      document.querySelectorAll('#companyBtns .company-btn').forEach(btn => {
+        btn.style.display = btn.querySelector('.btn-name').textContent.toLowerCase().includes(term) ? '' : 'none';
       });
     }
+
+    fetchCompaniesCSV();
+
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>buildHeroChart(); buildEventsChart();</script>
 </body>
 </html>

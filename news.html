@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Sentiment</title>
+  <title>AI Sentiment — News</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -514,185 +514,346 @@
 <body>
 
   <nav>
-    <div class="nav-logo">AI Sentiment</div>
+    <a class="nav-logo" href="./index.html" style="text-decoration:none">AI Sentiment</a>
     <ul class="nav-links">
-      <li><a href="./news.html">News</a></li>
+      <li><a href="./news.html" class="active" style="color:var(--accent)">News</a></li>
       <li><a href="./occupation.html">Occupation</a></li>
       <li><a href="./company.html">Company</a></li>
       <li><a href="./comments.html">Comments</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">AI Sentiment Platform</div>
-        <h1>How <em>AI</em> Is Reshaping<br>the <em>Future</em> of Work</h1>
-        <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, dive into occupation-level trends, and analyse firm-level data across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
-        </p>
-        <div class="hero-insights" id="heroInsights">
-          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
+  <section class="news-section" id="news" style="border-bottom:none;padding-bottom:80px">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon news-icon">📰</div>
+        <h2 class="section-title">Recent AI News</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <div class="filter-group-label">Keyword</div>
+        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyNewsFilters()">
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">News Type</div>
+        <div class="type-dropdown-wrap">
+          <button class="type-dropdown-btn" id="typeDropdownBtn" onclick="toggleTypeDropdown(event)">All types</button>
+          <div class="type-dropdown-list" id="typeDropdownList"></div>
         </div>
       </div>
-      <div class="hero-chart">
-        <div class="hero-chart-top">
-          <div>
-            <div class="hero-chart-title">AI Post %</div>
-            <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
-          </div>
-          <div class="hero-chart-kpi">
-            <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
-            <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
-          </div>
-        </div>
-        <div style="position:relative;width:100%;height:210px"><canvas id="heroTrendChart"></canvas></div>
-        <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
+      <div class="filter-group">
+        <div class="filter-group-label">From</div>
+        <input class="date-input" id="dateFrom" type="date" onchange="applyNewsFilters()">
       </div>
-      <div class="hero-chart">
-        <div class="hero-chart-top">
-          <div>
-            <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
-            <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:center">
-            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#3b8abf;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#3b8abf;border-radius:2px;display:inline-block"></span>AI Investment</span>
-            <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#e05252;font-family:'DM Mono',monospace"><span style="width:18px;height:2.5px;background:#e05252;border-radius:2px;display:inline-block"></span>AI Layoff</span>
-          </div>
-        </div>
-        <div style="position:relative;width:100%;height:210px"><canvas id="heroEventsChart"></canvas></div>
-        <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
+      <div class="filter-group">
+        <div class="filter-group-label">To</div>
+        <input class="date-input" id="dateTo" type="date" onchange="applyNewsFilters()">
       </div>
+      <div class="filter-group" style="justify-content:flex-end">
+        <button class="clear-btn" onclick="clearNewsFilters()">✕ Clear</button>
+      </div>
+    </div>
+
+    <div class="filter-stats" id="filterStats" style="display:none">
+      Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> articles
+    </div>
+
+    <div class="sort-bar">
+      <span class="sort-label">Sort by</span>
+      <button class="sort-btn active" id="sortDateBtn"   onclick="newsSortBy('date')">Date ↓</button>
+      <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
+      <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
+      <button class="sort-btn"        id="sortNewsBtn"   onclick="newsSortBy('news')">Headline</button>
+      <button class="sort-btn"        id="sortTypeBtn"   onclick="newsSortBy('news_type')">Type</button>
+    </div>
+
+    <div class="news-table-wrap">
+      <table class="news-table" id="newsTable" style="display:none">
+        <thead>
+          <tr>
+            <th id="th-date"   onclick="newsSortBy('date')">Date</th>
+            <th id="th-firm"   onclick="newsSortBy('firm')">Firm</th>
+            <th id="th-amount" onclick="newsSortBy('investment_amount')">Investment/Layoff Amount</th>
+            <th id="th-news"   onclick="newsSortBy('news')">News Headline</th>
+            <th id="th-type"   onclick="newsSortBy('news_type')">News Type</th>
+          </tr>
+        </thead>
+        <tbody id="newsTbody"></tbody>
+      </table>
+      <div class="news-empty" id="newsEmpty" style="display:none">
+        <div class="empty-icon">🔎</div>
+        <p id="newsEmptyMsg">No articles match your filters.</p>
+      </div>
+    </div>
+
+    <div class="news-pagination" id="newsPagination" style="display:none">
+      <button class="page-btn" id="prevPageBtn" onclick="changeNewsPage(-1)" disabled>← Prev</button>
+      <span class="page-info" id="pageInfo">Page 1 of 1</span>
+      <button class="page-btn" id="nextPageBtn" onclick="changeNewsPage(1)">Next →</button>
     </div>
   </section>
 
-  <footer id="about">
-    <div class="footer-left">
-      <strong>AI Sentiment</strong>
-    </div>
-    <div class="footer-right">
-      © 2026 AI Sentiment. For research purposes.
-    </div>
+  <footer>
+    <div class="footer-left"><strong>AI Sentiment</strong></div>
+    <div class="footer-right">© 2026 AI Sentiment. For research purposes.</div>
   </footer>
 
   <script>
-function buildHeroChart() {
-      const monthly = [
-        [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],[2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
-        [2023,7,2.28],[2023,8,2.29],[2023,9,2.47],[2023,10,2.56],[2023,11,2.53],[2023,12,2.56],
-        [2024,1,2.52],[2024,2,2.69],[2024,3,3.12],[2024,4,2.67],[2024,5,3.29],[2024,6,3.04],
-        [2024,7,2.61],[2024,8,2.83],[2024,9,2.48],[2024,10,2.77],[2024,11,2.79],[2024,12,2.40],
-        [2025,1,2.64],[2025,2,3.49],[2025,3,3.63],[2025,4,3.64],[2025,5,4.22],[2025,6,4.02],
-        [2025,7,4.50],[2025,8,5.18],[2025,9,4.12],[2025,10,4.30],[2025,11,4.35],[2025,12,5.11]
-      ];
-      const qMap = {};
-      monthly.forEach(([y,m,v]) => { const k=y+'Q'+Math.ceil(m/3); if(!qMap[k])qMap[k]=[]; qMap[k].push(v); });
-      const qKeys=Object.keys(qMap).sort(), avg=arr=>+(arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
-      const labels=qKeys.map(k=>k.replace('Q',' Q')), data=qKeys.map(k=>avg(qMap[k]));
-      const kpiVal=data[data.length-2], delta=(((kpiVal-data[0])/data[0])*100).toFixed(0);
-      document.getElementById('heroKpiVal').textContent = kpiVal.toFixed(2)+'%';
-      document.getElementById('heroKpiDelta').innerHTML = '<span style="font-size:13px">▲</span>'+delta+'% vs 2023 Q1';
-
-      const canvas=document.getElementById('heroTrendChart'), gctx=canvas.getContext('2d');
-      const grad=gctx.createLinearGradient(0,0,0,210);
-      grad.addColorStop(0,'rgba(59,138,191,0.32)'); grad.addColorStop(0.4,'rgba(91,163,217,0.14)'); grad.addColorStop(1,'rgba(91,163,217,0)');
-
-      new Chart(canvas, {
-        type:'line',
-        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:4, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:3 }]},
-        options:{
-          responsive:true, maintainAspectRatio:false,
-          animation:{duration:900, easing:'easeInOutQuart'},
-          interaction:{mode:'index', intersect:false},
-          plugins:{
-            legend:{display:false},
-            tooltip:{
-              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
-              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
-              bodyFont:{family:'DM Mono, monospace',size:12},
-              padding:14, cornerRadius:4, displayColors:false,
-              callbacks:{
-                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
-                label: ctx => '  AI post: '+ctx.parsed.y.toFixed(2)+'%'
-              }
-            }
-          },
-          scales:{
-            x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            y:{ position:'right', min:1.5, max:5.8, title:{display:true, text:'AI Post %', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
-          }
-        }
-      });
+    /* ═══════════════════════════════════
+       CSV PARSER
+    ═══════════════════════════════════ */
+    function parseCSVLine(line) {
+      const cols = []; let cur = '', inQ = false;
+      for (let c = 0; c < line.length; c++) {
+        if (line[c] === '"') { inQ = !inQ; }
+        else if (line[c] === ',' && !inQ) { cols.push(cur); cur = ''; }
+        else { cur += line[c]; }
+      }
+      cols.push(cur);
+      return cols.map(s => s.replace(/^"|"$/g,'').trim());
     }
 
-    function buildEventsChart() {
-      fetch('data/events_by_quarter.csv')
-        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+    function parseCSVGeneric(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const cols = parseCSVLine(lines[i]);
+        const row = {};
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').trim(); });
+        rows.push(row);
+      }
+      return { headers, rows };
+    }
+
+    function parseDate(str) {
+      if (!str) return null;
+      let d = new Date(str);
+      if (!isNaN(d)) return d;
+      const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (mdy) return new Date(+mdy[3], +mdy[1]-1, +mdy[2]);
+      return null;
+    }
+
+    function fmtDate(d) {
+      if (!d) return '';
+      return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    }
+
+    /* ═══════════════════════════════════
+       NEWS TYPE COLOR MAP
+    ═══════════════════════════════════ */
+    const TYPE_MAP = {
+      'investment':   { row:'row-investment',   badge:'badge-investment',   dot:'dot-investment',   label:'Investment'   },
+      'layoff':       { row:'row-layoff',        badge:'badge-layoff',       dot:'dot-layoff',       label:'Layoff'       },
+      'divestment':   { row:'row-divestment',    badge:'badge-divestment',   dot:'dot-divestment',   label:'Divestment'   },
+      'partnership':  { row:'row-partnership',   badge:'badge-partnership',  dot:'dot-partnership',  label:'Partnership'  },
+      'regulation':   { row:'row-regulation',    badge:'badge-regulation',   dot:'dot-regulation',   label:'Regulation'   },
+      'hiring':       { row:'row-hiring',        badge:'badge-hiring',       dot:'dot-hiring',       label:'Hiring'       },
+      'acquisition':  { row:'row-acquisition',   badge:'badge-acquisition',  dot:'dot-acquisition',  label:'Acquisition'  },
+      'earnings':     { row:'row-earnings',      badge:'badge-earnings',     dot:'dot-earnings',     label:'Earnings'     },
+    };
+
+    function getTypeClasses(rawType) {
+      const key = (rawType || '').toLowerCase().trim();
+      return TYPE_MAP[key] || { row:'row-default', badge:'badge-default', dot:'dot-default', label: rawType || '—' };
+    }
+
+    /* ═══════════════════════════════════
+       NEWS SECTION
+    ═══════════════════════════════════ */
+    let allNews = [], filteredNews = [];
+    let newsPage = 1;
+    const NEWS_PAGE_SIZE = 15;
+    let newsSortCol = 'date', newsSortDir = 'desc';
+    let selectedTypes = new Set();
+
+    function fetchNewsCSV() {
+      fetch('data/news.csv')
+        .then(r => { if (!r.ok) throw new Error('not found'); return r.text(); })
         .then(text => {
           const { rows } = parseCSVGeneric(text);
-          const sorted = rows
-            .filter(r => r.year && r.quarter)
-            .sort((a,b) => (+a.year - +b.year) || (+a.quarter - +b.quarter));
-          const labels = sorted.map(r => r.year + ' Q' + r.quarter);
-          const invest = sorted.map(r => parseFloat(r.total_investment_events || 0) || 0);
-          const layoff = sorted.map(r => parseFloat(r.total_layoff_events    || 0) || 0);
-          renderEventsChart(labels, invest, layoff);
+          allNews = rows.map(r => ({
+            news:               r.news || r.headline || '',
+            date:               r.date || r.time || '',
+            investment_amount:  r['investment amount'] || r.investment_amount || '',
+            firm:               r.firm || '',
+            news_type:          r.news_type || r.type || r.media || '',
+            _date:              parseDate(r.date || r.time || '')
+          })).filter(r => r.news);
+
+          buildTypeDropdown();
+          setNewsDateBounds();
+          applyNewsFilters();
+          
+          document.getElementById('filterStats').style.display = 'flex';
         })
         .catch(() => {
-          const labels = ['2021 Q1','2021 Q2','2021 Q3','2021 Q4','2022 Q1','2022 Q2','2022 Q3','2022 Q4','2023 Q1','2023 Q2','2023 Q3','2023 Q4','2024 Q1','2024 Q2','2024 Q3','2024 Q4','2025 Q1','2025 Q2','2025 Q3','2025 Q4'];
-          const invest = [25,18,22,14,15,14,17,15,20,45,63,73,86,96,87,103,162,144,212,264];
-          const layoff = [0,0,0,0,0,1,2,4,12,2,2,6,11,4,8,6,10,13,22,21];
-          renderEventsChart(labels, invest, layoff);
+          const el = document.getElementById('newsEmpty');
+          el.style.display = 'block';
+          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, Firm, Investment Amount, News, News_Type</code></p>';
         });
     }
 
-    function renderEventsChart(labels, invest, layoff) {
-      const canvas = document.getElementById('heroEventsChart');
-      const gctx   = canvas.getContext('2d');
-      const gradI  = gctx.createLinearGradient(0,0,0,210);
-      gradI.addColorStop(0,'rgba(59,138,191,0.22)'); gradI.addColorStop(1,'rgba(59,138,191,0)');
-      const gradL  = gctx.createLinearGradient(0,0,0,210);
-      gradL.addColorStop(0,'rgba(224,82,82,0.18)');  gradL.addColorStop(1,'rgba(224,82,82,0)');
-
-      new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            { label:'AI Investment', data:invest, yAxisID:'yInvest', borderColor:'rgba(59,138,191,1)', backgroundColor:gradI, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 },
-            { label:'AI Layoff',     data:layoff, yAxisID:'yLayoff',  borderColor:'rgba(224,82,82,1)',  backgroundColor:gradL, fill:true, tension:0.45, pointRadius:3.5, pointBackgroundColor:'#e05252', pointBorderColor:'#e05252', pointBorderWidth:0, pointHoverRadius:6, borderWidth:2.5 }
-          ]
-        },
-        options: {
-          responsive:true, maintainAspectRatio:false,
-          animation:{duration:900, easing:'easeInOutQuart'},
-          interaction:{mode:'index', intersect:false},
-          plugins:{
-            legend:{display:false},
-            tooltip:{
-              backgroundColor:'#1e293b', titleColor:'#fff', bodyColor:'#f8fafc',
-              titleFont:{family:'DM Mono, monospace',size:12,weight:'700'},
-              bodyFont:{family:'DM Mono, monospace',size:12},
-              padding:14, cornerRadius:4,
-              callbacks:{
-                title: ctx => { const p=ctx[0].label.split(' '); return p[0]+' '+p[1]; },
-                label: ctx => '  '+ctx.dataset.label+': '+ctx.parsed.y
-              }
-            }
-          },
-          scales:{
-            x:{ grid:{display:false}, ticks:{ autoSkip:true, maxTicksLimit:12, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            yInvest:{ type:'linear', position:'left',  beginAtZero:true, title:{display:true, text:'AI Investment', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf'}, border:{display:false} },
-            yLayoff: { type:'linear', position:'right', beginAtZero:true, title:{display:true, text:'AI Layoff',     font:{size:10,family:'DM Mono, monospace'}, color:'#e05252'}, grid:{display:false},                                   ticks:{count:5,font:{size:10,family:'DM Mono, monospace'},color:'#e05252'}, border:{display:false} }
-          }
-        }
+    function buildTypeDropdown() {
+      const types = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      const list  = document.getElementById('typeDropdownList');
+      list.innerHTML = '';
+      const allOpt = document.createElement('div');
+      allOpt.className = 'type-opt type-opt-all';
+      allOpt.innerHTML = '<span class="type-opt-check">✓</span><span>All types</span>';
+      allOpt.onclick = () => { selectedTypes.clear(); updateTypeBtn(); applyNewsFilters(); };
+      list.appendChild(allOpt);
+      types.forEach(t => {
+        const tc = getTypeClasses(t);
+        const opt = document.createElement('div');
+        opt.className = 'type-opt'; opt.dataset.val = t;
+        opt.innerHTML = `<span class="type-opt-check"></span><span class="type-color-dot ${tc.dot}"></span><span>${tc.label}</span>`;
+        opt.onclick = () => {
+          if (selectedTypes.has(t)) selectedTypes.delete(t); else selectedTypes.add(t);
+          updateTypeBtn(); applyNewsFilters();
+        };
+        list.appendChild(opt);
       });
     }
+
+    function updateTypeBtn() {
+      document.getElementById('typeDropdownList').querySelectorAll('.type-opt[data-val]').forEach(opt => {
+        opt.classList.toggle('selected', selectedTypes.has(opt.dataset.val));
+      });
+      const btn = document.getElementById('typeDropdownBtn');
+      if (selectedTypes.size === 0) btn.textContent = 'All types';
+      else if (selectedTypes.size === 1) btn.textContent = [...selectedTypes][0];
+      else btn.textContent = `${selectedTypes.size} types`;
+    }
+
+    function toggleTypeDropdown(e) {
+      e.stopPropagation();
+      const btn  = document.getElementById('typeDropdownBtn');
+      const list = document.getElementById('typeDropdownList');
+      const open = list.classList.toggle('open');
+      btn.classList.toggle('open', open);
+    }
+
+    document.addEventListener('click', () => {
+      document.getElementById('typeDropdownList').classList.remove('open');
+      document.getElementById('typeDropdownBtn').classList.remove('open');
+    });
+
+    function buildNewsLegend() {
+      const types  = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      const legend = document.getElementById('newsLegend');
+      if (!types.length) return;
+      legend.innerHTML = '<span class="legend-label">Type key</span>' +
+        types.map(t => { const tc = getTypeClasses(t); return `<span class="legend-pill ${tc.badge}"><span class="legend-dot ${tc.dot}"></span>${tc.label}</span>`; }).join('');
+    }
+
+    function setNewsDateBounds() {
+      const dates = allNews.map(r => r._date).filter(Boolean);
+      if (!dates.length) return;
+      const minD = new Date(Math.min(...dates)), maxD = new Date(Math.max(...dates));
+      const toISO = d => d.toISOString().slice(0,10);
+      ['dateFrom','dateTo'].forEach(id => { const el = document.getElementById(id); el.min = toISO(minD); el.max = toISO(maxD); });
+    }
+
+    function applyNewsFilters() {
+      const keyword  = document.getElementById('keywordInput').value.toLowerCase().trim();
+      const fromDate = document.getElementById('dateFrom').value ? new Date(document.getElementById('dateFrom').value) : null;
+      const toDate   = document.getElementById('dateTo').value   ? new Date(document.getElementById('dateTo').value + 'T23:59:59') : null;
+
+      filteredNews = allNews.filter(row => {
+        if (keyword && !row.news.toLowerCase().includes(keyword)) return false;
+        if (selectedTypes.size > 0 && !selectedTypes.has(row.news_type)) return false;
+        if (fromDate && row._date && row._date < fromDate) return false;
+        if (toDate   && row._date && row._date > toDate)   return false;
+        return true;
+      });
+
+      filteredNews.sort((a, b) => {
+        let av = newsSortCol === 'date' ? (a._date || 0) : (a[newsSortCol] || '');
+        let bv = newsSortCol === 'date' ? (b._date || 0) : (b[newsSortCol] || '');
+        if (av < bv) return newsSortDir === 'asc' ? -1 : 1;
+        if (av > bv) return newsSortDir === 'asc' ? 1  : -1;
+        return 0;
+      });
+
+      newsPage = 1;
+      renderNewsTable();
+      document.getElementById('visibleCount').textContent = filteredNews.length;
+      document.getElementById('totalCount').textContent   = allNews.length;
+    }
+
+    function newsSortBy(col) {
+      if (newsSortCol === col) newsSortDir = newsSortDir === 'asc' ? 'desc' : 'asc';
+      else { newsSortCol = col; newsSortDir = col === 'date' ? 'desc' : 'asc'; }
+      const idMap  = { date:'sortDateBtn', investment_amount:'sortAmountBtn', firm:'sortFirmBtn', news:'sortNewsBtn', news_type:'sortTypeBtn' };
+      const labels = { date:'Date', investment_amount:'Amount', firm:'Firm', news:'Headline', news_type:'Type' };
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById(idMap[col]);
+      if (btn) { btn.classList.add('active'); btn.textContent = labels[col] + (newsSortDir === 'asc' ? ' ↑' : ' ↓'); }
+      applyNewsFilters();
+    }
+
+    function renderNewsTable() {
+      const tbody = document.getElementById('newsTbody');
+      const empty = document.getElementById('newsEmpty');
+      const table = document.getElementById('newsTable');
+      const pag   = document.getElementById('newsPagination');
+      tbody.innerHTML = '';
+
+      if (filteredNews.length === 0) {
+        empty.style.display = 'block'; table.style.display = 'none'; pag.style.display = 'none';
+        document.getElementById('newsEmptyMsg').textContent = allNews.length === 0
+          ? 'No articles loaded. Check data/news.csv.'
+          : 'No articles match your filters.';
+        return;
+      }
+
+      empty.style.display = 'none'; table.style.display = 'table';
+
+      const totalPages = Math.ceil(filteredNews.length / NEWS_PAGE_SIZE);
+      const start = (newsPage - 1) * NEWS_PAGE_SIZE;
+      filteredNews.slice(start, start + NEWS_PAGE_SIZE).forEach(row => {
+        const tc = getTypeClasses(row.news_type);
+        const tr = document.createElement('tr');
+        tr.className = tc.row;
+        tr.innerHTML = `
+          <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
+          <td class="td-firm">${row.firm || '—'}</td>
+          <td class="td-amount">${row.investment_amount || '—'}</td>
+          <td class="td-news">${row.news}</td>
+          <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
+        tbody.appendChild(tr);
+      });
+
+      if (totalPages > 1) {
+        pag.style.display = 'flex';
+        document.getElementById('pageInfo').textContent = `Page ${newsPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = newsPage === 1;
+        document.getElementById('nextPageBtn').disabled = newsPage === totalPages;
+      } else {
+        pag.style.display = 'none';
+      }
+    }
+
+    function changeNewsPage(dir) {
+      newsPage = Math.max(1, Math.min(Math.ceil(filteredNews.length / NEWS_PAGE_SIZE), newsPage + dir));
+      renderNewsTable();
+    }
+
+    function clearNewsFilters() {
+      document.getElementById('keywordInput').value = '';
+      selectedTypes.clear(); updateTypeBtn();
+      document.getElementById('dateFrom').value = '';
+      document.getElementById('dateTo').value   = '';
+      applyNewsFilters();
+    }
+
+    fetchNewsCSV();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>buildHeroChart(); buildEventsChart();</script>
 </body>
 </html>
