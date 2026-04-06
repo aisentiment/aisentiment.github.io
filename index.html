@@ -256,9 +256,11 @@
     .news-table tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: filter 0.15s; }
     .news-table tbody tr:hover { filter: brightness(0.96); }
     .news-table td { padding: 12px 16px; vertical-align: top; line-height: 1.55; }
-    .td-date { white-space: nowrap; font-size: 13px; color: var(--text-dim); width: 110px; }
-    .td-news { color: var(--text); }
-    .td-type { white-space: nowrap; width: 150px; }
+    .td-date   { white-space: nowrap; font-size: 13px; color: var(--text-dim); width: 110px; }
+    .td-amount { white-space: nowrap; font-size: 13px; color: var(--text-dim); width: 160px; }
+    .td-firm   { font-size: 13px; color: var(--text-dim); width: 140px; }
+    .td-news   { color: var(--text); }
+    .td-type   { white-space: nowrap; width: 160px; }
 
     /* Row color schemes */
     .row-investment   { background: #eff6ff; }
@@ -465,18 +467,22 @@
 
     <div class="sort-bar">
       <span class="sort-label">Sort by</span>
-      <button class="sort-btn active" id="sortDateBtn" onclick="newsSortBy('date')">Date ↓</button>
-      <button class="sort-btn"        id="sortNewsBtn" onclick="newsSortBy('news')">Headline</button>
-      <button class="sort-btn"        id="sortTypeBtn" onclick="newsSortBy('news_type')">Type</button>
+      <button class="sort-btn active" id="sortDateBtn"   onclick="newsSortBy('date')">Date ↓</button>
+      <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
+      <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
+      <button class="sort-btn"        id="sortNewsBtn"   onclick="newsSortBy('news')">Headline</button>
+      <button class="sort-btn"        id="sortTypeBtn"   onclick="newsSortBy('news_type')">Type</button>
     </div>
 
     <div class="news-table-wrap">
       <table class="news-table" id="newsTable" style="display:none">
         <thead>
           <tr>
-            <th id="th-date"  onclick="newsSortBy('date')">Date</th>
-            <th id="th-news"  onclick="newsSortBy('news')">Headline</th>
-            <th id="th-type"  onclick="newsSortBy('news_type')">Type</th>
+            <th id="th-date"   onclick="newsSortBy('date')">Date</th>
+            <th id="th-amount" onclick="newsSortBy('investment_amount')">Investment/Layoff Amount</th>
+            <th id="th-firm"   onclick="newsSortBy('firm')">Firm</th>
+            <th id="th-news"   onclick="newsSortBy('news')">News Headline</th>
+            <th id="th-type"   onclick="newsSortBy('news_type')">News Headline Type</th>
           </tr>
         </thead>
         <tbody id="newsTbody"></tbody>
@@ -506,8 +512,9 @@
 
     <div class="filter-bar">
       <div class="filter-group">
+        <div class="filter-group-label">Search Occupation</div>
         <input class="filter-input" id="occSearchInput" type="text"
-          placeholder="Search occupation..." oninput="applyOccFilters()" style="width:320px">
+          placeholder="Search by occupation..." oninput="applyOccFilters()" style="width:320px">
       </div>
       <div class="filter-group" style="justify-content:flex-end">
         <button class="clear-btn" onclick="clearOccFilters()">✕ Clear</button>
@@ -550,7 +557,7 @@
       <div class="company-panel">
         <div class="company-search">
           <input class="company-search-input" id="companySearch" type="text"
-            placeholder="Search compancy..." oninput="filterCompanyBtns(this.value)">
+            placeholder="Search…" oninput="filterCompanyBtns(this.value)">
         </div>
         <div id="companyBtns">
           <div style="padding:16px;font-size:14px;color:var(--text-muted)">Loading companies…</div>
@@ -660,10 +667,12 @@
         .then(text => {
           const { rows } = parseCSVGeneric(text);
           allNews = rows.map(r => ({
-            news:      r.news || r.headline || '',
-            date:      r.date || r.time || '',
-            news_type: r.news_type || r.type || r.media || '',
-            _date:     parseDate(r.date || r.time || '')
+            news:               r.news || r.headline || '',
+            date:               r.date || r.time || '',
+            investment_amount:  r['investment amount'] || r.investment_amount || '',
+            firm:               r.firm || '',
+            news_type:          r.news_type || r.type || r.media || '',
+            _date:              parseDate(r.date || r.time || '')
           })).filter(r => r.news);
 
           buildTypeDropdown();
@@ -676,7 +685,7 @@
         .catch(() => {
           const el = document.getElementById('newsEmpty');
           el.style.display = 'block';
-          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, News, News_Type</code></p>';
+          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, Investment Amount, Firm, News, News_Type</code></p>';
         });
     }
 
@@ -771,8 +780,8 @@
     function newsSortBy(col) {
       if (newsSortCol === col) newsSortDir = newsSortDir === 'asc' ? 'desc' : 'asc';
       else { newsSortCol = col; newsSortDir = col === 'date' ? 'desc' : 'asc'; }
-      const idMap  = { date:'sortDateBtn', news:'sortNewsBtn', news_type:'sortTypeBtn' };
-      const labels = { date:'Date', news:'Headline', news_type:'Type' };
+      const idMap  = { date:'sortDateBtn', investment_amount:'sortAmountBtn', firm:'sortFirmBtn', news:'sortNewsBtn', news_type:'sortTypeBtn' };
+      const labels = { date:'Date', investment_amount:'Amount', firm:'Firm', news:'Headline', news_type:'Type' };
       document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
       const btn = document.getElementById(idMap[col]);
       if (btn) { btn.classList.add('active'); btn.textContent = labels[col] + (newsSortDir === 'asc' ? ' ↑' : ' ↓'); }
@@ -804,6 +813,8 @@
         tr.className = tc.row;
         tr.innerHTML = `
           <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
+          <td class="td-amount">${row.investment_amount || '—'}</td>
+          <td class="td-firm">${row.firm || '—'}</td>
           <td class="td-news">${row.news}</td>
           <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
         tbody.appendChild(tr);
@@ -1054,7 +1065,7 @@
       document.querySelectorAll('#companyBtns .company-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('figCompanyName').textContent = row.conm;
-      document.getElementById('figCompanySubtitle').textContent = 'Six-Dimension Analysis';
+      document.getElementById('figCompanySubtitle').textContent = 'AI Labor Market · Six-Dimension Analysis';
       drawRadar(row);
     }
 
