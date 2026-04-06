@@ -468,8 +468,8 @@
     <div class="sort-bar">
       <span class="sort-label">Sort by</span>
       <button class="sort-btn active" id="sortDateBtn"   onclick="newsSortBy('date')">Date ↓</button>
-      <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
       <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
+      <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
       <button class="sort-btn"        id="sortNewsBtn"   onclick="newsSortBy('news')">Headline</button>
       <button class="sort-btn"        id="sortTypeBtn"   onclick="newsSortBy('news_type')">Type</button>
     </div>
@@ -683,7 +683,7 @@
         .catch(() => {
           const el = document.getElementById('newsEmpty');
           el.style.display = 'block';
-          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, Investment Amount, Firm, News, News_Type</code></p>';
+          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, Firm, Investment Amount, News, News_Type</code></p>';
         });
     }
 
