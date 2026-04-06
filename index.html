@@ -124,7 +124,7 @@
     .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
     .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 4.5vw, 56px); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; color: #7a8694; }
-    .hero h1 em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); }
+    .hero h1 em { font-family: 'Instrument Serif', serif;  color: var(--accent); }
     .hero-desc { color: var(--text-dim); line-height: 1.75; font-size: 16px; max-width: 640px; margin-bottom: 36px; }
     .hero-insights { display: flex; flex-wrap: wrap; gap: 8px; }
     .insight-pill { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); padding: 9px 16px; font-size: 14px; color: var(--text-dim); cursor: default; }
@@ -668,7 +668,7 @@
       <span class="page-info" id="occPageInfo">Page 1 of 1</span>
       <button class="page-btn" id="occNextBtn" onclick="changeOccPage(1)">Next →</button>
     </div>
-    <div style="padding: 12px 48px 0; text-align: right; font-size: 12px; color: var(--text-muted);">
+    <div style="padding: 12px 48px 0; text-align: right; font-size: 12px; color: var(--text-muted); ">
       Data as of 2025
     </div>
   </section>
@@ -706,7 +706,7 @@
             <p>Reads from <code>data/companies.csv</code><br>Click a company to view its radar chart.</p>
           </div>
         </div>
-        <div style="padding: 10px 20px; text-align: right; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);">
+        <div style="padding: 10px 20px; text-align: right; font-size: 12px; color: var(--text-muted);  border-top: 1px solid var(--border);">
           Data as of 2025
         </div>
       </div>
@@ -1069,7 +1069,16 @@
       const start = (occPage - 1) * OCC_PAGE_SIZE;
       filteredOcc.slice(start, start + OCC_PAGE_SIZE).forEach(row => {
         const tr = document.createElement('tr');
-        tr.innerHTML = occHeaders.map(h => `<td>${row[h] !== undefined ? row[h] : '—'}</td>`).join('');
+        const PCT_COLS = new Set(['ai_talent_perc','ai talent perc','retention_perc','retention perc','hire_perc','hire perc','ai_salary_premium','ai salary premium']);
+        function fmtCell(h, val) {
+          if (val === undefined || val === '') return '—';
+          if (PCT_COLS.has(h.toLowerCase().trim())) {
+            const n = parseFloat(val);
+            if (!isNaN(n)) return (n * 100).toFixed(2) + '%';
+          }
+          return val;
+        }
+        tr.innerHTML = occHeaders.map(h => `<td>${fmtCell(h, row[h])}</td>`).join('');
         tbody.appendChild(tr);
       });
 
@@ -1102,7 +1111,7 @@
       const pills = document.getElementById('heroInsights');
       const nc = allNews.length, oc = allOcc.length, cc = companyData.length;
       let items = [];
-      if (nc > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span>AI news tracked from 2021 till now</span></div>`);
+      if (nc > 0) items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span>AI News Tracked from 2021 till now</span></div>`);
       if (oc > 0) items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${oc}</span><span>occupations tracked</span></div>`);
       if (cc > 0) items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${cc}</span><span>companies analysed</span></div>`);
       if (!items.length) {
