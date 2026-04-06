@@ -708,11 +708,11 @@ function buildHeroChart() {
       const pills = document.getElementById('heroInsights');
       let items = [];
       if (pillNews > 0)
-        items.push(`<div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C"><span class="pill-dot" style="background:#378ADD"></span><span>AI news tracked from 2021 till now</span></div>`);
+        items.push(`<a href="./news.html" style="text-decoration:none"><div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#378ADD'" onmouseout="this.style.borderColor='#B5D4F4'"><span class="pill-dot" style="background:#378ADD"></span><span>AI news tracked from 2021 till now</span></div></a>`);
       if (pillOcc > 0)
-        items.push(`<div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${pillOcc}</span><span> occupations tracked</span></div>`);
+        items.push(`<a href="./occupation.html" style="text-decoration:none"><div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#9FE1CB'"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${pillOcc}</span><span> occupations tracked</span></div></a>`);
       if (pillComp > 0)
-        items.push(`<div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${pillComp}</span><span> companies analysed</span></div>`);
+        items.push(`<a href="./company.html" style="text-decoration:none"><div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#7F77DD'" onmouseout="this.style.borderColor='#CECBF6'"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${pillComp}</span><span> companies analysed</span></div></a>`);
       if (items.length) pills.innerHTML = items.join('');
     }
 
