@@ -589,13 +589,14 @@
 
     function parseCSVGeneric(text) {
       const lines = text.trim().split(/\r?\n/);
-      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const sep = lines[0].includes('\t') ? '\t' : ',';
+      const headers = (sep === '\t' ? lines[0].split('\t') : parseCSVLine(lines[0])).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
       const rows = [];
       for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
-        const cols = parseCSVLine(lines[i]);
+        const cols = sep === '\t' ? lines[i].split('\t') : parseCSVLine(lines[i]);
         const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').trim(); });
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
         rows.push(row);
       }
       return { headers, rows };
@@ -614,23 +615,6 @@
       if (!d) return '';
       return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
     }
-
-        /* Smart title-case: title-cases normal words, preserves known brand/acronym names */
-    const KNOWN_NAMES = new Set([
-      'NVIDIA','IBM','JPMorgan','AI','CEO','CFO','CTO','HR','US','UK','EU','IT','IPO',
-      'GDP','EV','AWS','API','SaaS','OpenAI','ChatGPT','DeepMind','TikTok','LinkedIn',
-      'YouTube','iPhone','iPad','macOS','iOS','GitHub','PyTorch','TensorFlow',
-      'Microsoft','Google','Apple','Amazon','Meta','Netflix','Tesla','Uber','Lyft',
-      'Salesforce','Oracle','SAP','HP','AMD','Intel','Qualcomm','Broadcom',
-    ]);
-    function smartTitle(str) {
-      if (!str) return str;
-      return str.replace(/\S+/g, word => {
-        const upper = word.toUpperCase();
-        // Check against known names (case-insensitive lookup)
-        for (const name of KNOWN_NAMES) {
-          if (name.toUpperCase() === upper) return name;
-        }
         // Default: Title Case (first letter upper, rest lower)
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       });
@@ -733,14 +717,12 @@
       filteredOcc.slice(start, start + OCC_PAGE_SIZE).forEach(row => {
         const tr = document.createElement('tr');
         const PCT_COLS = new Set(['ai_talent_perc','ai talent perc','retention_perc','retention perc','hire_perc','hire perc','ai_salary_premium','ai salary premium']);
-        const OCC_COL  = occHeaders[0]; // first column is the occupation name
         function fmtCell(h, val) {
           if (val === undefined || val === '') return '—';
           if (PCT_COLS.has(h.toLowerCase().trim())) {
             const n = parseFloat(val);
             if (!isNaN(n)) return (n * 100).toFixed(2) + '%';
           }
-          if (h === OCC_COL) return smartTitle(val);
           return val;
         }
         tr.innerHTML = occHeaders.map(h => `<td>${fmtCell(h, row[h])}</td>`).join('');

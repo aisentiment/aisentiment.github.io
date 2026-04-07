@@ -618,34 +618,18 @@
 
     function parseCSVGeneric(text) {
       const lines = text.trim().split(/\r?\n/);
-      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const sep = lines[0].includes('\t') ? '\t' : ',';
+      const headers = (sep === '\t' ? lines[0].split('\t') : parseCSVLine(lines[0])).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
       const rows = [];
       for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
-        const cols = parseCSVLine(lines[i]);
+        const cols = sep === '\t' ? lines[i].split('\t') : parseCSVLine(lines[i]);
         const row = {};
-        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').trim(); });
+        headers.forEach((h, idx) => { row[h] = (cols[idx] || '').replace(/^"|"$/g,'').trim(); });
         rows.push(row);
       }
       return { headers, rows };
     }
-
-        /* Smart title-case: title-cases normal words, preserves known brand/acronym names */
-    const KNOWN_NAMES = new Set([
-      'NVIDIA','IBM','JPMorgan','AI','CEO','CFO','CTO','HR','US','UK','EU','IT','IPO',
-      'GDP','EV','AWS','API','SaaS','OpenAI','ChatGPT','DeepMind','TikTok','LinkedIn',
-      'YouTube','iPhone','iPad','macOS','iOS','GitHub','PyTorch','TensorFlow',
-      'Microsoft','Google','Apple','Amazon','Meta','Netflix','Tesla','Uber','Lyft',
-      'Salesforce','Oracle','SAP','HP','AMD','Intel','Qualcomm','Broadcom',
-    ]);
-    function smartTitle(str) {
-      if (!str) return str;
-      return str.replace(/\S+/g, word => {
-        const upper = word.toUpperCase();
-        // Check against known names (case-insensitive lookup)
-        for (const name of KNOWN_NAMES) {
-          if (name.toUpperCase() === upper) return name;
-        }
         // Default: Title Case (first letter upper, rest lower)
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       });
@@ -701,7 +685,8 @@
       fetch('data/news.csv')
         .then(r => { if (!r.ok) throw new Error('not found'); return r.text(); })
         .then(text => {
-          const { rows } = parseCSVGeneric(text);
+          const { rows, headers } = parseCSVGeneric(text);
+          console.log('CSV headers found:', headers);
           allNews = rows.map(r => ({
             news:               r.news || r.headline || '',
             date:               r.date || r.time || '',
@@ -710,6 +695,7 @@
             news_type:          r.news_type || r.type || r.media || '',
             _date:              parseDate(r.date || r.time || '')
           })).filter(r => r.news);
+          console.log('Rows loaded:', allNews.length);
 
           buildTypeDropdown();
           setNewsDateBounds();
@@ -848,7 +834,7 @@
         tr.className = tc.row;
         tr.innerHTML = `
           <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
-          <td class="td-firm">${row.firm ? smartTitle(row.firm) : '—'}</td>
+          <td class="td-firm">${row.firm || '—'}</td>
           <td class="td-amount">${row.investment_amount || '—'}</td>
           <td class="td-news">${row.news}</td>
           <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
