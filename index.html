@@ -753,7 +753,7 @@ function buildHeroChart() {
       if (pillOcc > 0)
         items.push(`<a href="./occupation.html" style="text-decoration:none"><div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#9FE1CB'"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${pillOcc}</span><span> occupations tracked</span></div></a>`);
       if (pillComp > 0)
-        items.push(`<a href="./company.html" style="text-decoration:none"><div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#7F77DD'" onmouseout="this.style.borderColor='#CECBF6'"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${pillComp}</span><span> companies analysed</span></div></a>`);
+        items.push(`<a href="./company.html" style="text-decoration:none"><div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#7F77DD'" onmouseout="this.style.borderColor='#CECBF6'"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${pillComp}</span><span> public firms analysed</span></div></a>`);
       if (items.length) pills.innerHTML = items.join('');
     }
 
