@@ -630,6 +630,31 @@
       return { headers, rows };
     }
 
+        /* Smart title-case: title-cases normal words, preserves known brand/acronym names */
+    const KNOWN_NAMES = new Set([
+      'NVIDIA','IBM','JPMorgan','AI','CEO','CFO','CTO','HR','US','UK','EU','IT','IPO',
+      'GDP','EV','AWS','API','SaaS','OpenAI','ChatGPT','DeepMind','TikTok','LinkedIn',
+      'YouTube','iPhone','iPad','macOS','iOS','GitHub','PyTorch','TensorFlow',
+      'Microsoft','Google','Apple','Amazon','Meta','Netflix','Tesla','Uber','Lyft',
+      'Salesforce','Oracle','SAP','HP','AMD','Intel','Qualcomm','Broadcom',
+    ]);
+    function smartTitle(str) {
+      if (!str) return str;
+      return str.replace(/\S+/g, word => {
+        const upper = word.toUpperCase();
+        // Check against known names (case-insensitive lookup)
+        for (const name of KNOWN_NAMES) {
+          if (name.toUpperCase() === upper) return name;
+        }
+        // Default: Title Case (first letter upper, rest lower)
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      });
+    }
+        // Mixed-case or already normal → just capitalise first letter
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      });
+    }
+
     function parseDate(str) {
       if (!str) return null;
       let d = new Date(str);
@@ -823,7 +848,7 @@
         tr.className = tc.row;
         tr.innerHTML = `
           <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
-          <td class="td-firm">${row.firm || '—'}</td>
+          <td class="td-firm">${row.firm ? smartTitle(row.firm) : '—'}</td>
           <td class="td-amount">${row.investment_amount || '—'}</td>
           <td class="td-news">${row.news}</td>
           <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
