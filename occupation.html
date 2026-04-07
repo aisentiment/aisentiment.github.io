@@ -602,6 +602,32 @@
       return { headers, rows };
     }
 
+/* Smart title-case for firm names */
+    const KNOWN_NAMES = {
+      // Tech
+      'nvidia':'NVIDIA','ibm':'IBM','amd':'AMD','intel':'Intel','qualcomm':'Qualcomm',
+      'broadcom':'Broadcom','hp':'HP','sap':'SAP','aws':'AWS','openai':'OpenAI',
+      'chatgpt':'ChatGPT','deepmind':'DeepMind','tiktok':'TikTok','linkedin':'LinkedIn',
+      'youtube':'YouTube','github':'GitHub','pytorch':'PyTorch','tensorflow':'TensorFlow',
+      'microsoft':'Microsoft','google':'Google','apple':'Apple','amazon':'Amazon',
+      'meta':'Meta','netflix':'Netflix','tesla':'Tesla','uber':'Uber','lyft':'Lyft',
+      'salesforce':'Salesforce','oracle':'Oracle','atlassian':'Atlassian',
+      'pra':'PRA','kkr':'KKR',
+      'jpmorgan':'JPMorgan','goldman':'Goldman','sachs':'Sachs','blackrock':'BlackRock',
+      'blackstone':'Blackstone','softbank':'SoftBank','sequoia':'Sequoia',
+      // Other abbreviations & special casing
+      'ai':'AI','us':'US','uk':'UK','eu':'EU','ceo':'CEO','cfo':'CFO','cto':'CTO',
+      'hr':'HR','ipo':'IPO','vc':'VC','llc':'LLC','inc':'Inc','ltd':'Ltd','corp':'Corp',
+    };
+    function smartTitle(str) {
+      if (!str) return str;
+      return str.replace(/\S+/g, word => {
+        const key = word.toLowerCase().replace(/[.,]/g,'');
+        if (KNOWN_NAMES[key]) return KNOWN_NAMES[key];
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      });
+    }
+
     function parseDate(str) {
       if (!str) return null;
       let d = new Date(str);
@@ -711,12 +737,14 @@
       filteredOcc.slice(start, start + OCC_PAGE_SIZE).forEach(row => {
         const tr = document.createElement('tr');
         const PCT_COLS = new Set(['ai_talent_perc','ai talent perc','retention_perc','retention perc','hire_perc','hire perc','ai_salary_premium','ai salary premium']);
+        const OCC_COL = occHeaders[0];
         function fmtCell(h, val) {
           if (val === undefined || val === '') return '—';
           if (PCT_COLS.has(h.toLowerCase().trim())) {
             const n = parseFloat(val);
             if (!isNaN(n)) return (n * 100).toFixed(2) + '%';
           }
+          if (h === OCC_COL) return smartTitle(val);
           return val;
         }
         tr.innerHTML = occHeaders.map(h => `<td>${fmtCell(h, row[h])}</td>`).join('');
