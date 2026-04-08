@@ -697,6 +697,8 @@
         </div>
 
         <button class="submit-btn" onclick="submitOpinion()">Submit anonymously</button>
+        <!-- Honeypot: hidden from humans, filled by bots -->
+        <input type="text" id="honeypot" name="website" style="display:none;position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
         <div class="submit-msg" id="submitMsg"></div>
       </div>
 
@@ -1008,6 +1010,24 @@
       if (!location)               { showMsg(msg, 'Please select your location.', false); return; }
       if (comment.length === 0)    { showMsg(msg, 'Please share your thoughts before submitting.', false); return; }
       if (comment.length > 1000)   { showMsg(msg, 'Please keep your comment under 1000 characters.', false); return; }
+
+      // Honeypot check — bots fill this hidden field, humans don't
+      if (document.getElementById('honeypot').value !== '') return;
+
+      // Rate limiting — max 3 submissions per 10 minutes per browser
+      const RATE_KEY = 'ailmi_submissions';
+      const RATE_LIMIT = 3;
+      const RATE_WINDOW = 10 * 60 * 1000; // 10 minutes
+      const now = Date.now();
+      let submits = [];
+      try { submits = JSON.parse(localStorage.getItem(RATE_KEY) || '[]'); } catch(e) {}
+      submits = submits.filter(t => now - t < RATE_WINDOW);
+      if (submits.length >= RATE_LIMIT) {
+        const wait = Math.ceil((RATE_WINDOW - (now - submits[0])) / 60000);
+        showMsg(msg, `Too many submissions. Please wait ${wait} minute${wait !== 1 ? 's' : ''} before trying again.`, false);
+        return;
+      }
+
       if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
         showMsg(msg, '⚠ Apps Script URL not configured — see comments in the code.', false); return;
       }
@@ -1029,6 +1049,13 @@
       const cached = loadLocal();
       cached.unshift(payload);
       saveLocal(cached);
+
+      // Record this submission for rate limiting
+      try {
+        let submits = JSON.parse(localStorage.getItem('ailmi_submissions') || '[]');
+        submits.push(Date.now());
+        localStorage.setItem('ailmi_submissions', JSON.stringify(submits));
+      } catch(e) {}
 
       try {
         await fetch(APPS_SCRIPT_URL, {
