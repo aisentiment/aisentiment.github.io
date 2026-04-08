@@ -1195,43 +1195,39 @@ Answer questions helpfully and concisely. If asked about specific data values, e
       input.value = '';
       document.getElementById('chatSuggestions').style.display = 'none';
       appendMsg(text, 'user');
-
       sendBtn.disabled = true;
       const typingDiv = appendMsg('Thinking…', 'bot typing');
+
+      // Build prompt: system context + conversation history + new question
+      const fullPrompt = SITE_CONTEXT + '\n\n' +
+        chatHistory.map(m => (m.role === 'user' ? 'User: ' : 'Assistant: ') + m.parts[0].text).join('\n') +
+        '\nUser: ' + text + '\nAssistant:';
 
       chatHistory.push({ role: 'user', parts: [{ text }] });
 
       try {
-        // Inject system context as first exchange so all models support it
-        const contents = [
-          { role: 'user',  parts: [{ text: SITE_CONTEXT + '\n\nUser question: ' + text }] }
-        ];
-        // For follow-up messages, include prior history after the first
-        if (chatHistory.length > 1) {
-          const hist = chatHistory.slice(0, -1);
-          contents[0] = { role: 'user', parts: [{ text: SITE_CONTEXT }] };
-          contents.push({ role: 'model', parts: [{ text: 'Understood. I will answer questions about the AI Sentiment platform.' }] });
-          hist.slice(1).forEach(m => contents.push(m));
-          contents.push({ role: 'user', parts: [{ text }] });
-        }
         const res = await fetch(GEMINI_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents,
+            contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
             generationConfig: { maxOutputTokens: 400, temperature: 0.7 }
           })
         });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error?.message || 'HTTP ' + res.status);
+        }
         const data = await res.json();
-        if (data.error) throw new Error(data.error.message);
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not get a response. Please try again.';
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || 'Sorry, no response received.';
         typingDiv.textContent = reply;
         typingDiv.classList.remove('typing');
         chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+        if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
       } catch(e) {
-        typingDiv.textContent = 'Connection error — please try again.';
+        typingDiv.textContent = 'Error: ' + (e.message || 'Connection failed. Check console for details.');
         typingDiv.classList.remove('typing');
+        console.error('Gemini error:', e);
       }
 
       sendBtn.disabled = false;
