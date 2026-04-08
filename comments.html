@@ -542,10 +542,10 @@
   <nav>
     <a class="nav-logo" href="./index.html">AI Sentiment</a>
     <ul class="nav-links">
-      <li><a href="./index.html#news">News</a></li>
-      <li><a href="./index.html#analysis">Analysis</a></li>
+      <li><a href="./news.html">News</a></li>
+      <li><a href="./occupation.html">Occupation</a></li>
+      <li><a href="./company.html">Company</a></li>
       <li><a href="./comments.html" class="active">Comments</a></li>
-      <li><a href="./index.html#about">About</a></li>
     </ul>
   </nav>
 
@@ -657,12 +657,18 @@
     </div>
   </div>
 
-  <footer>
-    <div class="footer-left">
-      <strong>AI Sentiment</strong>
-    </div>
-    <div class="footer-right">
-      © 2026 AI Sentiment. For research purposes.
+  <footer id="about">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">AI Sentiment</div>
+      </div>
+      <div class="footer-right-block">
+        <a href="mailto:support@ai-sentiment.com" class="footer-email">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+          support@ai-sentiment.com
+        </a>
+        <div class="footer-copy">© 2026 AI Sentiment · For research purposes</div>
+      </div>
     </div>
   </footer>
 
@@ -674,7 +680,7 @@
     //  3. Deploy as Web App → Anyone can access
     //  4. Paste the deployed URL below
     // ════════════════════════════════════════════════════════
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-0Uh1BCo_5gpzgmW_0GLKCA0EimN7uIhF9mD7NRxr2LXr5M82WzOtho65zx-Ne334/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz068vtOwj-rjFPDbHK_Y-h8bbW1VZj2zhwJYx2CfMszN2T0hbOP0zN_dtre200UoY6QQ/exec';
 
     let selectedRating = 0;
     let opinions = [];       // loaded from Google Sheet
