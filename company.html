@@ -67,16 +67,68 @@
       color: var(--accent);
     }
     .nav-logo span { color: var(--text-muted); font-weight: 400; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
+
+    /* DROPDOWN NAV */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid var(--border);
       color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-dropdown-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.04); }
+    .nav-dropdown-btn.open { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
+    .nav-chevron { flex-shrink: 0; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 256px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--accent);
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(30,41,59,0.1);
+      z-index: 200;
+      overflow: hidden;
+    }
+    .nav-dropdown-menu.open { display: block; }
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, color 0.15s, padding-left 0.15s;
+      border-bottom: 1px solid var(--surface2);
+      position: relative;
+    }
+
+    .nav-dropdown-item:last-child { border-bottom: none; }
+    .nav-dropdown-item:hover {
+      background: rgba(91,163,217,0.05);
+      color: var(--accent);
+      padding-left: 24px;
+    }
+    .nav-dropdown-item.active {
+      color: var(--accent2);
+      background: rgba(91,163,217,0.07);
+      font-weight: 700;
+      border-left: 3px solid var(--accent);
+      padding-left: 17px;
+    }
 
     /* HERO */
     .hero {
@@ -583,22 +635,41 @@
 <body>
 
   <nav>
-    <a class="nav-logo" href="./index.html" style="text-decoration:none">AI Sentiment</a>
-    <ul class="nav-links">
-      <li><a href="./index.html" style="color:var(--accent);font-weight:600;letter-spacing:0.12em">Main</a></li>
-      <li><a href="./news.html">News</a></li>
-      <li><a href="./occupation.html">Occupation</a></li>
-      <li><a href="./company.html" class="active" style="color:var(--accent)">Company</a></li>
-      <li><a href="./comments.html">Comments</a></li>
-      <li><a href="./index.html#about">About</a></li>
-    </ul>
+    <div class="nav-logo">AI Sentiment</div>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn" id="navBtn" onclick="toggleNav(event)">
+        <svg class="nav-chevron" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="13" x2="20" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown-menu" id="navMenu">
+        <a href="./index.html" class="nav-dropdown-item">Economy AI Sentiment</a>
+        <a href="./news.html" class="nav-dropdown-item">Company AI News</a>
+        <a href="./occupation.html" class="nav-dropdown-item">Occupation AI Sentiment</a>
+        <a href="./company.html" class="nav-dropdown-item active">Company AI Sentiment</a>
+        <a href="./comments.html" class="nav-dropdown-item">Employee AI Comment</a>
+      </div>
+    </div>
   </nav>
+  <script>
+    function toggleNav(e) {
+      e.stopPropagation();
+      document.getElementById('navBtn').classList.toggle('open');
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', () => {
+      document.getElementById('navBtn').classList.remove('open');
+      document.getElementById('navMenu').classList.remove('open');
+    });
+  </script>
 
   <section class="analysis-section" id="analysis" style="padding-top:0;padding-bottom:80px">
     <div class="section-header">
       <div class="section-header-inner">
         <div class="section-icon analysis-icon">📊</div>
-        <h2 class="section-title">Company Analysis</h2>
+        <h2 class="section-title">Company AI Sentiment</h2>
         <div class="section-line"></div>
       </div>
     </div>
