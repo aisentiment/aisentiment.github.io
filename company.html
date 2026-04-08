@@ -1005,7 +1005,25 @@
 
   <script>
     const GEMINI_KEY = 'AIzaSyAnHkHb_v5UUoH5R8u7zbihz9U72RlBTSg';
-    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash-preview:generateContent?key=${GEMINI_KEY}`;
+    let GEMINI_MODEL = 'gemini-2.0-flash';
+    let GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+
+    // Auto-discover available model on load
+    fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_KEY}`)
+      .then(r => r.json())
+      .then(data => {
+        const models = (data.models || [])
+          .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+          .map(m => m.name.replace('models/', ''));
+        // Prefer flash models, fall back to pro
+        const preferred = models.find(n => n.includes('flash')) || models.find(n => n.includes('pro')) || models[0];
+        if (preferred) {
+          GEMINI_MODEL = preferred;
+          GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${preferred}:generateContent?key=${GEMINI_KEY}`;
+          console.log('Gemini model selected:', preferred);
+        }
+      })
+      .catch(() => {});
     const SITE_CONTEXT = `You are a helpful assistant for the AI Sentiment website (ai-sentiment.com). 
 This is a research platform tracking how AI is reshaping the labor market. It has 5 sections:
 1. Home (index.html): Two charts — "AI Post %" showing quarterly share of job postings requiring AI skills (2023-2025), and "AI Investment and Layoff Announcements" showing quarterly counts (2021-2025).
