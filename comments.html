@@ -1016,5 +1016,268 @@
 
     loadOpinions();
   </script>
+
+  <!-- AI Sentiment Chatbot Widget -->
+  <style>
+    .chat-bubble {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+    }
+    .chat-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 2px solid #5ba3d9;
+      color: #5ba3d9;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(91,163,217,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(91,163,217,0.45); }
+    .chat-window {
+      display: none;
+      position: fixed;
+      bottom: 92px;
+      right: 28px;
+      width: 360px;
+      max-height: 520px;
+      background: #fff;
+      border: 1px solid #dde3ec;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(30,41,59,0.18);
+      z-index: 9999;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-window.open { display: flex; }
+    .chat-header {
+      background: #1e293b;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 3px solid #5ba3d9;
+    }
+    .chat-header-left { display: flex; align-items: center; gap: 10px; }
+    .chat-header-dot { width: 8px; height: 8px; border-radius: 50%; background: #38b36e; }
+    .chat-header-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #fff; }
+    .chat-header-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+    .chat-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 18px; cursor: pointer; line-height: 1; padding: 0; }
+    .chat-close:hover { color: #fff; }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 200px;
+      max-height: 340px;
+    }
+    .chat-messages::-webkit-scrollbar { width: 3px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: #dde3ec; border-radius: 2px; }
+    .chat-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      font-family: 'DM Mono', monospace;
+    }
+    .chat-msg.bot {
+      background: #f4f6f8;
+      color: #1e293b;
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+    .chat-msg.user {
+      background: #1e293b;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+    .chat-msg.typing { color: #7a8694; font-style: italic; }
+    .chat-suggestions {
+      padding: 0 16px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chat-suggestion {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 4px 10px;
+      background: #f4f6f8;
+      border: 1px solid #dde3ec;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #4a5568;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .chat-suggestion:hover { border-color: #5ba3d9; color: #3b8abf; background: #e6f1fb; }
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid #eef1f5;
+    }
+    .chat-input {
+      flex: 1;
+      background: #f4f6f8;
+      border: 1px solid #dde3ec;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #1e293b;
+      outline: none;
+      resize: none;
+      min-height: 36px;
+      max-height: 80px;
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: #5ba3d9; }
+    .chat-input::placeholder { color: #7a8694; }
+    .chat-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: none;
+      color: #5ba3d9;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .chat-send:hover { background: #5ba3d9; color: #fff; }
+    .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+  </style>
+
+  <div class="chat-bubble">
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-header-dot"></div>
+          <div>
+            <div class="chat-header-title">AI Sentiment Assistant</div>
+            <div class="chat-header-sub">Ask about the data</div>
+          </div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()">✕</button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg bot">Hi! I can answer questions about AI trends in the labor market, company data, occupations, or how to use this site.</div>
+      </div>
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">What does AI talent % mean?</button>
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">Which sectors have most AI layoffs?</button>
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">How is sentiment measured?</button>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Ask a question…" rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+        <button class="chat-send" id="chatSendBtn" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+    <button class="chat-toggle" onclick="toggleChat()" title="Ask AI Assistant">💬</button>
+  </div>
+
+  <script>
+    const GEMINI_KEY = 'AIzaSyAnHkHb_v5UUoH5R8u7zbihz9U72RlBTSg';
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+    const SITE_CONTEXT = `You are a helpful assistant for the AI Sentiment website (ai-sentiment.com). 
+This is a research platform tracking how AI is reshaping the labor market. It has 5 sections:
+1. Home (index.html): Two charts — "AI Post %" showing quarterly share of job postings requiring AI skills (2023-2025), and "AI Investment and Layoff Announcements" showing quarterly counts (2021-2025).
+2. News (news.html): A table of AI-related news with columns: Date, Firm, Investment/Layoff Amount, News Headline, News Type. News types include Investment, Layoff, Divestment, Partnership, Regulation, Hiring, Acquisition, Earnings.
+3. Occupation (occupation.html): A table from role_level_data.csv showing occupation-level AI exposure metrics including AI talent %, retention %, hire %, AI salary premium.
+4. Company (company.html): A radar chart for public firms showing 6 dimensions: AI Talent %, Retention %, Hiring %, AI Salary Premium %, Employee AI Sentiment, Executive AI Sentiment. Scores are normalized 0-5 relative to all firms in the dataset.
+5. Comments (comments.html): Anonymous community feedback form where users rate AI satisfaction at their firm (1-5 stars) and share observations.
+Key metrics explained:
+- AI Post %: Share of new job postings requiring AI-related skills
+- AI Talent %: Share of a firm's workforce with AI skills
+- AI Salary Premium: How much more AI-skilled workers earn vs average
+- Employee/Executive AI Sentiment: Survey-based score of how positively employees/executives view AI at their firm
+- Retention %: Employee retention rate
+- Hiring %: Share of new hires with AI skills
+Answer questions helpfully and concisely. If asked about specific data values, explain you can only describe the methodology since you don't have live access to the CSV data.`;
+
+    let chatHistory = [];
+    let chatOpen = false;
+
+    function toggleChat() {
+      chatOpen = !chatOpen;
+      document.getElementById('chatWindow').classList.toggle('open', chatOpen);
+      if (chatOpen) document.getElementById('chatInput').focus();
+    }
+
+    function sendSuggestion(btn) {
+      document.getElementById('chatInput').value = btn.textContent;
+      document.getElementById('chatSuggestions').style.display = 'none';
+      sendChat();
+    }
+
+    function appendMsg(text, role) {
+      const msgs = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + role;
+      div.textContent = text;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
+
+    async function sendChat() {
+      const input = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('chatSendBtn');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      document.getElementById('chatSuggestions').style.display = 'none';
+      appendMsg(text, 'user');
+
+      sendBtn.disabled = true;
+      const typingDiv = appendMsg('Thinking…', 'bot typing');
+
+      chatHistory.push({ role: 'user', parts: [{ text }] });
+
+      try {
+        const res = await fetch(GEMINI_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: SITE_CONTEXT }] },
+            contents: chatHistory,
+            generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
+          })
+        });
+        const data = await res.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not get a response. Please try again.';
+        typingDiv.textContent = reply;
+        typingDiv.classList.remove('typing');
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+      } catch(e) {
+        typingDiv.textContent = 'Connection error — please try again.';
+        typingDiv.classList.remove('typing');
+      }
+
+      sendBtn.disabled = false;
+      document.getElementById('chatMessages').scrollTop = 99999;
+    }
+  </script>
+
 </body>
 </html>
