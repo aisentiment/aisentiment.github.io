@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Sentiment — Regional AI Sentiment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #f4f6f8; --surface2: #e9ecf0;
+      --border: #d0d5dd; --accent: #5ba3d9; --accent2: #3b8abf;
+      --text: #1e293b; --text-muted: #7a8694; --text-dim: #4a5568;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(91,163,217,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(91,163,217,0.06) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
+
+    /* DROPDOWN NAV */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 4px; transition: border-color 0.18s, color 0.18s, background 0.18s; }
+    .nav-dropdown-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.04); }
+    .nav-dropdown-btn.open { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
+    .nav-chevron { flex-shrink: 0; }
+    .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); right: 0; min-width: 256px; background: #fff; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 4px 24px rgba(30,41,59,0.1); z-index: 200; overflow: hidden; }
+    .nav-dropdown-menu.open { display: block; }
+    .nav-dropdown-item { display: flex; align-items: center; padding: 14px 20px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-dim); text-decoration: none; letter-spacing: 0.02em; transition: background 0.15s, color 0.15s, padding-left 0.15s; border-bottom: 1px solid var(--surface2); position: relative; }
+    .nav-dropdown-item:last-child { border-bottom: none; }
+    .nav-dropdown-item:hover { background: rgba(91,163,217,0.05); color: var(--accent); padding-left: 24px; }
+    .nav-dropdown-item.active { color: var(--accent2); background: rgba(91,163,217,0.07); font-weight: 700; border-left: 3px solid var(--accent); padding-left: 17px; }
+
+    /* PAGE HERO */
+    .page-hero { position: relative; z-index: 1; padding: 56px 48px 48px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%); }
+    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: #7a8694; margin-bottom: 12px; }
+    .page-hero h1 em { font-style: normal; color: var(--accent); }
+    .page-hero p { font-size: 15px; color: var(--text-dim); max-width: 580px; line-height: 1.75; }
+
+    /* MAIN CONTENT */
+    .main-content { position: relative; z-index: 1; padding: 48px 48px 64px; }
+
+    /* SECTION HEADER */
+    .section-header { padding: 0 0 32px; }
+    .section-header-inner { display: flex; align-items: center; gap: 14px; }
+    .section-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: linear-gradient(135deg, rgba(91,163,217,0.18) 0%, rgba(175,169,236,0.12) 100%); border: 1px solid rgba(91,163,217,0.3); flex-shrink: 0; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
+
+    /* MAPS */
+    .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .map-card { background: #fff; border: 1px solid #dde3ec; border-radius: 8px; padding: 20px 22px 16px; box-shadow: 0 2px 20px rgba(55,138,221,0.07); position: relative; overflow: hidden; }
+    .map-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%); }
+    .map-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+    .map-card-sub { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .map-svg-wrap { width: 100%; }
+    .map-svg-wrap svg { width: 100%; height: auto; display: block; }
+    .map-legend { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .map-legend-bar { flex: 1; height: 8px; border-radius: 4px; }
+    .state-path { stroke: #fff; stroke-width: 0.5; cursor: pointer; transition: opacity 0.15s; }
+    .state-path:hover { opacity: 0.8; stroke-width: 1.5; stroke: #1e293b; }
+    .map-tooltip { position: fixed; pointer-events: none; background: #1e293b; color: #fff; font-family: 'DM Mono', monospace; font-size: 12px; padding: 8px 12px; border-radius: 4px; white-space: nowrap; z-index: 9999; display: none; }
+    @media (max-width: 900px) { .map-grid { grid-template-columns: 1fr; } }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; background: #1e293b; color: rgba(255,255,255,0.55); padding: 0; }
+    .footer-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; padding: 40px 48px; border-top: 3px solid var(--accent); }
+    .footer-brand { display: flex; flex-direction: column; gap: 6px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff; }
+    .footer-right-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-email { display: inline-flex; align-items: center; gap: 7px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    .footer-email:hover { color: #fff; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 768px) { nav, .page-hero, .main-content, footer { padding-left: 20px; padding-right: 20px; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn" id="navBtn" onclick="toggleNav(event)">
+        <svg class="nav-chevron" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="13" x2="20" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown-menu" id="navMenu">
+        <a href="/" class="nav-dropdown-item">Home</a>
+        <a href="/news/" class="nav-dropdown-item">Company AI News</a>
+        <a href="/regional/" class="nav-dropdown-item active">Regional AI Sentiment</a>
+        <a href="/occupation/" class="nav-dropdown-item">Occupation AI Sentiment</a>
+        <a href="/company/" class="nav-dropdown-item">Company AI Sentiment</a>
+        <a href="/comments/" class="nav-dropdown-item">Employee AI Comment</a>
+      </div>
+    </div>
+  </nav>
+  <script>
+    function toggleNav(e) {
+      e.stopPropagation();
+      document.getElementById('navBtn').classList.toggle('open');
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', () => {
+      document.getElementById('navBtn').classList.remove('open');
+      document.getElementById('navMenu').classList.remove('open');
+    });
+  </script>
+
+  <section class="page-hero">
+    <h1><em>Regional</em> AI Sentiment</h1>
+    <p>State-level analysis of AI job market trends across the United States — tracking AI job share and salary premium by state.</p>
+  </section>
+
+  <div class="main-content">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon">🗺️</div>
+        <h2 class="section-title">Regional AI Sentiment</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+
+    <div class="map-grid">
+      <div class="map-card">
+        <div class="map-card-title">AI Job Share</div>
+        <div class="map-card-sub">% of jobs requiring AI skills · 2025</div>
+        <div class="map-svg-wrap" id="mapPct"></div>
+        <div class="map-legend">
+          <span id="mapPctMin">0%</span>
+          <div class="map-legend-bar" id="mapPctBar"></div>
+          <span id="mapPctMax">—</span>
+        </div>
+      </div>
+      <div class="map-card">
+        <div class="map-card-title">AI Salary Premium</div>
+        <div class="map-card-sub">AI vs non-AI average salary · 2025</div>
+        <div class="map-svg-wrap" id="mapPremium"></div>
+        <div class="map-legend">
+          <span id="mapPremMin">0%</span>
+          <div class="map-legend-bar" id="mapPremBar"></div>
+          <span id="mapPremMax">—</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;font-size:12px;color:var(--text-muted);margin-top:12px;font-family:'DM Mono',monospace">Data as of 2025</div>
+    <div class="map-tooltip" id="mapTooltip"></div>
+  </div>
+
+  <footer id="about">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">AI Sentiment</div>
+      </div>
+      <div class="footer-right-block">
+        <a href="mailto:support@ai-sentiment.com" class="footer-email">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+          support@ai-sentiment.com
+        </a>
+        <div class="footer-copy">© 2026 AI Sentiment · For research purposes</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <script>
+  function buildMaps() {
+    const tooltip = document.getElementById('mapTooltip');
+    const dataMap = {
+      '01':{name:'Alabama',        pct:1.54,  prem:104.09},
+      '02':{name:'Alaska',         pct:2.79,  prem:69.27},
+      '04':{name:'Arizona',        pct:2.19,  prem:63.51},
+      '05':{name:'Arkansas',       pct:2.04,  prem:85.06},
+      '06':{name:'California',     pct:5.84,  prem:58.15},
+      '08':{name:'Colorado',       pct:3.04,  prem:60.76},
+      '09':{name:'Connecticut',    pct:3.68,  prem:51.02},
+      '10':{name:'Delaware',       pct:5.38,  prem:52.36},
+      '11':{name:'Washington D.C.',pct:7.37,  prem:22.92},
+      '12':{name:'Florida',        pct:2.34,  prem:66.91},
+      '13':{name:'Georgia',        pct:2.16,  prem:99.57},
+      '15':{name:'Hawaii',         pct:2.51,  prem:68.75},
+      '16':{name:'Idaho',          pct:2.76,  prem:71.33},
+      '17':{name:'Illinois',       pct:2.36,  prem:85.37},
+      '18':{name:'Indiana',        pct:1.82,  prem:100.68},
+      '19':{name:'Iowa',           pct:2.15,  prem:82.97},
+      '20':{name:'Kansas',         pct:2.13,  prem:84.13},
+      '21':{name:'Kentucky',       pct:1.63,  prem:83.85},
+      '22':{name:'Louisiana',      pct:1.61,  prem:89.21},
+      '23':{name:'Maine',          pct:2.83,  prem:73.23},
+      '24':{name:'Maryland',       pct:3.66,  prem:79.77},
+      '25':{name:'Massachusetts',  pct:4.73,  prem:68.70},
+      '26':{name:'Michigan',       pct:1.95,  prem:83.32},
+      '27':{name:'Minnesota',      pct:3.03,  prem:64.53},
+      '28':{name:'Mississippi',    pct:2.27,  prem:74.65},
+      '29':{name:'Missouri',       pct:2.05,  prem:75.81},
+      '30':{name:'Montana',        pct:2.37,  prem:88.32},
+      '31':{name:'Nebraska',       pct:2.92,  prem:53.40},
+      '32':{name:'Nevada',         pct:2.78,  prem:63.07},
+      '33':{name:'New Hampshire',  pct:1.54,  prem:100.51},
+      '34':{name:'New Jersey',     pct:3.65,  prem:49.15},
+      '35':{name:'New Mexico',     pct:2.71,  prem:65.47},
+      '36':{name:'New York',       pct:3.75,  prem:60.23},
+      '37':{name:'North Carolina', pct:2.80,  prem:94.51},
+      '38':{name:'North Dakota',   pct:4.05,  prem:40.82},
+      '39':{name:'Ohio',           pct:1.50,  prem:84.11},
+      '40':{name:'Oklahoma',       pct:1.75,  prem:74.35},
+      '41':{name:'Oregon',         pct:2.96,  prem:71.05},
+      '42':{name:'Pennsylvania',   pct:2.10,  prem:77.15},
+      '44':{name:'Rhode Island',   pct:3.59,  prem:52.94},
+      '45':{name:'South Carolina', pct:1.79,  prem:70.33},
+      '46':{name:'South Dakota',   pct:3.16,  prem:53.75},
+      '47':{name:'Tennessee',      pct:1.63,  prem:73.11},
+      '48':{name:'Texas',          pct:2.72,  prem:77.10},
+      '49':{name:'Utah',           pct:2.96,  prem:53.24},
+      '50':{name:'Vermont',        pct:3.14,  prem:69.48},
+      '51':{name:'Virginia',       pct:4.77,  prem:67.85},
+      '53':{name:'Washington',     pct:5.77,  prem:56.79},
+      '54':{name:'West Virginia',  pct:1.57,  prem:114.02},
+      '55':{name:'Wisconsin',      pct:2.00,  prem:59.35},
+      '56':{name:'Wyoming',        pct:3.92,  prem:53.19},
+    };
+
+    const pctVals  = Object.values(dataMap).map(d => d.pct);
+    const premVals = Object.values(dataMap).map(d => d.prem);
+    const pctMin = d3.min(pctVals), pctMax = d3.max(pctVals);
+    const premMin = d3.min(premVals), premMax = d3.max(premVals);
+    const colorPct  = d3.scaleSequential([pctMin, pctMax],   d3.interpolateBlues);
+    const colorPrem = d3.scaleSequential([premMin, premMax], d3.interpolateOranges);
+
+    document.getElementById('mapPctBar').style.background  = 'linear-gradient(90deg,#dbeafe,#1d4ed8)';
+    document.getElementById('mapPremBar').style.background = 'linear-gradient(90deg,#fff7ed,#c2410c)';
+    document.getElementById('mapPctMin').textContent  = pctMin.toFixed(1)+'%';
+    document.getElementById('mapPctMax').textContent  = pctMax.toFixed(1)+'%';
+    document.getElementById('mapPremMin').textContent = premMin.toFixed(1)+'%';
+    document.getElementById('mapPremMax').textContent = premMax.toFixed(1)+'%';
+
+    d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+      const states = topojson.feature(us, us.objects.states);
+      const FIPS_ABBR = {
+        '01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT','10':'DE',
+        '11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL','18':'IN','19':'IA',
+        '20':'KS','21':'KY','22':'LA','23':'ME','24':'MD','25':'MA','26':'MI','27':'MN',
+        '28':'MS','29':'MO','30':'MT','31':'NE','32':'NV','33':'NH','34':'NJ','35':'NM',
+        '36':'NY','37':'NC','38':'ND','39':'OH','40':'OK','41':'OR','42':'PA','44':'RI',
+        '45':'SC','46':'SD','47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA',
+        '54':'WV','55':'WI','56':'WY'
+      };
+
+      function drawMap(containerId, colorFn, valKey, labelFn) {
+        const container = document.getElementById(containerId);
+        const W = container.clientWidth || 600;
+        const H = Math.round(W * 0.62);
+        const projection = d3.geoAlbersUsa().fitSize([W, H], states);
+        const path = d3.geoPath().projection(projection);
+        const svg = d3.select('#'+containerId).append('svg')
+          .attr('viewBox', `0 0 ${W} ${H}`)
+          .attr('preserveAspectRatio', 'xMidYMid meet');
+        svg.selectAll('.state-path')
+          .data(states.features).join('path')
+          .attr('class', 'state-path').attr('d', path)
+          .attr('fill', d => { const r = dataMap[String(d.id).padStart(2,'0')]; return r ? colorFn(r[valKey]) : '#e2e8f0'; })
+          .on('mousemove', (event, d) => {
+            const r = dataMap[String(d.id).padStart(2,'0')];
+            tooltip.style.display = 'block';
+            tooltip.style.left = (event.clientX + 14)+'px';
+            tooltip.style.top  = (event.clientY - 28)+'px';
+            tooltip.innerHTML = r ? `<strong>${r.name}</strong>  ${labelFn(r[valKey])}` : '<strong>No data</strong>';
+          })
+          .on('mouseleave', () => { tooltip.style.display = 'none'; });
+
+        svg.selectAll('.state-label').data(states.features).join('g').attr('class','state-label')
+          .each(function(d) {
+            const fips = String(d.id).padStart(2,'0');
+            const r = dataMap[fips], abbr = FIPS_ABBR[fips];
+            if (!r || !abbr || fips === '11') return;
+            const c = path.centroid(d);
+            if (!c || isNaN(c[0])) return;
+            const fs = Math.max(6, Math.min(9, W / 80));
+            const val = r[valKey];
+            const norm = (val - d3.min(Object.values(dataMap).map(x => x[valKey]))) /
+                         (d3.max(Object.values(dataMap).map(x => x[valKey])) - d3.min(Object.values(dataMap).map(x => x[valKey])));
+            const tc = norm > 0.55 ? '#fff' : '#1e293b';
+            const g = d3.select(this);
+            g.append('text').attr('x',c[0]).attr('y',c[1]-fs*0.6).attr('text-anchor','middle').attr('font-size',fs).attr('font-family','DM Mono,monospace').attr('font-weight','600').attr('fill',tc).attr('pointer-events','none').text(abbr);
+            g.append('text').attr('x',c[0]).attr('y',c[1]+fs*0.8).attr('text-anchor','middle').attr('font-size',fs*0.9).attr('font-family','DM Mono,monospace').attr('fill',tc).attr('pointer-events','none').text(labelFn(r[valKey]));
+          });
+      }
+
+      drawMap('mapPct',     colorPct,  'pct',  v => v.toFixed(2)+'%');
+      drawMap('mapPremium', colorPrem, 'prem', v => v.toFixed(1)+'%');
+    }).catch(err => {
+      console.error('Map error:', err);
+      ['mapPct','mapPremium'].forEach(id => {
+        document.getElementById(id).innerHTML = '<p style="color:var(--text-muted);font-size:13px;padding:20px">Could not load map.</p>';
+      });
+    });
+  }
+  buildMaps();
+  </script>
+</body>
+</html>
