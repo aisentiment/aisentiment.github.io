@@ -919,7 +919,7 @@ function buildHeroChart() {
             }
           },
           scales:{
-            x:{ grid:{display:false}, ticks:{ autoSkip:true, maxTicksLimit:12, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
+            x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
             yInvest:{ type:'linear', position:'left',  beginAtZero:true, title:{display:true, text:'AI Investment', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:6,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf'}, border:{display:false} },
             yLayoff: { type:'linear', position:'right', beginAtZero:true, title:{display:true, text:'AI Layoff',     font:{size:10,family:'DM Mono, monospace'}, color:'#e05252'}, grid:{display:false},                                   ticks:{count:6,font:{size:10,family:'DM Mono, monospace'},color:'#e05252'}, border:{display:false} }
           }
