@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Voices — AI Sentiment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f4f6f8;
+      --surface2: #e9ecf0;
+      --border: #d0d5dd;
+      --accent: #5ba3d9;
+      --accent2: #3b8abf;
+      --text: #1e293b;
+      --text-muted: #7a8694;
+      --text-dim: #4a5568;
+      --red: #e05252;
+      --green: #38b36e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91,163,217,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,163,217,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
+
+    /* DROPDOWN NAV */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+    }
+    .nav-dropdown-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.04); }
+    .nav-dropdown-btn.open { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
+    .nav-chevron { flex-shrink: 0; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 256px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--accent);
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(30,41,59,0.1);
+      z-index: 200;
+      overflow: hidden;
+    }
+    .nav-dropdown-menu.open { display: block; }
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, color 0.15s, padding-left 0.15s;
+      border-bottom: 1px solid var(--surface2);
+      position: relative;
+    }
+    .nav-dropdown-item:last-child { border-bottom: none; }
+    .nav-dropdown-item:hover { background: rgba(91,163,217,0.05); color: var(--accent); padding-left: 24px; }
+    .nav-dropdown-item.active {
+      color: var(--accent2);
+      background: rgba(91,163,217,0.07);
+      font-weight: 700;
+      border-left: 3px solid var(--accent);
+      padding-left: 17px;
+    }
+
+    .page-hero {
+      position: relative;
+      z-index: 1;
+      padding: 56px 48px 48px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      color: #7a8694;
+      margin-bottom: 12px;
+    }
+
+    .page-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .page-hero p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 680px;
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 48px;
+    }
+
+    .comments-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      min-height: 600px;
+    }
+
+    /* ── FORM PANEL ── */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .form-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .field { margin-bottom: 24px; }
+
+    .field-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .star-row { display: flex; gap: 6px; margin-bottom: 6px; }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 30px;
+      color: var(--border);
+      cursor: pointer;
+      transition: color 0.15s, transform 0.15s;
+      padding: 0 2px;
+      line-height: 1;
+    }
+
+    .star-btn:hover { transform: scale(1.15); }
+    .star-btn.active { color: #EF9F27; }
+    .star-btn.hover-preview { color: #FAC775; }
+
+    .rating-hint { font-size: 12px; color: var(--text-muted); }
+
+    .location-select {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8694' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    .location-select:focus { border-color: var(--accent); }
+
+    .comment-input {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.2s;
+    }
+
+    .comment-input:focus { border-color: var(--accent); }
+    .comment-input::placeholder { color: var(--text-muted); }
+
+    .char-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.03em;
+      width: 100%;
+    }
+
+    .submit-btn:hover { background: var(--accent2); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .submit-msg {
+      font-size: 13px;
+      margin-top: 12px;
+      min-height: 20px;
+      text-align: center;
+    }
+
+    /* ── FEED PANEL ── */
+    /* ── FEED PANEL ── */
+    .feed-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feed-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      background: #fff;
+    }
+
+    .feed-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .feed-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .feed-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Star filter tabs */
+    .feed-filters {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 4px 11px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .filter-pill:hover  { border-color: var(--accent); color: var(--text); }
+    .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.07); font-weight: 500; }
+
+    /* Cards list */
+    .feed-list {
+      flex: 1;
+      padding: 14px 14px 0;
+      min-height: 0;
+    }
+
+    /* Individual card */
+    /* Admin mode */
+    .admin-bar {
+      display: none;
+      padding: 8px 12px;
+      background: rgba(224,82,82,0.06);
+      border: 1px solid rgba(224,82,82,0.2);
+      border-radius: 3px;
+      margin: 0 0 10px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--red);
+    }
+    .admin-bar.visible { display: flex; }
+    .admin-bar-label { font-weight: 600; letter-spacing: 0.05em; }
+    .admin-exit-btn {
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 3px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .admin-exit-btn:hover { background: var(--red); color: #fff; }
+
+    .delete-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(224,82,82,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 3px 9px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .delete-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
+    body.admin-mode .delete-btn { display: inline-block; }
+
+    /* AI tools toggle */
+    .ai-toggle-group { display: flex; gap: 8px; }
+
+    .ai-toggle-btn {
+      flex: 1;
+      padding: 9px 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.18s;
+    }
+
+    .ai-toggle-btn:hover { border-color: var(--accent2); color: var(--text); }
+
+    /* Almost Everyday — green */
+    .ai-toggle-btn.selected-yes       { border-color: #38b36e; color: #fff; background: #38b36e; font-weight: 600; }
+    /* Never — red */
+    .ai-toggle-btn.selected-no        { border-color: #e05252; color: #fff; background: #e05252; font-weight: 600; }
+    /* Sometimes — blue */
+    .ai-toggle-btn.selected-sometimes { border-color: #5ba3d9; color: #fff; background: #5ba3d9; font-weight: 600; }
+
+    .opinion-card {
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-bottom: 8px;
+      border-radius: 3px;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      position: relative;
+    }
+    .opinion-card:hover {
+      border-color: rgba(91,163,217,0.5);
+      box-shadow: 0 2px 12px rgba(91,163,217,0.08);
+    }
+
+    /* Rating bar accent on left edge */
+    .opinion-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      border-radius: 3px 0 0 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+    .opinion-card:hover::before { opacity: 1; }
+
+    .opinion-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .opinion-top-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .opinion-stars {
+      color: #EF9F27;
+      font-size: 14px;
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    .opinion-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .badge-ai-tools { background: rgba(56,179,110,0.08); color: #1a6e42; border: 1px solid rgba(56,179,110,0.25); }
+    .badge-employer { background: rgba(93,202,165,.12); color: #085041; border: 1px solid rgba(93,202,165,.3); }
+    .badge-location { background: rgba(91,163,217,.1);  color: var(--accent2); border: 1px solid rgba(91,163,217,.25); }
+
+    .opinion-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .opinion-text {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .feed-pagination {
+      padding: 12px 14px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 6px;
+      background: var(--surface);
+    }
+
+    .feed-page-info {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .feed-page-btns { display: flex; gap: 4px; }
+
+    .feed-page-btn {
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .feed-page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .feed-page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .feed-empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: #1e293b;
+      color: rgba(255,255,255,0.55);
+      padding: 0;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+      padding: 40px 48px;
+      border-top: 3px solid var(--accent);
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 6px; }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .footer-right-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-email:hover { color: #fff; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 1024px) {
+      .comments-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav, .page-hero, .main-content, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn" id="navBtn" onclick="toggleNav(event)">
+        <svg class="nav-chevron" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="13" x2="20" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown-menu" id="navMenu">
+        <a href="/" class="nav-dropdown-item">Home</a>
+        <a href="/news/" class="nav-dropdown-item">Company AI News</a>
+        <a href="/occupation/" class="nav-dropdown-item">Occupation AI Sentiment</a>
+        <a href="/company/" class="nav-dropdown-item">Company AI Sentiment</a>
+        <a href="/comments/" class="nav-dropdown-item active">Employee AI Comment</a>
+      </div>
+    </div>
+  </nav>
+  <script>
+    function toggleNav(e) {
+      e.stopPropagation();
+      document.getElementById('navBtn').classList.toggle('open');
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', () => {
+      document.getElementById('navBtn').classList.remove('open');
+      document.getElementById('navMenu').classList.remove('open');
+    });
+  </script>
+
+  <section class="page-hero">
+    <h1><em>Community</em> Voices</h1>
+    <p>How is AI affecting your workplace? Share your experience anonymously — rate your satisfaction with AI at your firm and tell us about your concerns, hopes, or observations.</p>
+  </section>
+
+  <div class="main-content">
+    <div class="comments-layout">
+
+      <div class="form-panel">
+        <div class="form-title">Share your experience</div>
+        <div class="form-desc">All submissions are completely anonymous.</div>
+
+        <div class="field">
+          <div class="field-label">AI satisfaction at your firm</div>
+          <div class="star-row" id="starRow">
+            <button class="star-btn" data-val="1">★</button>
+            <button class="star-btn" data-val="2">★</button>
+            <button class="star-btn" data-val="3">★</button>
+            <button class="star-btn" data-val="4">★</button>
+            <button class="star-btn" data-val="5">★</button>
+          </div>
+          <div class="rating-hint" id="ratingHint">Select 1 (very dissatisfied) to 5 (very satisfied)</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your employer</div>
+          <input class="location-select" id="employerInput" type="text" placeholder="e.g. Google, JPMorgan, a startup..." style="background-image:none;cursor:text">
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your location</div>
+          <select class="location-select" id="locationSelect">
+            <option value="">Select a region...</option>
+            <option value="US - Northeast">US — Northeast</option>
+            <option value="US - Southeast">US — Southeast</option>
+            <option value="US - Midwest">US — Midwest</option>
+            <option value="US - Southwest">US — Southwest</option>
+            <option value="US - West">US — West</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="Europe">Europe</option>
+            <option value="Asia - East">Asia — East</option>
+            <option value="Asia - South">Asia — South</option>
+            <option value="Asia - Southeast">Asia — Southeast</option>
+            <option value="Middle East">Middle East</option>
+            <option value="Africa">Africa</option>
+            <option value="Latin America">Latin America</option>
+            <option value="Oceania">Oceania</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Do you use AI tools in your work?</div>
+          <div class="ai-toggle-group" id="aiToolsGroup">
+            <button type="button" class="ai-toggle-btn" data-val="Almost Everyday" onclick="selectAiTools(this)">Almost Everyday</button>
+            <button type="button" class="ai-toggle-btn" data-val="Sometimes" onclick="selectAiTools(this)">Sometimes</button>
+            <button type="button" class="ai-toggle-btn" data-val="Never"     onclick="selectAiTools(this)">Never</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your thoughts on AI use and job concerns</div>
+          <textarea class="comment-input" id="commentInput" rows="5"
+            placeholder="e.g. AI tools have improved my productivity, but I worry about..."
+            oninput="updateCharCount()"></textarea>
+          <div class="char-count"><span id="charCount">0</span> / 1000</div>
+        </div>
+
+        <button class="submit-btn" onclick="submitOpinion()">Submit anonymously</button>
+        <!-- Honeypot: hidden from humans, filled by bots -->
+        <input type="text" id="honeypot" name="website" style="display:none;position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+        <div class="submit-msg" id="submitMsg"></div>
+      </div>
+
+      <div class="feed-panel">
+        <div class="feed-header">
+          <span class="feed-title">Recent Responses</span>
+          <div class="feed-header-right">
+            <span class="feed-count" id="feedCount">0 responses</span>
+
+          </div>
+        </div>
+        <div class="admin-bar" id="adminBar">
+          <span class="admin-bar-label">🔑 Admin mode — click ✕ to delete a response</span>
+          <button class="admin-exit-btn" onclick="toggleAdminMode()">Exit admin</button>
+        </div>
+        <div class="feed-filters">
+          <button class="filter-pill active" onclick="filterFeed('all', this)">All</button>
+          <button class="filter-pill" onclick="filterFeed(5, this)">★★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(4, this)">★★★★</button>
+          <button class="filter-pill" onclick="filterFeed(3, this)">★★★</button>
+          <button class="filter-pill" onclick="filterFeed(2, this)">★★</button>
+          <button class="filter-pill" onclick="filterFeed(1, this)">★</button>
+        </div>
+        <div class="feed-list" id="feedList">
+          <div class="feed-empty" id="feedEmpty">No responses yet — be the first to share your experience with AI in the workplace.</div>
+        </div>
+        <div class="feed-pagination" id="feedPagination" style="display:none">
+          <span class="feed-page-info" id="feedPageInfo">Page 1 of 1</span>
+          <div class="feed-page-btns">
+            <button class="feed-page-btn" id="feedPrevBtn" onclick="changeFeedPage(-1)" disabled>← Prev</button>
+            <button class="feed-page-btn" id="feedNextBtn" onclick="changeFeedPage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="about">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">AI Sentiment</div>
+      </div>
+      <div class="footer-right-block">
+        <a href="mailto:support@ai-sentiment.com" class="footer-email">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+          support@ai-sentiment.com
+        </a>
+        <div class="footer-copy">© 2026 AI Sentiment · For research purposes</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ════════════════════════════════════════════════════════
+    //  GOOGLE SHEETS CONFIG
+    //  1. In your Google Sheet: Extensions → Apps Script
+    //  2. Paste the doPost/doGet code (see README)
+    //  3. Deploy as Web App → Anyone can access
+    //  4. Paste the deployed URL below
+    // ════════════════════════════════════════════════════════
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz068vtOwj-rjFPDbHK_Y-h8bbW1VZj2zhwJYx2CfMszN2T0hbOP0zN_dtre200UoY6QQ/exec';
+
+    let selectedRating = 0;
+    let opinions = [];       // loaded from Google Sheet
+    let currentFilter = 'all';
+
+    // ── Star rating UI ──
+    const starBtns = document.querySelectorAll('.star-btn');
+    const ratingHint = document.getElementById('ratingHint');
+    const hints = ['','Very dissatisfied','Dissatisfied','Neutral','Satisfied','Very satisfied'];
+
+    starBtns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        const val = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('hover-preview', +b.dataset.val <= val && +b.dataset.val > selectedRating);
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        starBtns.forEach(b => b.classList.remove('hover-preview'));
+      });
+      btn.addEventListener('click', () => {
+        selectedRating = +btn.dataset.val;
+        starBtns.forEach(b => {
+          b.classList.toggle('active', +b.dataset.val <= selectedRating);
+          b.classList.remove('hover-preview');
+        });
+        ratingHint.textContent = hints[selectedRating];
+      });
+    });
+
+    function updateCharCount() {
+      const len = document.getElementById('commentInput').value.length;
+      const el = document.getElementById('charCount');
+      el.textContent = len;
+      el.style.color = len > 1000 ? 'var(--red)' : 'var(--text-muted)';
+    }
+
+
+    function showMsg(el, text, success) {
+      el.style.color = success ? 'var(--green)' : 'var(--red)';
+      el.textContent = text;
+      if (success) setTimeout(() => { el.textContent = ''; }, 5000);
+    }
+
+    function resetForm() {
+      selectedRating = 0;
+      starBtns.forEach(b => b.classList.remove('active','hover-preview'));
+      ratingHint.textContent = 'Select 1 (very dissatisfied) to 5 (very satisfied)';
+      document.getElementById('commentInput').value = '';
+      document.getElementById('locationSelect').value = '';
+      document.getElementById('employerInput').value = '';
+      document.getElementById('charCount').textContent = '0';
+      document.querySelectorAll('.ai-toggle-btn').forEach(b => { b.className = 'ai-toggle-btn'; });
+    }
+
+    // ── Feed pagination state ──
+    const FEED_PAGE_SIZE = 10;
+    let feedPage = 1;
+
+    // ── Filter feed by star rating ──
+    function filterFeed(val, btn) {
+      currentFilter = val;
+      feedPage = 1;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFeed();
+    }
+
+    function changeFeedPage(dir) {
+      const filtered = currentFilter === 'all' ? opinions : opinions.filter(o => +o.rating === currentFilter);
+      const total = Math.ceil(filtered.length / FEED_PAGE_SIZE);
+      feedPage = Math.max(1, Math.min(total, feedPage + dir));
+      renderFeed();
+      document.querySelector('.feed-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Render opinions with pagination ──
+    function renderFeed() {
+      const list    = document.getElementById('feedList');
+      const countEl = document.getElementById('feedCount');
+      const pagDiv  = document.getElementById('feedPagination');
+      const pageInfo= document.getElementById('feedPageInfo');
+      const prevBtn = document.getElementById('feedPrevBtn');
+      const nextBtn = document.getElementById('feedNextBtn');
+
+      const filtered = currentFilter === 'all'
+        ? opinions
+        : opinions.filter(o => +o.rating === currentFilter);
+
+      countEl.textContent = opinions.length + ' response' + (opinions.length !== 1 ? 's' : '');
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="feed-empty">${
+          opinions.length === 0
+            ? 'No responses yet — be the first to share your experience.'
+            : 'No responses match this filter.'
+        }</div>`;
+        pagDiv.style.display = 'none';
+        return;
+      }
+
+      const totalPages = Math.ceil(filtered.length / FEED_PAGE_SIZE);
+      feedPage = Math.max(1, Math.min(totalPages, feedPage));
+      const start = (feedPage - 1) * FEED_PAGE_SIZE;
+      const page  = filtered.slice(start, start + FEED_PAGE_SIZE);
+
+      list.innerHTML = page.map((op, idx) => {
+        const r       = +op.rating || 0;
+        const stars   = '★'.repeat(r) + '☆'.repeat(5 - r);
+        const d       = new Date(op.timestamp || op.time);
+        const timeStr = isNaN(d) ? '' :
+          d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+        const safe    = (op.comment||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const emp     = (op.employer||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const num     = start + idx + 1;
+        const locBadge    = op.location  ? `<span class="opinion-badge badge-location">${op.location}</span>` : '';
+        const aiToolsBadge = op.ai_tools ? `<span class="opinion-badge badge-ai-tools">AI: ${op.ai_tools}</span>` : '';
+        const empBadge = emp         ? `<span class="opinion-badge badge-employer">${emp}</span>` : '';
+        const globalIdx = opinions.indexOf(op);
+        return `<div class="opinion-card">
+          <div class="opinion-top">
+            <div class="opinion-top-left">
+              <span style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;min-width:24px">#${num}</span>
+              <span class="opinion-stars">${stars}</span>
+              ${empBadge}${locBadge}${aiToolsBadge}
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="opinion-time">${timeStr}</span>
+              <button class="delete-btn" onclick="deleteOpinion(${globalIdx})">✕</button>
+            </div>
+          </div>
+          <div class="opinion-text">${safe}</div>
+        </div>`;
+      }).join('');
+
+      // Pagination controls
+      if (totalPages > 1) {
+        pagDiv.style.display  = 'flex';
+        pageInfo.textContent  = `Page ${feedPage} of ${totalPages}  ·  ${filtered.length} responses`;
+        prevBtn.disabled      = feedPage === 1;
+        nextBtn.disabled      = feedPage === totalPages;
+      } else {
+        pagDiv.style.display = 'none';
+      }
+    }
+
+    // ── Load all existing responses from Google Sheet on page load ──
+    // ── localStorage cache key ──
+    const LS_KEY = 'ailmi_opinions';
+
+    function saveLocal(ops) {
+      try { localStorage.setItem(LS_KEY, JSON.stringify(ops)); } catch(e) {}
+    }
+
+    function loadLocal() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch(e) { return []; }
+    }
+
+    // ── JSONP loader — bypasses CORS entirely ──
+    function fetchViaJSONP(url) {
+      return new Promise((resolve, reject) => {
+        const cbName = 'ailmi_cb_' + Date.now();
+        const script = document.createElement('script');
+        const timer  = setTimeout(() => {
+          cleanup();
+          reject(new Error('JSONP timeout'));
+        }, 8000);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = function(data) {
+          cleanup();
+          resolve(data);
+        };
+
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+        script.onerror = () => { cleanup(); reject(new Error('JSONP load error')); };
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadOpinions() {
+      const scroll = document.getElementById('feedScroll');
+
+      // Always show cached local submissions immediately
+      const local = loadLocal();
+      if (local.length > 0) {
+        opinions = local;
+        renderFeed();
+      }
+
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        if (local.length === 0) renderFeed();
+        return;
+      }
+
+      if (local.length === 0) {
+        scroll.innerHTML = '<div class="feed-empty" style="opacity:.5">Loading responses…</div>';
+      }
+
+      try {
+        // Try JSONP first (bypasses CORS redirect issues)
+        const data = await fetchViaJSONP(APPS_SCRIPT_URL);
+        const remote = Array.isArray(data) ? data : [];
+
+        // Merge: remote responses + any local-only ones not yet in remote
+        const remoteKeys = new Set(remote.map(r => r.timestamp));
+        const localOnly  = loadLocal().filter(r => !remoteKeys.has(r.timestamp));
+        opinions = [...localOnly, ...remote].sort((a, b) =>
+          new Date(b.timestamp || b.time) - new Date(a.timestamp || a.time)
+        );
+
+        // Update local cache with merged list
+        saveLocal(opinions);
+      } catch (err) {
+        // JSONP failed — fall back to whatever is in localStorage
+        if (opinions.length === 0) {
+          scroll.innerHTML = `<div class="feed-empty" style="color:var(--text-muted);font-size:13px">
+            Could not load responses from sheet.<br>
+            <span style="font-size:11px;opacity:.6">Check your Apps Script URL and deployment.</span>
+          </div>`;
+          return;
+        }
+      }
+
+      renderFeed();
+    }
+
+    // ── Submit → POST to Apps Script + save to localStorage ──
+    async function submitOpinion() {
+      // Intercept after successful submit to persist locally
+      const comment  = document.getElementById('commentInput').value.trim();
+      const location = document.getElementById('locationSelect').value;
+      const employer = document.getElementById('employerInput').value.trim();
+      const msg      = document.getElementById('submitMsg');
+      const btn      = document.querySelector('.submit-btn');
+
+      if (selectedRating === 0)    { showMsg(msg, 'Please select a rating (1–5 stars).', false); return; }
+      if (!employer)               { showMsg(msg, 'Please enter your employer name.', false); return; }
+      if (!location)               { showMsg(msg, 'Please select your location.', false); return; }
+      if (comment.length === 0)    { showMsg(msg, 'Please share your thoughts before submitting.', false); return; }
+      if (comment.length > 1000)   { showMsg(msg, 'Please keep your comment under 1000 characters.', false); return; }
+
+      // Honeypot check — bots fill this hidden field, humans don't
+      if (document.getElementById('honeypot').value !== '') return;
+
+      // Rate limiting — max 3 submissions per 10 minutes per browser
+      const RATE_KEY = 'ailmi_submissions';
+      const RATE_LIMIT = 3;
+      const RATE_WINDOW = 10 * 60 * 1000; // 10 minutes
+      const now = Date.now();
+      let submits = [];
+      try { submits = JSON.parse(localStorage.getItem(RATE_KEY) || '[]'); } catch(e) {}
+      submits = submits.filter(t => now - t < RATE_WINDOW);
+      if (submits.length >= RATE_LIMIT) {
+        const wait = Math.ceil((RATE_WINDOW - (now - submits[0])) / 60000);
+        showMsg(msg, `Too many submissions. Please wait ${wait} minute${wait !== 1 ? 's' : ''} before trying again.`, false);
+        return;
+      }
+
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        showMsg(msg, '⚠ Apps Script URL not configured — see comments in the code.', false); return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      const aiTools = document.querySelector('#aiToolsGroup .ai-toggle-btn.selected-yes, #aiToolsGroup .ai-toggle-btn.selected-no, #aiToolsGroup .ai-toggle-btn[class*="selected"]');
+      const payload = {
+        timestamp: new Date().toISOString(),
+        rating:    selectedRating,
+        employer:  employer,
+        location:  location,
+        ai_tools:  aiTools ? aiTools.dataset.val : '',
+        comment:   comment
+      };
+
+      // Save to localStorage immediately so it survives refresh
+      const cached = loadLocal();
+      cached.unshift(payload);
+      saveLocal(cached);
+
+      // Record this submission for rate limiting
+      try {
+        let submits = JSON.parse(localStorage.getItem('ailmi_submissions') || '[]');
+        submits.push(Date.now());
+        localStorage.setItem('ailmi_submissions', JSON.stringify(submits));
+      } catch(e) {}
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode:   'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body:   JSON.stringify(payload)
+        });
+        opinions.unshift(payload);
+        renderFeed();
+        resetForm();
+        showMsg(msg, '✓ Thank you — your response has been recorded anonymously.', true);
+      } catch (err) {
+        showMsg(msg, 'Submission failed — please try again.', false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit anonymously';
+      }
+    }
+
+    // AI tools toggle
+    function selectAiTools(btn) {
+      document.querySelectorAll('.ai-toggle-btn').forEach(b => {
+        b.className = 'ai-toggle-btn';
+      });
+      const cls = btn.dataset.val === 'Almost Everyday' ? 'selected-yes'       :
+                  btn.dataset.val === 'Never'          ? 'selected-no'        :
+                                                         'selected-sometimes';
+      btn.classList.add(cls);
+    }
+
+    let adminMode = false;
+
+    function toggleAdminMode() {
+      adminMode = !adminMode;
+      document.body.classList.toggle('admin-mode', adminMode);
+      document.getElementById('adminBar').classList.toggle('visible', adminMode);
+    }
+
+    function deleteOpinion(idx) {
+      if (!adminMode) return;
+      if (!confirm('Delete this response?')) return;
+      opinions.splice(idx, 1);
+      saveLocal(opinions);
+      renderFeed();
+      // Note: also delete from Google Sheet manually if needed
+    }
+
+    loadOpinions();
+  </script>
+
+  <!-- AI Sentiment Chatbot Widget -->
+
+
+</body>
+</html>
