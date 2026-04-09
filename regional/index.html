@@ -65,9 +65,9 @@
     .reg-table td { padding: 13px 20px; vertical-align: middle; font-family: 'DM Mono', monospace; }
     .reg-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
     .td-state { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); white-space: nowrap; }
-    .td-num { font-size: 13px; color: var(--text-dim); text-align: right; }
-    .td-pct  { font-size: 13px; color: var(--text-dim); text-align: right; }
-    .td-prem { font-size: 13px; color: var(--text-dim); text-align: right; }
+    .td-num   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
+    .td-pct   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
+    .td-prem  { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
     .reg-pagination { padding: 16px 0 0; display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
     .page-btn { padding: 8px 16px; font-size: 13px; font-family: 'DM Mono', monospace; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 4px; transition: all 0.18s; }
     .page-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(91,163,217,0.08); }
@@ -178,13 +178,13 @@
         <thead>
           <tr>
             <th onclick="sortTable('state')">State</th>
-            <th onclick="sortTable('year')">Year</th>
-            <th onclick="sortTable('total_jobs')">Total Jobs</th>
-            <th onclick="sortTable('ai_jobs')">AI Jobs</th>
-            <th onclick="sortTable('avg_salary_ai_w')">Avg AI Salary</th>
-            <th onclick="sortTable('avg_salary_nonai_w')">Avg Non-AI Salary</th>
-            <th onclick="sortTable('ai_job_pct')">AI Job %</th>
-            <th onclick="sortTable('salary_premium')">Salary Premium</th>
+            <th onclick="sortTable('year')" style="text-align:right">Year</th>
+            <th onclick="sortTable('total_jobs')" style="text-align:right">Total Jobs</th>
+            <th onclick="sortTable('ai_jobs')" style="text-align:right">AI Jobs</th>
+            <th onclick="sortTable('avg_salary_ai_w')" style="text-align:right">Avg AI Salary</th>
+            <th onclick="sortTable('avg_salary_nonai_w')" style="text-align:right">Avg Non-AI Salary</th>
+            <th onclick="sortTable('ai_job_pct')" style="text-align:right">AI Job %</th>
+            <th onclick="sortTable('salary_premium')" style="text-align:right">Salary Premium</th>
           </tr>
         </thead>
         <tbody id="regBody"></tbody>
@@ -218,7 +218,7 @@
   let allData = [], filtered = [], sortCol = 'state', sortDir = 'asc', page = 1;
 
   function fmt(n)       { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
-  function fmtSalary(n) { return '$' + Number(String(n).replace(/,/g,'')).toLocaleString(); }
+  function fmtSalary(n) { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
   function fmtPct(n)    { return parseFloat(n).toFixed(2) + '%'; }
   function fmtPrem(n)   { return parseFloat(n).toFixed(1) + '%'; }
 
