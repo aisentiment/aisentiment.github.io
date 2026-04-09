@@ -33,12 +33,6 @@
     .nav-dropdown-item:hover { background: rgba(91,163,217,0.05); color: var(--accent); padding-left: 24px; }
     .nav-dropdown-item.active { color: var(--accent2); background: rgba(91,163,217,0.07); font-weight: 700; border-left: 3px solid var(--accent); padding-left: 17px; }
 
-    /* PAGE HERO */
-    .page-hero { position: relative; z-index: 1; padding: 56px 48px 48px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%); }
-    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: #7a8694; margin-bottom: 12px; }
-    .page-hero h1 em { font-style: normal; color: var(--accent); }
-    .page-hero p { font-size: 15px; color: var(--text-dim); max-width: 580px; line-height: 1.75; }
-
     /* MAIN CONTENT */
     .main-content { position: relative; z-index: 1; padding: 48px 48px 64px; }
 
@@ -49,7 +43,37 @@
     .section-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
     .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
 
-    /* MAPS */
+    /* TABLE */
+    .filter-bar { padding: 24px 0 16px; display: flex; gap: 10px; align-items: flex-end; }
+    .filter-input { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 9px 14px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); outline: none; transition: border-color 0.2s; width: 260px; }
+    .filter-input:focus { border-color: var(--accent); }
+    .filter-input::placeholder { color: var(--text-muted); }
+    .occ-stats { font-size: 13px; color: var(--text-muted); margin-left: auto; font-family: 'DM Mono', monospace; }
+    .occ-stats span { color: var(--accent2); }
+    .reg-table-wrap { overflow-x: auto; margin-top: 8px; }
+    .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
+    .reg-table thead tr { background: #1e293b; }
+    .reg-table th { padding: 15px 20px; text-align: left; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-family: 'DM Mono', monospace; font-weight: 500; white-space: nowrap; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; position: relative; }
+    .reg-table th + th { border-left: 1px solid rgba(255,255,255,0.07); }
+    .reg-table th:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
+    .reg-table th.sorted { color: #7ec8f0; }
+    .reg-table th.sorted::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+    .reg-table tbody tr { transition: background 0.15s; border-bottom: 1px solid rgba(0,0,0,0.045); background: #fff; }
+    .reg-table tbody tr:nth-child(even) { background: #f8fafc; }
+    .reg-table tbody tr:last-child td { border-bottom: none; }
+    .reg-table tbody tr:hover { box-shadow: inset 4px 0 0 var(--accent), 0 2px 8px rgba(91,163,217,0.1); filter: brightness(0.97); position: relative; z-index: 1; }
+    .reg-table td { padding: 13px 20px; vertical-align: middle; font-family: 'DM Mono', monospace; }
+    .reg-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
+    .td-state { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); white-space: nowrap; }
+    .td-num { font-size: 13px; color: var(--text-dim); text-align: right; }
+    .td-pct { font-size: 13px; color: var(--accent2); font-weight: 600; text-align: right; }
+    .td-prem { font-size: 13px; color: #38b36e; font-weight: 600; text-align: right; }
+    .reg-pagination { padding: 16px 0 0; display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+    .page-btn { padding: 8px 16px; font-size: 13px; font-family: 'DM Mono', monospace; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 4px; transition: all 0.18s; }
+    .page-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(91,163,217,0.08); }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-info { font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .data-note { text-align: right; font-size: 12px; color: var(--text-muted); margin-top: 10px; font-family: 'DM Mono', monospace; }
     .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
     .map-card { background: #fff; border: 1px solid #dde3ec; border-radius: 8px; padding: 20px 22px 16px; box-shadow: 0 2px 20px rgba(55,138,221,0.07); position: relative; overflow: hidden; }
     .map-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%); }
@@ -111,11 +135,6 @@
     });
   </script>
 
-  <section class="page-hero">
-    <h1><em>Regional</em> AI Sentiment</h1>
-    <p>State-level analysis of AI job market trends across the United States — tracking AI job share and salary premium by state.</p>
-  </section>
-
   <div class="main-content">
     <div class="section-header">
       <div class="section-header-inner">
@@ -149,6 +168,34 @@
     </div>
     <div style="text-align:right;font-size:12px;color:var(--text-muted);margin-top:12px;font-family:'DM Mono',monospace">Data as of 2025</div>
     <div class="map-tooltip" id="mapTooltip"></div>
+
+    <!-- TABLE -->
+    <div style="display:flex;justify-content:flex-end;padding:20px 0 8px">
+      <div class="occ-stats" id="regStats"></div>
+    </div>
+    <div class="reg-table-wrap">
+      <table class="reg-table" id="regTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('state')">State</th>
+            <th onclick="sortTable('year')">Year</th>
+            <th onclick="sortTable('total_jobs')">Total Jobs</th>
+            <th onclick="sortTable('ai_jobs')">AI Jobs</th>
+            <th onclick="sortTable('avg_salary_ai_w')">Avg AI Salary</th>
+            <th onclick="sortTable('avg_salary_nonai_w')">Avg Non-AI Salary</th>
+            <th onclick="sortTable('ai_job_pct')">AI Job %</th>
+            <th onclick="sortTable('salary_premium')">Salary Premium</th>
+          </tr>
+        </thead>
+        <tbody id="regBody"></tbody>
+      </table>
+    </div>
+    <div class="reg-pagination" id="regPagination">
+      <span class="page-info" id="regPageInfo"></span>
+      <button class="page-btn" id="regPrev" onclick="changePage(-1)" disabled>← Prev</button>
+      <button class="page-btn" id="regNext" onclick="changePage(1)">Next →</button>
+    </div>
+    <div class="data-note">Data as of 2025</div>
   </div>
 
   <footer id="about">
@@ -166,64 +213,123 @@
     </div>
   </footer>
 
+  <script>
+  const PAGE_SIZE = 15;
+  let allData = [], filtered = [], sortCol = 'state', sortDir = 'asc', page = 1;
+
+  function fmt(n)       { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
+  function fmtSalary(n) { return '$' + Number(String(n).replace(/,/g,'')).toLocaleString(); }
+  function fmtPct(n)    { return parseFloat(n).toFixed(2) + '%'; }
+  function fmtPrem(n)   { return parseFloat(n).toFixed(1) + '%'; }
+
+  function parseCSV(text) {
+    const lines = text.trim().split('\n').map(l => l.replace(/\r$/,''));
+    const sep = lines[0].indexOf('\t') > -1 ? '\t' : ',';
+    const raw = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+    return lines.slice(1).filter(l => l.trim()).map(line => {
+      const cols = line.split(sep).map(c => c.trim().replace(/^"|"$/g,''));
+      const obj = {};
+      raw.forEach((h, i) => obj[h] = (cols[i]||'').replace(/,/g,''));
+      return obj;
+    }).filter(r => r.state && r.state.toLowerCase() !== 'empty');
+  }
+
+  function renderTable() {
+    const total = filtered.length;
+    const pages = Math.ceil(total / PAGE_SIZE);
+    const start = (page - 1) * PAGE_SIZE;
+    const rows  = filtered.slice(start, start + PAGE_SIZE);
+    document.getElementById('regStats').innerHTML = `Showing <span>${rows.length}</span> of <span>${total}</span> states`;
+    document.getElementById('regPageInfo').textContent = `Page ${page} of ${Math.max(1,pages)}`;
+    document.getElementById('regPrev').disabled = page <= 1;
+    document.getElementById('regNext').disabled = page >= pages;
+    document.getElementById('regBody').innerHTML = rows.map(r => `
+      <tr>
+        <td class="td-state">${r.state}</td>
+        <td class="td-num">${r.year || '2025'}</td>
+        <td class="td-num">${fmt(r.total_jobs)}</td>
+        <td class="td-num">${fmt(r.ai_jobs)}</td>
+        <td class="td-num">${fmtSalary(r.avg_salary_ai_w)}</td>
+        <td class="td-num">${fmtSalary(r.avg_salary_nonai_w)}</td>
+        <td class="td-pct">${fmtPct(r.ai_job_pct)}</td>
+        <td class="td-prem">${fmtPrem(r.salary_premium)}</td>
+      </tr>`).join('');
+  }
+
+  function sortTable(col) {
+    if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortCol = col; sortDir = col === 'state' ? 'asc' : 'desc'; }
+    const applySort = arr => arr.sort((a,b) => {
+      const av = isNaN(+a[col]) ? a[col] : +a[col];
+      const bv = isNaN(+b[col]) ? b[col] : +b[col];
+      const cmp = typeof av === 'string' ? av.localeCompare(bv) : av - bv;
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+    applySort(filtered);
+    page = 1; renderTable();
+  }
+
+  function changePage(dir) { page += dir; renderTable(); }
+
+  // State name → FIPS
+  const NAME_FIPS = {
+    'alabama':'01','alaska':'02','arizona':'04','arkansas':'05','california':'06',
+    'colorado':'08','connecticut':'09','delaware':'10','florida':'12','georgia':'13',
+    'hawaii':'15','idaho':'16','illinois':'17','indiana':'18','iowa':'19','kansas':'20',
+    'kentucky':'21','louisiana':'22','maine':'23','maryland':'24','massachusetts':'25',
+    'michigan':'26','minnesota':'27','mississippi':'28','missouri':'29','montana':'30',
+    'nebraska':'31','nevada':'32','new hampshire':'33','new jersey':'34','new mexico':'35',
+    'new york':'36','north carolina':'37','north dakota':'38','ohio':'39','oklahoma':'40',
+    'oregon':'41','pennsylvania':'42','rhode island':'44','south carolina':'45',
+    'south dakota':'46','tennessee':'47','texas':'48','utah':'49','vermont':'50',
+    'virginia':'51','washington':'53','west virginia':'54','wisconsin':'55','wyoming':'56',
+    'washington d.c.':'11','district of columbia':'11','washington, d.c.':'11'
+  };
+
+  fetch('/data/ai_job_metrics_by_state_year_2025.csv')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(text => {
+      allData = parseCSV(text);
+      filtered = [...allData];
+      renderTable();
+      buildMaps(allData);
+    })
+    .catch(err => {
+      document.getElementById('regBody').innerHTML =
+        `<tr><td colspan="8" style="padding:40px;text-align:center;color:var(--text-muted)">Could not load data/ai_job_metrics_by_state_year_2025.csv</td></tr>`;
+      console.error(err);
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
   <script>
-  function buildMaps() {
+  function buildMaps(csvRows) {
     const tooltip = document.getElementById('mapTooltip');
-    const dataMap = {
-      '01':{name:'Alabama',        pct:1.54,  prem:104.09},
-      '02':{name:'Alaska',         pct:2.79,  prem:69.27},
-      '04':{name:'Arizona',        pct:2.19,  prem:63.51},
-      '05':{name:'Arkansas',       pct:2.04,  prem:85.06},
-      '06':{name:'California',     pct:5.84,  prem:58.15},
-      '08':{name:'Colorado',       pct:3.04,  prem:60.76},
-      '09':{name:'Connecticut',    pct:3.68,  prem:51.02},
-      '10':{name:'Delaware',       pct:5.38,  prem:52.36},
-      '11':{name:'Washington D.C.',pct:7.37,  prem:22.92},
-      '12':{name:'Florida',        pct:2.34,  prem:66.91},
-      '13':{name:'Georgia',        pct:2.16,  prem:99.57},
-      '15':{name:'Hawaii',         pct:2.51,  prem:68.75},
-      '16':{name:'Idaho',          pct:2.76,  prem:71.33},
-      '17':{name:'Illinois',       pct:2.36,  prem:85.37},
-      '18':{name:'Indiana',        pct:1.82,  prem:100.68},
-      '19':{name:'Iowa',           pct:2.15,  prem:82.97},
-      '20':{name:'Kansas',         pct:2.13,  prem:84.13},
-      '21':{name:'Kentucky',       pct:1.63,  prem:83.85},
-      '22':{name:'Louisiana',      pct:1.61,  prem:89.21},
-      '23':{name:'Maine',          pct:2.83,  prem:73.23},
-      '24':{name:'Maryland',       pct:3.66,  prem:79.77},
-      '25':{name:'Massachusetts',  pct:4.73,  prem:68.70},
-      '26':{name:'Michigan',       pct:1.95,  prem:83.32},
-      '27':{name:'Minnesota',      pct:3.03,  prem:64.53},
-      '28':{name:'Mississippi',    pct:2.27,  prem:74.65},
-      '29':{name:'Missouri',       pct:2.05,  prem:75.81},
-      '30':{name:'Montana',        pct:2.37,  prem:88.32},
-      '31':{name:'Nebraska',       pct:2.92,  prem:53.40},
-      '32':{name:'Nevada',         pct:2.78,  prem:63.07},
-      '33':{name:'New Hampshire',  pct:1.54,  prem:100.51},
-      '34':{name:'New Jersey',     pct:3.65,  prem:49.15},
-      '35':{name:'New Mexico',     pct:2.71,  prem:65.47},
-      '36':{name:'New York',       pct:3.75,  prem:60.23},
-      '37':{name:'North Carolina', pct:2.80,  prem:94.51},
-      '38':{name:'North Dakota',   pct:4.05,  prem:40.82},
-      '39':{name:'Ohio',           pct:1.50,  prem:84.11},
-      '40':{name:'Oklahoma',       pct:1.75,  prem:74.35},
-      '41':{name:'Oregon',         pct:2.96,  prem:71.05},
-      '42':{name:'Pennsylvania',   pct:2.10,  prem:77.15},
-      '44':{name:'Rhode Island',   pct:3.59,  prem:52.94},
-      '45':{name:'South Carolina', pct:1.79,  prem:70.33},
-      '46':{name:'South Dakota',   pct:3.16,  prem:53.75},
-      '47':{name:'Tennessee',      pct:1.63,  prem:73.11},
-      '48':{name:'Texas',          pct:2.72,  prem:77.10},
-      '49':{name:'Utah',           pct:2.96,  prem:53.24},
-      '50':{name:'Vermont',        pct:3.14,  prem:69.48},
-      '51':{name:'Virginia',       pct:4.77,  prem:67.85},
-      '53':{name:'Washington',     pct:5.77,  prem:56.79},
-      '54':{name:'West Virginia',  pct:1.57,  prem:114.02},
-      '55':{name:'Wisconsin',      pct:2.00,  prem:59.35},
-      '56':{name:'Wyoming',        pct:3.92,  prem:53.19},
+
+    // Build dataMap from CSV rows
+    const NAME_FIPS = {
+      'alabama':'01','alaska':'02','arizona':'04','arkansas':'05','california':'06',
+      'colorado':'08','connecticut':'09','delaware':'10','florida':'12','georgia':'13',
+      'hawaii':'15','idaho':'16','illinois':'17','indiana':'18','iowa':'19','kansas':'20',
+      'kentucky':'21','louisiana':'22','maine':'23','maryland':'24','massachusetts':'25',
+      'michigan':'26','minnesota':'27','mississippi':'28','missouri':'29','montana':'30',
+      'nebraska':'31','nevada':'32','new hampshire':'33','new jersey':'34','new mexico':'35',
+      'new york':'36','north carolina':'37','north dakota':'38','ohio':'39','oklahoma':'40',
+      'oregon':'41','pennsylvania':'42','rhode island':'44','south carolina':'45',
+      'south dakota':'46','tennessee':'47','texas':'48','utah':'49','vermont':'50',
+      'virginia':'51','washington':'53','west virginia':'54','wisconsin':'55','wyoming':'56',
+      'washington d.c.':'11','district of columbia':'11','washington, d.c.':'11'
     };
+    const dataMap = {};
+    csvRows.forEach(r => {
+      const key = (r.state||'').toLowerCase().replace(/[.,]/g,'').trim();
+      const fips = NAME_FIPS[key];
+      if (fips) dataMap[fips] = {
+        name: r.state,
+        pct:  parseFloat(r.ai_job_pct),
+        prem: parseFloat(r.salary_premium)
+      };
+    });
 
     const pctVals  = Object.values(dataMap).map(d => d.pct);
     const premVals = Object.values(dataMap).map(d => d.prem);
@@ -300,7 +406,6 @@
       });
     });
   }
-  buildMaps();
   </script>
 </body>
 </html>
