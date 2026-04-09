@@ -170,9 +170,6 @@
     <div class="map-tooltip" id="mapTooltip"></div>
 
     <!-- TABLE -->
-    <div style="display:flex;justify-content:flex-end;padding:20px 0 8px">
-      <div class="occ-stats" id="regStats"></div>
-    </div>
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
         <thead>
@@ -189,11 +186,6 @@
         </thead>
         <tbody id="regBody"></tbody>
       </table>
-    </div>
-    <div class="reg-pagination" id="regPagination">
-      <span class="page-info" id="regPageInfo"></span>
-      <button class="page-btn" id="regPrev" onclick="changePage(-1)" disabled>← Prev</button>
-      <button class="page-btn" id="regNext" onclick="changePage(1)">Next →</button>
     </div>
     <div class="data-note">Data as of 2025</div>
   </div>
@@ -214,7 +206,7 @@
   </footer>
 
   <script>
-  const PAGE_SIZE = 15;
+  const PAGE_SIZE = 999; // show all
   let allData = [], filtered = [], sortCol = 'state', sortDir = 'asc', page = 1;
 
   function fmt(n)       { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
@@ -236,7 +228,7 @@
       const obj = {};
       headers.forEach((h, i) => obj[h] = (cols[i]||'').replace(/^"|"$/g,'').replace(/,/g,'').trim());
       return obj;
-    }).filter(r => r.state && r.state.toLowerCase() !== 'empty');
+    }).filter(r => r.state); // keep all rows including 'empty'
   }
 
   // Proper CSV line parser that handles quoted fields containing commas
@@ -254,15 +246,7 @@
   }
 
   function renderTable() {
-    const total = filtered.length;
-    const pages = Math.ceil(total / PAGE_SIZE);
-    const start = (page - 1) * PAGE_SIZE;
-    const rows  = filtered.slice(start, start + PAGE_SIZE);
-    document.getElementById('regStats').innerHTML = `Showing <span>${rows.length}</span> of <span>${total}</span> states`;
-    document.getElementById('regPageInfo').textContent = `Page ${page} of ${Math.max(1,pages)}`;
-    document.getElementById('regPrev').disabled = page <= 1;
-    document.getElementById('regNext').disabled = page >= pages;
-    document.getElementById('regBody').innerHTML = rows.map(r => `
+    document.getElementById('regBody').innerHTML = filtered.map(r => `
       <tr>
         <td class="td-state">${r.state}</td>
         <td class="td-num">${r.year || '2025'}</td>
@@ -311,7 +295,8 @@
       allData = parseCSV(text);
       filtered = [...allData];
       renderTable();
-      buildMaps(allData);
+      // Maps only use real state rows (exclude 'empty')
+      buildMaps(allData.filter(r => r.state.toLowerCase() !== 'empty'));
     })
     .catch(err => {
       document.getElementById('regBody').innerHTML =
