@@ -710,6 +710,19 @@
     </div>
   </section>
 
+  <!-- SALARY PREMIUM CHART -->
+  <section class="occupation-section" style="border-top:1px solid var(--border)">
+    <div class="news-table-wrap" style="padding-top:32px">
+      <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:24px 28px 16px;box-shadow:0 2px 20px rgba(55,138,221,0.07)">
+        <canvas id="salaryChart" style="width:100%"></canvas>
+        <div style="display:flex;justify-content:center;gap:28px;margin-top:16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">
+          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#93c5fd;border:1px solid #3b82f6;display:inline-block"></span>Non-AI Salary</div>
+          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#f97316;border:1px solid #ea580c;display:inline-block"></span>AI Salary</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer id="about">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -930,5 +943,149 @@
   <!-- AI Sentiment Chatbot Widget -->
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script>
+  (function() {
+    // Data ordered bottom→top (as in matplotlib y=1..10)
+    const industries = [
+      'Utilities','Information','Construction','Services','Mining',
+      'Finance & Real Est','Manufacturing','Agriculture','Transportation','Wholesale & Retail'
+    ];
+    const nonAI = [85761,105939,74459,75826,74452,92274,86735,69704,75341,69143];
+    const ai    = [108324,137196,98873,101623,100593,125104,117914,100812,116421,119517];
+    const prems = ['+26.3%','+29.5%','+32.8%','+34.0%','+35.1%','+35.6%','+35.9%','+44.6%','+54.5%','+72.9%'];
+
+    // Reverse so Chart.js (top→bottom) shows bottom-to-top like matplotlib
+    const labelsR = [...industries].reverse();
+    const nonAIR  = [...nonAI].reverse();
+    const aiR     = [...ai].reverse();
+    const premsR  = [...prems].reverse();
+
+    // Custom plugin: draw premium brackets exactly like Python
+    const premiumPlugin = {
+      id: 'premiumBrackets',
+      afterDatasetsDraw(chart) {
+        const { ctx, scales: { x, y } } = chart;
+        ctx.save();
+        ctx.font = 'bold 11px "DM Mono", monospace';
+
+        labelsR.forEach((_, i) => {
+          // In Chart.js grouped bar: AI dataset is index 0 (top bar), NonAI is index 1 (bottom bar)
+          const meta0 = chart.getDatasetMeta(0); // AI bars
+          const meta1 = chart.getDatasetMeta(1); // NonAI bars
+          const barAI    = meta0.data[i];
+          const barNonAI = meta1.data[i];
+
+          const xAI    = barAI.x;           // right edge of AI bar
+          const yTop   = barAI.y - barAI.height / 2;    // top of AI bar
+          const yBot   = barNonAI.y + barNonAI.height / 2; // bottom of NonAI bar
+
+          const BRACKET_GAP = 6;
+          const TICK_LEN    = 5;
+          const xB = xAI + BRACKET_GAP;
+          const yMid = (yTop + yBot) / 2;
+
+          // Bracket
+          ctx.strokeStyle = '#9ca3af';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(xB, yTop);  ctx.lineTo(xB, yBot);         // spine
+          ctx.moveTo(xB - TICK_LEN, yTop); ctx.lineTo(xB, yTop); // top tick
+          ctx.moveTo(xB - TICK_LEN, yBot); ctx.lineTo(xB, yBot); // bottom tick
+          ctx.stroke();
+
+          // Premium label
+          ctx.fillStyle = '#ea580c';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(premsR[i], xB + 5, yMid);
+        });
+        ctx.restore();
+      }
+    };
+
+    new Chart(document.getElementById('salaryChart'), {
+      type: 'bar',
+      data: {
+        labels: labelsR,
+        datasets: [
+          {
+            // AI bars — rendered as upper bar in each pair
+            label: 'AI Salary',
+            data: aiR,
+            backgroundColor: '#f97316',
+            borderColor: '#ea580c',
+            borderWidth: 1,
+            barPercentage: 0.42,
+            categoryPercentage: 0.85,
+          },
+          {
+            // Non-AI bars — rendered as lower bar in each pair
+            label: 'Non-AI Salary',
+            data: nonAIR,
+            backgroundColor: '#93c5fd',
+            borderColor: '#3b82f6',
+            borderWidth: 1,
+            barPercentage: 0.42,
+            categoryPercentage: 0.85,
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 2.4,
+        layout: { padding: { right: 80 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1e293b',
+            titleColor: '#fff',
+            bodyColor: '#f8fafc',
+            titleFont: { family: '"DM Mono", monospace', size: 12, weight: '700' },
+            bodyFont: { family: '"DM Mono", monospace', size: 12 },
+            padding: 12,
+            cornerRadius: 4,
+            displayColors: true,
+            callbacks: {
+              label: ctx => `  ${ctx.dataset.label}: $${ctx.raw.toLocaleString()}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 40000,
+            max: 155000,
+            ticks: {
+              font: { size: 12, family: '"DM Mono", monospace' },
+              color: '#7a8694',
+              stepSize: 20000,
+              callback: v => '$' + (v/1000).toFixed(0) + 'k'
+            },
+            grid: { color: 'rgba(150,150,150,0.18)', lineWidth: 0.8 },
+            border: { color: '#9ca3af', width: 0.8 },
+            title: {
+              display: true,
+              text: 'Salary ($)',
+              font: { size: 13, family: '"DM Mono", monospace', weight: 'bold' },
+              color: '#1e293b',
+              padding: { top: 10 }
+            }
+          },
+          y: {
+            ticks: {
+              font: { size: 12, family: '"DM Mono", monospace', weight: 'bold' },
+              color: '#1e293b',
+              crossAlign: 'far'
+            },
+            grid: { display: false },
+            border: { color: '#9ca3af', width: 0.8 }
+          }
+        }
+      },
+      plugins: [premiumPlugin]
+    });
+  })();
+  </script>
 </body>
 </html>
