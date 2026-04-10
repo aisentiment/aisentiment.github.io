@@ -169,6 +169,12 @@
     <div class="map-tooltip" id="mapTooltip"></div>
 
     <!-- TABLE -->
+    <div class="filter-bar" style="padding:24px 0 20px">
+      <div class="filter-group">
+        <input class="filter-input" id="regSearch" type="text" placeholder="Search by state…" oninput="filterTable()" style="width:280px">
+      </div>
+    </div>
+    <div class="occ-stats" id="regStats" style="padding:0 0 14px;display:block"></div>
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
         <thead>
@@ -245,6 +251,8 @@
   }
 
   function renderTable() {
+    const stats = document.getElementById('regStats');
+    if (stats) stats.innerHTML = `Showing <span>${filtered.length}</span> of <span>${allData.length}</span> regions`;
     document.getElementById('regBody').innerHTML = filtered.map(r => `
       <tr>
         <td class="td-state">${r.state}</td>
@@ -269,6 +277,13 @@
     });
     applySort(filtered);
     page = 1; renderTable();
+  }
+
+  function filterTable() {
+    const q = document.getElementById('regSearch').value.toLowerCase();
+    filtered = allData.filter(r => r.state.toLowerCase().includes(q));
+    page = 1;
+    renderTable();
   }
 
   function changePage(dir) { page += dir; renderTable(); }
