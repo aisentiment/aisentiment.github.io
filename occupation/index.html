@@ -711,11 +711,12 @@
   </section>
 
   <!-- SALARY PREMIUM CHART -->
-  <section class="occupation-section" style="border-top:1px solid var(--border)">
+  <section class="occupation-section">
     <div class="news-table-wrap" style="padding-top:32px">
-      <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:24px 28px 16px;box-shadow:0 2px 20px rgba(55,138,221,0.07)">
+      <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:20px 22px 16px;box-shadow:0 2px 20px rgba(55,138,221,0.07);position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5ba3d9 0%,#38b36e 100%)"></div>
         <canvas id="salaryChart" style="width:100%"></canvas>
-        <div style="display:flex;justify-content:center;gap:28px;margin-top:16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">
+        <div style="display:flex;justify-content:center;gap:28px;margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">
           <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#93c5fd;border:1px solid #3b82f6;display:inline-block"></span>Non-AI Salary</div>
           <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#f97316;border:1px solid #ea580c;display:inline-block"></span>AI Salary</div>
         </div>
@@ -961,7 +962,6 @@
     const aiR     = [...ai].reverse();
     const premsR  = [...prems].reverse();
 
-    // Custom plugin: draw premium brackets exactly like Python
     const premiumPlugin = {
       id: 'premiumBrackets',
       afterDatasetsDraw(chart) {
@@ -1035,7 +1035,7 @@
         responsive: true,
         maintainAspectRatio: true,
         aspectRatio: 2.4,
-        layout: { padding: { right: 80 } },
+        layout: { padding: { right: 50 } },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -1055,12 +1055,15 @@
         scales: {
           x: {
             min: 40000,
-            max: 155000,
+            max: 158000,
+            afterBuildTicks(scale) {
+              scale.ticks = [40000,60000,80000,100000,120000,140000].map(v => ({ value: v }));
+            },
             ticks: {
               font: { size: 12, family: '"DM Mono", monospace' },
               color: '#7a8694',
-              stepSize: 20000,
-              callback: v => '$' + (v/1000).toFixed(0) + 'k'
+              autoSkip: false,
+              callback: v => '$' + (v/1000) + 'K'
             },
             grid: { color: 'rgba(150,150,150,0.18)', lineWidth: 0.8 },
             border: { color: '#9ca3af', width: 0.8 },
@@ -1073,10 +1076,11 @@
             }
           },
           y: {
+            afterFit(scale) { scale.width = 145; },
             ticks: {
               font: { size: 12, family: '"DM Mono", monospace', weight: 'bold' },
               color: '#1e293b',
-              crossAlign: 'far'
+              padding: 4
             },
             grid: { display: false },
             border: { color: '#9ca3af', width: 0.8 }
