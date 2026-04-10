@@ -675,6 +675,18 @@
       </div>
     </div>
 
+    <!-- SALARY PREMIUM CHART -->
+    <div class="news-table-wrap" style="padding-bottom:32px">
+      <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:20px 22px 16px;box-shadow:0 2px 20px rgba(55,138,221,0.07);position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5ba3d9 0%,#38b36e 100%)"></div>
+        <canvas id="salaryChart" style="width:100%"></canvas>
+        <div style="display:flex;justify-content:center;gap:28px;margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">
+          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#93c5fd;border:1px solid #3b82f6;display:inline-block"></span>Non-AI Salary</div>
+          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#f97316;border:1px solid #ea580c;display:inline-block"></span>AI Salary</div>
+        </div>
+      </div>
+    </div>
+
     <div class="filter-bar">
       <div class="filter-group">
         <input class="filter-input" id="occSearchInput" type="text"
@@ -707,20 +719,6 @@
     </div>
     <div style="padding: 12px 48px 0; text-align: right; font-size: 12px; color: var(--text-muted);">
       Data as of 2025
-    </div>
-  </section>
-
-  <!-- SALARY PREMIUM CHART -->
-  <section class="occupation-section">
-    <div class="news-table-wrap" style="padding-top:32px">
-      <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:20px 22px 16px;box-shadow:0 2px 20px rgba(55,138,221,0.07);position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5ba3d9 0%,#38b36e 100%)"></div>
-        <canvas id="salaryChart" style="width:100%"></canvas>
-        <div style="display:flex;justify-content:center;gap:28px;margin-top:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">
-          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#93c5fd;border:1px solid #3b82f6;display:inline-block"></span>Non-AI Salary</div>
-          <div style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:10px;border-radius:2px;background:#f97316;border:1px solid #ea580c;display:inline-block"></span>AI Salary</div>
-        </div>
-      </div>
     </div>
   </section>
 
