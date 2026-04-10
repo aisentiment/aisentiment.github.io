@@ -48,6 +48,8 @@
     .filter-input { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 9px 14px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); outline: none; transition: border-color 0.2s; width: 260px; }
     .filter-input:focus { border-color: var(--accent); }
     .filter-input::placeholder { color: var(--text-muted); }
+    .clear-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 13px; padding: 0 16px; height: 40px; cursor: pointer; transition: all 0.18s; }
+    .clear-btn:hover { border-color: var(--red); color: var(--red); }
     .occ-stats { font-size: 13px; color: var(--text-muted); margin-left: auto; font-family: 'DM Mono', monospace; }
     .occ-stats span { color: var(--accent2); }
     .reg-table-wrap { overflow-x: auto; margin-top: 8px; }
@@ -173,6 +175,9 @@
       <div class="filter-group">
         <input class="filter-input" id="regSearch" type="text" placeholder="Search by state..." oninput="filterTable()" style="width:280px">
       </div>
+      <div class="filter-group" style="justify-content:flex-end">
+        <button class="clear-btn" onclick="clearRegFilter()">✕ Clear</button>
+      </div>
     </div>
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
@@ -279,6 +284,13 @@
   function filterTable() {
     const q = document.getElementById('regSearch').value.toLowerCase();
     filtered = allData.filter(r => r.state.toLowerCase().includes(q));
+    page = 1;
+    renderTable();
+  }
+
+  function clearRegFilter() {
+    document.getElementById('regSearch').value = '';
+    filtered = [...allData];
     page = 1;
     renderTable();
   }
