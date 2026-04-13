@@ -885,8 +885,10 @@ function buildHeroChart() {
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script>
-    buildHeroChart();
-    buildEventsChart();
+    document.addEventListener('DOMContentLoaded', function() {
+      buildHeroChart();
+      buildEventsChart();
+    });
 
     // Fetch CSVs just to count rows and update hero pills
     function countCSVRows(text) {

@@ -312,20 +312,22 @@
     'washington d.c.':'11','district of columbia':'11','washington, d.c.':'11'
   };
 
-  fetch('/data/ai_job_metrics_by_state_year_2025.csv')
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-    .then(text => {
-      allData = parseCSV(text);
-      filtered = [...allData];
-      renderTable();
-      // Maps only use real state rows (exclude 'empty')
-      buildMaps(allData.filter(r => r.state.toLowerCase() !== 'empty'));
-    })
-    .catch(err => {
-      document.getElementById('regBody').innerHTML =
-        `<tr><td colspan="8" style="padding:40px;text-align:center;color:var(--text-muted)">Could not load data/ai_job_metrics_by_state_year_2025.csv</td></tr>`;
-      console.error(err);
-    });
+  // Delay fetch until all scripts loaded (avoids race with D3/TopoJSON)
+  window.addEventListener('load', function() {
+    fetch('/data/ai_job_metrics_by_state_year_2025.csv')
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(text => {
+        allData = parseCSV(text);
+        filtered = [...allData];
+        renderTable();
+        buildMaps(allData.filter(r => r.state.toLowerCase() !== 'empty'));
+      })
+      .catch(err => {
+        document.getElementById('regBody').innerHTML =
+          `<tr><td colspan="8" style="padding:40px;text-align:center;color:var(--text-muted)">Could not load data/ai_job_metrics_by_state_year_2025.csv</td></tr>`;
+        console.error(err);
+      });
+  });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
