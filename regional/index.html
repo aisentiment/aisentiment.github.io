@@ -102,6 +102,18 @@
 
     @media (max-width: 768px) { nav, .page-hero, .main-content, footer { padding-left: 20px; padding-right: 20px; } }
   </style>
+  <!-- Google Analytics (cookieless) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VMGFDM5THP', {
+      anonymize_ip: true,
+      storage: 'none',
+      client_storage: 'none'
+    });
+  </script>
 </head>
 <body>
 
@@ -215,8 +227,7 @@
   </footer>
 
   <script>
-  const PAGE_SIZE = 999; // show all
-  let allData = [], filtered = [], sortCol = 'state', sortDir = 'asc', page = 1;
+  let allData = [], filtered = [], sortCol = 'state', sortDir = 'asc';
 
   function fmt(n)       { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
   function fmtSalary(n) { return Number(String(n).replace(/,/g,'')).toLocaleString(); }
@@ -284,18 +295,15 @@
   function filterTable() {
     const q = document.getElementById('regSearch').value.toLowerCase();
     filtered = allData.filter(r => r.state.toLowerCase().includes(q));
-    page = 1;
     renderTable();
   }
 
   function clearRegFilter() {
     document.getElementById('regSearch').value = '';
     filtered = [...allData];
-    page = 1;
     renderTable();
   }
 
-  function changePage(dir) { page += dir; renderTable(); }
 
   // State name → FIPS
   const NAME_FIPS = {
