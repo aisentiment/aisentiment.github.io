@@ -16,22 +16,35 @@
     body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; min-height: 100vh; overflow-x: hidden; }
     body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(91,163,217,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(91,163,217,0.06) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
 
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
-    .nav-logo span { color: var(--text-muted); font-weight: 400; }
-
-    /* DROPDOWN NAV */
-    .nav-dropdown { position: relative; }
-    .nav-dropdown-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 4px; transition: border-color 0.18s, color 0.18s, background 0.18s; }
-    .nav-dropdown-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.04); }
-    .nav-dropdown-btn.open { border-color: var(--accent); color: var(--accent); background: rgba(91,163,217,0.06); }
-    .nav-chevron { flex-shrink: 0; }
-    .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); right: 0; min-width: 256px; background: #fff; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 4px 24px rgba(30,41,59,0.1); z-index: 200; overflow: hidden; }
-    .nav-dropdown-menu.open { display: block; }
-    .nav-dropdown-item { display: flex; align-items: center; padding: 14px 20px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-dim); text-decoration: none; letter-spacing: 0.02em; transition: background 0.15s, color 0.15s, padding-left 0.15s; border-bottom: 1px solid var(--surface2); position: relative; }
-    .nav-dropdown-item:last-child { border-bottom: none; }
-    .nav-dropdown-item:hover { background: rgba(91,163,217,0.05); color: var(--accent); padding-left: 24px; }
-    .nav-dropdown-item.active { color: var(--accent2); background: rgba(91,163,217,0.07); font-weight: 700; border-left: 3px solid var(--accent); padding-left: 17px; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 56px; gap: 0;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none; margin-right: 36px;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif; font-size: 13px;
+      color: var(--text-muted); text-decoration: none;
+      padding: 6px 14px; border-radius: 4px;
+      transition: color 0.18s, background 0.18s;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .nav-link:hover { color: var(--accent); background: rgba(91,163,217,0.06); }
+    .nav-link.active { color: var(--accent); font-weight: 700; background: rgba(91,163,217,0.08); }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; gap: 0; overflow-x: auto; }
+      .nav-logo { font-size: 13px; margin-right: 16px; }
+      .nav-link { font-size: 11px; padding: 6px 10px; }
+    }
 
     /* MAIN CONTENT */
     .main-content { position: relative; z-index: 1; padding: 48px 48px 64px; }
@@ -79,7 +92,7 @@
     .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
     .map-card { background: #fff; border: 1px solid #dde3ec; border-radius: 8px; padding: 20px 22px 16px; box-shadow: 0 2px 20px rgba(55,138,221,0.07); position: relative; overflow: hidden; }
     .map-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%); }
-    .map-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+    .map-card-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
     .map-card-sub { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
     .map-svg-wrap { width: 100%; }
     .map-svg-wrap svg { width: 100%; height: auto; display: block; }
@@ -87,7 +100,7 @@
     .map-legend-bar { flex: 1; height: 8px; border-radius: 4px; }
     .state-path { stroke: #fff; stroke-width: 0.5; cursor: pointer; transition: opacity 0.15s; }
     .state-path:hover { opacity: 0.8; stroke-width: 1.5; stroke: #1e293b; }
-    .map-tooltip { position: fixed; pointer-events: none; background: #1e293b; color: #fff; font-family: 'DM Mono', monospace; font-size: 12px; padding: 8px 12px; border-radius: 4px; white-space: nowrap; z-index: 9999; display: none; }
+    .map-tooltip { position: fixed; pointer-events: none; background: #1e293b; color: #fff; font-family: 'Syne', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 4px; white-space: nowrap; z-index: 9999; display: none; }
     @media (max-width: 900px) { .map-grid { grid-template-columns: 1fr; } }
 
     /* FOOTER */
@@ -115,34 +128,14 @@
 
   <nav>
     <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment Tracker</a>
-    <div class="nav-dropdown">
-      <button class="nav-dropdown-btn" id="navBtn" onclick="toggleNav(event)">
-        <svg class="nav-chevron" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <line x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <line x1="0" y1="13" x2="20" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-      <div class="nav-dropdown-menu" id="navMenu">
-        <a href="/" class="nav-dropdown-item">Home</a>
-        <a href="/regional/" class="nav-dropdown-item active">Regional AI Sentiment</a>
-        <a href="/occupation/" class="nav-dropdown-item">Occupation AI Sentiment</a>
-        <a href="/company/" class="nav-dropdown-item">Company AI Sentiment</a>
-        <a href="/comments/" class="nav-dropdown-item">Employee AI Comment</a>
-      </div>
+        <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/regional/" class="nav-link active">Regional AI Sentiment</a>
+    <a href="/occupation/" class="nav-link">Occupation AI Sentiment</a>
+    <a href="/company/" class="nav-link">Company AI Sentiment</a>
+    <a href="/comments/" class="nav-link">Employee AI Comment</a>
     </div>
   </nav>
-  <script>
-    function toggleNav(e) {
-      e.stopPropagation();
-      document.getElementById('navBtn').classList.toggle('open');
-      document.getElementById('navMenu').classList.toggle('open');
-    }
-    document.addEventListener('click', () => {
-      document.getElementById('navBtn').classList.remove('open');
-      document.getElementById('navMenu').classList.remove('open');
-    });
-  </script>
 
   <div class="main-content">
     <div class="section-header">
