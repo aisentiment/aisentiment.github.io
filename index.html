@@ -150,7 +150,7 @@
     .hero-inner {
       max-width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 3fr 2fr;
       gap: 36px;
       align-items: center;
     }
@@ -191,7 +191,7 @@
     .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 4.5vw, 56px); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; color: #7a8694; }
     .hero h1 em { font-family: 'Instrument Serif', serif;  color: var(--accent); }
-    .hero-desc { color: var(--text-dim); line-height: 1.75; font-size: 16px; max-width: 640px; margin-bottom: 36px; }
+    .hero-desc { color: var(--text-dim); line-height: 1.75; font-size: 16px; margin-bottom: 36px; }
     .hero-insights { display: flex; flex-wrap: wrap; gap: 8px; }
     .insight-pill { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); padding: 9px 16px; font-size: 14px; color: var(--text-dim); cursor: default; }
     .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
@@ -717,20 +717,21 @@
               <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
             </div>
           </div>
-          <div style="position:relative;width:100%;height:175px"><canvas id="heroTrendChart"></canvas></div>
+          <div style="position:relative;width:100%;height:240px"><canvas id="heroTrendChart"></canvas></div>
           <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
         </div>
-        <div class="hero-chart">
-          <div class="hero-chart-top">
-            <div>
-              <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
-              <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
-            </div>
-          </div>
-          <div style="position:relative;width:100%;height:175px"><canvas id="heroEventsChart"></canvas></div>
-          <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
+      </div>
+    </div>
+    <!-- Full-width events chart below -->
+    <div class="hero-chart" style="margin-top:20px">
+      <div class="hero-chart-top">
+        <div>
+          <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
+          <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
         </div>
       </div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="heroEventsChart"></canvas></div>
+      <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
     </div>
   </section>
 
@@ -893,11 +894,6 @@ function buildHeroChart() {
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      buildHeroChart();
-      buildEventsChart();
-    });
-
     // Fetch CSVs just to count rows and update hero pills
     function countCSVRows(text) {
       return text.trim().split(/\r?\n/).slice(1).filter(l => l.trim()).length;
@@ -919,14 +915,18 @@ function buildHeroChart() {
       if (items.length) pills.innerHTML = items.join('');
     }
 
-    fetch('data/news.csv').then(r => r.text()).then(t => { pillNews = countCSVRows(t); refreshPills(); }).catch(() => {});
-    fetch('data/role_level_data.csv').then(r => r.text()).then(t => { pillOcc = countCSVRows(t); refreshPills(); }).catch(() => {});
-    fetch('data/companies.csv').then(r => r.text()).then(t => { pillComp = countCSVRows(t); refreshPills(); }).catch(() => {});
-    fetch('data/ai_job_metrics_by_state_year_2025.csv').then(r => r.text()).then(t => {
-      // Count only real state rows (exclude 'empty')
-      pillReg = t.trim().split(/\r?\n/).slice(1).filter(l => l.trim() && !l.toLowerCase().startsWith('empty')).length;
-      refreshPills();
-    }).catch(() => {});
+    document.addEventListener('DOMContentLoaded', function() {
+      buildHeroChart();
+      buildEventsChart();
+
+      fetch('data/news.csv').then(r => r.text()).then(t => { pillNews = countCSVRows(t); refreshPills(); }).catch(() => {});
+      fetch('data/role_level_data.csv').then(r => r.text()).then(t => { pillOcc = countCSVRows(t); refreshPills(); }).catch(() => {});
+      fetch('data/companies.csv').then(r => r.text()).then(t => { pillComp = countCSVRows(t); refreshPills(); }).catch(() => {});
+      fetch('data/ai_job_metrics_by_state_year_2025.csv').then(r => r.text()).then(t => {
+        pillReg = t.trim().split(/\r?\n/).slice(1).filter(l => l.trim() && !l.toLowerCase().startsWith('empty')).length;
+        refreshPills();
+      }).catch(() => {});
+    });
   </script>
 
 </body>
