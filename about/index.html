@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Sentiment Tracker — About Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Google Analytics (cookieless) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VMGFDM5THP', { anonymize_ip: true });
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f4f6f8;
+      --surface2: #e9ecf0;
+      --border: #d0d5dd;
+      --accent: #5ba3d9;
+      --accent2: #3b8abf;
+      --text: #1e293b;
+      --text-muted: #7a8694;
+      --text-dim: #4a5568;
+      --red: #e05252;
+      --green: #38b36e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before { display: none; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 56px;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none; white-space: nowrap;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif; font-size: 13px;
+      color: var(--text-muted); text-decoration: none;
+      padding: 6px 14px; border-radius: 4px;
+      transition: color 0.18s, background 0.18s;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .nav-link:hover { color: var(--accent); background: rgba(91,163,217,0.06); }
+    .nav-link.active { color: var(--accent); font-weight: 700; background: rgba(91,163,217,0.08); }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; overflow-x: auto; }
+      .nav-logo { font-size: 13px; }
+      .nav-link { font-size: 11px; padding: 6px 10px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; z-index: 1;
+      padding: 64px 48px 56px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f0f7fd 0%, #f2faf6 50%, #f4f2fd 100%);
+      overflow: hidden;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-eyebrow {
+      font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .page-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700; line-height: 1.12; letter-spacing: -0.02em;
+      color: #7a8694; margin-bottom: 16px;
+    }
+    .page-hero h1 em { font-family: 'Instrument Serif', serif; color: var(--accent); font-style: italic; }
+    .page-hero-desc {
+      color: var(--text-dim); line-height: 1.75; font-size: 16px;
+      max-width: 640px;
+    }
+
+    /* CONTRIBUTORS SECTION */
+    .about-section {
+      position: relative; z-index: 1;
+      padding: 56px 48px 80px;
+      background: #f8fafc;
+    }
+
+    .section-header { margin-bottom: 48px; }
+    .section-header-inner { display: flex; align-items: center; gap: 14px; }
+    .section-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(91,163,217,0.15) 0%, rgba(56,179,110,0.1) 100%);
+      border: 1px solid rgba(91,163,217,0.25);
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: 22px;
+      font-weight: 700; letter-spacing: -0.01em; color: var(--text);
+    }
+    .section-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+      margin-left: 4px;
+    }
+
+    /* TEAM LIST — vertical rows */
+    .team-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .team-card {
+      background: #fff;
+      border: none;
+      border-bottom: 1px solid #eef1f5;
+      border-radius: 0;
+      overflow: visible;
+      box-shadow: none;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+    }
+    .team-card::before { display: none; }
+    .team-card:hover { transform: none; box-shadow: none; }
+
+    .team-photo {
+      width: 180px;
+      min-width: 180px;
+      overflow: hidden;
+      background: var(--surface);
+      flex-shrink: 0;
+      align-self: stretch;
+    }
+    .team-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center; display: block;
+    }
+    .team-photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #e8f4fd 0%, #edf9f2 100%);
+    }
+    .team-photo-placeholder svg {
+      width: 44%; height: 44%; opacity: 0.3;
+    }
+
+    .team-info {
+      padding: 28px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid #eef1f5;
+      overflow: visible;
+    }
+    .team-name {
+      font-family: 'Georgia', serif; font-size: 20px;
+      font-weight: 700; font-style: normal;
+      color: var(--text); margin-bottom: 6px;
+      letter-spacing: 0; line-height: 1.3;
+    }
+    .team-role-lines {
+      margin-bottom: 20px;
+      font-family: 'Georgia', serif; font-size: 14px;
+      font-style: italic; color: var(--text-muted);
+      letter-spacing: 0; line-height: 1.7;
+    }
+    .team-role-lines span { display: block; }
+    .team-opinion {
+      font-family: 'Georgia', serif; font-size: 16px;
+      color: var(--text-dim); line-height: 1.85;
+      font-style: italic;
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+    }
+    .opinion-link {
+      display: inline; margin-top: 10px;
+      font-family: 'Syne', sans-serif; font-size: 13px;
+      font-style: normal; font-weight: 600;
+      color: var(--accent); text-decoration: underline;
+      text-underline-offset: 3px;
+      letter-spacing: 0.04em; transition: opacity 0.18s;
+    }
+    .opinion-link:hover { opacity: 0.7; }
+    @media (max-width: 640px) {
+      .team-card { flex-direction: column; }
+      .team-photo { width: 100%; min-width: unset; aspect-ratio: 3 / 2; }
+      .team-info { border-left: none; border-top: 1px solid #eef1f5; padding: 20px; }
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      background: #1e293b; color: rgba(255,255,255,0.55);
+      padding: 0;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 32px;
+      padding: 40px 48px; border-top: 3px solid var(--accent);
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 18px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #ffffff;
+    }
+    .footer-right-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-email {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'DM Mono', monospace; font-size: 13px;
+      color: var(--accent); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-email:hover { color: #fff; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment Tracker</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/regional/" class="nav-link">Regional AI Sentiment</a>
+      <a href="/occupation/" class="nav-link">Occupation AI Sentiment</a>
+      <a href="/company/" class="nav-link">Company AI Sentiment</a>
+      <a href="/comments/" class="nav-link">Employee AI Comment</a>
+      <a href="/about/" class="nav-link active">About Us</a>
+    </div>
+  </nav>
+
+  <!-- CONTRIBUTORS -->
+  <section class="about-section">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon">👥</div>
+        <h2 class="section-title">Contributors</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+
+    <div class="team-list">
+
+      <!-- Author 1: Mark Ma -->
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/photo/mark-ma-2026.png" alt="Mark (Shuai) Ma" onerror="this.parentElement.innerHTML='<div class=\'team-photo-placeholder\'><svg viewBox=\'0 0 100 100\' fill=\'none\'><circle cx=\'50\' cy=\'36\' r=\'20\' fill=\'#5ba3d9\'/><ellipse cx=\'50\' cy=\'80\' rx=\'30\' ry=\'20\' fill=\'#5ba3d9\'/></svg></div>'">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Mark (Shuai) Ma</div>
+          <div class="team-role-lines">
+            <span>Associate Professor of Business Administration</span>
+            <span>University of Pittsburgh</span>
+          </div>
+          <div class="team-opinion">
+            "A shorter workweek can prevent AI-driven mass unemployment."
+          </div>
+          <a href="https://thehill.com/opinion/technology/5681660-shorter-workweek-ai-economy/" target="_blank" rel="noopener" class="opinion-link">Read on The Hill →</a>
+        </div>
+      </div>
+
+      <!-- Author 2: Yuye Ding -->
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/photo/yuyeding.png" alt="Yuye Ding" onerror="this.parentElement.innerHTML='<div class=\'team-photo-placeholder\'><svg viewBox=\'0 0 100 100\' fill=\'none\'><circle cx=\'50\' cy=\'36\' r=\'20\' fill=\'#38b36e\'/><ellipse cx=\'50\' cy=\'80\' rx=\'30\' ry=\'20\' fill=\'#38b36e\'/></svg></div>'">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Yuye Ding</div>
+          <div class="team-role-lines">
+            <span>PhD Candidate in Accounting</span>
+            <span>University of Pittsburgh</span>
+          </div>
+          <div class="team-opinion">
+            "We are not only tasked with adapting to AI, but with redefining our role within it."
+          </div>
+        </div>
+      </div>
+
+      <!-- Author 3: Jun Wu -->
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/photo/junwu.png" alt="Jun Wu" onerror="this.parentElement.innerHTML='<div class=\'team-photo-placeholder\'><svg viewBox=\'0 0 100 100\' fill=\'none\'><circle cx=\'50\' cy=\'36\' r=\'20\' fill=\'#7f77dd\'/><ellipse cx=\'50\' cy=\'80\' rx=\'30\' ry=\'20\' fill=\'#7f77dd\'/></svg></div>'">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Jun Wu</div>
+          <div class="team-role-lines">
+            <span>Assistant Professor of Computer Science</span>
+            <span>Michigan State University</span>
+          </div>
+          <div class="team-opinion">
+            "The last mile of AI is not intelligence. It is trust."
+          </div>
+        </div>
+      </div>
+
+      <!-- Author 4: John Yang -->
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="/photo/johnyang.png" alt="Yucheng (John) Yang" onerror="this.parentElement.innerHTML='<div class=\'team-photo-placeholder\'><svg viewBox=\'0 0 100 100\' fill=\'none\'><circle cx=\'50\' cy=\'36\' r=\'20\' fill=\'#ea580c\'/><ellipse cx=\'50\' cy=\'80\' rx=\'30\' ry=\'20\' fill=\'#ea580c\'/></svg></div>'">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Yucheng (John) Yang</div>
+          <div class="team-role-lines">
+            <span>Assistant Professor of Accounting</span>
+            <span>Chinese University of Hong Kong (CUHK)</span>
+          </div>
+          <div class="team-opinion">
+            "Placeholder quote."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">AI Sentiment Tracker</div>
+      </div>
+      <div class="footer-right-block">
+        <a href="mailto:support@ai-sentiment.com" class="footer-email">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+          support@ai-sentiment.com
+        </a>
+        <div class="footer-copy">© 2026 AI Sentiment Tracker · For research purposes</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
