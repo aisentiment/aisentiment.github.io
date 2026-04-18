@@ -123,6 +123,8 @@
     gtag('js', new Date());
     gtag('config', 'G-VMGFDM5THP', { anonymize_ip: true });
   </script>
+  <link rel="preload" href="/data/ai_job_metrics_by_state_year_2025.csv" as="fetch" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json" as="fetch" crossorigin>
 </head>
 <body>
 
@@ -336,8 +338,8 @@
       });
   });
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
   <script>
   function buildMaps(csvRows) {
     const tooltip = document.getElementById('mapTooltip');
