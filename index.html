@@ -1010,6 +1010,74 @@
       }
     }
   
+
+    /* ═══════════════════════════════════
+       MOBILE RESPONSIVE (max-width: 480px)
+    ═══════════════════════════════════ */
+    @media (max-width: 480px) {
+      /* Nav */
+      nav { padding: 0 16px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+      .nav-logo { font-size: 14px; margin-right: 0; width: 100%; }
+      .nav-links { gap: 0; flex-wrap: wrap; width: 100%; }
+      .nav-link { font-size: 12px; padding: 4px 8px; }
+
+      /* Hero */
+      .hero { padding: 32px 16px 28px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 20px; }
+      .hero-charts { padding-top: 0 !important; }
+      .hero h1 { font-size: 28px; }
+      .hero-desc { font-size: 14px; }
+      .insight-pill { font-size: 12px; padding: 7px 12px; }
+
+      /* Sections */
+      .section-header { padding: 32px 16px 0; }
+      .section-title { font-size: 18px; }
+      .filter-bar { padding: 0 16px 16px; flex-direction: column; align-items: stretch; }
+      .filter-input { width: 100% !important; }
+      .news-table-wrap, .occ-table-wrap, .reg-table-wrap { padding: 0 8px; }
+      .sort-bar { padding: 0 16px 12px; flex-wrap: wrap; gap: 6px; }
+      .news-pagination, .occ-pagination { padding: 16px; }
+
+      /* Tables — horizontal scroll on mobile */
+      .news-table, .occ-table, .reg-table { font-size: 12px; }
+      .news-table th, .news-table td,
+      .occ-table th, .occ-table td,
+      .reg-table th, .reg-table td { padding: 10px 8px; }
+
+      /* Hero chart section */
+      .hero-chart { padding: 16px; }
+      .hero-chart-kpi-val { font-size: 18px; }
+
+      /* Footer */
+      .footer-inner { grid-template-columns: 1fr; gap: 16px; padding: 24px 16px; }
+      .footer-right-block { align-items: flex-start; }
+
+      /* About page */
+      .team-card { flex-direction: column; }
+      .team-photo { width: 100% !important; min-width: unset !important; aspect-ratio: 4/3; }
+      .team-info { padding: 16px 20px !important; border-left: none !important; border-top: 1px solid #eef1f5; }
+      .team-name { font-size: 17px; }
+      .about-section { padding: 32px 16px 48px; }
+
+      /* Regional maps */
+      .map-grid { grid-template-columns: 1fr !important; }
+      .main-content { padding: 24px 16px 40px; }
+
+      /* Company layout */
+      .company-layout { padding: 0 16px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 40px 20px 36px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+      .hero-charts { padding-top: 0 !important; }
+      .section-header { padding: 40px 20px 0; }
+      .filter-bar { padding: 0 20px 16px; }
+      .news-table-wrap, .occ-table-wrap, .reg-table-wrap { padding: 0 16px; }
+      .footer-inner { padding: 32px 20px; }
+      .about-section { padding: 40px 20px 60px; }
+      .main-content { padding: 32px 20px 48px; }
+    }
     /* end styles */
   </style>
   <!-- Google Analytics (cookieless) -->
