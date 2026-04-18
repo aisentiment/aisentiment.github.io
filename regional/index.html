@@ -68,8 +68,8 @@
     .reg-table-wrap { overflow-x: auto; margin-top: 8px; }
     .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
     .reg-table thead tr { background: #1e293b; }
-    .reg-table th { padding: 15px 20px; text-align: left; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-family: 'DM Mono', monospace; font-weight: 500; white-space: nowrap; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; position: relative; }
-    .reg-table th + th { border-left: 1px solid rgba(255,255,255,0.07); }
+    .reg-table th { padding: 15px 10px; text-align: left; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-family: 'DM Mono', monospace; font-weight: 500; white-space: normal; word-break: break-word; min-width: 80px; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; position: relative; vertical-align: top; }
+    .reg-table th + th { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 4px; }
     .reg-table th:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
     .reg-table th.sorted { color: #7ec8f0; }
     .reg-table th.sorted::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
@@ -182,16 +182,26 @@
     </div>
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
+        <colgroup>
+          <col style="width:100px">  <!-- State -->
+          <col style="width:5px">    <!-- Year -->
+          <col style="width:180px">  <!-- Total Job Posts by Public Firms -->
+          <col style="width:180px">  <!-- Total AI Job Posts by Public Frms -->
+          <col style="width:278px">  <!-- AI Job% -->
+          <col style="width:170px">  <!-- Average Salary of AI Jobs -->
+          <col style="width:170px">  <!-- Average Salary of No-AI Jobs -->
+          <col style="width:180px">  <!-- Salary Premium -->
+        </colgroup>
         <thead>
           <tr>
             <th onclick="sortTable('state')">State</th>
             <th onclick="sortTable('year')" style="text-align:right">Year</th>
-            <th onclick="sortTable('total_jobs')" style="text-align:right">Total Jobs</th>
-            <th onclick="sortTable('ai_jobs')" style="text-align:right">AI Jobs</th>
-            <th onclick="sortTable('avg_salary_ai_w')" style="text-align:right">Avg AI Salary</th>
-            <th onclick="sortTable('avg_salary_nonai_w')" style="text-align:right">Avg Non-AI Salary</th>
-            <th onclick="sortTable('ai_job_pct')" style="text-align:right">AI Job %</th>
-            <th onclick="sortTable('salary_premium')" style="text-align:right">Salary Premium</th>
+            <th onclick="sortTable('total job posts by public firms')" style="text-align:right">Total Job Posts<br>by Public Firms</th>
+            <th onclick="sortTable('total ai job posts by public frms')" style="text-align:right">Total AI Job Posts<br>by Public Frms</th>
+            <th onclick="sortTable('ai job% (=total job posts by public firms/total ai job posts by public firms)')" style="text-align:right">AI Job%<br>(=Total Job Posts by Public Firms<br>/Total AI Job Posts by Public Firms)</th>
+            <th onclick="sortTable('average salary of ai jobs')" style="text-align:right">Average Salary<br>of AI Jobs</th>
+            <th onclick="sortTable('average salary of no-ai jobs')" style="text-align:right">Average Salary<br>of No-AI Jobs</th>
+            <th onclick="sortTable('salary premium (=average salary of ai jobs/average salary of no-ai jobs)')" style="text-align:right">Salary Premium<br>(=Average Salary of AI Jobs<br>/Average Salary of No-AI Jobs)</th>
           </tr>
         </thead>
         <tbody id="regBody"></tbody>
@@ -259,12 +269,12 @@
       <tr>
         <td class="td-state">${r.state}</td>
         <td class="td-num">${r.year || '2025'}</td>
-        <td class="td-num">${fmt(r.total_jobs)}</td>
-        <td class="td-num">${fmt(r.ai_jobs)}</td>
-        <td class="td-num">${fmtSalary(r.avg_salary_ai_w)}</td>
-        <td class="td-num">${fmtSalary(r.avg_salary_nonai_w)}</td>
-        <td class="td-pct">${fmtPct(r.ai_job_pct)}</td>
-        <td class="td-prem">${fmtPrem(r.salary_premium)}</td>
+        <td class="td-num">${fmt(r['total job posts by public firms'])}</td>
+        <td class="td-num">${fmt(r['total ai job posts by public frms'])}</td>
+        <td class="td-pct">${fmtPct(r['ai job% (=total job posts by public firms/total ai job posts by public firms)'])}</td>
+        <td class="td-num">${fmtSalary(r['average salary of ai jobs'])}</td>
+        <td class="td-num">${fmtSalary(r['average salary of no-ai jobs'])}</td>
+        <td class="td-prem">${fmtPrem(r['salary premium (=average salary of ai jobs/average salary of no-ai jobs)'])}</td>
       </tr>`).join('');
   }
 
@@ -352,8 +362,8 @@
       const fips = NAME_FIPS[key];
       if (fips) dataMap[fips] = {
         name: r.state,
-        pct:  parseFloat(r.ai_job_pct),
-        prem: parseFloat(r.salary_premium)
+        pct:  parseFloat(r['ai job% (=total job posts by public firms/total ai job posts by public firms)']),
+        prem: parseFloat(r['salary premium (=average salary of ai jobs/average salary of no-ai jobs)'])
       };
     });
 
