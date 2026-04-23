@@ -79,6 +79,8 @@
     .reg-table tbody tr:hover { box-shadow: inset 4px 0 0 var(--accent), 0 2px 8px rgba(91,163,217,0.1); filter: brightness(0.97); position: relative; z-index: 1; }
     .reg-table td { padding: 12px 14px; vertical-align: middle; font-size: 13px; font-family: 'DM Mono', monospace; font-weight: 400; color: var(--text-dim); text-align: center; }
     .reg-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
+    .reg-table td:first-child { text-align: left !important; }
+    .reg-table th:first-child { text-align: left !important; }
     .td-state { font-family: 'DM Mono', monospace; font-weight: 600; font-size: 13px; color: var(--text); white-space: nowrap; text-align: left; }
     .td-num   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
     .td-pct   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
@@ -229,9 +231,19 @@
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
 
+        <colgroup>
+          <col style="width:90px">  <!-- State -->
+          <col style="width:45px">  <!-- Year -->
+          <col>  <!-- Total Job Posts -->
+          <col>  <!-- Total AI Job Posts -->
+          <col>  <!-- AI Job% -->
+          <col>  <!-- Average Salary AI -->
+          <col>  <!-- Average Salary No-AI -->
+          <col>  <!-- Salary Premium -->
+        </colgroup>
         <thead>
           <tr>
-            <th onclick="sortTable('state')" style="text-align:left">State</th>
+            <th onclick="sortTable('state')">State</th>
             <th onclick="sortTable('year')">Year</th>
             <th onclick="sortTable('total job posts by public firms')">Total Job Posts by Public Firms</th>
             <th onclick="sortTable('total ai job posts by public frms')">Total AI Job Posts by Public Frms</th>
