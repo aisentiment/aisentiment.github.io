@@ -66,7 +66,7 @@
     .occ-stats { font-size: 13px; color: var(--text-muted); margin-left: auto; font-family: 'DM Mono', monospace; }
     .occ-stats span { color: var(--accent2); }
     .reg-table-wrap { overflow-x: auto; margin-top: 8px; }
-    .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; font-family: 'DM Mono', monospace; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
+    .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; font-family: 'DM Mono', monospace; table-layout: fixed; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
     .reg-table thead tr { background: #f0f6fc; }
     .reg-table th { padding: 14px 10px; text-align: center; font-size: 13px; letter-spacing: 0.04em; text-transform: none; color: #1e293b; font-family: 'DM Mono', monospace; font-weight: 700; white-space: normal; word-break: break-word; min-width: 80px; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; border-bottom: 2px solid #c8dff2; position: relative; vertical-align: top; }
     .reg-table th + th { border-left: 1px solid #dde8f5; padding-left: 4px; }
@@ -228,26 +228,17 @@
     </div>
     <div class="reg-table-wrap">
       <table class="reg-table" id="regTable">
-        <colgroup>
-          <col style="width:80px">   <!-- State -->
-          <col style="width:1px">    <!-- Year -->
-          <col style="width:150px">  <!-- Total Job Posts by Public Firms -->
-          <col style="width:170px">  <!-- Total AI Job Posts by Public Frms -->
-          <col style="width:328px">  <!-- AI Job% -->
-          <col style="width:140px">  <!-- Average Salary of AI Jobs -->
-          <col style="width:140px">  <!-- Average Salary of No-AI Jobs -->
-          <col style="width:270px">  <!-- Salary Premium -->
-        </colgroup>
+
         <thead>
           <tr>
-            <th onclick="sortTable('state')">State</th>
-            <th onclick="sortTable('year')" style="text-align:right">Year</th>
-            <th onclick="sortTable('total job posts by public firms')" style="text-align:right">Total Job Posts<br>by Public Firms</th>
-            <th onclick="sortTable('total ai job posts by public frms')" style="text-align:right">Total AI Job Posts<br>by Public Frms</th>
-            <th onclick="sortTable('ai job% (=total job posts by public firms/total ai job posts by public firms)')" style="text-align:right">AI Job%<br>(=Total Job Posts by Public Firms<br>/Total AI Job Posts by Public Firms)</th>
-            <th onclick="sortTable('average salary of ai jobs')" style="text-align:right">Average Salary<br>of AI Jobs</th>
-            <th onclick="sortTable('average salary of no-ai jobs')" style="text-align:right">Average Salary<br>of No-AI Jobs</th>
-            <th onclick="sortTable('salary premium (=average salary of ai jobs/average salary of no-ai jobs)')" style="text-align:right">Salary Premium<br>(=Average Salary of AI Jobs<br>/Average Salary of No-AI Jobs)</th>
+            <th onclick="sortTable('state')" style="text-align:left">State</th>
+            <th onclick="sortTable('year')">Year</th>
+            <th onclick="sortTable('total job posts by public firms')">Total Job Posts by Public Firms</th>
+            <th onclick="sortTable('total ai job posts by public frms')">Total AI Job Posts by Public Frms</th>
+            <th onclick="sortTable('ai job% (=total job posts by public firms/total ai job posts by public firms)')">AI Job% (=Total Job Posts by Public Firms /Total AI Job Posts by Public Firms)</th>
+            <th onclick="sortTable('average salary of ai jobs')">Average Salary of AI Jobs</th>
+            <th onclick="sortTable('average salary of no-ai jobs')">Average Salary of No-AI Jobs</th>
+            <th onclick="sortTable('salary premium (=average salary of ai jobs/average salary of no-ai jobs)')">Salary Premium (=Average Salary of AI Jobs /Average Salary of No-AI Jobs)</th>
           </tr>
         </thead>
         <tbody id="regBody"></tbody>
