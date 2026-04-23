@@ -414,7 +414,7 @@
     }
     .occ-table thead tr { background: #1e293b; }
     .occ-table th {
-      padding: 15px 20px;
+      padding: 15px 10px;
       text-align: left;
       font-size: 11px;
       letter-spacing: 0.18em;
@@ -422,12 +422,15 @@
       color: rgba(255,255,255,0.55);
       font-family: 'DM Mono', monospace;
       font-weight: 500;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      min-width: 80px;
       cursor: pointer;
       user-select: none;
       transition: color 0.18s, background 0.18s;
       border-bottom: none;
       position: relative;
+      vertical-align: top;
     }
     .occ-table th + th { border-left: 1px solid rgba(255,255,255,0.07); text-align: center; }
     .occ-table th:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
@@ -816,22 +819,36 @@
     }
 
     function buildOccHeaders() {
+      // Exact display labels matching the CSV column names
+      const DISPLAY_LABELS = {
+        'occupation': 'Occupation',
+        'ai talent% relative to total headcount': 'AI Talent%<br>Relative to Total Headcount',
+        'ai-required position retention rate': 'AI-Required Position<br>Retention Rate',
+        'ai-required position hire rate': 'AI-Required Position<br>Hire Rate',
+        'average salary for positions without ai requirements': 'Average Salary for Positions<br>Without AI Requirements',
+        'average salary for positions with ai requirements': 'Average Salary for Positions<br>With AI Requirements',
+        'ai salary premium': 'AI Salary Premium',
+        'number of job posts without ai requirements': 'Number of Job Posts<br>Without AI Requirements',
+        'number of job posts with ai requirements': 'Number of Job Posts<br>With AI Requirements',
+      };
+
       const tr = document.getElementById('occThead');
       tr.innerHTML = '';
       occHeaders.forEach(h => {
         const th = document.createElement('th');
-        const label = h.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase());
-        th.textContent = label;
+        const hl = h.toLowerCase().trim();
+        const label = DISPLAY_LABELS[hl] || h.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+        th.innerHTML = label;
         th.dataset.col = h;
         th.onclick = () => {
           if (occSortCol === h) { occSortDir = occSortDir === 'asc' ? 'desc' : 'asc'; }
           else { occSortCol = h; occSortDir = 'asc'; }
           document.querySelectorAll('#occThead th').forEach(t => {
             t.classList.remove('sorted');
-            t.textContent = t.textContent.replace(/ [↑↓]$/,'');
+            t.innerHTML = DISPLAY_LABELS[t.dataset.col.toLowerCase().trim()] || t.dataset.col;
           });
           th.classList.add('sorted');
-          th.textContent = label + (occSortDir === 'asc' ? ' ↑' : ' ↓');
+          th.innerHTML = label + (occSortDir === 'asc' ? ' ↑' : ' ↓');
           applyOccFilters();
         };
         tr.appendChild(th);
@@ -878,15 +895,31 @@
       const start = (occPage - 1) * OCC_PAGE_SIZE;
       filteredOcc.slice(start, start + OCC_PAGE_SIZE).forEach(row => {
         const tr = document.createElement('tr');
-        const PCT_COLS = new Set(['ai_talent_perc','ai talent perc','retention_perc','retention perc','hire_perc','hire perc','ai_salary_premium','ai salary premium']);
+        const PCT_COLS = new Set([
+          'ai talent% relative to total headcount',
+          'ai-required position retention rate',
+          'ai-required position hire rate',
+          'ai salary premium'
+        ]);
+        const SALARY_COLS = new Set([
+          'average salary for positions without ai requirements',
+          'average salary for positions with ai requirements'
+        ]);
         const OCC_COL = occHeaders[0];
         function fmtCell(h, val) {
+          const hl = h.toLowerCase().trim();
           if (val === undefined || val === '') return '—';
-          if (PCT_COLS.has(h.toLowerCase().trim())) {
+          if (PCT_COLS.has(hl)) {
             const n = parseFloat(val);
             if (!isNaN(n)) return (n * 100).toFixed(2) + '%';
           }
+          if (SALARY_COLS.has(hl)) {
+            const n = parseFloat(String(val).replace(/,/g,''));
+            if (!isNaN(n)) return '$' + n.toLocaleString();
+          }
           if (h === OCC_COL) return smartTitle(val);
+          const n = parseFloat(String(val).replace(/,/g,''));
+          if (!isNaN(n) && val.trim() !== '') return n.toLocaleString();
           return val;
         }
         tr.innerHTML = occHeaders.map(h => `<td>${fmtCell(h, row[h])}</td>`).join('');
