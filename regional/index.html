@@ -66,20 +66,20 @@
     .occ-stats { font-size: 13px; color: var(--text-muted); margin-left: auto; font-family: 'DM Mono', monospace; }
     .occ-stats span { color: var(--accent2); }
     .reg-table-wrap { overflow-x: auto; margin-top: 8px; }
-    .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
-    .reg-table thead tr { background: #1e293b; }
-    .reg-table th { padding: 15px 10px; text-align: left; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-family: 'DM Mono', monospace; font-weight: 500; white-space: normal; word-break: break-word; min-width: 80px; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; position: relative; vertical-align: top; }
-    .reg-table th + th { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 4px; }
-    .reg-table th:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
-    .reg-table th.sorted { color: #7ec8f0; }
-    .reg-table th.sorted::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+    .reg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; font-family: 'DM Mono', monospace; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(91,163,217,0.08); }
+    .reg-table thead tr { background: #f0f6fc; }
+    .reg-table th { padding: 14px 10px; text-align: center; font-size: 13px; letter-spacing: 0.04em; text-transform: none; color: #1e293b; font-family: 'DM Mono', monospace; font-weight: 700; white-space: normal; word-break: break-word; min-width: 80px; cursor: pointer; user-select: none; transition: color 0.18s, background 0.18s; border-bottom: 2px solid #c8dff2; position: relative; vertical-align: top; }
+    .reg-table th + th { border-left: 1px solid #dde8f5; padding-left: 4px; }
+    .reg-table th:hover { background: #e4f0fb; }
+    .reg-table th.sorted { background: #daeaf8; }
+    .reg-table th.sorted::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #3b8abf, transparent); }
     .reg-table tbody tr { transition: background 0.15s; border-bottom: 1px solid rgba(0,0,0,0.045); background: #fff; }
     .reg-table tbody tr:nth-child(even) { background: #f8fafc; }
     .reg-table tbody tr:last-child td { border-bottom: none; }
     .reg-table tbody tr:hover { box-shadow: inset 4px 0 0 var(--accent), 0 2px 8px rgba(91,163,217,0.1); filter: brightness(0.97); position: relative; z-index: 1; }
-    .reg-table td { padding: 13px 20px; vertical-align: middle; font-family: 'DM Mono', monospace; }
+    .reg-table td { padding: 12px 14px; vertical-align: middle; font-size: 13px; font-family: 'DM Mono', monospace; font-weight: 400; color: var(--text-dim); text-align: center; }
     .reg-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
-    .td-state { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); white-space: nowrap; }
+    .td-state { font-family: 'DM Mono', monospace; font-weight: 600; font-size: 13px; color: var(--text); white-space: nowrap; text-align: left; }
     .td-num   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
     .td-pct   { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
     .td-prem  { font-size: 13px; color: var(--text-dim); text-align: right; font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; }
