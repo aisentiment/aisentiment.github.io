@@ -907,19 +907,8 @@
         ]);
         const OCC_COL = occHeaders[0];
         function fmtCell(h, val) {
-          const hl = h.toLowerCase().trim();
           if (val === undefined || val === '') return '—';
-          if (PCT_COLS.has(hl)) {
-            const n = parseFloat(val);
-            if (!isNaN(n)) return (n * 100).toFixed(2) + '%';
-          }
-          if (SALARY_COLS.has(hl)) {
-            const n = parseFloat(String(val).replace(/,/g,''));
-            if (!isNaN(n)) return '$' + n.toLocaleString();
-          }
           if (h === OCC_COL) return smartTitle(val);
-          const n = parseFloat(String(val).replace(/,/g,''));
-          if (!isNaN(n) && val.trim() !== '') return n.toLocaleString();
           return val;
         }
         tr.innerHTML = occHeaders.map(h => `<td>${fmtCell(h, row[h])}</td>`).join('');
