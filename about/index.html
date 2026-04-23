@@ -375,12 +375,44 @@
             <span>Assistant Professor of Accounting</span>
             <span>Chinese University of Hong Kong (CUHK)</span>
           </div>
-          <div class="team-opinion">
-            "Placeholder quote."
-          </div>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- PDF SECTION -->
+  <section style="position:relative;z-index:1;padding:56px 48px 72px;background:#f8fafc;border-top:1px solid #eef1f5;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px;">
+      <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:linear-gradient(135deg,rgba(91,163,217,0.15) 0%,rgba(56,179,110,0.1) 100%);border:1px solid rgba(91,163,217,0.25);">📄</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.01em;">Research Paper</h2>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,var(--border) 0%,transparent 100%);margin-left:4px;"></div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #dde3ec;border-radius:8px;overflow:hidden;box-shadow:0 2px 20px rgba(55,138,221,0.07);">
+      <!-- PDF viewer -->
+      <div style="position:relative;width:100%;height:680px;">
+        <iframe
+          id="pdfViewer"
+          src="/data/AI Sentiment 0420.pdf"
+          style="width:100%;height:100%;border:none;display:block;"
+          title="Research Paper">
+        </iframe>
+        <!-- Fallback if PDF doesn't load -->
+        <div id="pdfFallback" style="display:none;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f8fafc;gap:12px;">
+          <div style="font-size:48px;">📄</div>
+          <p style="font-family:'DM Mono',monospace;font-size:14px;color:var(--text-muted);">PDF preview not available in this browser.</p>
+          <a href="/data/AI Sentiment 0420.pdf" download style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:#fff;background:var(--accent);padding:10px 20px;border-radius:4px;text-decoration:none;">Download PDF</a>
+        </div>
+      </div>
+      <!-- Download bar -->
+      <div style="padding:14px 24px;border-top:1px solid #eef1f5;display:flex;align-items:center;justify-content:space-between;background:#fafbfc;">
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);">AI Sentiment Tracker — Research Paper</span>
+        <a href="/data/AI Sentiment 0420.pdf" download style="display:inline-flex;align-items:center;gap:7px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:7px 16px;border-radius:4px;transition:all 0.18s;" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download PDF
+        </a>
+      </div>
     </div>
   </section>
 
