@@ -1159,6 +1159,32 @@
       </div>
     </div>
 
+    <!-- CAR Charts Row -->
+    <div style="padding:0 48px 0;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <!-- CAR[-1,+1] -->
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Layoff — CAR[−1,+1]</div>
+            <div class="hero-chart-sub">Cumulative Abnormal Returns (three-day window)</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:300px"><canvas id="carChart11"></canvas></div>
+        <div class="hero-chart-note">Cumulative Abnormal Returns (CARs) for a three-day window surrounding the layoff announcement</div>
+      </div>
+      <!-- CAR[-3,+3] -->
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Layoff — CAR[−3,+3]</div>
+            <div class="hero-chart-sub">Cumulative Abnormal Returns (seven-day window)</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:300px"><canvas id="carChart33"></canvas></div>
+        <div class="hero-chart-note">Cumulative Abnormal Returns (CARs) for a seven-day window surrounding the layoff announcement</div>
+      </div>
+    </div>
+
     <div class="filter-bar">
       <div class="filter-group">
         <div class="filter-group-label">Keyword</div>
@@ -1239,6 +1265,7 @@
   </footer>
 
   <script>
+
 function buildHeroChart() {
       const monthly = [
         [2023,1,2.69],[2023,2,2.46],[2023,3,1.97],[2023,4,2.08],[2023,5,2.21],[2023,6,2.43],
@@ -1379,6 +1406,89 @@ function buildHeroChart() {
         }
       });
     }
+
+    function buildCARCharts() {
+      const hist11 = [0.9009,0,0,0,0,0,0,0.9009,0,0,3.6036,0.9009,0.9009,1.8018,3.6036,4.5045,4.5045,10.8108,9.9099,15.3153,9.009,14.4144,6.3063,3.6036,1.8018,0.9009,1.8018,0.9009,0.9009,0.9009,0,0,0,0,1.8018,0,0,0,0,0];
+      const hist33 = [0.9091,0,0.9091,0.9091,0.9091,0.9091,1.8182,0,0,0.9091,0.9091,2.7273,2.7273,1.8182,3.6364,4.5455,10.9091,10,6.3636,7.2727,6.3636,8.1818,3.6364,7.2727,5.4545,0.9091,0.9091,0,2.7273,0.9091,1.8182,0.9091,0.9091,0.9091,0,0,0,0,0,0.9091];
+      // KDE evaluated at each bin center (Scott's rule, matches scipy gaussian_kde)
+      const kde11 = [0.1994,0.16,0.0958,0.051,0.0511,0.108,0.2328,0.4369,0.7196,1.0373,1.3146,1.552,1.8901,2.5023,3.4931,4.9159,6.7337,8.6912,10.3194,11.1196,10.7777,9.3193,7.155,4.9238,3.1608,2.0488,1.4523,1.1296,0.8928,0.6572,0.4423,0.3231,0.3307,0.3935,0.3985,0.3058,0.1731,0.072,0.0219,0.0049];
+      const kde33 = [0.3797,0.5085,0.6364,0.7477,0.8271,0.8693,0.8908,0.9322,1.0455,1.2734,1.6385,2.1513,2.8229,3.6571,4.616,5.5912,6.4227,6.9685,7.1744,7.0814,6.7691,6.2896,5.6521,4.8629,3.9762,3.103,2.3657,1.8359,1.5047,1.3043,1.1552,1.0023,0.8262,0.6364,0.4579,0.3168,0.2275,0.1851,0.1695,0.1574];
+      const allLabels = ['-0.20','-0.19','-0.18','-0.17','-0.16','-0.15','-0.14','-0.13','-0.12','-0.11','-0.10','-0.09','-0.08','-0.07','-0.06','-0.05','-0.04','-0.03','-0.02','-0.01','0.00','0.01','0.02','0.03','0.04','0.05','0.06','0.07','0.08','0.09','0.10','0.11','0.12','0.13','0.14','0.15','0.16','0.17','0.18','0.20'];
+      const showIdx = new Set([0,5,10,15,20,25,30,35,39]);
+      const labels = allLabels.map((l,i) => showIdx.has(i) ? l : '');
+
+      function makeCARChart(id, hist, kde) {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        new Chart(canvas, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [
+              {
+                type: 'bar',
+                data: hist,
+                backgroundColor: 'rgba(189,183,107,0.65)',
+                borderColor: 'rgba(60,60,60,0.35)',
+                borderWidth: 0.4,
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                order: 2
+              },
+              {
+                type: 'line',
+                data: kde,
+                borderColor: '#4682B4',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4,
+                fill: false,
+                order: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: {
+              filter: item => item.datasetIndex === 0,
+              callbacks: {
+                title: () => '',
+                label: (item) => ' Density: ' + item.parsed.y.toFixed(4)
+              },
+              backgroundColor: '#1e293b',
+              titleColor: '#fff',
+              bodyColor: '#f8fafc',
+              titleFont: { family: 'DM Mono, monospace', size: 12, weight: '700' },
+              bodyFont: { family: 'DM Mono, monospace', size: 12 },
+              padding: 10,
+              cornerRadius: 4
+            } },
+            scales: {
+              x: {
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 0,
+                  font: { size: 10, family: 'DM Mono, monospace' },
+                  color: '#555'
+                },
+                title: { display: true, text: 'CAR', font: { size: 11, family: 'DM Mono, monospace' } },
+                grid: { display: false }
+              },
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Density', font: { size: 11, family: 'DM Mono, monospace' } },
+                ticks: { font: { size: 10, family: 'DM Mono, monospace' }, color: '#9ca3af', maxTicksLimit: 6 },
+                grid: { color: 'rgba(0,0,0,0.04)' }
+              }
+            }
+          }
+        });
+      }
+
+      makeCARChart('carChart11', hist11, kde11);
+      makeCARChart('carChart33', hist33, kde33);
+    }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script>
@@ -1403,8 +1513,9 @@ function buildHeroChart() {
       if (items.length) pills.innerHTML = items.join('');
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('load', function() {
       buildHeroChart();
+      buildCARCharts();
       buildEventsChart();
 
       fetchNewsCSV();
@@ -1529,13 +1640,14 @@ function buildHeroChart() {
             firm:               r.firm || '',
             news_type:          r.news_type || r.type || r.media || '',
             _date:              parseDate(r.date || r.time || '')
-          })).filter(r => r.news);
-          console.log('Rows loaded:', allNews.length);
+          }))
+          .filter(r => r.news)
+          .sort((a, b) => b._date - a._date);
 
+          console.log('Rows loaded:', allNews.length);
           buildTypeDropdown();
           setNewsDateBounds();
           applyNewsFilters();
-          
           document.getElementById('filterStats').style.display = 'flex';
         })
         .catch(() => {
