@@ -1186,7 +1186,18 @@
     </div>
 
     <div class="news-table-wrap">
-      <table class="news-table" id="newsTable" style="display:none">
+      <div style="padding:0 0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <input id="newsSearch" type="text" placeholder="Search headlines, company, ticker…"
+          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;outline:none;width:280px;color:var(--text);"
+          oninput="filterNewsTable()">
+        <input id="newsDateFrom" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);">to</span>
+        <input id="newsDateTo" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <button onclick="document.getElementById('newsSearch').value='';document.getElementById('newsDateFrom').value='';document.getElementById('newsDateTo').value='';filterNewsTable();"
+          style="font-family:'Syne',sans-serif;font-size:12px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;color:var(--text-muted);">✕ Clear</button>
+        <span id="newsCount" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);"></span>
+      </div>
+      <table class="news-table" id="newsTable">
         <thead>
           <tr>
             <th>Date</th>
@@ -1201,7 +1212,7 @@
             <th>Return (Day+1)</th>
           </tr>
         </thead>
-        <tbody id="newsTbody"></tbody>
+        <tbody id="newsTbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:'DM Mono',monospace;font-size:13px;">Loading news data…</td></tr></tbody>
       </table>
       <div class="news-empty" id="newsEmpty" style="display:none">
         <div class="empty-icon">📂</div>
@@ -1596,30 +1607,45 @@ function buildHeroChart() {
       fetch('/data/AI_news_stock_return.csv')
         .then(r => { if (!r.ok) throw new Error('not found'); return r.text(); })
         .then(text => {
-          const { rows } = parseCSVGeneric(text);
+          const { rows, headers } = parseCSVGeneric(text);
+          console.log('AI news CSV headers:', headers);
+          // Flexible key lookup — find first header matching each pattern
+          function col(r, ...keys) {
+            for (const k of keys) {
+              if (r[k] !== undefined && r[k] !== '') return r[k];
+            }
+            // fuzzy: find any header containing the pattern
+            const rKeys = Object.keys(r);
+            for (const k of keys) {
+              const found = rKeys.find(h => h.replace(/[^a-z0-9]/g,'').includes(k.replace(/[^a-z0-9]/g,'')));
+              if (found && r[found] !== '') return r[found];
+            }
+            return '';
+          }
           allNews = rows.map(r => ({
-            date:       r.date || '',
-            headline:   r.headline || '',
-            news_type:  r['news type'] || r.news_type || '',
-            company:    r.company || '',
-            ticker:     r.ticker || '',
-            price_m1:   r['price(day-1)'] || r['price (day-1)'] || '',
-            price_0:    r['price(day0)']  || r['price (day 0)'] || r['price(day 0)'] || '',
-            price_p1:   r['price(day+1)'] || r['price (day+1)'] || '',
-            ret_0:      r['stock return(day0)']  || r['stock return (day0)']  || r['stock return (day 0)'] || '',
-            ret_p1:     r['stock return(day+1)'] || r['stock return (day+1)'] || '',
-            _date:      parseDate(r.date || '')
+            date:      col(r, 'date'),
+            headline:  col(r, 'headline'),
+            news_type: col(r, 'news type', 'newstype', 'news_type', 'type'),
+            company:   col(r, 'company', 'firm'),
+            ticker:    col(r, 'ticker', 'symbol'),
+            price_m1:  col(r, 'price(day-1)', 'price (day-1)', 'price(day -1)'),
+            price_0:   col(r, 'price(day0)', 'price (day0)', 'price(day 0)', 'price (day 0)'),
+            price_p1:  col(r, 'price(day+1)', 'price (day+1)', 'price(day +1)'),
+            ret_0:     col(r, 'stock return(day0)', 'stock return (day0)', 'stock return(day 0)', 'stockreturn(day0)'),
+            ret_p1:    col(r, 'stock return(day+1)', 'stock return (day+1)', 'stock return(day +1)', 'stockreturn(day+1)'),
+            _date:     parseDate(col(r, 'date'))
           }))
           .filter(r => r.headline)
-          .sort((a, b) => b._date - a._date);
+          .sort((a, b) => (b._date || 0) - (a._date || 0));
 
+          console.log('Loaded rows:', allNews.length);
           filteredNews = [...allNews];
           renderNewsTable();
         })
-        .catch(() => {
-          const el = document.getElementById('newsEmpty');
-          el.style.display = 'block';
-          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/AI_news_stock_return.csv</strong></p>';
+        .catch(err => {
+          console.error('News CSV error:', err);
+          document.getElementById('newsTbody').innerHTML =
+            '<tr><td colspan="10" style="text-align:center;padding:32px;color:#dc2626;font-family:'DM Mono',monospace;font-size:13px;">⚠ Could not load data/AI_news_stock_return.csv</td></tr>';
         });
     }
 
@@ -1640,6 +1666,22 @@ function buildHeroChart() {
       return '$' + num.toFixed(2);
     }
 
+    function filterNewsTable() {
+      const q = (document.getElementById('newsSearch').value || '').toLowerCase().trim();
+      const fromVal = document.getElementById('newsDateFrom').value;
+      const toVal   = document.getElementById('newsDateTo').value;
+      const fromDate = fromVal ? new Date(fromVal) : null;
+      const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
+      filteredNews = allNews.filter(r => {
+        if (q && !(r.headline + r.company + r.ticker + r.news_type).toLowerCase().includes(q)) return false;
+        if (fromDate && r._date && r._date < fromDate) return false;
+        if (toDate   && r._date && r._date > toDate)   return false;
+        return true;
+      });
+      newsPage = 1;
+      renderNewsTable();
+    }
+
     function renderNewsTable() {
       const tbody = document.getElementById('newsTbody');
       const empty = document.getElementById('newsEmpty');
@@ -1648,11 +1690,10 @@ function buildHeroChart() {
       tbody.innerHTML = '';
 
       if (filteredNews.length === 0) {
-        empty.style.display = 'block'; table.style.display = 'none'; pag.style.display = 'none';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:\'DM Mono\',monospace;font-size:13px;">No news articles found.</td></tr>';
+        pag.style.display = 'none';
         return;
       }
-
-      empty.style.display = 'none'; table.style.display = 'table';
 
       const totalPages = Math.ceil(filteredNews.length / NEWS_PAGE_SIZE);
       const start = (newsPage - 1) * NEWS_PAGE_SIZE;
