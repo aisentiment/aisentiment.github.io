@@ -1185,60 +1185,27 @@
       </div>
     </div>
 
-    <div class="filter-bar">
-      <div class="filter-group">
-        <div class="filter-group-label">Keyword</div>
-        <input class="filter-input" id="keywordInput" type="text" placeholder="Search headlines..." oninput="applyNewsFilters()">
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">News Type</div>
-        <div class="type-dropdown-wrap">
-          <button class="type-dropdown-btn" id="typeDropdownBtn" onclick="toggleTypeDropdown(event)">All types</button>
-          <div class="type-dropdown-list" id="typeDropdownList"></div>
-        </div>
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">From</div>
-        <input class="date-input" id="dateFrom" type="date" onchange="applyNewsFilters()">
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">To</div>
-        <input class="date-input" id="dateTo" type="date" onchange="applyNewsFilters()">
-      </div>
-      <div class="filter-group" style="justify-content:flex-end">
-        <button class="clear-btn" onclick="clearNewsFilters()">✕ Clear</button>
-      </div>
-    </div>
-
-    <div class="filter-stats" id="filterStats" style="display:none">
-      Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> articles
-    </div>
-
-    <div class="sort-bar">
-      <span class="sort-label">Sort by</span>
-      <button class="sort-btn active" id="sortDateBtn"   onclick="newsSortBy('date')">Date ↓</button>
-      <button class="sort-btn"        id="sortFirmBtn"   onclick="newsSortBy('firm')">Firm</button>
-      <button class="sort-btn"        id="sortAmountBtn" onclick="newsSortBy('investment_amount')">Amount</button>
-      <button class="sort-btn"        id="sortNewsBtn"   onclick="newsSortBy('news')">Headline</button>
-      <button class="sort-btn"        id="sortTypeBtn"   onclick="newsSortBy('news_type')">Type</button>
-    </div>
-
     <div class="news-table-wrap">
       <table class="news-table" id="newsTable" style="display:none">
         <thead>
           <tr>
-            <th id="th-date"   onclick="newsSortBy('date')">Date</th>
-            <th id="th-firm"   onclick="newsSortBy('firm')">Firm</th>
-            <th id="th-amount" onclick="newsSortBy('investment_amount')">Investment/Layoff Amount</th>
-            <th id="th-news"   onclick="newsSortBy('news')">News Headline</th>
-            <th id="th-type"   onclick="newsSortBy('news_type')">News Type</th>
+            <th>Date</th>
+            <th>Headline</th>
+            <th>News Type</th>
+            <th>Company</th>
+            <th>Ticker</th>
+            <th>Price (Day−1)</th>
+            <th>Price (Day 0)</th>
+            <th>Price (Day+1)</th>
+            <th>Return (Day 0)</th>
+            <th>Return (Day+1)</th>
           </tr>
         </thead>
         <tbody id="newsTbody"></tbody>
       </table>
       <div class="news-empty" id="newsEmpty" style="display:none">
-        <div class="empty-icon">🔎</div>
-        <p id="newsEmptyMsg">No articles match your filters.</p>
+        <div class="empty-icon">📂</div>
+        <p id="newsEmptyMsg">Loading news data...</p>
       </div>
     </div>
 
@@ -1519,7 +1486,7 @@ function buildHeroChart() {
       buildEventsChart();
 
       fetchNewsCSV();
-      fetch('data/news.csv').then(r => r.text()).then(t => { pillNews = countCSVRows(t); refreshPills(); }).catch(() => {});
+      fetch('data/AI_news_stock_return.csv').then(r => r.text()).then(t => { pillNews = countCSVRows(t); refreshPills(); }).catch(() => {});
       fetch('data/role_level_data.csv').then(r => r.text()).then(t => { pillOcc = countCSVRows(t); refreshPills(); }).catch(() => {});
       fetch('data/companies.csv').then(r => r.text()).then(t => { pillComp = countCSVRows(t); refreshPills(); }).catch(() => {});
       fetch('data/ai_job_metrics_by_state_year_2025.csv').then(r => r.text()).then(t => {
@@ -1623,137 +1590,54 @@ function buildHeroChart() {
     ═══════════════════════════════════ */
     let allNews = [], filteredNews = [];
     let newsPage = 1;
-    const NEWS_PAGE_SIZE = 15;
-    let newsSortCol = 'date', newsSortDir = 'desc';
-    let selectedTypes = new Set();
+    const NEWS_PAGE_SIZE = 20;
 
     function fetchNewsCSV() {
-      fetch('/data/news.csv')
+      fetch('/data/AI_news_stock_return.csv')
         .then(r => { if (!r.ok) throw new Error('not found'); return r.text(); })
         .then(text => {
-          const { rows, headers } = parseCSVGeneric(text);
-          console.log('CSV headers found:', headers);
+          const { rows } = parseCSVGeneric(text);
           allNews = rows.map(r => ({
-            news:               r.news || r.headline || '',
-            date:               r.date || r.time || '',
-            investment_amount:  r['investment amount'] || r.investment_amount || '',
-            firm:               r.firm || '',
-            news_type:          r.news_type || r.type || r.media || '',
-            _date:              parseDate(r.date || r.time || '')
+            date:       r.date || '',
+            headline:   r.headline || '',
+            news_type:  r['news type'] || r.news_type || '',
+            company:    r.company || '',
+            ticker:     r.ticker || '',
+            price_m1:   r['price(day-1)'] || r['price (day-1)'] || '',
+            price_0:    r['price(day0)']  || r['price (day 0)'] || r['price(day 0)'] || '',
+            price_p1:   r['price(day+1)'] || r['price (day+1)'] || '',
+            ret_0:      r['stock return(day0)']  || r['stock return (day0)']  || r['stock return (day 0)'] || '',
+            ret_p1:     r['stock return(day+1)'] || r['stock return (day+1)'] || '',
+            _date:      parseDate(r.date || '')
           }))
-          .filter(r => r.news)
+          .filter(r => r.headline)
           .sort((a, b) => b._date - a._date);
 
-          console.log('Rows loaded:', allNews.length);
-          buildTypeDropdown();
-          setNewsDateBounds();
-          applyNewsFilters();
-          document.getElementById('filterStats').style.display = 'flex';
+          filteredNews = [...allNews];
+          renderNewsTable();
         })
         .catch(() => {
           const el = document.getElementById('newsEmpty');
           el.style.display = 'block';
-          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/news.csv</strong>.<br>Expected columns: <code>Date, Firm, Investment Amount, News, News_Type</code></p>';
+          el.innerHTML = '<div class="empty-icon">📂</div><p>Could not load <strong>data/AI_news_stock_return.csv</strong></p>';
         });
     }
 
-    function buildTypeDropdown() {
-      const types = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
-      const list  = document.getElementById('typeDropdownList');
-      list.innerHTML = '';
-      const allOpt = document.createElement('div');
-      allOpt.className = 'type-opt type-opt-all';
-      allOpt.innerHTML = '<span class="type-opt-check">✓</span><span>All types</span>';
-      allOpt.onclick = () => { selectedTypes.clear(); updateTypeBtn(); applyNewsFilters(); };
-      list.appendChild(allOpt);
-      types.forEach(t => {
-        const tc = getTypeClasses(t);
-        const opt = document.createElement('div');
-        opt.className = 'type-opt'; opt.dataset.val = t;
-        opt.innerHTML = `<span class="type-opt-check"></span><span class="type-color-dot ${tc.dot}"></span><span>${tc.label}</span>`;
-        opt.onclick = () => {
-          if (selectedTypes.has(t)) selectedTypes.delete(t); else selectedTypes.add(t);
-          updateTypeBtn(); applyNewsFilters();
-        };
-        list.appendChild(opt);
-      });
+    function fmtReturn(val) {
+      if (val === '' || val === null || val === undefined) return '<span style="color:#6b7280">—</span>';
+      const num = parseFloat(val);
+      if (isNaN(num)) return '<span style="color:#6b7280">—</span>';
+      const pct = (num * 100).toFixed(2) + '%';
+      const color = num > 0 ? '#16a34a' : num < 0 ? '#dc2626' : '#6b7280';
+      const prefix = num > 0 ? '+' : '';
+      return '<span style="color:' + color + ';font-weight:600">' + prefix + pct + '</span>';
     }
 
-    function updateTypeBtn() {
-      document.getElementById('typeDropdownList').querySelectorAll('.type-opt[data-val]').forEach(opt => {
-        opt.classList.toggle('selected', selectedTypes.has(opt.dataset.val));
-      });
-      const btn = document.getElementById('typeDropdownBtn');
-      if (selectedTypes.size === 0) btn.textContent = 'All types';
-      else if (selectedTypes.size === 1) btn.textContent = [...selectedTypes][0];
-      else btn.textContent = `${selectedTypes.size} types`;
-    }
-
-    function toggleTypeDropdown(e) {
-      e.stopPropagation();
-      const btn  = document.getElementById('typeDropdownBtn');
-      const list = document.getElementById('typeDropdownList');
-      const open = list.classList.toggle('open');
-      btn.classList.toggle('open', open);
-    }
-
-    document.addEventListener('click', () => {
-      document.getElementById('typeDropdownList').classList.remove('open');
-      document.getElementById('typeDropdownBtn').classList.remove('open');
-    });
-
-    function buildNewsLegend() {
-      const types  = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
-      const legend = document.getElementById('newsLegend');
-      if (!types.length) return;
-      legend.innerHTML = '<span class="legend-label">Type key</span>' +
-        types.map(t => { const tc = getTypeClasses(t); return `<span class="legend-pill ${tc.badge}"><span class="legend-dot ${tc.dot}"></span>${tc.label}</span>`; }).join('');
-    }
-
-    function setNewsDateBounds() {
-      const dates = allNews.map(r => r._date).filter(Boolean);
-      if (!dates.length) return;
-      const minD = new Date(Math.min(...dates)), maxD = new Date(Math.max(...dates));
-      const toISO = d => d.toISOString().slice(0,10);
-      ['dateFrom','dateTo'].forEach(id => { const el = document.getElementById(id); el.min = toISO(minD); el.max = toISO(maxD); });
-    }
-
-    function applyNewsFilters() {
-      const keyword  = document.getElementById('keywordInput').value.toLowerCase().trim();
-      const fromDate = document.getElementById('dateFrom').value ? new Date(document.getElementById('dateFrom').value) : null;
-      const toDate   = document.getElementById('dateTo').value   ? new Date(document.getElementById('dateTo').value + 'T23:59:59') : null;
-
-      filteredNews = allNews.filter(row => {
-        if (keyword && !row.news.toLowerCase().includes(keyword)) return false;
-        if (selectedTypes.size > 0 && !selectedTypes.has(row.news_type)) return false;
-        if (fromDate && row._date && row._date < fromDate) return false;
-        if (toDate   && row._date && row._date > toDate)   return false;
-        return true;
-      });
-
-      filteredNews.sort((a, b) => {
-        let av = newsSortCol === 'date' ? (a._date || 0) : (a[newsSortCol] || '');
-        let bv = newsSortCol === 'date' ? (b._date || 0) : (b[newsSortCol] || '');
-        if (av < bv) return newsSortDir === 'asc' ? -1 : 1;
-        if (av > bv) return newsSortDir === 'asc' ? 1  : -1;
-        return 0;
-      });
-
-      newsPage = 1;
-      renderNewsTable();
-      document.getElementById('visibleCount').textContent = filteredNews.length;
-      document.getElementById('totalCount').textContent   = allNews.length;
-    }
-
-    function newsSortBy(col) {
-      if (newsSortCol === col) newsSortDir = newsSortDir === 'asc' ? 'desc' : 'asc';
-      else { newsSortCol = col; newsSortDir = col === 'date' ? 'desc' : 'asc'; }
-      const idMap  = { date:'sortDateBtn', investment_amount:'sortAmountBtn', firm:'sortFirmBtn', news:'sortNewsBtn', news_type:'sortTypeBtn' };
-      const labels = { date:'Date', investment_amount:'Amount', firm:'Firm', news:'Headline', news_type:'Type' };
-      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-      const btn = document.getElementById(idMap[col]);
-      if (btn) { btn.classList.add('active'); btn.textContent = labels[col] + (newsSortDir === 'asc' ? ' ↑' : ' ↓'); }
-      applyNewsFilters();
+    function fmtPrice(val) {
+      if (!val) return '<span style="color:#6b7280">—</span>';
+      const num = parseFloat(val);
+      if (isNaN(num)) return val;
+      return '$' + num.toFixed(2);
     }
 
     function renderNewsTable() {
@@ -1765,9 +1649,6 @@ function buildHeroChart() {
 
       if (filteredNews.length === 0) {
         empty.style.display = 'block'; table.style.display = 'none'; pag.style.display = 'none';
-        document.getElementById('newsEmptyMsg').textContent = allNews.length === 0
-          ? 'No articles loaded. Check data/news.csv.'
-          : 'No articles match your filters.';
         return;
       }
 
@@ -1776,21 +1657,24 @@ function buildHeroChart() {
       const totalPages = Math.ceil(filteredNews.length / NEWS_PAGE_SIZE);
       const start = (newsPage - 1) * NEWS_PAGE_SIZE;
       filteredNews.slice(start, start + NEWS_PAGE_SIZE).forEach(row => {
-        const tc = getTypeClasses(row.news_type);
         const tr = document.createElement('tr');
-        tr.className = tc.row;
-        tr.innerHTML = `
-          <td class="td-date">${fmtDate(row._date) || row.date || '—'}</td>
-          <td class="td-firm">${row.firm ? smartTitle(row.firm) : '—'}</td>
-          <td class="td-amount">${row.investment_amount || '—'}</td>
-          <td class="td-news">${row.news}</td>
-          <td class="td-type"><span class="type-badge ${tc.badge}"><span class="type-badge-dot ${tc.dot}"></span>${tc.label}</span></td>`;
+        tr.innerHTML =
+          '<td class="td-date">' + (fmtDate(row._date) || row.date || '—') + '</td>' +
+          '<td class="td-news">' + (row.headline || '—') + '</td>' +
+          '<td class="td-type">' + (row.news_type || '—') + '</td>' +
+          '<td class="td-firm">' + (row.company || '—') + '</td>' +
+          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:center">' + (row.ticker || '—') + '</td>' +
+          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_m1) + '</td>' +
+          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_0) + '</td>' +
+          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_p1) + '</td>' +
+          '<td style="text-align:right">' + fmtReturn(row.ret_0) + '</td>' +
+          '<td style="text-align:right">' + fmtReturn(row.ret_p1) + '</td>';
         tbody.appendChild(tr);
       });
 
       if (totalPages > 1) {
         pag.style.display = 'flex';
-        document.getElementById('pageInfo').textContent = `Page ${newsPage} of ${totalPages}`;
+        document.getElementById('pageInfo').textContent = 'Page ' + newsPage + ' of ' + totalPages;
         document.getElementById('prevPageBtn').disabled = newsPage === 1;
         document.getElementById('nextPageBtn').disabled = newsPage === totalPages;
       } else {
@@ -1801,14 +1685,6 @@ function buildHeroChart() {
     function changeNewsPage(dir) {
       newsPage = Math.max(1, Math.min(Math.ceil(filteredNews.length / NEWS_PAGE_SIZE), newsPage + dir));
       renderNewsTable();
-    }
-
-    function clearNewsFilters() {
-      document.getElementById('keywordInput').value = '';
-      selectedTypes.clear(); updateTypeBtn();
-      document.getElementById('dateFrom').value = '';
-      document.getElementById('dateTo').value   = '';
-      applyNewsFilters();
     }
 
     
