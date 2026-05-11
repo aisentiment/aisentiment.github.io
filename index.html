@@ -259,7 +259,7 @@
 
     /* NEWS SECTION */
 
-    .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+    .td-mono { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: normal; word-break: break-word; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
@@ -280,15 +280,17 @@
       background: #1e293b;
     }
     .news-table th {
-      padding: 15px 20px;
+      padding: 12px 14px;
       text-align: left;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 10px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.55);
       font-family: 'DM Mono', monospace;
       font-weight: 500;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      vertical-align: bottom;
       cursor: pointer;
       user-select: none;
       transition: color 0.18s, background 0.18s;
@@ -319,41 +321,34 @@
       position: relative;
     }
 
-    .news-table td { padding: 14px 20px; vertical-align: middle; line-height: 1.55; }
+    .news-table td { padding: 12px 14px; vertical-align: top; line-height: 1.6; font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); word-break: break-word; white-space: normal; }
     .news-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
 
     .td-date {
-      white-space: nowrap;
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      color: var(--text-muted);
-      width: 85px;
-      letter-spacing: 0.03em;
-    }
-    .td-amount {
-      white-space: nowrap;
       font-size: 13px;
       font-family: 'DM Mono', monospace;
       color: var(--text-dim);
-      width: 155px;
-      font-weight: 500;
-    }
-    .td-firm {
+      width: 90px;
       white-space: nowrap;
+    }
+
+    .td-firm {
       font-size: 13px;
-      color: var(--text);
-      width: 110px;
-      font-weight: 700;
-      font-family: 'Syne', sans-serif;
-      letter-spacing: -0.01em;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-dim);
+      width: 130px;
+      font-weight: 500;
+      word-break: break-word;
     }
     .td-news {
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.65;
-      min-width: 300px;
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-dim);
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: normal;
     }
-    .td-type { white-space: nowrap; width: 100px; }
+    .td-type { font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); width: 110px; word-break: break-word; white-space: normal; }
 
     /* Row color schemes — richer tints + thicker left bar */
     .row-investment  { background: #eef4ff; box-shadow: inset 5px 0 0 #3b82f6; }
@@ -684,7 +679,7 @@
       pointer-events: none;
     }
 
-    .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+    .td-mono { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: normal; word-break: break-word; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
@@ -705,15 +700,17 @@
       background: #1e293b;
     }
     .news-table th {
-      padding: 15px 20px;
+      padding: 12px 14px;
       text-align: left;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 10px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.55);
       font-family: 'DM Mono', monospace;
       font-weight: 500;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      vertical-align: bottom;
       cursor: pointer;
       user-select: none;
       transition: color 0.18s, background 0.18s;
@@ -744,41 +741,34 @@
       position: relative;
     }
 
-    .news-table td { padding: 14px 20px; vertical-align: middle; line-height: 1.55; }
+    .news-table td { padding: 12px 14px; vertical-align: top; line-height: 1.6; font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); word-break: break-word; white-space: normal; }
     .news-table td + td { border-left: 1px solid rgba(0,0,0,0.04); }
 
     .td-date {
-      white-space: nowrap;
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      color: var(--text-muted);
-      width: 85px;
-      letter-spacing: 0.03em;
-    }
-    .td-amount {
-      white-space: nowrap;
       font-size: 13px;
       font-family: 'DM Mono', monospace;
       color: var(--text-dim);
-      width: 155px;
-      font-weight: 500;
-    }
-    .td-firm {
+      width: 90px;
       white-space: nowrap;
+    }
+
+    .td-firm {
       font-size: 13px;
-      color: var(--text);
-      width: 110px;
-      font-weight: 700;
-      font-family: 'Syne', sans-serif;
-      letter-spacing: -0.01em;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-dim);
+      width: 130px;
+      font-weight: 500;
+      word-break: break-word;
     }
     .td-news {
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.65;
-      min-width: 300px;
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-dim);
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: normal;
     }
-    .td-type { white-space: nowrap; width: 100px; }
+    .td-type { font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); width: 110px; word-break: break-word; white-space: normal; }
 
     /* Row color schemes — richer tints + thicker left bar */
     .row-investment  { background: #eef4ff; box-shadow: inset 5px 0 0 #3b82f6; }
@@ -1211,29 +1201,29 @@
       </div>
       <table class="news-table" id="newsTable">
         <colgroup>
-          <col style="width:85px">
-          <col><!-- headline: fills remaining -->
-          <col style="width:100px">
+          <col style="width:90px">
+          <col style="width:28%"><!-- headline -->
           <col style="width:110px">
-          <col style="width:60px">
-          <col style="width:75px">
-          <col style="width:75px">
-          <col style="width:75px">
-          <col style="width:82px">
-          <col style="width:82px">
+          <col style="width:130px">
+          <col style="width:70px">
+          <col style="width:88px">
+          <col style="width:88px">
+          <col style="width:88px">
+          <col style="width:92px">
+          <col style="width:92px">
         </colgroup>
         <thead>
           <tr>
             <th>Date</th>
             <th>Headline</th>
-            <th>News Type</th>
+            <th>Type</th>
             <th>Company</th>
             <th>Ticker</th>
-            <th>Price (Day−1)</th>
-            <th>Price (Day 0)</th>
-            <th>Price (Day+1)</th>
-            <th>Return (Day 0)</th>
-            <th>Return (Day+1)</th>
+            <th>Price<br>Day−1</th>
+            <th>Price<br>Day 0</th>
+            <th>Price<br>Day+1</th>
+            <th>Return<br>Day 0</th>
+            <th>Return<br>Day+1</th>
           </tr>
         </thead>
         <tbody id="newsTbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:'DM Mono',monospace;font-size:13px;">Loading news data…</td></tr></tbody>
@@ -1598,7 +1588,7 @@ function buildHeroChart() {
 
     function fmtDate(d) {
       if (!d) return '';
-      return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+      return (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
     }
 
     /* ═══════════════════════════════════
