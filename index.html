@@ -262,11 +262,12 @@
     .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
-    .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
-    .news-table-wrap { padding: 0 48px; overflow-x: auto; }
+    .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
+    .news-table-wrap { padding: 0; overflow-x: auto; }
 
     .news-table {
       width: 100%;
+      table-layout: fixed;
       border-collapse: separate;
       border-spacing: 0;
       font-size: 14px;
@@ -326,7 +327,7 @@
       font-size: 12px;
       font-family: 'DM Mono', monospace;
       color: var(--text-muted);
-      width: 105px;
+      width: 85px;
       letter-spacing: 0.03em;
     }
     .td-amount {
@@ -341,7 +342,7 @@
       white-space: nowrap;
       font-size: 13px;
       color: var(--text);
-      width: 145px;
+      width: 110px;
       font-weight: 700;
       font-family: 'Syne', sans-serif;
       letter-spacing: -0.01em;
@@ -350,8 +351,9 @@
       color: var(--text);
       font-size: 14px;
       line-height: 1.65;
+      min-width: 300px;
     }
-    .td-type { white-space: nowrap; width: 148px; }
+    .td-type { white-space: nowrap; width: 100px; }
 
     /* Row color schemes — richer tints + thicker left bar */
     .row-investment  { background: #eef4ff; box-shadow: inset 5px 0 0 #3b82f6; }
@@ -685,11 +687,12 @@
     .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
-    .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
-    .news-table-wrap { padding: 0 48px; overflow-x: auto; }
+    .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
+    .news-table-wrap { padding: 0; overflow-x: auto; }
 
     .news-table {
       width: 100%;
+      table-layout: fixed;
       border-collapse: separate;
       border-spacing: 0;
       font-size: 14px;
@@ -749,7 +752,7 @@
       font-size: 12px;
       font-family: 'DM Mono', monospace;
       color: var(--text-muted);
-      width: 105px;
+      width: 85px;
       letter-spacing: 0.03em;
     }
     .td-amount {
@@ -764,7 +767,7 @@
       white-space: nowrap;
       font-size: 13px;
       color: var(--text);
-      width: 145px;
+      width: 110px;
       font-weight: 700;
       font-family: 'Syne', sans-serif;
       letter-spacing: -0.01em;
@@ -773,8 +776,9 @@
       color: var(--text);
       font-size: 14px;
       line-height: 1.65;
+      min-width: 300px;
     }
-    .td-type { white-space: nowrap; width: 148px; }
+    .td-type { white-space: nowrap; width: 100px; }
 
     /* Row color schemes — richer tints + thicker left bar */
     .row-investment  { background: #eef4ff; box-shadow: inset 5px 0 0 #3b82f6; }
@@ -1145,7 +1149,7 @@
     </div>
   </section>
 
-  <section class="news-section" id="news" style="border-bottom:1px solid var(--border);padding-bottom:80px">
+  <section class="news-section" id="news" style="border-bottom:1px solid var(--border);padding-bottom:80px;padding-left:48px;padding-right:48px">
     <div class="section-header">
       <div class="section-header-inner">
         <div class="section-icon news-icon">📰</div>
@@ -1206,6 +1210,18 @@
         <span id="newsCount" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);"></span>
       </div>
       <table class="news-table" id="newsTable">
+        <colgroup>
+          <col style="width:85px">
+          <col><!-- headline: fills remaining -->
+          <col style="width:100px">
+          <col style="width:110px">
+          <col style="width:60px">
+          <col style="width:75px">
+          <col style="width:75px">
+          <col style="width:75px">
+          <col style="width:82px">
+          <col style="width:82px">
+        </colgroup>
         <thead>
           <tr>
             <th>Date</th>
@@ -1661,7 +1677,7 @@ function buildHeroChart() {
       if (val === '' || val === null || val === undefined) return '<span style="color:#6b7280">—</span>';
       const num = parseFloat(val);
       if (isNaN(num)) return '<span style="color:#6b7280">—</span>';
-      const pct = (num * 100).toFixed(2) + '%';
+      const pct = num.toFixed(2) + '%';
       const color = num > 0 ? '#16a34a' : num < 0 ? '#dc2626' : '#6b7280';
       const prefix = num > 0 ? '+' : '';
       return '<span style="color:' + color + ';font-weight:600">' + prefix + pct + '</span>';
