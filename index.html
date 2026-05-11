@@ -1219,14 +1219,14 @@
         <colgroup>
           <col style="width:90px">
           <col style="width:28%"><!-- headline -->
-          <col style="width:88px">
+          <col style="width:90px">
           <col style="width:130px">
-          <col style="width:54px">
-          <col style="width:98px">
-          <col style="width:98px">
-          <col style="width:98px">
-          <col style="width:92px">
-          <col style="width:92px">
+          <col style="width:58px">
+          <col style="width:88px">
+          <col style="width:88px">
+          <col style="width:88px">
+          <col style="width:100px">
+          <col style="width:100px">
         </colgroup>
         <thead>
           <tr>
@@ -1655,7 +1655,7 @@ function buildHeroChart() {
           allNews = rows.map(r => ({
             date:      col(r, 'date'),
             headline:  col(r, 'headline', 'news headline', 'news', 'title', 'description'),
-            news_type: col(r, 'news type', 'newstype', 'news_type', 'type'),
+            news_type: col(r, 'news type', 'newstype', 'news_type', 'type').toLowerCase().trim(),
             company:   col(r, 'company', 'firm'),
             ticker:    col(r, 'ticker', 'symbol'),
             price_m1:  col(r, 'price(day-1)', 'price (day-1)', 'price(day -1)'),
@@ -1700,7 +1700,8 @@ function buildHeroChart() {
     function populateTypeDropdown() {
       const sel = document.getElementById('newsTypeFilter');
       if (!sel) return;
-      const types = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      // Normalize to lowercase for dedup, then capitalize for display
+      const types = [...new Set(allNews.map(r => (r.news_type || '').toLowerCase().trim()).filter(Boolean))].sort();
       sel.innerHTML = '<option value="">All News Types</option>';
       types.forEach(t => {
         const opt = document.createElement('option');
