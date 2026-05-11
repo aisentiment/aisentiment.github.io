@@ -258,6 +258,10 @@
     .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
 
     /* NEWS SECTION */
+
+    .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+    .td-center { text-align: center; }
+    .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
     .news-table-wrap { padding: 0 48px; overflow-x: auto; }
 
@@ -677,6 +681,10 @@
       background: radial-gradient(circle, rgba(91,163,217,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
+
+    .td-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+    .td-center { text-align: center; }
+    .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
     .news-table-wrap { padding: 0 48px; overflow-x: auto; }
 
@@ -1624,7 +1632,7 @@ function buildHeroChart() {
           }
           allNews = rows.map(r => ({
             date:      col(r, 'date'),
-            headline:  col(r, 'headline'),
+            headline:  col(r, 'headline', 'news headline', 'news', 'title', 'description'),
             news_type: col(r, 'news type', 'newstype', 'news_type', 'type'),
             company:   col(r, 'company', 'firm'),
             ticker:    col(r, 'ticker', 'symbol'),
@@ -1645,7 +1653,7 @@ function buildHeroChart() {
         .catch(err => {
           console.error('News CSV error:', err);
           document.getElementById('newsTbody').innerHTML =
-            '<tr><td colspan="10" style="text-align:center;padding:32px;color:#dc2626;font-family:'DM Mono',monospace;font-size:13px;">⚠ Could not load data/AI_news_stock_return.csv</td></tr>';
+            '<tr><td colspan="10" style="text-align:center;padding:32px;color:#dc2626;font-size:13px;">&#9888; Could not load data/AI_news_stock_return.csv &mdash; ' + err.message + '</td></tr>';
         });
     }
 
@@ -1704,12 +1712,12 @@ function buildHeroChart() {
           '<td class="td-news">' + (row.headline || '—') + '</td>' +
           '<td class="td-type">' + (row.news_type || '—') + '</td>' +
           '<td class="td-firm">' + (row.company || '—') + '</td>' +
-          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:center">' + (row.ticker || '—') + '</td>' +
-          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_m1) + '</td>' +
-          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_0) + '</td>' +
-          '<td style="font-family:'DM Mono',monospace;font-size:12px;text-align:right">' + fmtPrice(row.price_p1) + '</td>' +
-          '<td style="text-align:right">' + fmtReturn(row.ret_0) + '</td>' +
-          '<td style="text-align:right">' + fmtReturn(row.ret_p1) + '</td>';
+          '<td class="td-mono td-center">' + (row.ticker || '—') + '</td>' +
+          '<td class="td-mono td-right">' + fmtPrice(row.price_m1) + '</td>' +
+          '<td class="td-mono td-right">' + fmtPrice(row.price_0) + '</td>' +
+          '<td class="td-mono td-right">' + fmtPrice(row.price_p1) + '</td>' +
+          '<td class="td-right">' + fmtReturn(row.ret_0) + '</td>' +
+          '<td class="td-right">' + fmtReturn(row.ret_p1) + '</td>';
         tbody.appendChild(tr);
       });
 
