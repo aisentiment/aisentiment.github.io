@@ -1219,12 +1219,12 @@
         <colgroup>
           <col style="width:90px">
           <col style="width:28%"><!-- headline -->
-          <col style="width:110px">
+          <col style="width:88px">
           <col style="width:130px">
-          <col style="width:70px">
-          <col style="width:88px">
-          <col style="width:88px">
-          <col style="width:88px">
+          <col style="width:54px">
+          <col style="width:98px">
+          <col style="width:98px">
+          <col style="width:98px">
           <col style="width:92px">
           <col style="width:92px">
         </colgroup>
@@ -1704,7 +1704,8 @@ function buildHeroChart() {
       sel.innerHTML = '<option value="">All News Types</option>';
       types.forEach(t => {
         const opt = document.createElement('option');
-        opt.value = t; opt.textContent = t;
+        opt.value = t;
+        opt.textContent = t.charAt(0).toUpperCase() + t.slice(1);
         sel.appendChild(opt);
       });
     }
