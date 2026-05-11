@@ -260,6 +260,12 @@
     /* NEWS SECTION */
 
     .td-mono { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: normal; word-break: break-word; }
+    .news-table td:nth-child(5) { text-align: center; }
+    .news-table td:nth-child(6),
+    .news-table td:nth-child(7),
+    .news-table td:nth-child(8),
+    .news-table td:nth-child(9),
+    .news-table td:nth-child(10) { text-align: right; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
@@ -309,16 +315,16 @@
     }
 
     .news-table tbody tr {
-      transition: background 0.15s, transform 0.12s;
-      border-bottom: 1px solid rgba(0,0,0,0.045);
+      background: #ffffff;
+      transition: background 0.15s;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .news-table tbody tr:nth-child(even) {
+      background: #f8fafc;
     }
     .news-table tbody tr:last-child td { border-bottom: none; }
     .news-table tbody tr:hover {
-      filter: brightness(0.965);
-      transform: scaleY(1);
-      box-shadow: inset 4px 0 0 var(--accent), 0 2px 8px rgba(91,163,217,0.1);
-      z-index: 1;
-      position: relative;
+      background: #e8f4fd !important;
     }
 
     .news-table td { padding: 12px 14px; vertical-align: top; line-height: 1.6; font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); word-break: break-word; white-space: normal; }
@@ -680,6 +686,12 @@
     }
 
     .td-mono { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-dim); white-space: normal; word-break: break-word; }
+    .news-table td:nth-child(5) { text-align: center; }
+    .news-table td:nth-child(6),
+    .news-table td:nth-child(7),
+    .news-table td:nth-child(8),
+    .news-table td:nth-child(9),
+    .news-table td:nth-child(10) { text-align: right; }
     .td-center { text-align: center; }
     .td-right { text-align: right; }
     .news-section { position: relative; z-index: 1; padding-bottom: 64px; border-bottom: 1px solid var(--border); padding-left: 48px; padding-right: 48px; }
@@ -729,16 +741,16 @@
     }
 
     .news-table tbody tr {
-      transition: background 0.15s, transform 0.12s;
-      border-bottom: 1px solid rgba(0,0,0,0.045);
+      background: #ffffff;
+      transition: background 0.15s;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .news-table tbody tr:nth-child(even) {
+      background: #f8fafc;
     }
     .news-table tbody tr:last-child td { border-bottom: none; }
     .news-table tbody tr:hover {
-      filter: brightness(0.965);
-      transform: scaleY(1);
-      box-shadow: inset 4px 0 0 var(--accent), 0 2px 8px rgba(91,163,217,0.1);
-      z-index: 1;
-      position: relative;
+      background: #e8f4fd !important;
     }
 
     .news-table td { padding: 12px 14px; vertical-align: top; line-height: 1.6; font-size: 13px; font-family: 'DM Mono', monospace; color: var(--text-dim); word-break: break-word; white-space: normal; }
@@ -1189,13 +1201,17 @@
 
     <div class="news-table-wrap">
       <div style="padding:0 0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <input id="newsSearch" type="text" placeholder="Search headlines, company, ticker…"
-          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;outline:none;width:280px;color:var(--text);"
+        <input id="newsSearch" type="text" placeholder="Search headlines…"
+          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;outline:none;width:240px;color:var(--text);"
           oninput="filterNewsTable()">
+        <select id="newsTypeFilter" onchange="filterNewsTable()"
+          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);background:#fff;cursor:pointer;">
+          <option value="">All News Types</option>
+        </select>
         <input id="newsDateFrom" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
         <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);">to</span>
         <input id="newsDateTo" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
-        <button onclick="document.getElementById('newsSearch').value='';document.getElementById('newsDateFrom').value='';document.getElementById('newsDateTo').value='';filterNewsTable();"
+        <button onclick="document.getElementById('newsSearch').value='';document.getElementById('newsTypeFilter').value='';document.getElementById('newsDateFrom').value='';document.getElementById('newsDateTo').value='';filterNewsTable();"
           style="font-family:'Syne',sans-serif;font-size:12px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;color:var(--text-muted);">✕ Clear</button>
         <span id="newsCount" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);"></span>
       </div>
@@ -1216,14 +1232,14 @@
           <tr>
             <th>Date</th>
             <th>Headline</th>
-            <th>Type</th>
+            <th>News Type</th>
             <th>Company</th>
-            <th>Ticker</th>
-            <th>Price<br>Day−1</th>
-            <th>Price<br>Day 0</th>
-            <th>Price<br>Day+1</th>
-            <th>Return<br>Day 0</th>
-            <th>Return<br>Day+1</th>
+            <th style="text-align:center">Ticker</th>
+            <th style="text-align:right">Price (Day-1)</th>
+            <th style="text-align:right">Price (Day0)</th>
+            <th style="text-align:right">Price (Day+1)</th>
+            <th style="text-align:right">Stock Return (Day0)</th>
+            <th style="text-align:right">Stock Return (Day+1)</th>
           </tr>
         </thead>
         <tbody id="newsTbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:'DM Mono',monospace;font-size:13px;">Loading news data…</td></tr></tbody>
@@ -1654,6 +1670,7 @@ function buildHeroChart() {
 
           console.log('Loaded rows:', allNews.length);
           filteredNews = [...allNews];
+          populateTypeDropdown();
           renderNewsTable();
         })
         .catch(err => {
@@ -1680,14 +1697,28 @@ function buildHeroChart() {
       return '$' + num.toFixed(2);
     }
 
+    function populateTypeDropdown() {
+      const sel = document.getElementById('newsTypeFilter');
+      if (!sel) return;
+      const types = [...new Set(allNews.map(r => r.news_type).filter(Boolean))].sort();
+      sel.innerHTML = '<option value="">All News Types</option>';
+      types.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        sel.appendChild(opt);
+      });
+    }
+
     function filterNewsTable() {
       const q = (document.getElementById('newsSearch').value || '').toLowerCase().trim();
+      const type = (document.getElementById('newsTypeFilter').value || '').toLowerCase();
       const fromVal = document.getElementById('newsDateFrom').value;
       const toVal   = document.getElementById('newsDateTo').value;
       const fromDate = fromVal ? new Date(fromVal) : null;
       const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
       filteredNews = allNews.filter(r => {
-        if (q && !(r.headline + r.company + r.ticker + r.news_type).toLowerCase().includes(q)) return false;
+        if (q && !r.headline.toLowerCase().includes(q)) return false;
+        if (type && r.news_type.toLowerCase() !== type) return false;
         if (fromDate && r._date && r._date < fromDate) return false;
         if (toDate   && r._date && r._date > toDate)   return false;
         return true;
@@ -1713,6 +1744,7 @@ function buildHeroChart() {
       const start = (newsPage - 1) * NEWS_PAGE_SIZE;
       filteredNews.slice(start, start + NEWS_PAGE_SIZE).forEach(row => {
         const tr = document.createElement('tr');
+        tr.className = 'row-default';
         tr.innerHTML =
           '<td class="td-date">' + (fmtDate(row._date) || row.date || '—') + '</td>' +
           '<td class="td-news">' + (row.headline || '—') + '</td>' +
