@@ -1201,16 +1201,16 @@
 
     <div class="news-table-wrap">
       <div style="padding:0 0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <input id="newsSearch" type="text" placeholder="Search headlines..."
+        <input id="newsSearch" type="text" placeholder="Search headlines…"
           style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;outline:none;width:240px;color:var(--text);"
           oninput="filterNewsTable()">
         <select id="newsTypeFilter" onchange="filterNewsTable()"
           style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);background:#fff;cursor:pointer;">
           <option value="">All News Types</option>
         </select>
-        <input id="newsDateFrom" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <input id="newsDateFrom" type="date" max="" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
         <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);">to</span>
-        <input id="newsDateTo" type="date" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <input id="newsDateTo" type="date" max="" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
         <button onclick="document.getElementById('newsSearch').value='';document.getElementById('newsTypeFilter').value='';document.getElementById('newsDateFrom').value='';document.getElementById('newsDateTo').value='';filterNewsTable();"
           style="font-family:'Syne',sans-serif;font-size:12px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;color:var(--text-muted);">✕ Clear</button>
         <span id="newsCount" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);"></span>
@@ -1522,6 +1522,10 @@ function buildHeroChart() {
     }
 
     window.addEventListener('load', function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('newsDateFrom').max = today;
+      document.getElementById('newsDateTo').max = today;
+
       buildHeroChart();
       buildCARCharts();
       buildEventsChart();
