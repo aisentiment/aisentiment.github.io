@@ -1,4 +1,42 @@
 Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Stock Return(Day0),Stock Return(Day+1)
+5/16/26,S&P Global’s StepForward Ties AI Workforce Push To Long Term Story,investment,S&P GLOBAL INC,SPGI,402.21,416.44,409.45,3.54%,-1.68%
+5/17/26,"Robinhood announces investments in Stripe, ElevenLabs",investment,ROBINHOOD MARKETS INC,HOOD,77.14,77.15,74.16,0.01%,-3.88%
+5/17/26,TRI Extends Anthropic AI Deal As Earnings Beat Expectations,investment,THOMSON-REUTERS CORP,TRI,82.11,89.33,86.69,8.79%,-2.96%
+5/18/26,NextEra Will Buy Dominion Energy For $67 Billion As AI Spending Accelerates,investment,NEXTERA ENERGY INC,NEE,93.36,89.04,90.06,-4.63%,1.15%
+5/19/26,Check Point acquires Israeli AI startup Deepchecks' team and technology to advance AI security platform,investment,CHECK POINT SOFTWARE TECHN,CHKP,127.28,125.98,128.33,-1.02%,1.87%
+5/19/26,Plus Therapeutics inks AI deal with Ephemeral Technologies,investment,PLUS THERAPEUTICS INC,PSTV,5.84,5.83,6.43,-0.17%,10.29%
+5/20/26,Bristol Myers deepens AI investment with Anthropic deal,investment,BRISTOL-MYERS SQUIBB CO,BMY,58.31,58.54,59.55,0.39%,1.73%
+5/20/26,"Intuit to cut 17% of staff, close offices in AI shift",investment,INTUIT INC,INTU,399.71,383.93,307.07,-3.95%,-20.02%
+5/20/26,"Meta to eliminate around 8,000 jobs as AI investment push intensifies (META)",layoff,META PLATFORMS INC,META,602.61,605.06,607.38,0.41%,0.38%
+5/20/26,Netskope integrates with Anthropic’s Claude Compliance API,investment,NETSKOPE INC,NTSK,11.43,11.75,11.57,2.80%,-1.53%
+5/21/26,AMD commits over $10B to expand Taiwan AI chip capacity,investment,ADVANCED MICRO DEVICES,AMD,447.58,449.59,467.51,0.45%,3.99%
+5/21/26,AEON Announces $8M in Funding Led by YZi Labs to Build the Settlement Layer for Agentic Economy,investment,AEON BIOPHARMA INC,AEON,0.86,0.82,0.78,-4.65%,-4.88%
+5/21/26,Amazon to invest over $33 billion in cloud and AI infrastructure in Southeast Asia,investment,AMAZON.COM INC,AMZN,265.01,268.46,266.32,1.30%,-0.80%
+5/21/26,"Spotify strikes deal with Universal Music to let premium users create AI covers, remixes",investment,SPOTIFY TECHNOLOGY SA,SPOT,433.32,489.93,519.86,13.06%,6.11%
+5/21/26,"Wellgistics Health (NASDAQ: WGRX) outlines DelivMeds AI deal, $4B valuation target and reverse split",investment,WELLGISTICS HEALTH INC,WGRX,6.45,5.35,4.15,-17.05%,-22.43%
+5/23/26,Intel Joins Race To Buy AI Startup Tenstorrent: Report,investment,INTEL CORP,INTC,119.84,123.52,121.77,3.07%,-1.42%
+5/26/26,Groupon to cut 400 jobs in AI-driven overhaul,layoff,GROUPON INC,GRPN,18.93,20.69,21.46,9.30%,3.72%
+5/26/26,IREN to buy Blackwell systems from Dell for about $1.6 billion,investment,IREN LIMITED,IREN,56.83,59.78,67.84,5.19%,13.48%
+5/26/26,"Meta cuts nearly 1,400 jobs in Seattle area, 20% of local workforce, in sweeping AI revamp",layoff,META PLATFORMS INC,META,610.26,612.34,635.26,0.34%,3.74%
+5/26/26,Qualcomm Lands AI Deal With ByteDance,investment,QUALCOMM INC,QCOM,238.16,248.82,233.4,4.48%,-6.20%
+5/26/26,Yiren Digital invests in three AI application companies,investment,YIREN DIGITAL LTD -ADR,YRD,1.6,1.43,1.48,-10.63%,3.50%
+5/27/26,AWS and Snowflake sign 5-year giant AI deal,investment,AMAZON.COM INC,AMZN,265.29,271.85,274,2.47%,0.79%
+5/27/26,Genius Group stock jumps on $100M AI investment plan ,investment,GENIUS GROUP LTD,GNS,0.22,0.22,0.27,0.00%,22.73%
+5/27/26,NatWest inks AI deal for trade finance,investment,NATWEST GROUP PLC,NWG,16.15,16.11,15.83,-0.25%,-1.74%
+5/27/26,Nvidia to invest $150 billion annually in Taiwan AI hub,investment,NVIDIA CORP,NVDA,214.86,212.6,214.25,-1.05%,0.78%
+5/27/26,Sanofi is building its own AI ecosystem to give the French pharma giant an edge,investment,SANOFI,SNY,44.15,44.43,44.29,0.63%,-0.32%
+5/27/26,"SNOW Stock Rallies After-Hours On $6B Amazon AI Deal, Strong Earnings Beat",investment,SNOWFLAKE INC,SNOW,177.6,175.26,239.2,-1.32%,36.48%
+5/27/26,Walmart Expands Edomex Logistics With AI Investment,investment,WALMART INC,WMT,118.57,118.54,118.9,-0.03%,0.30%
+5/28/26,"Apollo, Blackstone shop $36b AI deal for Anthropic",investment,APOLLO GLOBAL MGMT INC,APO,130.27,127.51,128.71,-2.12%,0.94%
+5/28/26,Asana Acquires AI Workflow Startup StackAI for $75M to Build Human-Agent OS,investment,ASANA INC,ASANA,6.41,6.66,7.7,3.90%,15.62%
+5/28/26,"Apollo, Blackstone shop $36b AI deal for Anthropic",investment,BLACKSTONE INC,BX,118,116.14,116.97,-1.58%,0.71%
+5/28/26,Lion Group Expands Into Web3 and AI Investment Markets,investment,LION GROUP HOLDING LTD -ADS,LGHL,0.98,1.01,0.96,3.06%,-4.95%
+5/28/26,"Massimo Group Launches AI Intelligent Patrol Platform Initiative Integrating Autonomous Patrol Vehicles, Spherical Security Robots and Drone Systems",investment,MASSIMO GROUP,MAMO,1.01,1.03,0.97,1.98%,-5.83%
+5/28/26,Netflix Buys Affleck AI Startup InterPositive To Reshape Content Economics,investment,NETFLIX INC,NFLX,87.35,86.36,86.02,-1.13%,-0.39%
+5/28/26,Nextpower makes $365M battery storage move into AI data center power,investment,NEXTPOWER INC,NXT,135.78,137.17,156.4,1.02%,14.02%
+5/28/26,SentinelOne to cut 8% of workforce as AI boosts productivity,layoff,SENTINELONE INC,S,17.95,18.02,16.55,0.39%,-8.16%
+5/28/26,AI job cuts hit Wix as CEO cuts 20% of workforce after Q1 earnings miss,layoff,WIX COM LTD,WIX,53.46,52.65,56.06,-1.52%,6.48%
+5/29/26,Wipro shares jump 4.6% at open on ServiceNow AI deal buzz,investment,WIPRO LTD,WIT,2.43,2.36,,-2.88%,
 5/14/26,Akamai Technologies: $205 Million Acquisition Of LayerX Advances AI Workforce Security Strategy,investment,AKAMAI TECHNOLOGIES INC,AKAM,161.14,155.67,150.88,-3.39%,-3.08%
 5/14/26,Amazon trims seller support roles as AI spending grows,layoff,AMAZON.COM INC,AMZN,270.13,267.22,264.14,-1.08%,-1.15%
 5/14/26,"Billion-Dollar AI deal, $100m in Acquisitions, $25m Founder Buy-In – Diginex Details Expansion Push",investment,DIGINEX LIMITED,DGNX,1.2,0.95,0.9649,-20.83%,1.57%
