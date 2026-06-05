@@ -1108,35 +1108,19 @@
     <a href="/" class="nav-logo">AI Sentiment Tracker</a>
     <div class="nav-links">
     <a href="/" class="nav-link">Home</a>
+    <a href="/news/" class="nav-link active">News</a>
     <a href="/regional/" class="nav-link">Regional AI Sentiment</a>
     <a href="/occupation/" class="nav-link">Occupation AI Sentiment</a>
     <a href="/company/" class="nav-link">Company AI Sentiment</a>
-    <a href="/news/" class="nav-link active">AI News</a>
     <a href="/comments/" class="nav-link">Employee AI Comment</a>
     <a href="/about/" class="nav-link">About Us</a>
     </div>
   </nav>
 
-  <section style="position:relative;z-index:1;padding:40px 48px 32px">
-    <div class="section-header">
-      <div class="section-header-inner">
-        <div class="section-icon news-icon">📰</div>
-        <h2 class="section-title">AI News</h2>
-        <div class="section-line"></div>
-      </div>
-    </div>
-  </section>
+  <section class="news-section" id="news" style="padding-bottom:80px;padding-left:48px;padding-right:48px">
 
-  <section class="news-section" id="news" style="border-bottom:1px solid var(--border);padding-bottom:80px;padding-left:48px;padding-right:48px">
-    <div class="section-header">
-      <div class="section-header-inner">
-        <div class="section-icon news-icon">📰</div>
-        <h2 class="section-title">Recent AI News</h2>
-        <div class="section-line"></div>
-      </div>
-    </div>
-    <!-- Events chart at top of news section -->
-    <div style="padding:0 48px 0;margin-bottom:28px">
+    <!-- Events chart -->
+    <div style="padding:0 0 0;margin-bottom:28px">
       <div class="hero-chart" style="overflow:visible">
         <div class="hero-chart-top">
           <div>
@@ -1150,8 +1134,7 @@
     </div>
 
     <!-- CAR Charts Row -->
-    <div style="padding:0 48px 0;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
-      <!-- CAR[-1,+1] -->
+    <div style="padding:0 0 0;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
       <div class="hero-chart" style="overflow:visible">
         <div class="hero-chart-top">
           <div>
@@ -1162,7 +1145,6 @@
         <div style="position:relative;width:100%;height:300px"><canvas id="carChart11"></canvas></div>
         <div class="hero-chart-note">Cumulative Abnormal Returns (CARs) for a three-day window surrounding the layoff announcement. The solid curve is the fitted normal distribution.</div>
       </div>
-      <!-- CAR[-3,+3] -->
       <div class="hero-chart" style="overflow:visible">
         <div class="hero-chart-top">
           <div>
@@ -1175,6 +1157,7 @@
       </div>
     </div>
 
+    <!-- News table -->
     <div class="news-table-wrap">
       <div style="padding:0 0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <input id="newsSearch" type="text" placeholder="Search headlines…"
@@ -1194,8 +1177,8 @@
       <table class="news-table" id="newsTable">
         <colgroup>
           <col style="width:90px">
-          <col style="width:28%"><!-- headline -->
-          <col style="width:93px">
+          <col style="width:28%">
+          <col style="width:90px">
           <col style="width:140px">
           <col style="width:60px">
           <col style="width:84px">
@@ -1218,11 +1201,13 @@
             <th style="text-align:right">Stock Return (Day+1)</th>
           </tr>
         </thead>
-        <tbody id="newsTbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:'DM Mono',monospace;font-size:13px;">Loading news data…</td></tr></tbody>
+        <tbody id="newsTbody">
+          <tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-size:13px;">Loading news data…</td></tr>
+        </tbody>
       </table>
       <div class="news-empty" id="newsEmpty" style="display:none">
         <div class="empty-icon">📂</div>
-        <p id="newsEmptyMsg">Loading news data...</p>
+        <p id="newsEmptyMsg">No news articles found.</p>
       </div>
     </div>
 
@@ -1231,6 +1216,7 @@
       <span class="page-info" id="pageInfo">Page 1 of 1</span>
       <button class="page-btn" id="nextPageBtn" onclick="changeNewsPage(1)">Next →</button>
     </div>
+
   </section>
 
   <footer id="about">
@@ -1248,7 +1234,13 @@
     </div>
   </footer>
 
-  <script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VMGFDM5THP', { anonymize_ip: true });
+  </script>
+<script>
 
 function buildHeroChart() {
       const monthly = [
@@ -1322,6 +1314,7 @@ function buildHeroChart() {
 
     function renderEventsChart(labels, invest, layoff) {
       const canvas = document.getElementById('heroEventsChart');
+      if (!canvas) return;
       const gctx   = canvas.getContext('2d');
       const gradI  = gctx.createLinearGradient(0,0,0,175);
       gradI.addColorStop(0,'rgba(59,138,191,0.22)'); gradI.addColorStop(1,'rgba(59,138,191,0)');
@@ -1474,8 +1467,8 @@ function buildHeroChart() {
       makeCARChart('carChart33', hist33, kde33);
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
     // Fetch CSVs just to count rows and update hero pills
     function countCSVRows(text) {
       return text.trim().split(/\r?\n/).slice(1).filter(l => l.trim()).length;
@@ -1499,10 +1492,11 @@ function buildHeroChart() {
 
     window.addEventListener('load', function() {
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('newsDateFrom').max = today;
-      document.getElementById('newsDateTo').max = today;
+      const df = document.getElementById('newsDateFrom');
+      const dt = document.getElementById('newsDateTo');
+      if (df) df.max = today;
+      if (dt) dt.max = today;
 
-      buildHeroChart();
       buildCARCharts();
       buildEventsChart();
 
@@ -1516,8 +1510,7 @@ function buildHeroChart() {
       }).catch(() => {});
     });
   </script>
-
-  <script>
+<script>
     /* ═══════════════════════════════════
        CSV PARSER
     ═══════════════════════════════════ */
@@ -1761,27 +1754,6 @@ function buildHeroChart() {
     }
 
     
-  </script>
-</body>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>
-    // pill stubs (not used on news page)
-    let pillNews=0, pillReg=0, pillOcc=0, pillComp=0;
-    function refreshPills(){}
-    function countCSVRows(t){ return t.trim().split(/\r?\n/).slice(1).filter(l=>l.trim()).length; }
-  </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script>
-    window.addEventListener('load', function() {
-      const today = new Date().toISOString().split('T')[0];
-      const df = document.getElementById('newsDateFrom');
-      const dt = document.getElementById('newsDateTo');
-      if (df) df.max = today;
-      if (dt) dt.max = today;
-      fetchNewsCSV();
-    });
   </script>
 </body>
 </html>
