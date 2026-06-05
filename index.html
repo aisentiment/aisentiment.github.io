@@ -131,8 +131,8 @@
     .hero-chart-kpi { text-align: right; }
     .hero-chart-kpi-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #3b8abf; line-height: 1; }
     .hero-chart-kpi-delta { display: flex; align-items: center; justify-content: flex-end; gap: 3px; font-size: 11px; font-weight: 600; color: #38b36e; margin-top: 3px; }
-    .hero-chart-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #eef1f5; font-size: 13px; color: #1e293b; display: flex; align-items: center; gap: 5px; }
-    .hero-chart-note::before { content: 'ℹ'; color: #5ba3d9; }
+    .hero-chart-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #eef1f5; font-size: 13px; color: #1e293b; display: flex; align-items: flex-start; gap: 6px; }
+    .hero-chart-note::before { content: '†'; color: var(--accent); font-size: 16px; font-weight: 700; font-family: 'Georgia', serif; white-space: nowrap; padding-top: 1px; opacity: 0.85; }
     .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
     .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 4.5vw, 56px); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; color: #7a8694; }
@@ -1146,13 +1146,43 @@
             </div>
           </div>
           <div style="position:relative;width:100%;height:240px"><canvas id="heroTrendChart"></canvas></div>
-          <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
+          <div class="hero-chart-note">This figure displays the quarterly share of AI-related job postings as a percentage of total job postings from January 2023 to December 2025.</div>
         </div>
       </div>
     </div>
+    <!-- AI Review Over Time Chart inside hero -->
+    <div style="padding:32px 0 40px;">
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">AI-Related Review Over Time</div>
+            <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:380px"><canvas id="aiReviewChart"></canvas></div>
+        <div class="hero-chart-note">This figure plots the quarterly share of English-language Glassdoor reviews containing AI-specific commentary. Two events are marked: the public launch of ChatGPT (Q4 2022), which broadly democratized access to generative AI, and the onset of the agentic AI era (Q1 2025), characterized by AI systems capable of autonomous reasoning, tool use, and multi-step workflow execution.</div>
+      </div>
+    </div>
+    <!-- Sentiment Distribution Chart inside hero -->
+    <div style="padding:0 0 40px;">
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Sentiment Distribution</div>
+            <div class="hero-chart-sub">Employee Glassdoor Reviews</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:420px"><canvas id="sentimentChart"></canvas></div>
+        <div id="sentLegend" style="display:flex;justify-content:center;gap:28px;padding:8px 0 2px;font-family:'DM Mono',monospace;font-size:12px;color:#333;">
+          <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(226,75,74);border-radius:2px;"></span>Negative</span>
+          <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(136,135,128);border-radius:2px;"></span>Neutral</span>
+          <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(29,158,117);border-radius:2px;"></span>Positive</span>
+        </div>
+
+        <div class="hero-chart-note">This figure presents the sentiment distribution across AI-related Glassdoor review categories for employees who mention AI in their comments. Sentiment is derived from the Harvard General Inquirer IV-4 (HIV4) dictionary, a lexicon-based tool classifying words as positive (n=1,634) or negative (n=2,004). Within each bar, the proportions of negative (red), neutral (gray), and positive (green) sentiment are expressed as a share of total reviews in that category. Overall and AI Sentiment (each n=82,160) capture general firm-level and AI-specific comment sentiment, respectively. Category definitions: AI Job Insecurity — job displacement or workforce reduction attributable to AI; AI Leadership — leadership quality and AI adoption; AI Operations &amp; Productivity — AI-driven efficiency gains and operational conditions; AI Upskill — learning, training, and skill development related to AI.</div>
+      </div>
+    </div>
   </section>
-
-
 
   <footer id="about">
     <div class="footer-inner">
@@ -1215,6 +1245,245 @@ function buildHeroChart() {
           scales:{
             x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
             y:{ position:'right', min:1.5, max:5.8, title:{display:true, text:'AI Post %', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:6,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
+          }
+        }
+      });
+    }
+
+    function buildAIReviewChart() {
+      const canvas = document.getElementById('aiReviewChart');
+      if (!canvas) return;
+
+      const labels = ['2021-Q1','2021-Q2','2021-Q3','2021-Q4',
+                      '2022-Q1','2022-Q2','2022-Q3','2022-Q4',
+                      '2023-Q1','2023-Q2','2023-Q3','2023-Q4',
+                      '2024-Q1','2024-Q2','2024-Q3','2024-Q4',
+                      '2025-Q1','2025-Q2','2025-Q3','2025-Q4'];
+      const data  = [0.21,0.22,0.25,0.22,0.21,0.21,0.23,0.23,0.25,0.30,
+                     0.32,0.33,0.34,0.43,0.44,0.49,0.59,0.82,1.06,1.20];
+      const PURPLE = 'rgba(91,95,199,1)';
+      const PURPLE_FILL = 'rgba(91,95,199,0.25)';
+
+      // Custom plugin: vertical lines + annotations
+      const vlinePlugin = {
+        id: 'vlines',
+        afterDraw(chart) {
+          const ctx = chart.ctx;
+          const xScale = chart.scales.x;
+          const yScale = chart.scales.y;
+          const lines = [
+            { idx: 7,  color: 'red',           label: ['ChatGPT Launch', '(Nov 2022)'] },
+            { idx: 16, color: 'rgb(0,140,70)',  label: ['Agentic AI Era', '(2025)'] }
+          ];
+          lines.forEach(({ idx, color, label }) => {
+            const x = xScale.getPixelForValue(idx);
+            const yTop = yScale.getPixelForValue(1.58);
+            const yBot = yScale.bottom;
+            // Draw vertical dashed line
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath(); ctx.moveTo(x, yBot); ctx.lineTo(x, yTop); ctx.stroke();
+            ctx.setLineDash([]);
+            // Draw text inside chart area
+            ctx.fillStyle = color;
+            ctx.font = 'bold 14px "Syne", sans-serif';
+            ctx.textAlign = 'center';
+            const lineH = 18;
+            const textY = yScale.getPixelForValue(1.45);
+            label.forEach((line, i) => ctx.fillText(line, x, textY + i * lineH));
+            ctx.restore();
+          });
+        }
+      };
+
+      new Chart(canvas, {
+        type: 'line',
+        plugins: [vlinePlugin],
+        data: {
+          labels,
+          datasets: [{
+            data,
+            borderColor: PURPLE,
+            borderWidth: 2.5,
+            backgroundColor: PURPLE_FILL,
+            fill: true,
+            tension: 0.3,
+            pointBackgroundColor: PURPLE,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBorderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: item => ' ' + item.parsed.y.toFixed(2) + '%'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                maxRotation: 45,
+                minRotation: 45,
+                font: { size: 11, family: 'DM Mono, monospace' },
+                color: '#555'
+              },
+              grid: { display: false },
+              border: { width: 1.2, color: '#aaa' }
+            },
+            y: {
+              min: 0, max: 1.6,
+              ticks: {
+                stepSize: 0.2,
+                callback: v => v.toFixed(1) + '%',
+                font: { size: 11, family: 'DM Mono, monospace' },
+                color: '#555'
+              },
+              grid: { color: 'rgba(0,0,0,0.04)' },
+              border: { width: 1.2, color: '#aaa' },
+              title: {
+                display: true,
+                text: 'AI Related Review (%)',
+                font: { size: 12, family: 'DM Mono, monospace', weight: '600' },
+                color: '#333'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function buildSentimentChart() {
+      const canvas = document.getElementById('sentimentChart');
+      if (!canvas) return;
+
+      const labels = [
+        ['Overall Sentiment', '(n = 82,160)'],
+        ['AI Sentiment', '(n=82,160)'],
+        ['AI Job Insecurity', '(n=4,333)'],
+        ['AI Leadership', '(n=1,641)'],
+        ['AI Operation & Productivity', '(n=48,323)'],
+        ['AI UpSkill', '(n=27,863)'],
+      ];
+      const negData = [5.1, 12.4, 21.2, 17.2, 14.0, 8.0];
+      const neuData = [5.2, 33.9, 41.1, 26.5, 35.7, 30.2];
+      const posData = [89.7, 53.7, 37.6, 56.2, 50.3, 61.8];
+
+      const NEG = 'rgb(226,75,74)';
+      const NEU = 'rgb(136,135,128)';
+      const POS = 'rgb(29,158,117)';
+
+      const sentPlugin = {
+        id: 'sentPlugin',
+        afterLayout(chart) {
+          const leg = document.getElementById('sentLegend');
+          if (!leg || !chart.chartArea) return;
+          const l = chart.chartArea.left;
+          const r = chart.canvas.offsetWidth - chart.chartArea.right;
+          leg.style.paddingLeft = l + 'px';
+          leg.style.paddingRight = r + 'px';
+          leg.style.justifyContent = 'space-around';
+        },
+        afterDraw(chart) {
+          const ctx = chart.ctx;
+          const xScale = chart.scales.x;
+          const yScale = chart.scales.y;
+
+          // Separator dashed lines between categories 0-1 and 1-2
+          [[0, 1], [1, 2]].forEach(([a, b]) => {
+            const y = (yScale.getPixelForValue(a) + yScale.getPixelForValue(b)) / 2;
+            ctx.save();
+            ctx.strokeStyle = 'rgba(100,100,100,0.6)';
+            ctx.lineWidth = 1.8;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            ctx.moveTo(xScale.left, y);
+            ctx.lineTo(xScale.right, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+          });
+
+          // Value labels inside bar segments
+          chart.data.datasets.forEach((dataset, di) => {
+            const meta = chart.getDatasetMeta(di);
+            if (!meta.visible) return;
+            meta.data.forEach((bar, idx) => {
+              const val = dataset.data[idx];
+              if (val < 8) return;
+              const cx = (bar.x + bar.base) / 2;
+              const cy = bar.y;
+              ctx.save();
+              ctx.fillStyle = 'white';
+              ctx.font = 'bold 12px "DM Mono", monospace';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(val.toFixed(1) + '%', cx, cy);
+              ctx.restore();
+            });
+          });
+        }
+      };
+
+      new Chart(canvas, {
+        type: 'bar',
+        plugins: [sentPlugin],
+        data: {
+          labels,
+          datasets: [
+            { label: 'Negative', data: negData, backgroundColor: NEG, stack: 's' },
+            { label: 'Neutral',  data: neuData, backgroundColor: NEU, stack: 's' },
+            { label: 'Positive', data: posData, backgroundColor: POS, stack: 's' },
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: item => ' ' + item.dataset.label + ': ' + item.parsed.x.toFixed(1) + '%'
+              }
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              min: 0, max: 100,
+              ticks: {
+                callback: v => v + '%',
+                stepSize: 20,
+                font: { size: 11, family: 'DM Mono, monospace' },
+                color: '#555'
+              },
+              grid: { color: 'rgba(120,120,120,0.15)' },
+              border: { width: 1.2, color: '#aaa' },
+              title: {
+                display: true,
+                text: 'Share of Reviews (%)',
+                font: { size: 12, family: 'DM Mono, monospace', weight: '600' },
+                color: '#333',
+                padding: { top: 8 }
+              }
+            },
+            y: {
+              stacked: true,
+              ticks: {
+                font: { size: 11, family: 'DM Mono, monospace' },
+                color: '#333'
+              },
+              grid: { display: false },
+              border: { width: 1.2, color: '#aaa' }
+            }
           }
         }
       });
@@ -1426,6 +1695,8 @@ function buildHeroChart() {
       if (dt) dt.max = today;
 
       buildHeroChart();
+      buildAIReviewChart();
+      buildSentimentChart();
       buildCARCharts();
       buildEventsChart();
 
