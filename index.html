@@ -1150,8 +1150,8 @@
         </div>
       </div>
     </div>
-    <!-- AI Review Over Time Chart inside hero -->
-    <div style="padding:32px 0 40px;">
+    <!-- AI Review + Sentiment Distribution in one row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:32px 0 40px;align-items:start;">
       <div class="hero-chart" style="overflow:visible">
         <div class="hero-chart-top">
           <div>
@@ -1159,12 +1159,9 @@
             <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
           </div>
         </div>
-        <div style="position:relative;width:100%;height:380px"><canvas id="aiReviewChart"></canvas></div>
+        <div style="position:relative;width:100%;height:420px"><canvas id="aiReviewChart"></canvas></div>
         <div class="hero-chart-note">This figure plots the quarterly share of English-language Glassdoor reviews containing AI-specific commentary. Two events are marked: the public launch of ChatGPT (Q4 2022), which broadly democratized access to generative AI, and the onset of the agentic AI era (Q1 2025), characterized by AI systems capable of autonomous reasoning, tool use, and multi-step workflow execution.</div>
       </div>
-    </div>
-    <!-- Sentiment Distribution Chart inside hero -->
-    <div style="padding:0 0 40px;">
       <div class="hero-chart" style="overflow:visible">
         <div class="hero-chart-top">
           <div>
@@ -1172,13 +1169,12 @@
             <div class="hero-chart-sub">Employee Glassdoor Reviews</div>
           </div>
         </div>
-        <div style="position:relative;width:100%;height:420px"><canvas id="sentimentChart"></canvas></div>
+        <div style="position:relative;width:100%;height:360px"><canvas id="sentimentChart"></canvas></div>
         <div id="sentLegend" style="display:flex;justify-content:center;gap:12px;padding:8px 0 2px;font-family:'DM Mono',monospace;font-size:12px;color:#333;">
           <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(226,75,74);border-radius:2px;"></span>Negative</span>
           <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(136,135,128);border-radius:2px;"></span>Neutral</span>
           <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(29,158,117);border-radius:2px;"></span>Positive</span>
         </div>
-
         <div class="hero-chart-note">This figure presents the sentiment distribution across AI-related Glassdoor review categories for employees who mention AI in their comments. Sentiment is derived from the Harvard General Inquirer IV-4 (HIV4) dictionary, a lexicon-based tool classifying words as positive (n=1,634) or negative (n=2,004). Within each bar, the proportions of negative (red), neutral (gray), and positive (green) sentiment are expressed as a share of total reviews in that category. Overall and AI Sentiment (each n=82,160) capture general firm-level and AI-specific comment sentiment, respectively. Category definitions: AI Job Insecurity — job displacement or workforce reduction attributable to AI; AI Leadership — leadership quality and AI adoption; AI Operations &amp; Productivity — AI-driven efficiency gains and operational conditions; AI Upskill — learning, training, and skill development related to AI.</div>
       </div>
     </div>
