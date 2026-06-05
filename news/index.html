@@ -1104,55 +1104,134 @@
   </script>
 </head>
 <body>
-
   <nav>
-    <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment Tracker</a>
-        <div class="nav-links">
-    <a href="/" class="nav-link active">Home</a>
+    <a href="/" class="nav-logo">AI Sentiment Tracker</a>
+    <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
     <a href="/regional/" class="nav-link">Regional AI Sentiment</a>
     <a href="/occupation/" class="nav-link">Occupation AI Sentiment</a>
     <a href="/company/" class="nav-link">Company AI Sentiment</a>
-    <a href="/news/" class="nav-link">AI News</a>
+    <a href="/news/" class="nav-link active">AI News</a>
     <a href="/comments/" class="nav-link">Employee AI Comment</a>
     <a href="/about/" class="nav-link">About Us</a>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">AI Sentiment Tracker Platform</div>
-        <h1>How <em>AI</em> Is Reshaping<br>the <em>Future</em> of Work</h1>
-        <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, dive into <a href="/regional/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">regional-level</a> and <a href="/occupation/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">occupational-level trends</a>, and <a href="/company/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">analyse firm-level data</a> across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
-        </p>
-        <div class="hero-insights" id="heroInsights">
-          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
-        </div>
-      </div>
-      <div class="hero-charts">
-        <div class="hero-chart">
-          <div class="hero-chart-top">
-            <div>
-              <div class="hero-chart-title">AI Post %</div>
-              <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
-            </div>
-            <div class="hero-chart-kpi">
-              <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
-              <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
-            </div>
-          </div>
-          <div style="position:relative;width:100%;height:240px"><canvas id="heroTrendChart"></canvas></div>
-          <div class="hero-chart-note">AI post % = share of new job postings requiring AI-related skills</div>
-        </div>
+  <section style="position:relative;z-index:1;padding:40px 48px 32px">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon news-icon">📰</div>
+        <h2 class="section-title">AI News</h2>
+        <div class="section-line"></div>
       </div>
     </div>
   </section>
 
+  <section class="news-section" id="news" style="border-bottom:1px solid var(--border);padding-bottom:80px;padding-left:48px;padding-right:48px">
+    <div class="section-header">
+      <div class="section-header-inner">
+        <div class="section-icon news-icon">📰</div>
+        <h2 class="section-title">Recent AI News</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <!-- Events chart at top of news section -->
+    <div style="padding:0 48px 0;margin-bottom:28px">
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">AI Investment and Layoff Announcements</div>
+            <div class="hero-chart-sub">Quarterly · 2021 – 2025</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:280px"><canvas id="heroEventsChart"></canvas></div>
+        <div class="hero-chart-note">Count of quarterly AI investment and layoff announcements</div>
+      </div>
+    </div>
 
+    <!-- CAR Charts Row -->
+    <div style="padding:0 48px 0;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <!-- CAR[-1,+1] -->
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Layoff — CAR[−1,+1]</div>
+            <div class="hero-chart-sub">Distribution of Cumulative Abnormal Returns (three-day window)</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:300px"><canvas id="carChart11"></canvas></div>
+        <div class="hero-chart-note">Cumulative Abnormal Returns (CARs) for a three-day window surrounding the layoff announcement. The solid curve is the fitted normal distribution.</div>
+      </div>
+      <!-- CAR[-3,+3] -->
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Layoff — CAR[−3,+3]</div>
+            <div class="hero-chart-sub">Distribution of Cumulative Abnormal Returns (seven-day window)</div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:300px"><canvas id="carChart33"></canvas></div>
+        <div class="hero-chart-note">Cumulative Abnormal Returns (CARs) for a seven-day window surrounding the layoff announcement. The solid curve is the fitted normal distribution.</div>
+      </div>
+    </div>
+
+    <div class="news-table-wrap">
+      <div style="padding:0 0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <input id="newsSearch" type="text" placeholder="Search headlines…"
+          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;outline:none;width:240px;color:var(--text);"
+          oninput="filterNewsTable()">
+        <select id="newsTypeFilter" onchange="filterNewsTable()"
+          style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);background:#fff;cursor:pointer;">
+          <option value="">All News Types</option>
+        </select>
+        <input id="newsDateFrom" type="date" max="" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);">to</span>
+        <input id="newsDateTo" type="date" max="" style="font-family:'DM Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:4px;outline:none;color:var(--text);" onchange="filterNewsTable()">
+        <button onclick="document.getElementById('newsSearch').value='';document.getElementById('newsTypeFilter').value='';document.getElementById('newsDateFrom').value='';document.getElementById('newsDateTo').value='';filterNewsTable();"
+          style="font-family:'Syne',sans-serif;font-size:12px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;color:var(--text-muted);">✕ Clear</button>
+        <span id="newsCount" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);"></span>
+      </div>
+      <table class="news-table" id="newsTable">
+        <colgroup>
+          <col style="width:90px">
+          <col style="width:28%"><!-- headline -->
+          <col style="width:93px">
+          <col style="width:140px">
+          <col style="width:60px">
+          <col style="width:84px">
+          <col style="width:84px">
+          <col style="width:84px">
+          <col style="width:100px">
+          <col style="width:100px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Headline</th>
+            <th>News Type</th>
+            <th>Company</th>
+            <th style="text-align:center">Ticker</th>
+            <th style="text-align:right">Price (Day-1)</th>
+            <th style="text-align:right">Price (Day0)</th>
+            <th style="text-align:right">Price (Day+1)</th>
+            <th style="text-align:right">Stock Return (Day0)</th>
+            <th style="text-align:right">Stock Return (Day+1)</th>
+          </tr>
+        </thead>
+        <tbody id="newsTbody"><tr><td colspan="10" style="text-align:center;padding:32px;color:#9ca3af;font-family:'DM Mono',monospace;font-size:13px;">Loading news data…</td></tr></tbody>
+      </table>
+      <div class="news-empty" id="newsEmpty" style="display:none">
+        <div class="empty-icon">📂</div>
+        <p id="newsEmptyMsg">Loading news data...</p>
+      </div>
+    </div>
+
+    <div class="news-pagination" id="newsPagination" style="display:none">
+      <button class="page-btn" id="prevPageBtn" onclick="changeNewsPage(-1)" disabled>← Prev</button>
+      <span class="page-info" id="pageInfo">Page 1 of 1</span>
+      <button class="page-btn" id="nextPageBtn" onclick="changeNewsPage(1)">Next →</button>
+    </div>
+  </section>
 
   <footer id="about">
     <div class="footer-inner">
@@ -1682,6 +1761,27 @@ function buildHeroChart() {
     }
 
     
+  </script>
+</body>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script>
+    // pill stubs (not used on news page)
+    let pillNews=0, pillReg=0, pillOcc=0, pillComp=0;
+    function refreshPills(){}
+    function countCSVRows(t){ return t.trim().split(/\r?\n/).slice(1).filter(l=>l.trim()).length; }
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script>
+    window.addEventListener('load', function() {
+      const today = new Date().toISOString().split('T')[0];
+      const df = document.getElementById('newsDateFrom');
+      const dt = document.getElementById('newsDateTo');
+      if (df) df.max = today;
+      if (dt) dt.max = today;
+      fetchNewsCSV();
+    });
   </script>
 </body>
 </html>
