@@ -411,3 +411,36 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 6/4/26,Palantir Lands Major AI Deal With Kirkland & Ellis,investment,PALANTIR TECHNOLOG INC,PLTR,142.2,141.7,135.53,-0.35%,-4.35%
 6/4/26,Otsuka showcases kidney drug data; Pfizer cuts an AI deal,investment,PFIZER INC,PFE,25.34,25.69,26.04,1.38%,1.36%
 6/4/26,SK Telecom nears deal to sell stake in Ulsan AI data centre,divestment,SK TELECOM CO LTD,SKM,45.04,41.01,37.44,-8.95%,-8.71%
+6/4/26,"PayPay (PAYP), T&D Holdings Form AI-Driven Insurance and Fintech Alliance",investment,PAYPAL HOLDINGS INC,PYPL,42.47,42.75,41.29,0.006592889,-0.034152047
+6/5/26,Amazon unveils latest warehouse robot as tech giants continue AI layoffs,investment,AMAZON.COM INC,AMZN,253.79,246.03,245.22,-3.06%,-0.003292281
+6/5/26,Google and SpaceX Sign $920M-a-Month AI Deal,investment,ALPHABET INC,GOOG,369.27,365.76,361.17,-0.95%,-0.012549213
+6/5/26,Sanofi Owkin AI Deal Puts R&D Shift And Valuation In Focus,investment,SANOFI,SNY,44.38,45.02,43.88,1.44%,-0.025322079
+6/5/26,Hitachi and Intel announce strategic collaboration to accelerate AI transformation across key industries,investment,INTEL CORP,INTC,111.78,99.17,110.27,-0.112810879,0.111929011
+6/5/26,TeraWulf Eyes Leveraged Loans After Data Center Bond Market Win,investment,TERAWULF INC,WULF,26.19,24,25.86,-0.083619702,0.0775
+6/6/26,Apollo & Blackstone Inc. (BX) Seal $35B Anthropic AI Deal,investment,APOLLO GLOBAL MGMT INC,APO,128.03,127.57,132.7,-0.003592908,0.040213216
+6/6/26,Apollo & Blackstone Inc. (BX) Seal $35B Anthropic AI Deal,investment,BLACKSTONE INC,BX,115.35,114.19,120.29,-0.01005635,0.053419739
+6/7/26,NVIDIA and Doosan Group Collaborate to Advance Physical AI and AI Factory Infrastructure,investment,NVIDIA CORP,NVDA,205.1,208.64,208.19,0.017259873,-0.002156825
+6/8/26,Amazon Raises Record $14B Canadian Bond For AI Funding,investment,AMAZON.COM INC,AMZN,246.03,245.22,244.19,-0.003292281,-0.00420031
+6/8/26,AMD Expands UK AI Investment,investment,ADVANCED MICRO DEVICES,AMD,466.38,490.33,475.51,0.051352974,-0.030224543
+6/8/26,Cisco joins forces with UK Government to bring AI skills and innovation to communities nationwide,investment,CISCO SYSTEMS INC,CSCO,121.64,124.15,120.36,0.02063466,-0.030527588
+6/8/26,Corning strikes another multibillion-dollar AI deal. What the new Amazon pact means for the stock,investment,CORNING INC,GLW,177.58,187.54,173.94,0.056087397,-0.072517863
+6/8/26,Meta brings free AI workforce training program to Baton Rouge,investment,META PLATFORMS INC,META,593,585.39,584.59,-0.012833052,-0.00136661
+6/8/26,UK Government names Pearson as partner to advance AI workforce skills,investment,PEARSON PLC,PSO,15.56,15.45,15.48,-0.007069409,0.001941748
+6/8/26,POET Technologies Soars On Lumilens AI Deal And $400M Raise,investment,POET TECHNOLOGIES INC,POET,11.86,12.28,10.77,0.035413153,-0.122964169
+6/8/26,"SK Hynix Seals Multi-Year AI Deal With Nvidia, June 08",investment,NVIDIA CORP,NVDA,205.1,208.64,208.19,0.017259873,-0.002156825
+6/9/26,Applied Materials Expands Singapore Manufacturing to Support AI Chip Demand,investment,APPLIED MATERIALS INC,AMAT,492.17,499.21,497.01,0.014304001,-0.004406963
+6/8/26,"INHD Soars 3,661% in One Day as $3M AI Deal Sparks Frenzy Despite Reverse Splits and Dilution Risks",investment,INNO HOLDINGS INC,INHD,1.05,39.49,39.49,36.60952381,0
+6/9/26,Meta Partners With Reliance on AI-Enabled Data Center in India,investment,META PLATFORMS INC,META,585.39,584.59,570.98,-0.00136661,-0.023281274
+6/9/26,Meta Partners With Reliance on AI-Enabled Data Center in India,investment,RELIANCE INC,RS,396.26,401.8,394.29,0.01398072,-0.018690891
+6/9/26,Salesforce lays off employees in a new round of cuts,layoff,SALESFORCE INC,CRM,182.08,174.9,170.48,-0.039433216,-0.025271584
+6/10/26,Amazon secures $17.5 billion loan facility for AI spending,investment,AMAZON.COM INC,AMZN,244.19,238,241.51,-0.025349113,0.014747899
+6/10/26,SKT makes additional investment in Anthropic to support AI collaboration,investment,SK TELECOM CO LTD,SKM,41.21,37.81,37.92,-0.082504247,0.002909283
+6/10/26,"SKT, NTT, Chunghwa Launch $500M AI Investment Fund",investment,SK TELECOM CO LTD,SKM,41.21,37.81,37.92,-0.082504247,0.002909283
+6/10/26,SLB strikes deal with Venezuela's PDVSA to modernise oil sector with AI push,investment,SLB LTD,SLB,55.85,55.51,56,-0.006087735,0.008827238
+6/10/26,Warner Music acquires AI startup that fights unauthorized AI.,investment,WARNER MUSIC GROUP CORP,WMG,29.36,28.69,28.55,-0.022820163,-0.004879749
+6/11/26,DXC Tech Expands Anthropic Claude AI Deal,investment,DXC TECHNOLOGY CO,DXC,8.82,8.82,9.17,0,0.03968254
+6/11/26,JPMorgan Backs Bezos AI Startup Prometheus To Expand Industrial AI Reach,investment,JPMORGAN CHASE & CO,JPM,309.14,313.49,320.72,0.014071295,0.023062937
+6/11/26,Oracle boosts AI funding to $40 billion as shares drop after hours,investment,ORACLE CORP,ORCL,201.26,184.1,184.13,-0.085262844,0.000162955
+6/11/26,ServiceNow Layoffs: Software Giant Cuts Hundreds of Jobs As AI Efficiencies Reshape Workforce,layoff,SERVICENOW INC,NOW,106.06,103.08,102.15,-0.028097303,-0.009022119
+6/12/26,Janus Henderson develops AI investment tools with Percepta and Anthropic,investment,JANUS HENDERSON GROUP PLC,JHG,51.83,51.84,51.81,0.000192938,-0.000578704
+6/12/26,NVIDIA Expands Global AI Infrastructure Role With Vera And Sharon AI Deal,investment,NVIDIA CORP,NVDA,204.87,205.19,212.35,0.001561966,0.034894488
