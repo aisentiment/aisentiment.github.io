@@ -1093,6 +1093,31 @@
       .main-content { padding: 32px 20px 48px; }
     }
     /* end styles */
+
+    /* Explore the platform cards */
+    .explore-label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .explore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 0 32px; }
+    .explore-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem; transition: box-shadow 0.15s, border-color 0.15s; text-decoration: none; display: block; }
+    .explore-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.18); }
+    .explore-card-full { grid-column: 1 / -1; }
+    .explore-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; }
+    .explore-card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .explore-card-title { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+    .explore-badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 10px; white-space: nowrap; }
+    .explore-card-body { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+    .icon-blue  { background: #E6F1FB; } .icon-blue  svg { stroke: #378ADD; }
+    .icon-amber { background: #FAEEDA; } .icon-amber svg { stroke: #BA7517; }
+    .icon-teal  { background: #E1F5EE; } .icon-teal  svg { stroke: #1D9E75; }
+    .icon-egray { background: #F1EFE8; } .icon-egray svg { stroke: #5F5E5A; }
+    .icon-red   { background: #FCEBEB; } .icon-red   svg { stroke: #E24B4A; }
+    .icon-egreen{ background: #EAF3DE; } .icon-egreen svg { stroke: #3B6D11; }
+    .badge-blue  { background: #E6F1FB; color: #0C447C; }
+    .badge-amber { background: #FAEEDA; color: #633806; }
+    .badge-teal  { background: #E1F5EE; color: #085041; }
+    .badge-egray { background: #F1EFE8; color: #444441; }
+    .badge-red   { background: #FCEBEB; color: #791F1F; }
+    .badge-egreen{ background: #EAF3DE; color: #27500A; }
+    svg.eicon { width: 18px; height: 18px; stroke-width: 1.75; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   </style>
   <!-- Google Analytics (cookieless) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
@@ -1107,15 +1132,6 @@
 
   <nav>
     <a class="nav-logo" href="/" style="text-decoration:none">AI Sentiment Tracker</a>
-        <div class="nav-links">
-    <a href="/" class="nav-link active">Home</a>
-    <a href="/news/" class="nav-link">News</a>
-    <a href="/regional/" class="nav-link">Regional AI Sentiment</a>
-    <a href="/occupation/" class="nav-link">Occupation AI Sentiment</a>
-    <a href="/company/" class="nav-link">Company AI Sentiment</a>
-    <a href="/comments/" class="nav-link">Employee AI Comment</a>
-    <a href="/about/" class="nav-link">About Us</a>
-    </div>
   </nav>
 
   <!-- HERO -->
@@ -1150,6 +1166,67 @@
         </div>
       </div>
     </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:8px 0 24px;">
+    <p class="explore-label">Explore the platform</p>
+    <div class="explore-grid">
+      <a href="/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-blue"><svg class="eicon" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+          <span class="explore-card-title">Home</span>
+          <span class="explore-badge badge-blue">Overview</span>
+        </div>
+        <p class="explore-card-body">The big picture: AI's share of total job postings over time, the rising weight of AI discussion in employee reviews, and how workers' sentiment toward AI compares with their overall employer sentiment.</p>
+      </a>
+      <a href="/news/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-amber"><svg class="eicon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg></div>
+          <span class="explore-card-title">News</span>
+          <span class="explore-badge badge-amber">Events &amp; markets</span>
+        </div>
+        <p class="explore-card-body">AI-related investment and layoff events at public firms from 2021–2025, including stock market reactions. Markets are not always positive toward AI-driven layoffs. Updated continuously — contact us for further details.</p>
+      </a>
+      <a href="/regional/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-teal"><svg class="eicon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <span class="explore-card-title">Regional AI Sentiment</span>
+          <span class="explore-badge badge-teal">State-level</span>
+        </div>
+        <p class="explore-card-body">State-by-state AI job share and AI salary premiums for 2025, weighted by posting volume. Explore which states lead in AI hiring demand and where AI skills command the largest wage advantage.</p>
+      </a>
+      <a href="/occupation/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-egray"><svg class="eicon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+          <span class="explore-card-title">Occupation AI Sentiment</span>
+          <span class="explore-badge badge-egray">1,436 roles</span>
+        </div>
+        <p class="explore-card-body">AI salary premiums by industry and occupation. The full table covers salary premiums, AI talent weight, and hiring and retention rates across 1,436 occupations using 2025 public firm data.</p>
+      </a>
+      <a href="/company/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-red"><svg class="eicon" viewBox="0 0 24 24"><path d="M3 21h18M3 10l9-7 9 7"/><path d="M9 21V12h6v9"/></svg></div>
+          <span class="explore-card-title">Company AI Sentiment</span>
+          <span class="explore-badge badge-red">3,202 firms</span>
+        </div>
+        <p class="explore-card-body">Firm-level 2025 data: AI job share, salary premiums, AI talent proportion (LinkedIn), new hire rates, retention rates, employee sentiment (Glassdoor), and executive AI sentiment (earnings calls).</p>
+      </a>
+      <a href="/comments/" class="explore-card">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-egreen"><svg class="eicon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <span class="explore-card-title">Employee AI Comment</span>
+          <span class="explore-badge badge-egreen">Your voice</span>
+        </div>
+        <p class="explore-card-body">Have thoughts about AI in your workplace? Share and read anonymous experiences from workers across industries. Open to anyone who wants to contribute their perspective.</p>
+      </a>
+      <a href="/about/" class="explore-card explore-card-full">
+        <div class="explore-card-header">
+          <div class="explore-card-icon icon-egray"><svg class="eicon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <span class="explore-card-title">About Us</span>
+        </div>
+        <p class="explore-card-body">Meet the research team behind this platform. All data and figures originate from our academic paper, available for download here. For event-level data inquiries or collaboration, reach out via the contact information on this page.</p>
+      </a>
+    </div>
+
     <!-- AI Review + Sentiment Distribution in one row -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:32px 0 40px;align-items:stretch;">
       <div class="hero-chart" style="overflow:visible;height:100%;box-sizing:border-box">
