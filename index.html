@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Sentiment Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
@@ -111,35 +111,69 @@
     .hero-chart {
       background: #fff;
       border: 1px solid #dde3ec;
-      border-radius: 6px;
-      padding: 16px 18px 12px;
-      box-shadow: 0 2px 20px rgba(55,138,221,0.08), 0 1px 3px rgba(0,0,0,0.04);
+      border-radius: 14px;
+      padding: 18px 20px 14px;
+      box-shadow: 0 2px 16px rgba(55,138,221,0.07), 0 1px 3px rgba(0,0,0,0.03);
       position: relative;
       overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .hero-chart:hover {
+      box-shadow: 0 6px 24px rgba(55,138,221,0.11), 0 2px 6px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
     }
     .hero-chart::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #5ba3d9 0%, #38b36e 100%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
     }
     .hero-chart canvas { width: 100% !important; }
-    .hero-chart-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-    .hero-chart-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #1e293b; }
-    .hero-chart-sub { font-size: 10px; color: #1e293b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .hero-chart-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .hero-chart-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); }
+    .hero-chart-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; }
     .hero-chart-kpi { text-align: right; }
-    .hero-chart-kpi-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #3b8abf; line-height: 1; }
-    .hero-chart-kpi-delta { display: flex; align-items: center; justify-content: flex-end; gap: 3px; font-size: 11px; font-weight: 600; color: #38b36e; margin-top: 3px; }
-    .hero-chart-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #eef1f5; font-size: 13px; color: #1e293b; display: flex; align-items: flex-start; gap: 6px; }
+    .hero-chart-kpi-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent2); line-height: 1; }
+    .hero-chart-kpi-delta { display: flex; align-items: center; justify-content: flex-end; gap: 3px; font-size: 11px; font-weight: 600; color: var(--green); margin-top: 3px; }
+    .hero-chart-note { margin-top: 10px; padding-top: 10px; border-top: 1px solid #eef1f5; font-size: 13px; color: var(--text-dim); display: flex; align-items: flex-start; gap: 6px; line-height: 1.6; }
     .hero-chart-note::before { content: '†'; color: var(--accent); font-size: 16px; font-weight: 700; font-family: 'Georgia', serif; white-space: nowrap; padding-top: 1px; opacity: 0.85; }
-    .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 4.5vw, 56px); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 20px; color: #7a8694; }
-    .hero h1 em { font-family: 'Instrument Serif', serif;  color: var(--accent); }
-    .hero-desc { color: var(--text-dim); line-height: 1.75; font-size: 16px; margin-bottom: 36px; }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(91,163,217,0.18);
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .hero h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      background: linear-gradient(120deg, var(--accent) 0%, #38b36e 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc { color: var(--text-dim); line-height: 1.8; font-size: 15px; margin-bottom: 28px; font-family: 'Inter', system-ui, sans-serif; }
     .hero-insights { display: flex; flex-wrap: wrap; gap: 8px; }
-    .insight-pill { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); padding: 9px 16px; font-size: 14px; color: var(--text-dim); cursor: default; }
+    .insight-pill { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 9px 16px; font-size: 13px; color: var(--text-dim); cursor: default; box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: border-color 0.18s, box-shadow 0.18s; }
     .pill-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .pill-dot.news  { background: var(--accent); }
     .pill-dot.radar { background: var(--accent2); }
@@ -1095,10 +1129,11 @@
     /* end styles */
 
     /* Explore the platform cards */
-    .explore-label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.25rem; }
-    .explore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 0 32px; }
-    .explore-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem; transition: box-shadow 0.15s, border-color 0.15s; text-decoration: none; display: block; }
-    .explore-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.18); }
+    .explore-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 8px; }
+    .explore-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
+    .explore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 0 40px; }
+    .explore-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); transition: box-shadow 0.18s, border-color 0.18s, transform 0.18s; text-decoration: none; display: block; }
+    .explore-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.07); border-color: rgba(91,163,217,0.3); transform: translateY(-1px); }
     .explore-card-full { grid-column: 1 / -1; }
     .explore-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; }
     .explore-card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -1118,6 +1153,163 @@
     .badge-red   { background: #FCEBEB; color: #791F1F; }
     .badge-egreen{ background: #EAF3DE; color: #27500A; }
     svg.eicon { width: 18px; height: 18px; stroke-width: 1.75; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Redesigned hero intro */
+    .hero-lead {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 20px;
+      max-width: 620px;
+    }
+
+    .hero-quote {
+      position: relative;
+      margin: 0 0 8px;
+      padding: 8px 0 8px 32px;
+    }
+    .hero-quote-mark {
+      position: absolute;
+      left: -10px; top: -26px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 92px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent) 0%, #38b36e 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0.35;
+      font-style: italic;
+      pointer-events: none;
+    }
+    .hero-quote-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .hero-quote-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .findings-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px; font-family: 'DM Mono', monospace;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .findings-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
+    .findings-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .finding-tile {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: left;
+      transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+    }
+    .finding-tile:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.07); transform: translateY(-2px); border-color: rgba(91,163,217,0.35); }
+    .finding-icon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+    }
+    .finding-icon svg { width: 18px; height: 18px; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .finding-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+    .finding-desc { font-size: 12px; line-height: 1.55; color: var(--text-muted); }
+
+    @media (max-width: 980px) {
+      .findings-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .findings-row { grid-template-columns: 1fr; }
+    }
+
+    .findings-panel {
+      grid-column: 2;
+      background: linear-gradient(165deg, rgba(91,163,217,0.06) 0%, rgba(56,179,110,0.05) 55%, rgba(91,163,217,0.04) 100%);
+      border: 1px solid rgba(91,163,217,0.2);
+      border-radius: 16px;
+      padding: 28px 28px 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(91,163,217,0.08);
+    }
+    .findings-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
+    }
+    .findings-panel::after {
+      content: '†';
+      position: absolute;
+      right: 4px; bottom: -42px;
+      font-family: 'Georgia', serif;
+      font-size: 170px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .findings-list {
+      display: flex; flex-direction: column; gap: 4px;
+      position: relative;
+    }
+    .findings-list::before {
+      content: '';
+      position: absolute;
+      left: 13px; top: 26px; bottom: 26px;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(91,163,217,0.35) 0%, rgba(56,179,110,0.35) 100%);
+      z-index: 0;
+    }
+    .finding-row {
+      display: flex; gap: 14px; align-items: flex-start;
+      position: relative; z-index: 1;
+      padding: 10px 8px;
+      margin: 0 -8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .finding-row:hover { background: rgba(255,255,255,0.55); }
+    .finding-num-marker {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--green) 100%);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.7), 0 2px 6px rgba(91,163,217,0.3);
+      margin-top: 1px;
+    }
+    .findings-panel .finding-desc {
+      font-family: 'Georgia', serif;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+    .findings-panel .finding-desc strong {
+      color: var(--text);
+      font-weight: 700;
+    }
   </style>
   <!-- Google Analytics (cookieless) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMGFDM5THP"></script>
@@ -1140,29 +1332,55 @@
       <div class="hero-text">
         <div class="hero-eyebrow">AI Sentiment Tracker Platform</div>
         <h1>How <em>AI</em> Is Reshaping<br>the <em>Future</em> of Work</h1>
-        <p class="hero-desc">
-          The AI revolution is reshaping the labor market in real time. Explore the latest developments through curated news, dive into <a href="/regional/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">regional-level</a> and <a href="/occupation/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">occupational-level trends</a>, and <a href="/company/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">analyse firm-level data</a> across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
+        <p class="hero-lead">
+          This website tracks how AI is reshaping the labor market, drawing on job postings, employee reviews, earnings calls, and financial market data.
         </p>
-        <div class="hero-insights" id="heroInsights">
-          <div class="insight-pill"><span class="pill-dot news"></span><span>Recent AI News</span></div>
-          <div class="insight-pill"><span class="pill-dot radar"></span><span>Company Radar Analysis</span></div>
-          <div class="insight-pill"><span class="pill-dot dim"></span><span>AI Talent · Hiring · Retention · Salary · Sentiment</span></div>
+        <p class="hero-desc">
+          Explore the latest developments through curated news, dive into <a href="/regional/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">regional-level</a> and <a href="/occupation/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">occupational-level trends</a>, and <a href="/company/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">analyse firm-level data</a> across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
+        </p>
+        <div class="hero-insights" id="heroInsights"></div>
+
+        <div class="hero-quote">
+          <span class="hero-quote-mark">&ldquo;</span>
+          <div class="hero-quote-label">Headline Finding</div>
+          <div class="hero-quote-text">Using textual analysis of Glassdoor reviews, we find that employee sentiment toward AI is significantly more negative than workers' overall sentiment toward their employers, with concerns about job security emerging as the single most consequential driver of that gap.</div>
         </div>
+
       </div>
-      <div class="hero-charts">
-        <div class="hero-chart">
-          <div class="hero-chart-top">
+
+      <div class="findings-panel">
+        <div class="findings-label">Key Findings</div>
+        <div class="findings-list">
+          <div class="finding-row">
+            <div class="finding-num-marker">1</div>
             <div>
-              <div class="hero-chart-title">AI Post %</div>
-              <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
-            </div>
-            <div class="hero-chart-kpi">
-              <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
-              <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
+              <div class="finding-desc"><strong>AI-related job postings have grown steadily</strong> as a share of total postings, reflecting rising employer demand.</div>
             </div>
           </div>
-          <div style="position:relative;width:100%;height:240px"><canvas id="heroTrendChart"></canvas></div>
-          <div class="hero-chart-note">This figure displays the quarterly share of AI-related job postings as a percentage of total job postings from January 2023 to December 2025.</div>
+          <div class="finding-row">
+            <div class="finding-num-marker">2</div>
+            <div>
+              <div class="finding-desc">At the firm level, the displacement effect falls most heavily on rank-and-file employees: greater AI talent concentration within a firm is associated with <strong>reduced hiring and elevated turnover</strong> among junior workers.</div>
+            </div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-num-marker">3</div>
+            <div>
+              <div class="finding-desc">Market reactions to AI announcements are mixed but investors tend to <strong>react more negatively to AI-driven layoff announcements</strong>.</div>
+            </div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-num-marker">4</div>
+            <div>
+              <div class="finding-desc">Geographically, AI job posting shares are highest along the coasts, where technology and defense-adjacent industries are concentrated, yet the <strong>AI salary premium is paradoxically largest outside established tech hubs</strong>, where AI skills remain scarce enough to command an outsized wage advantage.</div>
+            </div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-num-marker">5</div>
+            <div>
+              <div class="finding-desc">At the industry level, <strong>Wholesale &amp; Retail Trade and Transportation show the largest salary premiums</strong>, consistent with the same scarcity logic: AI talent is comparatively rare in these traditionally non-technical sectors, so employers pay a substantial premium to attract it.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1228,7 +1446,7 @@
     </div>
 
     <!-- AI Review + Sentiment Distribution in one row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:32px 0 40px;align-items:stretch;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 0 40px;align-items:stretch;">
       <div class="hero-chart" style="overflow:visible;height:100%;box-sizing:border-box">
         <div class="hero-chart-top">
           <div>
@@ -1253,6 +1471,36 @@
           <span style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:28px;height:14px;background:rgb(29,158,117);border-radius:2px;"></span>Positive</span>
         </div>
         <div class="hero-chart-note">This figure presents the sentiment distribution across AI-related Glassdoor review categories for employees who mention AI in their comments. Sentiment is derived from the Harvard General Inquirer IV-4 (HIV4) dictionary, a lexicon-based tool classifying words as positive (n=1,634) or negative (n=2,004). Within each bar, the proportions of negative (red), neutral (gray), and positive (green) sentiment are expressed as a share of total reviews in that category. Overall and AI Sentiment (each n=82,160) capture general firm-level and AI-specific comment sentiment, respectively. Category definitions: AI Job Insecurity — job displacement or workforce reduction attributable to AI; AI Leadership — leadership quality and AI adoption; AI Operations &amp; Productivity — AI-driven efficiency gains and operational conditions; AI Upskill — learning, training, and skill development related to AI.</div>
+      </div>
+    </div>
+    <!-- AI Post % + Hire Rate and Turnover by Seniority -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 0 40px;align-items:stretch;">
+      <div class="hero-chart" style="overflow:visible;height:100%;box-sizing:border-box">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">AI Post (%)</div>
+            <div class="hero-chart-sub">Quarterly · 2023 – 2025</div>
+          </div>
+          <div class="hero-chart-kpi">
+            <div class="hero-chart-kpi-val" id="heroKpiVal">—</div>
+            <div class="hero-chart-kpi-delta" id="heroKpiDelta"></div>
+          </div>
+        </div>
+        <div style="position:relative;width:100%;height:360px"><canvas id="heroTrendChart"></canvas></div>
+        <div class="hero-chart-note">This figure displays the quarterly share of AI-related job postings as a percentage of total job postings from January 2023 to December 2025.</div>
+      </div>
+      <div class="hero-chart" style="overflow:visible">
+        <div class="hero-chart-top">
+          <div>
+            <div class="hero-chart-title">Hire Rate and Turnover by Seniority</div>
+            <div class="hero-chart-sub">Impact of AI-Skilled Employees</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+          <div style="position:relative;width:100%;height:360px"><canvas id="hireRateChart"></canvas></div>
+          <div style="position:relative;width:100%;height:360px"><canvas id="turnoverChart"></canvas></div>
+        </div>
+        <div class="hero-chart-note">This figure presents cross-sectional estimates of how AI talent accumulation affects hiring and turnover rates across seniority levels. Among rank-and-file employees, the displacement effect dominates: a higher share of AI talent within a firm is associated with lower new hire rates and higher turnover, with both effects most pronounced among junior workers.</div>
       </div>
     </div>
   </section>
@@ -1297,7 +1545,7 @@ function buildHeroChart() {
 
       new Chart(canvas, {
         type:'line',
-        data:{ labels, datasets:[{ label:'AI post %', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:4, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:3 }]},
+        data:{ labels, datasets:[{ label:'AI post (%)', data, borderColor:'rgba(59,138,191,1)', backgroundColor:grad, fill:true, tension:0.5, pointRadius:4, pointBackgroundColor:'#3b8abf', pointBorderColor:'#3b8abf', pointBorderWidth:0, pointHoverRadius:6, borderWidth:3 }]},
         options:{
           responsive:true, maintainAspectRatio:false,
           animation:{duration:900, easing:'easeInOutQuart'},
@@ -1317,7 +1565,7 @@ function buildHeroChart() {
           },
           scales:{
             x:{ grid:{display:false}, ticks:{ autoSkip:false, maxRotation:0, font:ctx=>{ const lbl=ctx.tick&&ctx.tick.label; return {size:lbl&&lbl.includes('Q1')?11:10,family:'DM Mono, monospace',weight:lbl&&lbl.includes('Q1')?'700':'400'}; }, color:'#9ca3af', callback:function(val){ const lbl=this.getLabelForValue(val); if(!lbl)return''; const p=lbl.split(' '); return p[1]==='Q1'?[p[0],p[1]]:p[1]; } }, border:{color:'#dde3ec'} },
-            y:{ position:'right', min:1.5, max:5.8, title:{display:true, text:'AI Post %', font:{size:10,family:'DM Mono, monospace'}, color:'#3b8abf'}, grid:{color:'rgba(209,213,219,0.5)',lineWidth:0.8}, ticks:{count:6,font:{size:10,family:'DM Mono, monospace'},color:'#3b8abf',callback:v=>v.toFixed(1)+'%'}, border:{display:false} }
+            y:{ min:1.5, max:5.8, title:{display:true, text:'AI Post (%)', font:{size:12,family:'DM Mono, monospace',weight:'600'}, color:'#333'}, grid:{color:'rgba(0,0,0,0.04)'}, ticks:{count:6,font:{size:11,family:'DM Mono, monospace'},color:'#555',callback:v=>v.toFixed(1)+'%'}, border:{width:1.2,color:'#aaa'} }
           }
         }
       });
@@ -1561,6 +1809,134 @@ function buildHeroChart() {
       });
     }
 
+    function buildSeniorityChart() {
+      const hireCanvas = document.getElementById('hireRateChart');
+      const turnCanvas = document.getElementById('turnoverChart');
+      if (!hireCanvas || !turnCanvas) return;
+
+      const labels = ['Rank & File', 'Mid Manager', 'Executive'];
+      const hireData = [-0.066, -0.050, -0.022];
+      const turnData = [0.024, 0.018, 0.009];
+
+      const HIRE_COLOR = 'rgba(242,153,153,1)';
+      const HIRE_BORDER = 'rgba(115,13,13,1)';
+      const TURN_COLOR = 'rgba(191,26,26,1)';
+      const TURN_BORDER = 'rgba(115,13,13,1)';
+
+      const valueLabelPlugin = {
+        id: 'valueLabel',
+        afterDraw(chart) {
+          const ctx = chart.ctx;
+          const meta = chart.getDatasetMeta(0);
+          const isHire = chart.canvas.id === 'hireRateChart';
+          meta.data.forEach((bar, i) => {
+            const val = chart.data.datasets[0].data[i];
+            ctx.save();
+            ctx.fillStyle = '#000';
+            ctx.font = '12px "DM Mono", monospace';
+            ctx.textAlign = 'center';
+            if (isHire) {
+              ctx.textBaseline = 'top';
+              ctx.fillText(val.toFixed(3), bar.x, bar.y + 6);
+            } else {
+              ctx.textBaseline = 'bottom';
+              ctx.fillText(val.toFixed(3), bar.x, bar.y - 6);
+            }
+            ctx.restore();
+          });
+        }
+      };
+
+      new Chart(hireCanvas, {
+        type: 'bar',
+        plugins: [valueLabelPlugin],
+        data: {
+          labels,
+          datasets: [{
+            label: 'Hire Rate',
+            data: hireData,
+            backgroundColor: HIRE_COLOR,
+            borderColor: HIRE_BORDER,
+            borderWidth: 1.2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { font: { size: 12, family: 'DM Mono, monospace' }, boxWidth: 20, boxHeight: 12 }
+            },
+            tooltip: { callbacks: { label: item => ' ' + item.parsed.y.toFixed(3) } }
+          },
+          scales: {
+            x: {
+              position: 'top',
+              ticks: { font: { size: 12, family: 'DM Mono, monospace' }, color: '#333' },
+              grid: { display: false },
+              border: { width: 1.2, color: '#aaa' }
+            },
+            y: {
+              min: -0.07, max: 0,
+              ticks: {
+                stepSize: 0.01,
+                callback: v => v.toFixed(2),
+                font: { size: 11, family: 'DM Mono, monospace' }, color: '#555'
+              },
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              border: { width: 1.2, color: '#aaa' },
+              title: { display: true, text: 'Hire Rate', font: { size: 12, family: 'DM Mono, monospace', weight: '600' }, color: '#333' }
+            }
+          }
+        }
+      });
+
+      new Chart(turnCanvas, {
+        type: 'bar',
+        plugins: [valueLabelPlugin],
+        data: {
+          labels,
+          datasets: [{
+            label: 'Turnover Rate',
+            data: turnData,
+            backgroundColor: TURN_COLOR,
+            borderColor: TURN_BORDER,
+            borderWidth: 1.2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { font: { size: 12, family: 'DM Mono, monospace' }, boxWidth: 20, boxHeight: 12 }
+            },
+            tooltip: { callbacks: { label: item => ' ' + item.parsed.y.toFixed(3) } }
+          },
+          scales: {
+            x: {
+              ticks: { font: { size: 12, family: 'DM Mono, monospace' }, color: '#333' },
+              grid: { display: false },
+              border: { width: 1.2, color: '#aaa' }
+            },
+            y: {
+              min: 0, max: 0.05,
+              ticks: {
+                stepSize: 0.01,
+                callback: v => v.toFixed(2),
+                font: { size: 11, family: 'DM Mono, monospace' }, color: '#555'
+              },
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              border: { width: 1.2, color: '#aaa' },
+              title: { display: true, text: 'Turnover Rate', font: { size: 12, family: 'DM Mono, monospace', weight: '600' }, color: '#333' }
+            }
+          }
+        }
+      });
+    }
+
     function buildEventsChart() {
       fetch('data/events_by_quarter.csv')
         .then(r => { if (!r.ok) throw new Error(); return r.text(); })
@@ -1769,6 +2145,7 @@ function buildHeroChart() {
       buildHeroChart();
       buildAIReviewChart();
       buildSentimentChart();
+      buildSeniorityChart();
       buildCARCharts();
       buildEventsChart();
 
