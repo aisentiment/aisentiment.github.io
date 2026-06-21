@@ -1338,7 +1338,6 @@
         <p class="hero-desc">
           Explore the latest developments through curated news, dive into <a href="/regional/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">regional-level</a> and <a href="/occupation/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">occupational-level trends</a>, and <a href="/company/" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)">analyse firm-level data</a> across six key dimensions—AI talent share, hiring, retention, salary premiums, and employee and executive sentiment.
         </p>
-        <div class="hero-insights" id="heroInsights"></div>
 
         <div class="hero-quote">
           <span class="hero-quote-mark">&ldquo;</span>
@@ -2122,17 +2121,7 @@ function buildHeroChart() {
     let pillNews = 0, pillOcc = 0, pillComp = 0, pillReg = 0;
 
     function refreshPills() {
-      const pills = document.getElementById('heroInsights');
-      let items = [];
-      if (pillNews > 0)
-        items.push(`<a href="/#news" style="text-decoration:none"><div class="insight-pill" style="background:#E6F1FB;border-color:#B5D4F4;color:#0C447C;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#378ADD'" onmouseout="this.style.borderColor='#B5D4F4'"><span class="pill-dot" style="background:#378ADD"></span><span>AI news tracked from 2021 till now</span></div></a>`);
-      if (pillOcc > 0)
-        items.push(`<a href="/occupation/" style="text-decoration:none"><div class="insight-pill" style="background:#E1F5EE;border-color:#9FE1CB;color:#085041;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#9FE1CB'"><span class="pill-dot" style="background:#1D9E75"></span><span class="pill-num" style="color:#0F6E56">${pillOcc}</span><span> occupations tracked</span></div></a>`);
-      if (pillComp > 0)
-        items.push(`<a href="/company/" style="text-decoration:none"><div class="insight-pill" style="background:#EEEDFE;border-color:#CECBF6;color:#3C3489;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#7F77DD'" onmouseout="this.style.borderColor='#CECBF6'"><span class="pill-dot" style="background:#7F77DD"></span><span class="pill-num" style="color:#5B55C5">${pillComp}</span><span> public firms analysed</span></div></a>`);
-      if (pillReg > 0)
-        items.push(`<a href="/regional/" style="text-decoration:none"><div class="insight-pill" style="background:#FAEEDA;border-color:#FAC775;color:#412402;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#BA7517'" onmouseout="this.style.borderColor='#FAC775'"><span class="pill-dot" style="background:#BA7517"></span><span class="pill-num" style="color:#854F0B">${pillReg}</span><span> states tracked</span></div></a>`);
-      if (items.length) pills.innerHTML = items.join('');
+      // heroInsights pills removed from homepage; kept as no-op so fetch callbacks don't error
     }
 
     window.addEventListener('load', function() {
