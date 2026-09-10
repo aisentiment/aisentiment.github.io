@@ -39,7 +39,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 5/29/26,Wipro shares jump 4.6% at open on ServiceNow AI deal buzz,investment,WIPRO LTD,WIT,2.43,2.36,2.41,-2.88%,2.12%
 5/14/26,Akamai Technologies: $205 Million Acquisition Of LayerX Advances AI Workforce Security Strategy,investment,AKAMAI TECHNOLOGIES INC,AKAM,161.14,155.67,150.88,-3.39%,-3.08%
 5/14/26,Amazon trims seller support roles as AI spending grows,layoff,AMAZON.COM INC,AMZN,270.13,267.22,264.14,-1.08%,-1.15%
-5/14/26,"Billion-Dollar AI deal, $100m in Acquisitions, $25m Founder Buy-In – Diginex Details Expansion Push",investment,DIGINEX LIMITED,DGNX,1.2,0.95,0.9649,-20.83%,1.57%
+5/14/26,"Billion-Dollar AI deal, $100m in Acquisitions, $25m Founder Buy-In â€“ Diginex Details Expansion Push",investment,DIGINEX LIMITED,DGNX,1.2,0.95,0.9649,-20.83%,1.57%
 5/14/26,"Salesforce Ventures, Echo Health Ventures back Optura's $17.5M series A to track AI performance",investment,SALESFORCE INC,CRM,165.84,167.58,173.51,1.05%,3.54%
 5/13/26,"Cisco Is Laying Off Nearly 4,000 Employees: Is AI Behind It?",layoff,CISCO SYSTEMS INC,CSCO,99.29,101.87,115.53,2.60%,13.41%
 5/13/26,Nvidia's Jensen Huang Backs British AI Startup Ineffable Intelligence in Record $1.1 Billion Seed Round - Community Momentum Stocks,investment,NVIDIA CORP,NVDA,220.78,225.83,235.74,2.29%,4.39%
@@ -53,7 +53,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 5/12/26,"Walmart cuts 1,000 roles to simplify operations, source says",layoff,WALMART INC,WMT,127.59,130.35,131.47,2.16%,0.86%
 5/11/26,Amazon Set to Launch Swiss Franc Bonds to Boost AI Investment,investment,AMAZON.COM INC,AMZN,272.68,268.99,365.82,-1.35%,36.00%
 5/11/26,General Motors Layoffs Signal Brutal Shift as 600 Software Roles Vanish for AI Focus,layoff,GENERAL MOTORS CO,GM,78.8,75.29,76.44,-4.45%,1.53%
-5/9/26,Alphabet’s $17b Bond Sale Reshapes AI Spending And Valuation Story,investment,ALPHABET INC,GOOG,397.05,386.77,383.82,-2.59%,-0.76%
+5/9/26,Alphabetâ€™s $17b Bond Sale Reshapes AI Spending And Valuation Story,investment,ALPHABET INC,GOOG,397.05,386.77,383.82,-2.59%,-0.76%
 5/7/26,NVIDIA and IREN Announce Strategic Partnership to Accelerate Deployment of up to 5 Gigawatts of AI Infrastructure,Investment,NVIDIA CORP,NVDA,207.83,211.5,215.2,1.74%,1.75%
 5/7/26,"Cloudflare Announces More Than 1,100 Job Cuts Amid Growing AI-Driven Layoff Trend",layoff,CLOUDFLARE INC,NET,248.59,256.79,196.13,3.30%,-23.62%
 5/7/26,Verizon joins wave of AI-driven job cuts in 2026,layoff,VERIZON COMMUNICATIONS INC,VZ,47.44,47.09,47.22,-0.74%,0.28%
@@ -79,7 +79,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 4/16/26,"GoGo AI Network Inc. Announces Algo8 Secures Strategic Investment from Chemelex, Accelerating Next-Generation Innovation with Support from Brookfield Corporation",Investment,Brookfield Corp,BN,46.5,45.95,46.59,-1.20%,1.39%
 4/16/26,"Freedom Holding Corp. Acquires ChessBase, a Market Leader in Chess Software, Data and Content",Investment,FREEDOM HOLDING CORP,FRHC,161.1,162.66,160.87,0.96%,-1.10%
 4/16/26,"Stellantis, Microsoft sign five-year partnership for AI push",Investment,STELLANTIS NV,STLA,8.3,8.15,8.62,-1.84%,5.77%
-4/15/26,"Snap Lays Off 1,000 Workers To Focus on AI—Is This the New Norm?",Layoff,SNAP INC,SNAP,5.6,6.04,6.02,7.28%,-0.33%
+4/15/26,"Snap Lays Off 1,000 Workers To Focus on AIâ€”Is This the New Norm?",Layoff,SNAP INC,SNAP,5.6,6.04,6.02,7.28%,-0.33%
 4/14/26,Progress Software Expands AI and Workforce Operations in India with New Bengaluru Innovation Hub,Investment,Progress Software,PRGS,27.73,28.18,29.57,1.60%,4.93%
 4/11/26,Life360 AI Pivot And Job Cuts Raise Questions On Valuation And Margins,Layoff,LIFE360 INC,LIF,38.1,39.52,39.78,3.59%,0.66%
 4/9/26,"Helport AI and QuickCEP Forge Strategic Alliance, Aiming to Accelerate AI Workforce Infrastructure for Global Brands",Investment,HELPORT AI LTD,HPAI,1.64,1.59,1.54,-3.14%,-3.14%
@@ -236,7 +236,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 2/26/26,TaskUs outlines 2026 revenue guidance of $1.21B-$1.24B amid $333M special dividend and AI investment,investment,TASKUS INC,TASK,6.93,6.94,6.92,0.14%,-0.29%
 2/26/26,WPP sharpens cost-cutting axe to reinvest in AI tools,investment,WPP PLC,WPP,18.73,18.87,18.6,0.74%,-1.43%
 2/25/26,American Express invests in Israeli cyber firm Zafran as financial sector faces new AI risks,investment,AMERICAN EXPRESS CO,AXP,319.47,326.06,334.26,2.02%,2.51%
-2/25/26,Sustainable AI Investments - CoreWeave Committed £1.5 Billion to UK Clean AI Advancements,investment,COREWEAVE INC,CRWV,99.3,98.01,97.63,-1.32%,-0.39%
+2/25/26,Sustainable AI Investments - CoreWeave Committed Â£1.5 Billion to UK Clean AI Advancements,investment,COREWEAVE INC,CRWV,99.3,98.01,97.63,-1.32%,-0.39%
 2/25/26,DigitalOcean Expands AMD AI Cloud As Investors Weigh Growth And Margins,investment,DIGITALOCEAN HOLDINGS INC,DOCN,62.74,59.27,54.26,-5.85%,-8.45%
 2/25/26,"LiveOne Slashes Millions More In Costs With AI Push, Workforce Cuts",investment,LIVEONE INC,LVO,5.43,5.43,5.49,0.00%,1.10%
 2/25/26,MercadoLibre outlines continued investment in AI and shipping as GMV grows 35% in Brazil and Mexico,investment,MERCADOLIBRE INC,MELI,1922.56,1767.71,1740.88,-8.76%,-1.52%
@@ -362,7 +362,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 1/12/26,"Nvidia, Eli Lilly announce $1 billion investment in AI drug discovery lab",investment,NVIDIA CORP,NVDA,184.85,184.93,185.8,0.04%,0.47%
 1/12/26,Snowflake's $1 Billion Move To Boost AI Data Cloud,investment,SNOWFLAKE INC,SNOW,219.09,220.28,209.39,0.54%,-4.94%
 1/11/26,Unusual: $3.6 Million Raised To Help Brands Shape How AI Describes Them,investment,UNUSUAL MACHINES INC,UMAC,14.17,14.74,14.99,3.87%,1.70%
-1/10/26,Oklo Stock Jumps 20% as Meta's £120 Billion Nuclear Gamble Powers AI Ambitions and 5 Million Homes,investment,OKLO INC,OKLO,105.31,102.5,97.09,-2.74%,-5.28%
+1/10/26,Oklo Stock Jumps 20% as Meta's Â£120 Billion Nuclear Gamble Powers AI Ambitions and 5 Million Homes,investment,OKLO INC,OKLO,105.31,102.5,97.09,-2.74%,-5.28%
 1/9/26,Entergy and NiSource Could Be Winners as Utilities Spend $1 Trillion on AI. Dividend Investors Not So Much -- Barrons.com,investment,ENTERGY CORP,ETR,90.1,92.4,92.38,2.49%,-0.02%
 1/9/26,"Meta to Invest in Nuclear Plants in Ohio, Pennsylvania for AI",investment,META PLATFORMS INC,META,645.51,652.5,641.42,1.07%,-1.70%
 1/9/26,Microsoft Takes Part in $10 Million Funding Round for AI Startup Cloudforce,investment,MICROSOFT CORP,MSFT,477.02,478.19,476.09,0.24%,-0.44%
@@ -444,7 +444,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 6/11/26,ServiceNow Layoffs: Software Giant Cuts Hundreds of Jobs As AI Efficiencies Reshape Workforce,layoff,SERVICENOW INC,NOW,106.06,103.08,102.15,-0.028097303,-0.009022119
 6/12/26,Janus Henderson develops AI investment tools with Percepta and Anthropic,investment,JANUS HENDERSON GROUP PLC,JHG,51.83,51.84,51.81,0.000192938,-0.000578704
 6/12/26,NVIDIA Expands Global AI Infrastructure Role With Vera And Sharon AI Deal,investment,NVIDIA CORP,NVDA,204.87,205.19,212.35,0.001561966,0.034894488
-6/13/26,OpenText to Create 400 Jobs with �105 Million Investment in Cork and Galway to Expand Agentic AI and Sovereign Cloud in Europe,investment,OPEN TEXT CORP,OTEX,22.23,22.06,22.13,-0.76%,0.32%
+6/13/26,OpenText to Create 400 Jobs with €105 Million Investment in Cork and Galway to Expand Agentic AI and Sovereign Cloud in Europe,investment,OPEN TEXT CORP,OTEX,22.23,22.06,22.13,-0.76%,0.32%
 6/15/26,CrowdStrike's New Gambit: Securing the Autonomous AI Workforce,investment,CROWDSTRIKE HOLDINGS INC,CRWD,682.8,692.91,679.49,1.48%,-1.94%
 6/15/26,Hyperscale's Michigan AI campus eyes 52MW deal that may top $2.5B,investment,HYPERSCALE DATA INC,GPUS,0.15,0.27,0.26,80.00%,-3.70%
 6/15/26,Nvidia joins the AI funding wave as it plans a $20B bond sale: A closer look,investment,NVIDIA CORP,NVDA,205.19,212.45,207.41,3.54%,-2.37%
@@ -484,7 +484,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 6/23/26,Google Taps Employee Alumni Network With AI Startup Incubator,investment,ALPHABET INC,GOOGL,349.68,346.13,345.29,-1.02%,-0.24%
 6/23/26,"Omnicom Media, Netflix (NFLX) Partner for AI-Powered Ad Creative Collaboration",investment,NETFLIX INC,NFLX,72.88,72.82,71.84,-0.08%,-1.35%
 6/23/26,Penguin Solutions Becomes an NVIDIA AI Factory Specialized Partner,investment,PENGUIN SOLUTIONS INC,PENG,67.94,66.96,64.72,-1.44%,-3.35%
-6/23/26,Uber puts Israeli AI startup in driver�s seat for Munich robotaxi test run,investment,UBER TECHNOLOGIES INC,UBER,71.43,69.67,73.85,-2.46%,6.00%
+6/23/26,Uber puts Israeli AI startup in driver’s seat for Munich robotaxi test run,investment,UBER TECHNOLOGIES INC,UBER,71.43,69.67,73.85,-2.46%,6.00%
 6/23/26,Youlife Partners with Thingo Technology to Provide AI-powered Workforce Solutions Across China,investment,YOULIFE GROUP INC -ADR,YOUL,0.45,0.44,0.43,-2.22%,-2.27%
 6/23/26,Zeta Global (ZETA) Stock Surges on Palantir AI Deal Worth Over $100M Annually,investment,ZETA GLOBAL HOLDINGS CORP,ZETA,18.47,19.51,18.84,5.63%,-3.43%
 6/24/26,Backblaze stock jumps on huge CoreWeave AI deal. The bull case is getting stronger.,investment,BACKBLAZE INC,BLZE,11.66,11.97,13.42,2.66%,12.11%
@@ -493,7 +493,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 6/24/26,Eli Lilly dives into hair loss treatments with investment in AI startup Absci,investment,LILLY (ELI) & CO,LLY,1107.08,1117.26,1127.69,0.92%,0.93%
 6/24/26,EXL (NASDAQ: EXLS) plans $310M iMerit acquisition to expand AI capabilities,investment,EXLSERVICE HOLDINGS INC,EXLS,26.16,26.34,25.22,0.69%,-4.25%
 6/24/26,Hyperscale Data Signs $1.2B AI Compute Deal as Bitcoin Mining Shift Accelerates,investment,HYPERSCALE DATA INC,GPUS,0.26,0.19,0.19,-26.92%,0.00%
-6/24/26,Odine Partners with Supermicro (SMCI) to Accelerate AI Infrastructure Development in Türkiye,investment,SUPER MICRO COMPUTER INC,SMCI,33.32,32.45,31.68,-2.61%,-2.37%
+6/24/26,Odine Partners with Supermicro (SMCI) to Accelerate AI Infrastructure Development in TÃ¼rkiye,investment,SUPER MICRO COMPUTER INC,SMCI,33.32,32.45,31.68,-2.61%,-2.37%
 6/25/26,Adobe bets on Topaz Labs to speed up AI video and image editing,investment,ADOBE INC,ADBE,196.57,193.41,202.73,-1.61%,4.82%
 6/25/26,"Amazon to invest additional $13 billion in India for AI, cloud expansion",investment,AMAZON.COM INC,AMZN,234.27,227.01,232.69,-3.10%,2.50%
 6/25/26,Cisco to lay off 471 workers at 3 Bay Area offices,layoff,CISCO SYSTEMS INC,CSCO,119.28,118.53,113.35,-0.63%,-4.37%
@@ -597,7 +597,7 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 8/20/26,Micron unveils $10 billion AI memory research lab in Boise,investment,MICRON TECHNOLOGY INC,MU,937.11,974.33,966.78,3.97%,-0.77%
 8/20/26,"Nvidia to Pay Poolside a $6 Billion License, Tap Startup's Staff",investment,NVIDIA CORP,NVDA,217.56,216.85,214.72,-0.33%,-0.98%
 8/19/26,Nvidia Reportedly Explores Stake in AI Data Provider Mercor At $20B Valuation,investment,NVIDIA CORP,NVDA,219.74,217.56,216.85,-0.99%,-0.33%
-8/15/26,Nvidia�s Secret $21 Billion SpaceX Windfall � How One Chip Deal Turned Into a Rocket Fortune,investment,NVIDIA CORP,NVDA,225.16,225.01,219.74,-0.07%,-2.34%
+8/15/26,Nvidia’s Secret $21 Billion SpaceX Windfall — How One Chip Deal Turned Into a Rocket Fortune,investment,NVIDIA CORP,NVDA,225.16,225.01,219.74,-0.07%,-2.34%
 8/18/26,"Update: Nvidia to Invest $1.5 Billion in SB Energy, Supply AI Compute for Ohio Data Center",investment,NVIDIA CORP,NVDA,225.01,219.74,217.56,-2.34%,-0.99%
 8/21/26,Austin-based Oracle Corp. weighs more job cuts as AI spending grows,layoff,ORACLE CORP,ORCL,142.07,146.47,142.45,3.10%,-2.74%
 8/11/26,"Oracle has drawn up plans for a new round of layoffs this month, sources say",layoff,ORACLE CORP,ORCL,151.05,145.48,153.28,-3.69%,5.36%
@@ -638,4 +638,4 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 9/2/26,Nvidia extends AI spending spree with $12.9 billion deal for Hugging Face,investment,NVIDIA CORP,NVDA,217.44,224.41,228.45,3.21%,1.80%
 9/3/26,Nvidia Is Eyeing a $2.5 Billion Bet on Mira Murati's AI Startup,investment,NVIDIA CORP,NVDA,224.41,228.45,230.36,1.80%,0.84%
 9/3/26,ServiceNow acquires Israeli AI startup Sweep in deal estimated at hundreds of millions,investment,SERVICENOW INC,NOW,136.72,145.59,141.26,6.49%,-2.97%
-,Accel in Talks to Lead $1B Round for Thinking Machines at $40B Valuation,investment,ACCEL ENTERTAINMENT INC,ACEL,11.64,11.8,11.88,1.37%,0.68%
+9/3/26,Accel in Talks to Lead $1B Round for Thinking Machines at $40B Valuation,investment,ACCEL ENTERTAINMENT INC,ACEL,11.64,11.8,11.88,1.37%,0.68%
