@@ -657,61 +657,97 @@ Date,Headline,News Type,Company,Ticker,Price(Day-1),Price(Day0),Price(Day+1),Sto
 9/10/26,Salesforce in talks to acquire AI startup Listen Labs for $2 billion,investment,SALESFORCE INC,CRM,244.16,243,247.72,-0.48%,1.94%
 9/11/26,"SpaceX signs another AI computing deal, with $100 billion in ARR 'on track,' CFO says",investment,SPACE EXPLORATION TECHNOLOGIES CORP,SPCX,148.18,151.21,148.15,2.04%,-2.02%
 9/10/26,"Willis Towers Watson, Lyzr Team Up to Advance AI-Enabled Workforce Transformation",investment,WILLIS TOWERS WATSON PLC,WTW,313.72,315.41,315.61,0.54%,0.06%
-9/9/26,Analog Devices to Acquire Alif Semiconductor,investment,ANALOG DEVICES INC,PRGS,39.46,37.91,36.92,-3.93%,-2.61%
-9/10/26,Lunit Announces Collaboration with 10x Genomics to Integrate AI-Enabled Pathology Analysis with Spatial Molecular Data for Oncology Clinical Research,investment,10X GENOMICS INC,ADI,363.2,365.07,361.25,0.51%,-1.05%
-9/10/26,Meta Acquires Swedish AI Startup To Boost Automated Business,investment,META PLATFORMS INC,TXG,67.29,66.38,68.59,-1.35%,3.33%
-9/11/26,Liberty Global Invests in Positron AI's Funding Round,investment,LIBERTY GLOBAL LTD,META,653.17,643.87,647.52,-1.42%,0.57%
-9/11/26,"SpaceX signs another AI computing deal, with $100 billion in ARR 'on track,' CFO says",investment,Space Exploration Technologies Corp,LBTYK,10.4,10.15,10.4,-2.40%,2.46%
-9/15/26,Google just completed its $1.5 billion-plus talent deal for AI startup Mechanize,investment,ALPHABET INC,SPCX,148.18,151.21,148.15,2.04%,-2.02%
-9/15/26,TotalEnergies Bets Over $115 Million on AI to Hunt for Oil With Mistral,investment,TOTALENERGIES SE,GOOGL,349.39,344.98,342.87,-1.26%,-0.61%
-9/15/26,Wells Fargo CFO sees more layoffs ahead as AI drives efficiency,layoff,WELLS FARGO & CO,TTE,90.08,92.04,89.78,2.18%,-2.46%
-9/16/26,Twist Bioscience Joins Lilly TuneLab to Advance Antibody Drug Discovery,investment,TWIST BIOSCIENCE CORP,WFC,88.71,89.72,87.05,1.14%,-2.98%
-9/17/26,Market Chatter: Apollo Global Management Expands AI Startup Investments With an Eye on Future Financing,investment,APOLLO GLOBAL MGMT INC,TWST,138.1,143.07,155.56,3.60%,8.73%
-9/17/26,CleanSpark Discloses Meta As Georgia AI Data Center Tenant CLSK Unit Plans Over $2.2B Raise To Fund Buildout,investment,CLEANSPARK INC,APO,124.53,126,125.91,1.18%,-0.07%
-9/17/26,Phoenix Education Partners to Acquire AI Workforce Platform Fuel50,investment,PHOENIX EDUCATION PARTNE INC,CLSK,12.79,13.35,14.47,4.38%,8.39%
-9/18/26,Accenture and Anthropic Partner to Build Team of Embedded Evaluators at Anthropic,investment,ACCENTURE PLC,PXED,26.61,26.59,26.64,-0.08%,0.19%
-9/21/26,Novo Nordisk Partners with Anthropic to Bring AI Deeper into Drug Discovery,investment,NOVO NORDISK A/S,ACN,188.78,179.85,184.63,-4.73%,2.66%
-9/22/26,Cognex to acquire RealSense for $500M in factory edge AI deal,investment,COGNEX CORP,NVO,43.24,39.8,39.4,-7.96%,-1.01%
-9/22/26,Nutanix Acquires Ryax Technologies to Help Customers Accelerate Agentic AI Initiatives,investment,NUTANIX INC,CGNX,61.99,58.97,58.19,-4.87%,-1.32%
-9/23/26,Accenture and Within Help Clients Accelerate AI Across the Enterprise Through Strategic Investment and New Partnership,investment,ACCENTURE PLC,NTNX,70.04,69.25,69.68,-1.13%,0.62%
-9/23/26,Bank of America plans to double AI budget next year,investment,BANK OF AMERICA CORP,ACN,182.26,182.06,176,-0.11%,-3.33%
-9/23/26,Liberty Global Signs Strategic Partnership with Sierra,investment,LIBERTY GLOBAL LTD,BAC,56.2,56,56.03,-0.36%,0.05%
-9/23/26,"Oracle layoffs top 2,500 workers as AI spending surges",layoff,ORACLE CORP,LBTYK,9.73,9.24,9.23,-5.04%,-0.11%
-9/23/26,Shopify and Meta sign deal on AI-agent shopping,investment,SHOPIFY INC,ORCL,148.65,144.03,139.03,-3.11%,-3.47%
-9/23/26,Verizon commits $70 million to scale AI workforce training in US,investment,VERIZON COMMUNICATIONS INC,SHOP,147.74,142.34,145.16,-3.66%,1.98%
-9/24/26,Anthropic to Pay Akamai Technologies $11.6 Billion Over Seven Years for Cloud Services,investment,AKAMAI TECHNOLOGIES INC,VZ,45.74,45.81,46.6,0.15%,1.72%
-9/24/26,BNP Paribas Strikes Partnership with Google Cloud to Integrate AI Models,investment,BNP PARIBAS,AKAM,118.44,110.41,113.94,-6.78%,3.20%
-9/24/26,CDW to Acquire Lovelytics to Turn Customer Data into Business Value,investment,CDW CORP,BNPQY,55.17,56.42,57.07,2.27%,1.15%
-9/24/26,Microsoft plans $10 billion-plus Gulf investment with focus on resilience,investment,MICROSOFT CORP,CDW,146.16,139.46,135.43,-4.58%,-2.89%
-9/24/26,PayPal Strikes Major Meta AI Shopping Deal,investment,PAYPAL HOLDINGS INC,MSFT,500.59,497.93,516.17,-0.53%,3.66%
-9/24/26,WTW and Softtek partner to help organizations scale AI workforce transformation,investment,WILLIS TOWERS WATSON PLC,PYPL,52.51,52.6,55.04,0.17%,4.64%
-9/25/26,Lightspeed India Fund Targets $250 Million For AI,investment,LIGHTSPEED COMMERCE INC,WTW,298,292.65,293.01,-1.80%,0.12%
-9/7/26,Cognizant Invests in America's AI-Era Workforce,investment,COGNIZANT TECH SOLUTIONS,LSPD,9.67,9.87,9.69,2.07%,-1.82%
-9/21/26,Tempus and Recursion Extend Existing Data License Agreement and Enter New License Agreement for Recursion‰Ûªs RNA Foundation Model,investment,RECURSION PHARMA INC,CTSH,62.31,59.92,58.2,-3.84%,-2.87%
-9/21/26,Shopify to Use Meta's Muse for Agentic Checkout,investment,SHOPIFY INC,RXRX,3.83,3.97,4.05,3.66%,2.02%
-9/28/26,AMD to Acquire World Labs to Advance the Future of AI Compute,investment,ADVANCED MICRO DEVICES,SHOP,128.5,137.92,147.74,7.33%,7.12%
-9/29/26,AT&T and Corning Team Up to Engineer the Connected World with Fiber,investment,CORNING INC,AMD,630.63,607.87,607.57,-3.61%,-0.05%
-9/29/26,AT&T and Corning Team Up to Engineer the Connected World with Fiber,investment,AT&T INC,GLW,151.59,158.71,153.76,4.70%,-3.12%
-9/29/26,Salesforce buys Sweden-founded Listen Labs in $2B AI deal,investment,SALESFORCE INC,T,24.62,24.21,24.13,-1.67%,-0.33%
-9/30/26,"Firefly Aerospace Signs Starcloud as Commercial Customer, Demonstrating Data Center Capabilities Around the Moon",investment,FIREFLY AEROSPACE INC,CRM,227.27,225.31,229.57,-0.86%,1.89%
-9/30/26,HPE Shares Jump on $1.2 Billion AMD AI Deal,investment,HEWLETT PACKARD ENTERPRISE,FLY,22.86,23.15,22.85,1.27%,-1.30%
-9/30/26,Infosys and ABN Amro Extend Strategic Collaboration to Simplify IT Landscape and Accelerate AI-Driven Transformation,investment,INFOSYS LTD,HPE,61.49,63.89,64.58,3.90%,1.08%
-9/30/26,"Yext Signs Definitive Agreement to Acquire Flamel.ai, Extending Its Agentic Marketing Platform Into Local Paid Media",investment,YEXT INC,INFY,10.64,10.76,11.35,1.13%,5.48%
-10/1/26,Nebius Buys Israeli AI Startup Inferize for Up to $150 Million,investment,NEBIUS GROUP N V,YEXT,6.48,6.47,6.62,-0.15%,2.32%
-10/1/26,"Ndot Light Bets on 3D Engine, Draws Nvidia and Samsung SDS",investment,NVIDIA CORP,NBIS,235.88,232.28,242.81,-1.53%,4.53%
-10/1/26,"ZoomInfo Introduces Agent Teams, Powered by the Acquisition of DoubleO.ai",investment,ZOOMINFO TECHNO INC,NVDA,228.38,230.86,233.95,1.09%,1.34%
-10/2/26,Meta Layoffs: Tech Giant Cuts Virtue AI Founders and Team Just 4 Months After High-Profile Hire,layoff,META PLATFORMS INC,GTM,3.79,3.85,3.71,1.58%,-3.64%
-10/5/26,CH Robinson Agrees to Buy RXO for $5.8 Billion in AI-Focused Deal,investment,C H ROBINSON WORLDWIDE INC,META,725.93,728.08,741.9,0.30%,1.90%
-10/5/26,Huawei and Qualcomm Sign First Patent Deal Covering 5G and AI,investment,QUALCOMM INC,CHRW,157.72,140.61,135.05,-10.85%,-3.95%
-10/5/26,RXRX Rises As Tempus AI Deal Locks In $42M,investment,RECURSION PHARMA INC,QCOM,184.87,180.79,181.03,-2.21%,0.13%
-10/6/26,SAP buys AI workforce startup TechWolf,investment,SAP SE,RXRX,4.12,4.78,4.63,16.02%,-3.14%
-10/7/26,Amazon employees hit by fresh job cuts across several teams,layoff,AMAZON.COM INC,SAP,207.74,210.46,210.13,1.31%,-0.16%
-10/7/26,"Honda, Nissan each team with US AI startup on next-gen vehicle software",investment,HONDA MOTOR CO LTD,AMZN,256.29,259.92,254.06,1.42%,-2.25%
-10/7/26,SpaceX looks to $40 billion debt raise to buy chips,investment,Space Exploration Technologies Corp,HMC,31.81,31.67,32.48,-0.44%,2.56%
-10/7/26,Google and Unity Partner on New AI Gaming Platform for the Next Era of Interactive Entertainment,investment,UNITY SOFTWARE INC,SPCX,171.92,167.6,160.57,-2.51%,-4.19%
-10/8/26,Hancom partners with AWS to bring Nomadian AI workforce platform to US,investment,AMAZON.COM INC,U,44.95,45.44,45.89,1.09%,0.99%
-10/9/26,"Netflix plans to cut 5% of its workforce, Puck News reports",layoff,NETFLIX INC,AMZN,259.92,254.06,262.43,-2.25%,3.29%
-10/10/26,Apple Quietly Acqui-Hires Audio AI Startup Built By Former Google Team,investment,APPLE INC,NFLX,71.57,70.3,70.61,-1.77%,0.44%
-10/10/26,"Nvidia in talks to invest further in Reflection AI or buy it, FT reports",investment,NVIDIA CORP,AAPL,336.64,340.97,341.27,1.29%,0.09%
-10/11/26,POSCO DX Invests 2 Billion Won in AI Startup Enhans,investment,POSCO HOLDINGS INC,NVDA,229.28,226.32,228.52,-1.29%,0.97%
-,,,,PKX,57.48,55.64,55.98,-3.20%,0.61%
+7/22/26,Progress Software to Acquire Domo‰Ûªs AI and Data Platform Business,investment,PROGRESS SOFTWARE CORP,PRGS,39.46,37.91,36.92,-3.93%,-2.61%
+9/9/26,Analog Devices to Acquire Alif Semiconductor,investment,ANALOG DEVICES INC,ADI,363.2,365.07,361.25,0.51%,-1.05%
+9/10/26,Lunit Announces Collaboration with 10x Genomics to Integrate AI-Enabled Pathology Analysis with Spatial Molecular Data for Oncology Clinical Research,investment,10X GENOMICS INC,TXG,67.29,66.38,68.59,-1.35%,3.33%
+9/10/26,Meta Acquires Swedish AI Startup To Boost Automated Business,investment,META PLATFORMS INC,META,653.17,643.87,647.52,-1.42%,0.57%
+9/11/26,Liberty Global Invests in Positron AI's Funding Round,investment,LIBERTY GLOBAL LTD,LBTYK,10.4,10.15,10.4,-2.40%,2.46%
+9/11/26,"SpaceX signs another AI computing deal, with $100 billion in ARR 'on track,' CFO says",investment,Space Exploration Technologies Corp,SPCX,148.18,151.21,148.15,2.04%,-2.02%
+9/15/26,Google just completed its $1.5 billion-plus talent deal for AI startup Mechanize,investment,ALPHABET INC,GOOGL,349.39,344.98,342.87,-1.26%,-0.61%
+9/15/26,TotalEnergies Bets Over $115 Million on AI to Hunt for Oil With Mistral,investment,TOTALENERGIES SE,TTE,90.08,92.04,89.78,2.18%,-2.46%
+9/15/26,Wells Fargo CFO sees more layoffs ahead as AI drives efficiency,layoff,WELLS FARGO & CO,WFC,88.71,89.72,87.05,1.14%,-2.98%
+9/16/26,Twist Bioscience Joins Lilly TuneLab to Advance Antibody Drug Discovery,investment,TWIST BIOSCIENCE CORP,TWST,138.1,143.07,155.56,3.60%,8.73%
+9/17/26,Market Chatter: Apollo Global Management Expands AI Startup Investments With an Eye on Future Financing,investment,APOLLO GLOBAL MGMT INC,APO,124.53,126,125.91,1.18%,-0.07%
+9/17/26,CleanSpark Discloses Meta As Georgia AI Data Center Tenant CLSK Unit Plans Over $2.2B Raise To Fund Buildout,investment,CLEANSPARK INC,CLSK,12.79,13.35,14.47,4.38%,8.39%
+9/17/26,Phoenix Education Partners to Acquire AI Workforce Platform Fuel50,investment,PHOENIX EDUCATION PARTNE INC,PXED,26.61,26.59,26.64,-0.08%,0.19%
+9/18/26,Accenture and Anthropic Partner to Build Team of Embedded Evaluators at Anthropic,investment,ACCENTURE PLC,ACN,188.78,179.85,184.63,-4.73%,2.66%
+9/21/26,Novo Nordisk Partners with Anthropic to Bring AI Deeper into Drug Discovery,investment,NOVO NORDISK A/S,NVO,43.24,39.8,39.4,-7.96%,-1.01%
+9/22/26,Cognex to acquire RealSense for $500M in factory edge AI deal,investment,COGNEX CORP,CGNX,61.99,58.97,58.19,-4.87%,-1.32%
+9/22/26,Nutanix Acquires Ryax Technologies to Help Customers Accelerate Agentic AI Initiatives,investment,NUTANIX INC,NTNX,70.04,69.25,69.68,-1.13%,0.62%
+9/23/26,Accenture and Within Help Clients Accelerate AI Across the Enterprise Through Strategic Investment and New Partnership,investment,ACCENTURE PLC,ACN,182.26,182.06,176,-0.11%,-3.33%
+9/23/26,Bank of America plans to double AI budget next year,investment,BANK OF AMERICA CORP,BAC,56.2,56,56.03,-0.36%,0.05%
+9/23/26,Liberty Global Signs Strategic Partnership with Sierra,investment,LIBERTY GLOBAL LTD,LBTYK,9.73,9.24,9.23,-5.04%,-0.11%
+9/23/26,"Oracle layoffs top 2,500 workers as AI spending surges",layoff,ORACLE CORP,ORCL,148.65,144.03,139.03,-3.11%,-3.47%
+9/23/26,Shopify and Meta sign deal on AI-agent shopping,investment,SHOPIFY INC,SHOP,147.74,142.34,145.16,-3.66%,1.98%
+9/23/26,Verizon commits $70 million to scale AI workforce training in US,investment,VERIZON COMMUNICATIONS INC,VZ,45.74,45.81,46.6,0.15%,1.72%
+9/24/26,Anthropic to Pay Akamai Technologies $11.6 Billion Over Seven Years for Cloud Services,investment,AKAMAI TECHNOLOGIES INC,AKAM,118.44,110.41,113.94,-6.78%,3.20%
+9/24/26,BNP Paribas Strikes Partnership with Google Cloud to Integrate AI Models,investment,BNP PARIBAS,BNPQY,55.17,56.42,57.07,2.27%,1.15%
+9/24/26,CDW to Acquire Lovelytics to Turn Customer Data into Business Value,investment,CDW CORP,CDW,146.16,139.46,135.43,-4.58%,-2.89%
+9/24/26,Microsoft plans $10 billion-plus Gulf investment with focus on resilience,investment,MICROSOFT CORP,MSFT,500.59,497.93,516.17,-0.53%,3.66%
+9/24/26,PayPal Strikes Major Meta AI Shopping Deal,investment,PAYPAL HOLDINGS INC,PYPL,52.51,52.6,55.04,0.17%,4.64%
+9/24/26,WTW and Softtek partner to help organizations scale AI workforce transformation,investment,WILLIS TOWERS WATSON PLC,WTW,298,292.65,293.01,-1.80%,0.12%
+9/25/26,Lightspeed India Fund Targets $250 Million For AI,investment,LIGHTSPEED COMMERCE INC,LSPD,9.67,9.87,9.69,2.07%,-1.82%
+9/7/26,Cognizant Invests in America's AI-Era Workforce,investment,COGNIZANT TECH SOLUTIONS,CTSH,62.31,59.92,58.2,-3.84%,-2.87%
+9/21/26,Tempus and Recursion Extend Existing Data License Agreement and Enter New License Agreement for Recursion‰Ûªs RNA Foundation Model,investment,RECURSION PHARMA INC,RXRX,3.83,3.97,4.05,3.66%,2.02%
+9/21/26,Shopify to Use Meta's Muse for Agentic Checkout,investment,SHOPIFY INC,SHOP,128.5,137.92,147.74,7.33%,7.12%
+9/28/26,AMD to Acquire World Labs to Advance the Future of AI Compute,investment,ADVANCED MICRO DEVICES,AMD,630.63,607.87,607.57,-3.61%,-0.05%
+9/29/26,AT&T and Corning Team Up to Engineer the Connected World with Fiber,investment,CORNING INC,GLW,151.59,158.71,153.76,4.70%,-3.12%
+9/29/26,AT&T and Corning Team Up to Engineer the Connected World with Fiber,investment,AT&T INC,T,24.62,24.21,24.13,-1.67%,-0.33%
+9/29/26,Salesforce buys Sweden-founded Listen Labs in $2B AI deal,investment,SALESFORCE INC,CRM,227.27,225.31,229.57,-0.86%,1.89%
+9/30/26,"Firefly Aerospace Signs Starcloud as Commercial Customer, Demonstrating Data Center Capabilities Around the Moon",investment,FIREFLY AEROSPACE INC,FLY,22.86,23.15,22.85,1.27%,-1.30%
+9/30/26,HPE Shares Jump on $1.2 Billion AMD AI Deal,investment,HEWLETT PACKARD ENTERPRISE,HPE,61.49,63.89,64.58,3.90%,1.08%
+9/30/26,Infosys and ABN Amro Extend Strategic Collaboration to Simplify IT Landscape and Accelerate AI-Driven Transformation,investment,INFOSYS LTD,INFY,10.64,10.76,11.35,1.13%,5.48%
+9/30/26,"Yext Signs Definitive Agreement to Acquire Flamel.ai, Extending Its Agentic Marketing Platform Into Local Paid Media",investment,YEXT INC,YEXT,6.48,6.47,6.62,-0.15%,2.32%
+10/1/26,Nebius Buys Israeli AI Startup Inferize for Up to $150 Million,investment,NEBIUS GROUP N V,NBIS,235.88,232.28,242.81,-1.53%,4.53%
+10/1/26,"Ndot Light Bets on 3D Engine, Draws Nvidia and Samsung SDS",investment,NVIDIA CORP,NVDA,228.38,230.86,233.95,1.09%,1.34%
+10/1/26,"ZoomInfo Introduces Agent Teams, Powered by the Acquisition of DoubleO.ai",investment,ZOOMINFO TECHNO INC,GTM,3.79,3.85,3.71,1.58%,-3.64%
+10/2/26,Meta Layoffs: Tech Giant Cuts Virtue AI Founders and Team Just 4 Months After High-Profile Hire,layoff,META PLATFORMS INC,META,725.93,728.08,741.9,0.30%,1.90%
+10/5/26,CH Robinson Agrees to Buy RXO for $5.8 Billion in AI-Focused Deal,investment,C H ROBINSON WORLDWIDE INC,CHRW,157.72,140.61,135.05,-10.85%,-3.95%
+10/5/26,Huawei and Qualcomm Sign First Patent Deal Covering 5G and AI,investment,QUALCOMM INC,QCOM,184.87,180.79,181.03,-2.21%,0.13%
+10/5/26,RXRX Rises As Tempus AI Deal Locks In $42M,investment,RECURSION PHARMA INC,RXRX,4.12,4.78,4.63,16.02%,-3.14%
+10/6/26,SAP buys AI workforce startup TechWolf,investment,SAP SE,SAP,207.74,210.46,210.13,1.31%,-0.16%
+10/7/26,Amazon employees hit by fresh job cuts across several teams,layoff,AMAZON.COM INC,AMZN,256.29,259.92,254.06,1.42%,-2.25%
+10/7/26,"Honda, Nissan each team with US AI startup on next-gen vehicle software",investment,HONDA MOTOR CO LTD,HMC,31.81,31.67,32.48,-0.44%,2.56%
+10/7/26,SpaceX looks to $40 billion debt raise to buy chips,investment,Space Exploration Technologies Corp,SPCX,171.92,167.6,160.57,-2.51%,-4.19%
+10/7/26,Google and Unity Partner on New AI Gaming Platform for the Next Era of Interactive Entertainment,investment,UNITY SOFTWARE INC,U,44.95,45.44,45.89,1.09%,0.99%
+10/8/26,Hancom partners with AWS to bring Nomadian AI workforce platform to US,investment,AMAZON.COM INC,AMZN,259.92,254.06,262.43,-2.25%,3.29%
+10/9/26,"Netflix plans to cut 5% of its workforce, Puck News reports",layoff,NETFLIX INC,NFLX,71.57,70.3,70.61,-1.77%,0.44%
+10/10/26,Apple Quietly Acqui-Hires Audio AI Startup Built By Former Google Team,investment,APPLE INC,AAPL,336.64,340.97,341.27,1.29%,0.09%
+10/10/26,"Nvidia in talks to invest further in Reflection AI or buy it, FT reports",investment,NVIDIA CORP,NVDA,229.28,226.32,228.52,-1.29%,0.97%
+10/11/26,POSCO DX Invests 2 Billion Won in AI Startup Enhans,investment,POSCO HOLDINGS INC,PKX,57.48,55.64,55.98,-3.20%,0.61%
+10/13/26,Jabil (JBL) After The Adani AI Deal Is The Stock Still Undervalued,investment,JABIL INC,JBL,312.01,317.86,293.91,1.87%,-7.53%
+10/11/26,"Amazon in talks to buy AI startup Decart for around $7 billion, WSJ reports",investment,AMAZON.COM INC,AMZN,262.43,259.53,258.58,-1.11%,-0.37%
+10/12/26,IREN Stock Rises on Reported Anthropic AI Deal,investment,IREN LIMITED,IREN,35.19,34.8,34.8,-1.11%,0.00%
+10/15/26,AstraZeneca signs USD 40 million AI deal as AstraZeneca stock trades EUR 149.78,investment,ASTRAZENECA PLC,AZN,162.03,166.68,165.41,2.87%,-0.76%
+10/22/26,"Barclays to cut 5,000 jobs as AI investment reshapes workforce",layoff,BARCLAYS PLC,BCS,22.6,22.01,21.74,-2.61%,-1.23%
+10/14/26,Booking Holdings Plans to Fund New AI Startup Vayo With $100 Million,investment,BOOKING HOLDINGS INC,BKNG,157.51,160.68,165.8,2.01%,3.19%
+10/21/26,CrowdStrike and NVIDIA Expand AI Agent Security from Software to Silicon,investment,CROWDSTRIKE HOLDINGS INC,CRWD,227.37,239.34,237.94,5.26%,-0.58%
+10/13/26,Disney strikes $20 million deal for Character.ai assets as AI startup files for bankruptcy,investment,DISNEY (WALT) CO,DIS,108.49,108.58,108.99,0.08%,0.38%
+10/23/26,Eastern Bank ramps up AI spending for 2027,investment,EASTERN BANKSHARES INC,EBC,22.11,22.4,22.51,1.31%,0.49%
+10/20/26,AstraZeneca Taps Oracle as Lilly Inks Up to $1.1B AI Deal,investment,LILLY (ELI) & CO,LLY,1240.34,1283.66,1270.75,3.49%,-1.01%
+10/26/26,A 96-server reservation gives Forum Markets (FRMM)'s AI venture its first customer contract.,investment,FORUM MARKETS INC,FRMM,3.38,3.38,3.49,0.00%,3.25%
+10/12/26,"Freshworks to Acquire Torii, Extending Freshservice to AI Spend Governance",investment,FRESHWORKS INC,FRSH,13.92,13.92,13.9,0.00%,-0.14%
+10/15/26,Google Announces $15 Million Funding for Indian MSMEs and Expands AI Teacher Training,investment,ALPHABET INC,GOOGL,347.64,349.22,340.59,0.45%,-2.47%
+10/19/26,Intuit Stock Jumps as AI Deal Offers Relief From Brutal Year,investment,INTUIT INC,INTU,325.15,325.62,335.29,0.14%,2.97%
+10/9/26,iSpecimen approves AI deal as iSpecimen stock faces reverse split vote,investment,ISPECIMEN INC,ISPC,1.09,1.13,1.08,3.67%,-4.42%
+10/26/26,Brazil's Itau agrees to buy AI startup NeoSpace for $589 million,investment,ITAU UNIBANCO HLDG SA,ITUB,9.67,7.7,7.67,-20.37%,-0.39%
+10/13/26,"Kroger to lay off 3,000 corporate employees over 3 years as it leans into artificial intelligence",layoff,KROGER CO,KR,62.56,60.74,63.09,-2.91%,3.87%
+10/14/26,"Kyndryl, Toyota Systems and Toyota Finance Modernize IT Operations with Agentic AI",investment,KYNDRYL HOLDINGS INC,KD,12.24,11.79,13.19,-3.68%,11.87%
+10/26/26,Meta Seeks Up to $95 Billion in Equity to Fund AI Spending,investment,META PLATFORMS INC,META,642.62,630.56,620.19,-1.88%,-1.64%
+10/26/26,"Microsoft Offer Buyouts to 60,000 Workers as It Doubles Down on AI Investment",both,MICROSOFT CORP,MSFT,524.51,532.6,531.33,1.54%,-0.24%
+10/18/26,Microsoft axes AI deal in setback for UK data centre pioneer,divestment,MICROSOFT CORP,MSFT,529.05,533.52,531.87,0.84%,-0.31%
+10/19/26,NVIDIA Expands AI Investment in Germany: Focus on Startups,investment,NVIDIA CORP,NVDA,214.13,217.09,216.47,1.38%,-0.29%
+10/23/26,AI Giant Nvidia Invests in Entertainment Startup Higgsfield,investment,NVIDIA CORP,NVDA,212.21,210.96,216,-0.59%,2.39%
+10/23/26,Nvidia wins fast-growing AI startup Modal for new central processors,investment,NVIDIA CORP,NVDA,212.21,210.96,216,-0.59%,2.39%
+10/13/26,Nvidia to unveil $2B AI investment in Europe this week,investment,NVIDIA CORP,NVDA,226.32,228.52,221.3,0.97%,-3.16%
+10/20/26,Oracle and AstraZeneca sign AI deal to speed up clinical trials,investment,ORACLE CORP,ORCL,129.59,131.14,129.13,1.20%,-1.53%
+10/22/26,Rivian acquires UK AI startup Third Dimension for self-driving Ì¢‰âÂ‰Ûð TechCrunch,investment,RIVIAN AUTOMOTIVE INC,RIVN,12.46,12.06,11.83,-3.21%,-1.91%
+10/20/26,Salesforce to buy Braze in $5.66B AI deal,investment,SALESFORCE INC,CRM,242.45,242.43,241.78,-0.01%,-0.27%
+10/26/26,SpaceX Strikes $40 Billion Apollo Deal to Accelerate AI Expansion,investment,Space Exploration Technologies Corp,SPCX,147.49,146.9,148.58,-0.40%,1.14%
+10/14/26,Stagwell & ServiceNow Join Forces In 3-Year AI Deal,investment,STAGWELL INC,STGW,9.13,8.78,9.13,-3.83%,3.99%
+10/15/26,"Tianci International Engages Linknex for Enterprise AI Platform; $146,700 Cash Plus 180,000 Shares",investment,TIANCI INTERNATIONAL INC,CIIT,1.96,1.94,2.02,-1.02%,4.12%
+10/19/26,Infosys and Truist Strengthen Strategic Collaboration to Build a Global Capability Center in India,investment,TRUIST FINANCIAL CORP,TFC,47.07,46.32,47.33,-1.59%,2.18%
+10/19/26,Infosys and Truist Strengthen Strategic Collaboration to Build a Global Capability Center in India,investment,INFOSYS LTD,INFY,12.24,12.2,12.66,-0.33%,3.77%
+10/26/26,"Verizon raised outlook, signed $2B+ Amazon AI deal in Q3 2026 earnings",investment,VERIZON COMMUNICATIONS INC,VZ,44.66,43.1,43.93,-3.49%,1.93%
+10/14/26,"Wells Fargo Targets FA Growth with Tech Capabilities, AI Investment",investment,WELLS FARGO & CO,WFC,80.74,80.9,82.75,0.20%,2.29%
+10/13/26,"Workday to Acquire C1.ai, a Leading Agentic Identity Platform for People and Agents",investment,WORKDAY INC,WDAY,188.25,186.02,188.77,-1.18%,1.48%
